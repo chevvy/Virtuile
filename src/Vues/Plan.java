@@ -12,7 +12,11 @@ public class Plan extends JPanel {
 
     @Override
     public void paint(Graphics g) {
-        g.setColor(Color.RED);
-        g.fill3DRect(100,100,100,100, true);
+        g.setColor(Color.gray);
+        for(int i = 0; i < this.getWidth()-1; i += 50){
+            for(int j = 0; j < this.getHeight()-1; j+=50){
+                g.drawRect(i, j, 50, 50);
+            }
+        }
     }
 }

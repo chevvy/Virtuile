@@ -1,18 +1,15 @@
 package Vues;
 
 import javax.swing.*;
-import javax.swing.event.MenuKeyEvent;
-import javax.swing.event.MenuKeyListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MainWindow extends JFrame {
 
     private JMenuBar menuBar;
-    private JMenu menuFile, menuEdit, menuView;
+    private JMenu menuFichier, menuEdition, menuVue;
     private JMenuItem menuItemSauvegarder, menuItemCharger;
-    private JPanel panelVuePlan, panelVueInfo;
+    private PaneauConfiguration panelVueInfo;
+    private Plan panelVuePlan;
 
     public MainWindow(){
         this.setSize(500, 500);
@@ -23,33 +20,25 @@ public class MainWindow extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         menuBar = new JMenuBar();
-        menuFile = new JMenu("File");
-        menuEdit = new JMenu("Edit");
-        menuView = new JMenu("View");
+        menuFichier = new JMenu("Fichier");
+        menuEdition = new JMenu("Edition");
+        menuVue = new JMenu("Vue");
         menuItemSauvegarder = new JMenuItem("Sauvegarder");
         menuItemCharger = new JMenuItem("Charger");
 
-        menuItemSauvegarder.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Un event");
-            }
-        });
-
-        menuFile.add(menuItemSauvegarder);
-        menuFile.add(menuItemCharger);
-        menuEdit.add(new JMenuItem("Ajouter une surface"));
-        menuEdit.add(new JMenuItem("Modifier les sommets"));
-        menuBar.add(menuFile);
-        menuBar.add(menuEdit);
-        menuBar.add(menuView);
+        menuFichier.add(menuItemSauvegarder);
+        menuFichier.add(menuItemCharger);
+        menuEdition.add(new JMenuItem("Ajouter une surface"));
+        menuEdition.add(new JMenuItem("Modifier les sommets"));
+        menuEdition.add(new JMenuItem("Menu des materiaux"));
+        menuBar.add(menuFichier);
+        menuBar.add(menuEdition);
+        menuBar.add(menuVue);
         this.setJMenuBar(menuBar);
 
         panelVuePlan = new Plan();
-        panelVueInfo = new JPanel();
+        panelVueInfo = new PaneauConfiguration();
 
-        panelVueInfo.setBackground(Color.gray);
-        panelVueInfo.add(new JLabel("And I say hey, hey hey, what's going on"));
 
         this.add(panelVuePlan, BorderLayout.CENTER);
         this.add(panelVueInfo, BorderLayout.EAST);
