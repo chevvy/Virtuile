@@ -10,6 +10,7 @@ public class Controller {
     private ArrayList<Observer> observers;
 
     public Plan plan;
+    private Etat etat = Etat.LECTURE;
 
     public Controller(){
         observers = new ArrayList<>();
@@ -21,7 +22,18 @@ public class Controller {
     }
 
     public void ajouterSurface(Point position){
-        plan.ajouterSurface(position);
+        etat = Etat.AJOUTER_SURFACE;
+    }
+
+    public void clic(int x, int y){
+        switch(etat){
+            case AJOUTER_SURFACE:
+                etat = plan.ajouterSurface(new Point(x, y));
+                break;
+            case LECTURE:
+                break;
+        }
+
         notifyObservers();
     }
 
