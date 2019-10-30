@@ -63,6 +63,7 @@ public class Canvas extends JPanel implements Observer{
     }
 
     private void mousedDraggedEvent(MouseEvent e){
+        controller.glisser(e.getX(), e.getY());
     }
 
     private void mousePressedEvent(MouseEvent e){
@@ -82,6 +83,7 @@ public class Canvas extends JPanel implements Observer{
     }
 
     private void mouseReleasedEvent(MouseEvent e){
+        controller.relacher();
     }
 
     @Override

@@ -28,12 +28,33 @@ public class Controller {
     public void clic(int x, int y){
         switch(etat){
             case AJOUTER_SURFACE:
-                etat = plan.ajouterSurface(new Point(x, y));
+                etat = plan.initialiserSurface(new Point(x, y));
                 break;
-            case LECTURE:
+            default:
                 break;
         }
+        notifyObservers();
+    }
 
+    public void glisser(int x, int y){
+        switch(etat){
+            case ETIRER_SURFACE:
+                plan.etirerSurface(new Point(x, y));
+                break;
+            default:
+                break;
+        }
+        notifyObservers();
+    }
+
+    public void relacher(){
+        switch(etat){
+            case ETIRER_SURFACE:
+                etat = plan.confirmerSurface();
+                break;
+            default:
+                break;
+        }
         notifyObservers();
     }
 
