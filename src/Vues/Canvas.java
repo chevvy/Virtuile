@@ -68,7 +68,7 @@ public class Canvas extends JPanel implements Observer{
     private void mousePressedEvent(MouseEvent e){
         switch (e.getButton()){
             case 1:
-                //Left click
+                controller.clic(e.getX(), e.getY());
                 break;
             case 2:
                 //Wheel click
