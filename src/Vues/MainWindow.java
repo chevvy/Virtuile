@@ -1,17 +1,24 @@
 package Vues;
 
+import MVC.Controller;
+import MVC.Observer;
+
+import javax.naming.ldap.Control;
 import javax.swing.*;
 import java.awt.*;
 
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame implements Observer {
 
     private JMenuBar menuBar;
     private JMenu menuFichier, menuEdition, menuVue;
     private JMenuItem menuItemSauvegarder, menuItemCharger;
     private PaneauConfiguration panelVueInfo;
     private Canvas panelVuePlan;
+    private Controller controller;
 
-    public MainWindow(){
+    public MainWindow(Controller controller){
+        controller.addObserver(this);
+        this.controller = controller;
         this.setSize(500, 500);
         this.setLocation(100,100);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -36,7 +43,7 @@ public class MainWindow extends JFrame {
         menuBar.add(menuVue);
         this.setJMenuBar(menuBar);
 
-        panelVuePlan = new Canvas();
+        panelVuePlan = new Canvas(controller);
         panelVueInfo = new PaneauConfiguration();
 
 
@@ -44,5 +51,10 @@ public class MainWindow extends JFrame {
         this.add(panelVueInfo, BorderLayout.EAST);
 
         this.setVisible(true);
+    }
+
+    @Override
+    public void update() {
+
     }
 }

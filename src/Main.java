@@ -1,3 +1,4 @@
+import MVC.Controller;
 import Vues.MainWindow;
 
 // test comment commit
@@ -8,6 +9,7 @@ public class Main {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch(Exception ignored){}
-        MainWindow window = new MainWindow();
+        Controller controller = new Controller();
+        MainWindow window = new MainWindow(controller);
     }
 }
