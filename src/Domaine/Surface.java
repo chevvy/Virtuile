@@ -1,5 +1,7 @@
 package Domaine;
 
+import javafx.util.Pair;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.awt.Polygon;
@@ -15,11 +17,13 @@ public class Surface {
     public boolean estDansSurface(Point point){
         return false;
     }
-    //méthode permettant de déplacer une surface en se basant sur le point en haut à gauche
-    public void deplacerSurface(Point point){
+    //méthode permettant de déplacer une surface selon le vecteur de déplacement reçu
+    public void deplacerSurface(Pair<Double, Double> deplacement){
 
     }
-    public void modifierSommets(){
+    //méthode permettant de modifier un point d'une surface
+    //on lui fournit une liste de tous les nouveaux points
+    public void modifierSommets(ArrayList<Point> coordonneesNouvellesCardinalites){
 
     }
     public void modifierSurface(){
