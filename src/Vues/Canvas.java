@@ -71,7 +71,7 @@ public class Canvas extends JPanel implements Observer{
                 //Left click
                 break;
             case 2:
-                //Wheel click«
+                //Wheel click
                 break;
             case 3:
                 //Left click
@@ -86,6 +86,7 @@ public class Canvas extends JPanel implements Observer{
 
     @Override
     public void paint(Graphics g) {
+        super.paintComponent(g);
         this.controller.paintCanevas(g, this.getHeight(), this.getWidth());
     }
 
