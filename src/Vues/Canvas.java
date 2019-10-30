@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class Plan extends JPanel {
+public class Canvas extends JPanel {
 
-    public Plan(){
+    public Canvas(){
 
     }
 

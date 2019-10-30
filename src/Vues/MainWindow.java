@@ -9,7 +9,7 @@ public class MainWindow extends JFrame {
     private JMenu menuFichier, menuEdition, menuVue;
     private JMenuItem menuItemSauvegarder, menuItemCharger;
     private PaneauConfiguration panelVueInfo;
-    private Plan panelVuePlan;
+    private Canvas panelVuePlan;
 
     public MainWindow(){
         this.setSize(500, 500);
@@ -36,7 +36,7 @@ public class MainWindow extends JFrame {
         menuBar.add(menuVue);
         this.setJMenuBar(menuBar);
 
-        panelVuePlan = new Plan();
+        panelVuePlan = new Canvas();
         panelVueInfo = new PaneauConfiguration();
 
 
