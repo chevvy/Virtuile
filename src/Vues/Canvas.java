@@ -24,6 +24,6 @@ public class Canvas extends JPanel implements Observer{
 
     @Override
     public void update() {
-
+        repaint();
     }
 }

@@ -1,17 +1,20 @@
 package Vues;
 
+import MVC.Controller;
 import javafx.scene.control.RadioButton;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class PaneauConfiguration extends JScrollPane {
+public class PanneauConfiguration extends JScrollPane {
 
     private JButton boutonAjouter, boutonSupprimer;
     private JRadioButton radioSurface, radioVide;
     private JComboBox listeMateriau, listeAlignement;
 
-    public PaneauConfiguration(){
+    private Controller controller;
+
+    public PanneauConfiguration(Controller controller){
         this.setBackground(Color.gray);
 
         this.setPreferredSize(new Dimension(250, 500));
@@ -19,12 +22,15 @@ public class PaneauConfiguration extends JScrollPane {
         this.setLayout(null);
         this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         SetUpUi();
+
+        this.controller = controller;
     }
 
     private void SetUpUi(){
         boutonAjouter = new JButton("Ajouter une Surface");
         boutonAjouter.setSize(200, 50);
         boutonAjouter.setLocation(25,20);
+        boutonAjouter.addActionListener(e -> controller.ajouterSurface(new Point(10, 10)));
 
         boutonSupprimer = new JButton("Supprimer la surface");
         boutonSupprimer.setSize(200, 50);

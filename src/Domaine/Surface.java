@@ -5,12 +5,17 @@ import javafx.util.Pair;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.awt.Polygon;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Surface {
 
     public Polygon polygone;
 
-    public Surface(ArrayList<Point> listPoints) {
+    public Surface(List<Point> listePoints) {
+        int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
+        int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
+        polygone = new Polygon(coords_x, coords_y, listePoints.size());
     }
     //méthode contains de Polygon
     //return True si le point est dans la surface
