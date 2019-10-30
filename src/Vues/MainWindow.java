@@ -3,7 +3,6 @@ package Vues;
 import MVC.Controller;
 import MVC.Observer;
 
-import javax.naming.ldap.Control;
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,7 +11,7 @@ public class MainWindow extends JFrame implements Observer {
     private JMenuBar menuBar;
     private JMenu menuFichier, menuEdition, menuVue;
     private JMenuItem menuItemSauvegarder, menuItemCharger;
-    private PaneauConfiguration panelVueInfo;
+    private PanneauConfiguration panelVueInfo;
     private Canvas panelVuePlan;
     private Controller controller;
 
@@ -44,7 +43,7 @@ public class MainWindow extends JFrame implements Observer {
         this.setJMenuBar(menuBar);
 
         panelVuePlan = new Canvas(controller);
-        panelVueInfo = new PaneauConfiguration();
+        panelVueInfo = new PanneauConfiguration(controller);
 
 
         this.add(panelVuePlan, BorderLayout.CENTER);
