@@ -31,13 +31,7 @@ public class Controller {
         }
     }
 
-    public void paintCanevas(Graphics g, int pageHeight, int pageWidth){
-        g.setColor(Color.gray);
-        for(int i = 0; i < pageWidth-1; i += 50){
-            for(int j = 0; j < pageHeight-1; j+=50){
-                g.drawRect(i, j, 50, 50);
-            }
-        }
+    public void paintCanevas(Graphics g){
         g.setColor(Color.blue);
         for(Surface surface : plan.recupererSurfaces()){
             g.drawPolygon(surface.polygone);

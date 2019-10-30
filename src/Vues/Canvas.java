@@ -14,12 +14,15 @@ public class Canvas extends JPanel implements Observer{
 
     private Controller controller;
     private Point dragOrigine;
+    private Point translate;
     private boolean isLeftClicked = true;
+    private final int GRID_SIZE = 50;
 
     public Canvas(Controller controller){
         controller.addObserver(this);
         this.controller = controller;
         dragOrigine = new Point();
+        translate = new Point();
         this.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -63,6 +66,11 @@ public class Canvas extends JPanel implements Observer{
     }
 
     private void mousedDraggedEvent(MouseEvent e){
+        if(isLeftClicked){
+            translate.x = e.getX() - dragOrigine.x;
+            translate.y = e.getY() - dragOrigine.y;
+            repaint();
+        }
     }
 
     private void mousePressedEvent(MouseEvent e){
@@ -75,19 +83,45 @@ public class Canvas extends JPanel implements Observer{
                 break;
             case 3:
                 //Left click
-                dragOrigine = e.getPoint();
+                dragOrigine.x = e.getX() - translate.x;
+                dragOrigine.y = e.getY() - translate.y;
                 isLeftClicked = true;
                 break;
         }
     }
 
     private void mouseReleasedEvent(MouseEvent e){
+        switch (e.getButton()){
+            case 1:
+                //Left click
+                break;
+            case 2:
+                //Wheel click
+                break;
+            case 3:
+                //Left click
+                isLeftClicked = false;
+                break;
+        }
     }
 
     @Override
     public void paint(Graphics g) {
         super.paintComponent(g);
-        this.controller.paintCanevas(g, this.getHeight(), this.getWidth());
+        g.setColor(Color.gray);
+        int sizeX = this.getWidth()-1;
+        int sizeY = this.getHeight()-1;
+        int gridOffX = translate.x % GRID_SIZE;
+        int gridOffY = translate.y % GRID_SIZE;
+        for(int i = -GRID_SIZE + gridOffX; i < sizeX + GRID_SIZE; i += GRID_SIZE){
+            for(int j = -GRID_SIZE + gridOffY; j < sizeY + GRID_SIZE; j+=GRID_SIZE){
+                g.drawRect(i, j, GRID_SIZE, GRID_SIZE);
+            }
+        }
+        g.translate(translate.x, translate.y);
+        this.controller.paintCanevas(g);
+        g.fillRect(100,100,100,100);
+
     }
 
     @Override
