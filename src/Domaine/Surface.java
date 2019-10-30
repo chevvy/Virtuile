@@ -37,6 +37,13 @@ public class Surface {
     public void modifierTypeSurface(){
 
     }
+    public ArrayList<Point> getListePoints(){
+        ArrayList<Point> listePoints = new ArrayList<Point>();
+        for(int i = 0; i < polygone.npoints; i++){
+            listePoints.add(new Point(polygone.xpoints[i], polygone.xpoints[i]));
+        }
+        return listePoints;
+    }
     public void getInfoSurface(){
 
     }

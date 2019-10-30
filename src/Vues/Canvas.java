@@ -66,11 +66,15 @@ public class Canvas extends JPanel implements Observer{
     }
 
     private void mousedDraggedEvent(MouseEvent e){
+<<<<<<< HEAD
         if(isLeftClicked){
             translate.x = e.getX() - dragOrigine.x;
             translate.y = e.getY() - dragOrigine.y;
             repaint();
         }
+=======
+        controller.glisser(e.getX(), e.getY());
+>>>>>>> f6d79290fef856b20bf6773039170f2ff9d77f18
     }
 
     private void mousePressedEvent(MouseEvent e){
@@ -92,6 +96,7 @@ public class Canvas extends JPanel implements Observer{
     }
 
     private void mouseReleasedEvent(MouseEvent e){
+<<<<<<< HEAD
         switch (e.getButton()){
             case 1:
                 //Left click
@@ -111,6 +116,9 @@ public class Canvas extends JPanel implements Observer{
         absolute.x = relative.x - translate.x;
         absolute.y = relative.y - translate.y;
         return absolute;
+=======
+        controller.relacher();
+>>>>>>> f6d79290fef856b20bf6773039170f2ff9d77f18
     }
 
     @Override
