@@ -76,7 +76,8 @@ public class Canvas extends JPanel implements Observer{
     private void mousePressedEvent(MouseEvent e){
         switch (e.getButton()){
             case 1:
-                controller.clic(e.getX(), e.getY());
+                Point temp = relativeToAbsolute(e.getPoint());
+                controller.clic(temp.x, temp.y);
                 break;
             case 2:
                 //Wheel click
@@ -105,6 +106,13 @@ public class Canvas extends JPanel implements Observer{
         }
     }
 
+    private Point relativeToAbsolute(Point relative){
+        Point absolute = new Point();
+        absolute.x = relative.x - translate.x;
+        absolute.y = relative.y - translate.y;
+        return absolute;
+    }
+
     @Override
     public void paint(Graphics g) {
         super.paintComponent(g);
@@ -118,10 +126,11 @@ public class Canvas extends JPanel implements Observer{
                 g.drawRect(i, j, GRID_SIZE, GRID_SIZE);
             }
         }
+        g.setColor(Color.DARK_GRAY);
+        g.drawLine(translate.x, 0, translate.x, sizeY);
+        g.drawLine(0, translate.y, sizeX, translate.y);
         g.translate(translate.x, translate.y);
         this.controller.paintCanevas(g);
-        g.fillRect(100,100,100,100);
-
     }
 
     @Override
