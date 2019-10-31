@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class PanneauChoixRevetements extends JScrollPane {
+public class PanneauChoixRevetements extends JPanel {
 
     private static String[] listItems = {"Revêtement 1", "Revêtement 2", "Revêtement3",
             "Revêtement 4", "Revêtement 4"};
