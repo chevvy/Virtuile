@@ -10,6 +10,7 @@ public class Controller {
     private ArrayList<Observer> observers;
 
     public Plan plan;
+    private Etat etat = Etat.LECTURE;
 
     public Controller(){
         observers = new ArrayList<>();
@@ -21,7 +22,39 @@ public class Controller {
     }
 
     public void ajouterSurface(Point position){
-        plan.ajouterSurface(position);
+        etat = Etat.AJOUTER_SURFACE;
+    }
+
+    public void clic(int x, int y){
+        switch(etat){
+            case AJOUTER_SURFACE:
+                etat = plan.initialiserSurface(new Point(x, y));
+                break;
+            default:
+                break;
+        }
+        notifyObservers();
+    }
+
+    public void glisser(int x, int y){
+        switch(etat){
+            case ETIRER_SURFACE:
+                plan.etirerSurface(new Point(x, y));
+                break;
+            default:
+                break;
+        }
+        notifyObservers();
+    }
+
+    public void relacher(){
+        switch(etat){
+            case ETIRER_SURFACE:
+                etat = plan.confirmerSurface();
+                break;
+            default:
+                break;
+        }
         notifyObservers();
     }
 
@@ -31,13 +64,7 @@ public class Controller {
         }
     }
 
-    public void paintCanevas(Graphics g, int pageHeight, int pageWidth){
-        g.setColor(Color.gray);
-        for(int i = 0; i < pageWidth-1; i += 50){
-            for(int j = 0; j < pageHeight-1; j+=50){
-                g.drawRect(i, j, 50, 50);
-            }
-        }
+    public void paintCanevas(Graphics g){
         g.setColor(Color.blue);
         for(Surface surface : plan.recupererSurfaces()){
             g.drawPolygon(surface.polygone);
