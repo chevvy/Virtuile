@@ -5,6 +5,8 @@ import MVC.Observer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainWindow extends JFrame implements Observer {
 
@@ -34,9 +36,16 @@ public class MainWindow extends JFrame implements Observer {
 
         menuFichier.add(menuItemSauvegarder);
         menuFichier.add(menuItemCharger);
+
+        JMenuItem menuMateriaux = new JMenuItem("Menu des materiaux");
+        menuEdition.add(menuMateriaux);
+        menuMateriaux.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                new FrameRevetements().setVisible(true);
+            }
+        });
         menuEdition.add(new JMenuItem("Ajouter une surface"));
         menuEdition.add(new JMenuItem("Modifier les sommets"));
-        menuEdition.add(new JMenuItem("Menu des materiaux"));
         menuBar.add(menuFichier);
         menuBar.add(menuEdition);
         menuBar.add(menuVue);
