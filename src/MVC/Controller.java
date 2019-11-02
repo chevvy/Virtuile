@@ -21,6 +21,11 @@ public class Controller {
         observers.add(observer);
     }
 
+    public void supprimerSurface(){
+        plan.supprimerSurface();
+        notifyObservers();
+    }
+
     public void ajouterSurface(Point position){
         etat = Etat.AJOUTER_SURFACE;
     }

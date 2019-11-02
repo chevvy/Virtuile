@@ -35,6 +35,7 @@ public class PanneauConfiguration extends JScrollPane {
         boutonSupprimer = new JButton("Supprimer la surface");
         boutonSupprimer.setSize(200, 50);
         boutonSupprimer.setLocation(25,90);
+        boutonSupprimer.addActionListener(e -> controller.supprimerSurface());
 
         JLabel line = new JLabel("_________________________________");
         line.setSize(250,50);

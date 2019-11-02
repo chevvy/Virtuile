@@ -31,6 +31,11 @@ public class Plan {
         return Etat.LECTURE;
     }
 
+    public void supprimerSurface(){
+        listeSurfaces.remove(surfaceSelectionnee);
+        surfaceSelectionnee = null;
+    }
+
     public Etat initialiserSurface(Point position){
         premierPoint = position;
 
