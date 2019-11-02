@@ -30,6 +30,9 @@ public class Controller {
             case AJOUTER_SURFACE:
                 etat = plan.initialiserSurface(new Point(x, y));
                 break;
+            case LECTURE:
+                etat = plan.selectionner(new Point(x, y));
+                break;
             default:
                 break;
         }
@@ -65,9 +68,15 @@ public class Controller {
     }
 
     public void paintCanevas(Graphics g){
-        g.setColor(Color.blue);
+        Surface surfaceSelectionnee = plan.surfaceSelectionnee;
         for(Surface surface : plan.recupererSurfaces()){
-            g.drawPolygon(surface.polygone);
+            Color couleur = surface.valide?Color.blue:Color.red;
+            g.setColor(surface == surfaceSelectionnee?couleur.brighter():couleur.darker());
+            g.fillPolygon(surface.polygone);
+        }
+        g.setColor(Color.yellow);
+        if(surfaceSelectionnee != null && surfaceSelectionnee.valide) {
+            g.drawPolygon(plan.surfaceSelectionnee.polygone);
         }
     }
 }
