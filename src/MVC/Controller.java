@@ -44,6 +44,9 @@ public class Controller {
             case ETIRER_SURFACE:
                 plan.etirerSurface(new Point(x, y));
                 break;
+            case DEPLACER_SURFACE:
+                plan.deplacerSurface(new Point(x, y));
+                break;
             default:
                 break;
         }
@@ -54,6 +57,9 @@ public class Controller {
         switch(etat){
             case ETIRER_SURFACE:
                 etat = plan.confirmerSurface();
+                break;
+            case DEPLACER_SURFACE:
+                etat = plan.confirmerDeplacement();
                 break;
             default:
                 break;

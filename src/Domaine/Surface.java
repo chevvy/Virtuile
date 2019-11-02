@@ -5,6 +5,7 @@ import javafx.util.Pair;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.awt.Polygon;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,8 +27,10 @@ public class Surface {
         return false;
     }
     //méthode permettant de déplacer une surface selon le vecteur de déplacement reçu
-    public void deplacerSurface(Pair<Double, Double> deplacement){
-
+    public void deplacerSurface(int deplacement_x, int deplacement_y){
+        int[] nouveaux_x = Arrays.stream(polygone.xpoints).map(x -> x + deplacement_x).toArray();
+        int[] nouveaux_y = Arrays.stream(polygone.ypoints).map(x -> x + deplacement_y).toArray();
+        polygone = new Polygon(nouveaux_x, nouveaux_y, polygone.npoints);
     }
     //méthode permettant de modifier un point d'une surface
     //on lui fournit une liste de tous les nouveaux points
@@ -66,6 +69,10 @@ public class Surface {
 
     public void rendreInvalide(){
         valide = false;
+    }
+
+    public void rendreValide(){
+        valide = true;
     }
 
     public void getInfoSurface(){

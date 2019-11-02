@@ -10,11 +10,17 @@ public class Plan {
     private ArrayList<Surface> listeSurfaces = new ArrayList<>();
     public Surface surfaceSelectionnee;
     private Point premierPoint;
+    private Point pointPrecedent;
+
 
     public Plan(){
     }
 
     public Etat selectionner(Point position){
+        if(surfaceSelectionnee != null && surfaceSelectionnee.polygone.contains(position)){
+            pointPrecedent = premierPoint = position;
+            return Etat.DEPLACER_SURFACE;
+        }
         for(Surface surface : listeSurfaces){
             if(surface.polygone.contains(position)){
                 surfaceSelectionnee = surface;
@@ -31,6 +37,18 @@ public class Plan {
         surfaceSelectionnee = new Surface(new ArrayList<>());
         listeSurfaces.add(surfaceSelectionnee);
         return Etat.ETIRER_SURFACE;
+    }
+
+    public void deplacerSurface(Point position){
+        int deplacement_x = position.x - pointPrecedent.x;
+        int deplacement_y = position.y - pointPrecedent.y;
+        surfaceSelectionnee.deplacerSurface(deplacement_x, deplacement_y);
+        pointPrecedent = position;
+        if(surfaceSelectionnee.intersecte(listeSurfaces)){
+            surfaceSelectionnee.rendreInvalide();
+        }else{
+            surfaceSelectionnee.rendreValide();
+        }
     }
 
     public void etirerSurface(Point position){
@@ -53,6 +71,13 @@ public class Plan {
     public Etat confirmerSurface(){
         if(!surfaceSelectionnee.valide){
             listeSurfaces.remove(surfaceSelectionnee);
+        }
+        return Etat.LECTURE;
+    }
+
+    public Etat confirmerDeplacement(){
+        if(!surfaceSelectionnee.valide){
+            deplacerSurface(premierPoint);
         }
         return Etat.LECTURE;
     }
