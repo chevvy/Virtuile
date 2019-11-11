@@ -11,6 +11,7 @@ public class Controller {
 
     public Plan plan;
     private Etat etat = Etat.LECTURE;
+    private Forme forme = Forme.AUCUNE;
 
     public Controller(){
         observers = new ArrayList<>();
@@ -26,14 +27,40 @@ public class Controller {
         notifyObservers();
     }
 
-    public void ajouterSurface(Point position){
+    public void ajouterSurface(int value){
         etat = Etat.AJOUTER_SURFACE;
+        switch(value){
+            case 0:
+                forme = Forme.CARRE;
+                break;
+            case 1:
+                //forme = Forme.TRIANGLE;
+                break;
+            case 2:
+                forme = Forme.FORME_LIBRE;
+                plan.initialiserSufraceLibre();
+                break;
+        }
     }
 
     public void clic(int x, int y){
         switch(etat){
             case AJOUTER_SURFACE:
-                etat = plan.initialiserSurface(new Point(x, y));
+                switch(forme){
+                    case CARRE:
+                        etat = plan.initialiserSurfaceCarre(new Point(x, y));
+                        break;
+                    case FORME_LIBRE:
+                        if(plan.surfaceLibreIsFirst(new Point(x, y))){
+                            plan.terminerSurfaceLibre();
+                            forme = Forme.AUCUNE;
+                            etat = Etat.LECTURE;
+                        }
+                        else{
+                            plan.ajouterPointSurfaceLibre(new Point(x, y));
+                        }
+                        break;
+                }
                 break;
             case LECTURE:
                 etat = plan.selectionner(new Point(x, y));
@@ -88,6 +115,19 @@ public class Controller {
         g.setColor(Color.yellow);
         if(surfaceSelectionnee != null && surfaceSelectionnee.valide) {
             g.drawPolygon(plan.surfaceSelectionnee.polygone);
+        }
+        ArrayList<Point> surfaceLibre = plan.getSurfaceLibre();
+        if(forme == Forme.FORME_LIBRE && surfaceLibre.size()>1){
+            g.drawOval(surfaceLibre.get(0).x-5, surfaceLibre.get(0).y-5, 10, 10);
+            for (int i = 0; i < surfaceLibre.size()-1; i++) {
+                Point p1 = surfaceLibre.get(i);
+                Point p2 = surfaceLibre.get(i+1);
+                g.drawLine(p1.x, p1.y, p2.x, p2.y);
+                g.drawOval(p2.x-5, p2.y-5, 10, 10);
+            }
+        }
+        else if (forme == Forme.FORME_LIBRE && surfaceLibre.size() == 1){
+            g.drawOval(surfaceLibre.get(0).x-5, surfaceLibre.get(0).y-5, 10, 10);
         }
     }
 }

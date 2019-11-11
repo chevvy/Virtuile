@@ -11,6 +11,7 @@ public class Plan {
     public Surface surfaceSelectionnee;
     private Point premierPoint;
     private Point pointPrecedent;
+    private ArrayList<Point> surfaceLibre;
 
 
     public Plan(){
@@ -36,12 +37,37 @@ public class Plan {
         surfaceSelectionnee = null;
     }
 
-    public Etat initialiserSurface(Point position){
+    public Etat initialiserSurfaceCarre(Point position){
         premierPoint = position;
 
         surfaceSelectionnee = new Surface(new ArrayList<>());
         listeSurfaces.add(surfaceSelectionnee);
         return Etat.ETIRER_SURFACE;
+    }
+
+    public void initialiserSufraceLibre(){
+        surfaceLibre = new ArrayList<>();
+    }
+
+    public void terminerSurfaceLibre(){
+        surfaceSelectionnee = new Surface(surfaceLibre);
+        listeSurfaces.add(surfaceSelectionnee);
+    }
+
+    public void ajouterPointSurfaceLibre(Point point){
+        surfaceLibre.add(point);
+    }
+
+    public boolean surfaceLibreIsFirst(Point point){
+        if (surfaceLibre.size() < 3) { return false; }
+        Point first = surfaceLibre.get(0);
+        if (point.x < first.x-5 || point.x > first.x+5) {return false;}
+        if (point.y < first.y-5 || point.y > first.y+5) {return false;}
+        return true;
+    }
+
+    public ArrayList<Point> getSurfaceLibre(){
+        return  surfaceLibre;
     }
 
     public void deplacerSurface(Point position){

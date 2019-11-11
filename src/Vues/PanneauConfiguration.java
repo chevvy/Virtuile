@@ -30,7 +30,7 @@ public class PanneauConfiguration extends JScrollPane {
         boutonAjouter = new JButton("Ajouter une Surface");
         boutonAjouter.setSize(200, 50);
         boutonAjouter.setLocation(25,20);
-        boutonAjouter.addActionListener(e -> controller.ajouterSurface(new Point(10, 10)));
+        boutonAjouter.addActionListener(e -> setCreateShape());
 
         boutonSupprimer = new JButton("Supprimer la surface");
         boutonSupprimer.setSize(200, 50);
@@ -84,6 +84,17 @@ public class PanneauConfiguration extends JScrollPane {
         this.add(labelAlignement);
         this.add(listeAlignement);
         this.setVisible(true);
+    }
+
+    private void setCreateShape(){
+        Object[] options = { "Carré", "Triangle", "Forme libre"};
+        String res = (String)JOptionPane.showInputDialog(null, "Forme pour la création", "Forme à créer",
+                JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+        int i = -1;
+        for (int j = 0; j < options.length; j++) {
+            if (options[j] == (String)res){ i = j; }
+        }
+        controller.ajouterSurface(i);
     }
 
     private class PanelSommet extends JFrame{
