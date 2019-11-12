@@ -109,6 +109,7 @@ public class Controller {
         if(surfaceSelectionnee != null && surfaceSelectionnee.valide) {
             g.drawPolygon(plan.surfaceSelectionnee.polygone);
         }
+        g.setColor(Color.RED);
         ArrayList<Point> surfaceLibre = plan.getSurfaceLibre();
         if(etat == Etat.CREER_FORME_LIBRE && surfaceLibre.size()>1){
             g.drawOval(surfaceLibre.get(0).x-5, surfaceLibre.get(0).y-5, 10, 10);
