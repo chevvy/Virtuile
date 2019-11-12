@@ -14,9 +14,11 @@ public class Canvas extends JPanel implements Observer{
     private Controller controller;
     private Point dragOrigine;
     private Point translate;
+    private boolean isGrilleMagnetiqueActive = false;
     private boolean isRightClicked = false;
     private boolean isLeftClicked = false;
-    private final int GRID_SIZE = 50;
+    private int grid_size = 50;
+
 
     public Canvas(Controller controller){
         controller.addObserver(this);
@@ -92,6 +94,7 @@ public class Canvas extends JPanel implements Observer{
                 dragOrigine.x = e.getX() - translate.x;
                 dragOrigine.y = e.getY() - translate.y;
                 isRightClicked = true;
+                this.setCursor(new Cursor(Cursor.MOVE_CURSOR));
                 break;
         }
     }
@@ -109,6 +112,7 @@ public class Canvas extends JPanel implements Observer{
             case 3:
                 //Right click
                 isRightClicked = false;
+                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 break;
         }
     }
@@ -117,7 +121,26 @@ public class Canvas extends JPanel implements Observer{
         Point absolute = new Point();
         absolute.x = relative.x - translate.x;
         absolute.y = relative.y - translate.y;
+        if (isGrilleMagnetiqueActive){
+            int offX = absolute.x % grid_size;
+            int offY = absolute.y % grid_size;
+            absolute.x = offX < grid_size / 2 ? absolute.x - offX : absolute.x - offX + grid_size;
+            absolute.y = offY < grid_size / 2 ? absolute.y - offY : absolute.y - offY + grid_size;
+        }
         return absolute;
+    }
+
+    public void setGrilleMagnetiqueActive(boolean active){
+        this.isGrilleMagnetiqueActive = active;
+    }
+
+    public void setGrilleSize(int size){
+        this.grid_size = size;
+        repaint();
+    }
+
+    public int getGrilleSize(){
+        return this.grid_size;
     }
 
     @Override
@@ -126,11 +149,11 @@ public class Canvas extends JPanel implements Observer{
         g.setColor(Color.gray);
         int sizeX = this.getWidth()-1;
         int sizeY = this.getHeight()-1;
-        int gridOffX = translate.x % GRID_SIZE;
-        int gridOffY = translate.y % GRID_SIZE;
-        for(int i = -GRID_SIZE + gridOffX; i < sizeX + GRID_SIZE; i += GRID_SIZE){
-            for(int j = -GRID_SIZE + gridOffY; j < sizeY + GRID_SIZE; j+=GRID_SIZE){
-                g.drawRect(i, j, GRID_SIZE, GRID_SIZE);
+        int gridOffX = translate.x % grid_size;
+        int gridOffY = translate.y % grid_size;
+        for(int i = -grid_size + gridOffX; i < sizeX + grid_size; i += grid_size){
+            for(int j = -grid_size + gridOffY; j < sizeY + grid_size; j+= grid_size){
+                g.drawRect(i, j, grid_size, grid_size);
             }
         }
         g.setColor(Color.DARK_GRAY);
@@ -138,6 +161,9 @@ public class Canvas extends JPanel implements Observer{
         g.drawLine(0, translate.y, sizeX, translate.y);
         g.translate(translate.x, translate.y);
         this.controller.paintCanevas(g);
+        g.translate(-translate.x, -translate.y);
+        g.setColor(Color.black);
+        g.drawString(controller.getStatusString(), 10, 20);
     }
 
     @Override
