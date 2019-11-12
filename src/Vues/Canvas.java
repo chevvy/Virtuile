@@ -19,6 +19,7 @@ public class Canvas extends JPanel implements Observer{
     private boolean isLeftClicked = false;
     private int grid_size = 50;
 
+
     public Canvas(Controller controller){
         controller.addObserver(this);
         this.controller = controller;
@@ -160,6 +161,9 @@ public class Canvas extends JPanel implements Observer{
         g.drawLine(0, translate.y, sizeX, translate.y);
         g.translate(translate.x, translate.y);
         this.controller.paintCanevas(g);
+        g.translate(-translate.x, -translate.y);
+        g.setColor(Color.black);
+        g.drawString(controller.getStatusString(), 10, 20);
     }
 
     @Override

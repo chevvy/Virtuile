@@ -39,6 +39,7 @@ public class Controller {
                 plan.initialiserSufraceLibre();
                 break;
         }
+        notifyObservers();
     }
 
     public void clic(int x, int y){
@@ -96,6 +97,28 @@ public class Controller {
         for (Observer observer: observers) {
             observer.update();
         }
+    }
+
+    public String getStatusString(){
+        String value = "";
+        switch (etat){
+            case LECTURE:
+                value = "";
+                break;
+            case CREER_FORME_LIBRE:
+                value = "Cliquez pour ajouter un point";
+                break;
+            case AJOUTER_SURFACE:
+                value = "Cliquez pour débuter la surface";
+                break;
+            case ETIRER_SURFACE:
+                value = "Relachez pour créer la forme";
+                break;
+            case DEPLACER_SURFACE:
+                value = "Déplacez la forme avec la sourie";
+                break;
+        }
+        return value;
     }
 
     public void paintCanevas(Graphics g){
