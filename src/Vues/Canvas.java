@@ -18,6 +18,7 @@ public class Canvas extends JPanel implements Observer{
     private boolean isRightClicked = false;
     private boolean isLeftClicked = false;
     private int grid_size = 50;
+    private Point mouse;
 
 
     public Canvas(Controller controller){
@@ -25,6 +26,7 @@ public class Canvas extends JPanel implements Observer{
         this.controller = controller;
         dragOrigine = new Point();
         translate = new Point();
+        mouse = new Point();
         this.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -65,9 +67,12 @@ public class Canvas extends JPanel implements Observer{
     }
 
     private void mouseMovedEvent(MouseEvent e){
+        mouse = relativeToAbsolute(e.getPoint());
+        repaint();
     }
 
     private void mousedDraggedEvent(MouseEvent e){
+        mouse = relativeToAbsolute(e.getPoint());
         if(isRightClicked){
             translate.x = e.getX() - dragOrigine.x;
             translate.y = e.getY() - dragOrigine.y;
@@ -160,7 +165,7 @@ public class Canvas extends JPanel implements Observer{
         g.drawLine(translate.x, 0, translate.x, sizeY);
         g.drawLine(0, translate.y, sizeX, translate.y);
         g.translate(translate.x, translate.y);
-        this.controller.paintCanevas(g);
+        this.controller.paintCanevas(g, mouse);
         g.translate(-translate.x, -translate.y);
         g.setColor(Color.black);
         g.drawString(controller.getStatusString(), 10, 20);

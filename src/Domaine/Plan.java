@@ -49,16 +49,23 @@ public class Plan {
         surfaceLibre = new ArrayList<>();
     }
 
-    public void terminerSurfaceLibre(){
+    private void terminerSurfaceLibre(){
         surfaceSelectionnee = new Surface(surfaceLibre);
         listeSurfaces.add(surfaceSelectionnee);
     }
 
-    public void ajouterPointSurfaceLibre(Point point){
-        surfaceLibre.add(point);
+    public Etat ajouterPointSurfaceLibre(Point point){
+        if(surfaceLibreIsFirst(point)) {
+            terminerSurfaceLibre();
+            return Etat.LECTURE;
+        }
+        else{
+            surfaceLibre.add(point);
+            return Etat.CREER_FORME_LIBRE;
+        }
     }
 
-    public boolean surfaceLibreIsFirst(Point point){
+    private boolean surfaceLibreIsFirst(Point point){
         if (surfaceLibre.size() < 3) { return false; }
         Point first = surfaceLibre.get(0);
         if (point.x < first.x-5 || point.x > first.x+5) {return false;}
