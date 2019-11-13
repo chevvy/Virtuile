@@ -10,7 +10,7 @@ public class FrameRevetements extends JFrame{
     private Controller controller;
 
     public FrameRevetements() {
-        this.setSize(700, 500);
+        this.setSize(800, 500);
         this.setLocation(100,100);
         this.setTitle("Propriétés des revêtements");
         this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
