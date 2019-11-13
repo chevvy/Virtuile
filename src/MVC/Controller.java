@@ -118,13 +118,19 @@ public class Controller {
     public void paintCanevas(Graphics g, Point mouse){
         Surface surfaceSelectionnee = plan.surfaceSelectionnee;
         for(Surface surface : plan.recupererSurfaces()){
-            Color couleur = surface.valide?Color.blue:Color.red;
-            g.setColor(surface == surfaceSelectionnee?couleur.brighter():couleur.darker());
+            g.setColor(surface.valide?Color.blue:Color.red);
             g.fillPolygon(surface.polygone);
         }
-        g.setColor(Color.yellow);
-        if(surfaceSelectionnee != null && surfaceSelectionnee.valide) {
-            g.drawPolygon(plan.surfaceSelectionnee.polygone);
+
+        if(surfaceSelectionnee != null){
+            g.setColor(surfaceSelectionnee.valide?Color.blue.brighter():Color.red);
+            g.fillPolygon(surfaceSelectionnee.polygone);
+
+            g.setColor(Color.yellow);
+            if(surfaceSelectionnee.valide){
+                g.setColor(Color.yellow);
+                g.drawPolygon(plan.surfaceSelectionnee.polygone);
+            }
         }
         g.setColor(Color.RED);
         if(etat == Etat.AJOUTER_SURFACE || etat == Etat.CREER_FORME_LIBRE){
