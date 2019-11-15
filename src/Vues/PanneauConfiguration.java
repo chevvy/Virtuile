@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 public class PanneauConfiguration extends JScrollPane {
 
-    private JButton boutonAjouter, boutonSupprimer, boutonMenuRevetement;
+    private JButton boutonAjouter, boutonSupprimer, boutonMenuRevetement, boutonAlligment;
     private JRadioButton radioSurface, radioVide;
     private JComboBox listeMateriau, listeAlignement;
 
@@ -84,6 +84,14 @@ public class PanneauConfiguration extends JScrollPane {
             public void actionPerformed(ActionEvent actionEvent) {new FrameRevetements(controller).setVisible(true);}
         });
 
+        boutonAlligment = new JButton("Alligner/Coller");
+        boutonAlligment.setSize(200, 50);
+        boutonAlligment.setLocation(25,360);
+        boutonAlligment.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {new FrameAllignement(controller).setVisible(true);}
+        });
+
         this.add(boutonAjouter);
         this.add(boutonSupprimer);
         this.add(line);
@@ -94,6 +102,7 @@ public class PanneauConfiguration extends JScrollPane {
         this.add(labelAlignement);
         this.add(listeAlignement);
         this.add(boutonMenuRevetement);
+        this.add(boutonAlligment);
         this.setVisible(true);
 
     }

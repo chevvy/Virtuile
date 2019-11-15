@@ -26,6 +26,7 @@ public class PanneauAllignement extends JPanel{
             System.out.println("The current working directory is " + currentDirectory);
             BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/gaucheExt.png"));
             JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
+            picLabel.setBounds(25, 250, 50, 50);
             add(picLabel);
         } catch (IOException ex) {
             System.out.println("Pas d'image :(");

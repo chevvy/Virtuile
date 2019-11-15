@@ -7,7 +7,7 @@ public class FrameAllignement extends JFrame{
     private PanneauAllignement panelAllignement;
     private Controller controller;
 
-    public FrameAllignement() {
+    public FrameAllignement(Controller controller) {
         this.setSize(600, 400);
         this.setLocation(100,100);
         this.setTitle("Alligment des surfaces");
