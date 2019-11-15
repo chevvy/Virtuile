@@ -8,6 +8,7 @@ public class Projet {
     private ArrayList<Plan> listPlans;
 
     public Projet(){
+        // liste de revêtements
 
     }
 

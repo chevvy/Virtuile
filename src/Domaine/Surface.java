@@ -20,6 +20,8 @@ public class Surface {
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
         valide = true;
+        // liste de tuiles
+        // revetement assigné
     }
     //méthode contains de Polygon
     //return True si le point est dans la surface

@@ -10,6 +10,7 @@ public class Controller {
     private ArrayList<Observer> observers;
 
     public Plan plan;
+    public ArrayList<Point> patronForme;
     private Etat etat = Etat.LECTURE;
 
     public Controller(){
@@ -28,15 +29,30 @@ public class Controller {
 
     public void ajouterSurface(int value){
         switch(value){
-            case 0:
+            case 0: //Rectangle
+                patronForme = new ArrayList<Point>() {
+                    {
+                        add(new Point(0, 0));
+                        add(new Point(0, 1));
+                        add(new Point(1, 1));
+                        add(new Point(1, 0));
+                    }
+                };
                 etat = Etat.AJOUTER_SURFACE;
                 break;
-            case 1:
-                //forme = Forme.TRIANGLE;
+            case 1: //Triangle
+                patronForme = new ArrayList<Point>() {
+                    {
+                        add(new Point(0, 0));
+                        add(new Point(2, 0));
+                        add(new Point(1, 1));
+                    }
+                };
+                etat = Etat.AJOUTER_SURFACE;
                 break;
             case 2:
                 etat = Etat.CREER_FORME_LIBRE;
-                plan.initialiserSufraceLibre();
+                plan.initialiserSurfaceLibre();
                 break;
         }
         notifyObservers();
@@ -45,7 +61,8 @@ public class Controller {
     public void clic(int x, int y){
         switch(etat){
             case AJOUTER_SURFACE:
-                etat = plan.initialiserSurfaceCarre(new Point(x, y));
+
+                etat = plan.initialiserSurface(new Point(x, y), patronForme);
                 break;
             case LECTURE:
                 etat = plan.selectionner(new Point(x, y));

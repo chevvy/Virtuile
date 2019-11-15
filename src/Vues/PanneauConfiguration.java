@@ -96,6 +96,7 @@ public class PanneauConfiguration extends JScrollPane {
         this.add(listeAlignement);
         this.add(boutonAllignement);
         this.setVisible(true);
+
     }
 
     private void setCreateShape(){
