@@ -39,6 +39,7 @@ public class Controller {
                 plan.initialiserSufraceLibre();
                 break;
         }
+        notifyObservers();
     }
 
     public void clic(int x, int y){
@@ -50,13 +51,7 @@ public class Controller {
                 etat = plan.selectionner(new Point(x, y));
                 break;
             case CREER_FORME_LIBRE:
-                if(plan.surfaceLibreIsFirst(new Point(x, y))){
-                    plan.terminerSurfaceLibre();
-                    etat = Etat.LECTURE;
-                }
-                else{
-                    plan.ajouterPointSurfaceLibre(new Point(x, y));
-                }
+                etat = plan.ajouterPointSurfaceLibre(new Point(x, y));
                 break;
             default:
                 break;
@@ -98,16 +93,48 @@ public class Controller {
         }
     }
 
-    public void paintCanevas(Graphics g){
+    public String getStatusString(){
+        String value = "";
+        switch (etat){
+            case LECTURE:
+                value = "";
+                break;
+            case CREER_FORME_LIBRE:
+                value = "Cliquez pour ajouter un point";
+                break;
+            case AJOUTER_SURFACE:
+                value = "Cliquez pour débuter la surface";
+                break;
+            case ETIRER_SURFACE:
+                value = "Relachez pour créer la forme";
+                break;
+            case DEPLACER_SURFACE:
+                value = "Déplacez la forme avec la sourie";
+                break;
+        }
+        return value;
+    }
+
+    public void paintCanevas(Graphics g, Point mouse){
         Surface surfaceSelectionnee = plan.surfaceSelectionnee;
         for(Surface surface : plan.recupererSurfaces()){
-            Color couleur = surface.valide?Color.blue:Color.red;
-            g.setColor(surface == surfaceSelectionnee?couleur.brighter():couleur.darker());
+            g.setColor(surface.valide?Color.blue:Color.red);
             g.fillPolygon(surface.polygone);
         }
-        g.setColor(Color.yellow);
-        if(surfaceSelectionnee != null && surfaceSelectionnee.valide) {
-            g.drawPolygon(plan.surfaceSelectionnee.polygone);
+
+        if(surfaceSelectionnee != null){
+            g.setColor(surfaceSelectionnee.valide?Color.blue.brighter():Color.red);
+            g.fillPolygon(surfaceSelectionnee.polygone);
+
+            g.setColor(Color.yellow);
+            if(surfaceSelectionnee.valide){
+                g.setColor(Color.yellow);
+                g.drawPolygon(plan.surfaceSelectionnee.polygone);
+            }
+        }
+        g.setColor(Color.RED);
+        if(etat == Etat.AJOUTER_SURFACE || etat == Etat.CREER_FORME_LIBRE){
+            g.drawOval(mouse.x-5, mouse.y-5, 10, 10);
         }
         ArrayList<Point> surfaceLibre = plan.getSurfaceLibre();
         if(etat == Etat.CREER_FORME_LIBRE && surfaceLibre.size()>1){
@@ -118,9 +145,12 @@ public class Controller {
                 g.drawLine(p1.x, p1.y, p2.x, p2.y);
                 g.drawOval(p2.x-5, p2.y-5, 10, 10);
             }
+            Point last = surfaceLibre.get(surfaceLibre.size()-1);
+            g.drawLine(last.x, last.y, mouse.x, mouse.y);
         }
         else if (etat == Etat.CREER_FORME_LIBRE && surfaceLibre.size() == 1){
             g.drawOval(surfaceLibre.get(0).x-5, surfaceLibre.get(0).y-5, 10, 10);
+            g.drawLine(surfaceLibre.get(0).x, surfaceLibre.get(0).y, mouse.x, mouse.y);
         }
     }
 }

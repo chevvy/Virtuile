@@ -12,7 +12,8 @@ public class MainWindow extends JFrame implements Observer {
 
     private JMenuBar menuBar;
     private JMenu menuFichier, menuEdition, menuVue;
-    private JMenuItem menuItemSauvegarder, menuItemCharger;
+    private JMenuItem menuItemSauvegarder, menuItemCharger, menuItemTailleGrilleMagnetique;
+    private JCheckBoxMenuItem menuCheckboxMagnetiser;
     private PanneauConfiguration panelVueInfo;
     private Canvas panelVuePlan;
     private Controller controller;
@@ -33,6 +34,24 @@ public class MainWindow extends JFrame implements Observer {
         menuVue = new JMenu("Vue");
         menuItemSauvegarder = new JMenuItem("Sauvegarder");
         menuItemCharger = new JMenuItem("Charger");
+        menuCheckboxMagnetiser = new JCheckBoxMenuItem("Grille Magnétique");
+        menuCheckboxMagnetiser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panelVuePlan.setGrilleMagnetiqueActive(menuCheckboxMagnetiser.getState());
+            }
+        });
+        menuItemTailleGrilleMagnetique = new JMenuItem("Modifier la taille de la grille magnétique");
+        menuItemTailleGrilleMagnetique.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    int initial = panelVuePlan.getGrilleSize();
+                    int size = Integer.parseInt(JOptionPane.showInputDialog("Entrez la taille de la grille magnétique désiré", initial));
+                    panelVuePlan.setGrilleSize(size);
+                }catch(Exception ex){}
+            }
+        });
 
         menuFichier.add(menuItemSauvegarder);
         menuFichier.add(menuItemCharger);
@@ -46,6 +65,9 @@ public class MainWindow extends JFrame implements Observer {
         });
         menuEdition.add(new JMenuItem("Ajouter une surface"));
         menuEdition.add(new JMenuItem("Modifier les sommets"));
+        menuEdition.addSeparator();
+        menuEdition.add(menuCheckboxMagnetiser);
+        menuEdition.add(menuItemTailleGrilleMagnetique);
         menuBar.add(menuFichier);
         menuBar.add(menuEdition);
         menuBar.add(menuVue);
