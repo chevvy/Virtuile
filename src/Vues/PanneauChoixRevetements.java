@@ -2,25 +2,33 @@ package Vues;
 import MVC.Controller;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 public class PanneauChoixRevetements extends JPanel {
 
     private JList listeRevetements;
-    private static String[] listItems = {"Revêtement 1", "Revêtement 2", "Revêtement3",
-            "Revêtement 4", "Revêtement 4"};
+    private DefaultListModel model;
     private Controller controller;
 
-    public PanneauChoixRevetements(Controller controller) {
+    /*
+    pour retirer un élement de ta liste tu fais
+    int index = list.getSelectedIndex();
+    listModel.remove(index);
+    * */
 
-        setLayout(new FlowLayout());
-        listeRevetements = new JList(listItems);
-        listeRevetements.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    public PanneauChoixRevetements(Controller controller) {
+        // Model c'est ça qui va contenir les éléments de ta liste
+        model = new DefaultListModel();
+        for (int i = 0; i < 15; i++) {
+            // addElement pour ajouter un élément à la liste
+            model.addElement("Revètement "+(i+1));
+        }
+        listeRevetements = new JList(model);
+        listeRevetements.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         listeRevetements.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         listeRevetements.setVisibleRowCount(-1);
-        setVisible(true);
+        JScrollPane listScroller = new JScrollPane(listeRevetements);
+        this.add(listScroller, BorderLayout.CENTER);
     }
 }
