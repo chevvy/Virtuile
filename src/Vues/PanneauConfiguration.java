@@ -1,7 +1,6 @@
 package Vues;
 
 import MVC.Controller;
-import javafx.scene.control.RadioButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -89,7 +88,7 @@ public class PanneauConfiguration extends JScrollPane {
         boutonAlligment.setLocation(25,360);
         boutonAlligment.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent actionEvent) {new FrameAllignement(controller).setVisible(true);}
+            public void actionPerformed(ActionEvent actionEvent) {new FrameAlignement(controller).setVisible(true);}
         });
 
         this.add(boutonAjouter);
