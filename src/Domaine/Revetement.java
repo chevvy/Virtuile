@@ -10,11 +10,11 @@ public class Revetement {
     // methode : genererRevetement(boundingbox) -> selon le bound et le motif, modifie la liste des tuiles pour quelles soient de la bonne taille
 
     public Revetement(String nom){
-        nomDuRevetement = nom;
+        this.nomDuRevetement = nom;
     }
 
 
-    public String getNom(){return nomDuRevetement;}
-    public void setNom(String nom){nomDuRevetement = nom;}
+    public String getNom(){return this.nomDuRevetement;}
+    public void setNom(String nom){this.nomDuRevetement = nom;}
 }
 

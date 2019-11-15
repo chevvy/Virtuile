@@ -14,10 +14,11 @@ public class Plan {
     private Point premierPoint;
     private Point pointPrecedent;
     private ArrayList<Point> surfaceLibre;
-    private ArrayList<Revetement> listeRevetements;
+    private ArrayList<Revetement> listeRevetements = new ArrayList<>();
 
 
     public Plan(){
+
     }
 
     public Etat selectionner(Point position){
@@ -136,13 +137,14 @@ public class Plan {
 
 
     public void ajouterRevetement(String nom){
-        listeRevetements.add(new Revetement(nom));
+        Revetement nouveauRevetement = new Revetement(nom);
+        this.listeRevetements.add(nouveauRevetement);
     }
 
     // TODO fonction test à supprimer !
     public void ajouter15Revetement(){
         for (int i = 0; i < 15; i++){
-            ajouterRevetement("Revètement "+(i+1));
+            ajouterRevetement("Fuck "+(i+1));
         }
     }
 
