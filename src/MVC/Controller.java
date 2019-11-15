@@ -58,10 +58,21 @@ public class Controller {
         notifyObservers();
     }
 
+    public void selectionnerAligner(){
+        etat = Etat.SELECTIONNER_ALIGNER;
+    }
+
+    public void aligner(String alignement){
+        plan.aligner(alignement);
+    }
+
+    public void annulerAligner(){
+        plan.annulerAligner();
+    }
+
     public void clic(int x, int y){
         switch(etat){
             case AJOUTER_SURFACE:
-
                 etat = plan.initialiserSurface(new Point(x, y), patronForme);
                 break;
             case LECTURE:
@@ -70,6 +81,8 @@ public class Controller {
             case CREER_FORME_LIBRE:
                 etat = plan.ajouterPointSurfaceLibre(new Point(x, y));
                 break;
+            case SELECTIONNER_ALIGNER:
+                etat = plan.selectionnerAligner(new Point(x, y));
             default:
                 break;
         }
