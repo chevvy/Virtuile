@@ -8,7 +8,8 @@ public class FrameRevetements extends JFrame{
     private PanneauInformationsRevetement panelInformationsRevetements;
     private Controller controller;
 
-    public FrameRevetements() {
+    public FrameRevetements(Controller controller) {
+        this.controller = controller;
         this.setSize(800, 500);
         this.setLocation(100,100);
         this.setTitle("Propriétés des revêtements");

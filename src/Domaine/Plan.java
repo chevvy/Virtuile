@@ -14,6 +14,7 @@ public class Plan {
     private Point premierPoint;
     private Point pointPrecedent;
     private ArrayList<Point> surfaceLibre;
+    private ArrayList<Revetement> listeRevetements;
 
 
     public Plan(){
@@ -132,4 +133,18 @@ public class Plan {
     public ArrayList<Surface> recupererSurfaces(){
         return listeSurfaces;
     }
+
+
+    public void ajouterRevetement(String nom){
+        listeRevetements.add(new Revetement(nom));
+    }
+
+    // TODO fonction test à supprimer !
+    public void ajouter15Revetement(){
+        for (int i = 0; i < 15; i++){
+            ajouterRevetement("Revètement "+(i+1));
+        }
+    }
+
+    public ArrayList<Revetement> getListeRevetements(){return listeRevetements;}
 }
