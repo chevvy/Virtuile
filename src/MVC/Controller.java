@@ -183,4 +183,8 @@ public class Controller {
             g.drawLine(surfaceLibre.get(0).x, surfaceLibre.get(0).y, mouse.x, mouse.y);
         }
     }
+
+    public Plan getPlan() {
+        return plan;
+    }
 }

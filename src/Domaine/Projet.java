@@ -6,9 +6,11 @@ public class Projet {
 
     private String projectName;
     private ArrayList<Plan> listPlans;
+    private ArrayList<Revetement> listRevetement;
 
     public Projet(){
         // liste de revêtements
+
 
     }
 

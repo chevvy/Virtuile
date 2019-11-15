@@ -1,4 +1,5 @@
 package Vues;
+import Domaine.Revetement;
 import MVC.Controller;
 
 import java.awt.*;
@@ -19,7 +20,9 @@ public class PanneauChoixRevetements extends JPanel {
 
     public PanneauChoixRevetements(Controller controller) {
         // Model c'est ça qui va contenir les éléments de ta liste
+        this.controller = controller;
         model = new DefaultListModel();
+
         for (int i = 0; i < 15; i++) {
             // addElement pour ajouter un élément à la liste
             model.addElement("Revètement "+(i+1));
@@ -28,7 +31,7 @@ public class PanneauChoixRevetements extends JPanel {
         listeRevetements.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         listeRevetements.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         listeRevetements.setVisibleRowCount(-1);
-        this.controller = controller;
+
         listeRevetements.setPreferredSize(new Dimension(180, 400));
         listeRevetements.setLayout(null);
         JScrollPane listScroller = new JScrollPane(listeRevetements);
