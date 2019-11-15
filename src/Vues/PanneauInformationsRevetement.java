@@ -9,6 +9,7 @@ public class PanneauInformationsRevetement extends JPanel{
     private JLabel nomRevetementLabel, typeMateriauLabel, couleurMateriauLabel, motifRecouvrementLabel, hauteurTuileLabel, largeurTuileLabel, nbTuilesBoiteLabel, couleurCoulisLabel, epaisseurCoulisLabel ;
     private JTextField nomRevetementField, hauteurTuileText, largeurTuileText, nbTuilesBoiteText, epaisseurCoulisText;
     private JComboBox TypeMateriauxCombo, couleurMateriauCombo, motifRecouvrementCombo, couleurCoulisCombo;
+    private JButton BoutonAjouter, boutonModifier;
     private Controller controller;
 
     public PanneauInformationsRevetement(Controller controller) {
@@ -117,5 +118,17 @@ public class PanneauInformationsRevetement extends JPanel{
         JTextField epaisseurCoulisText = new JTextField(20);
         epaisseurCoulisText.setBounds(220,350,200,25);
         this.add(epaisseurCoulisText);
+
+        JButton boutonModifier = new JButton("Modifier les propriétés du revêtement");
+        boutonModifier.setSize(300, 30);
+        boutonModifier.setLocation(100, 390);
+        this.add(boutonModifier);
+        this.setVisible(true);
+
+        JButton boutonAjouter = new JButton("Ajouter un nouveau revêtement");
+        boutonAjouter.setSize(300, 30);
+        boutonAjouter.setLocation(100, 420);
+        this.add(boutonAjouter);
+        this.setVisible(true);
     }
 }

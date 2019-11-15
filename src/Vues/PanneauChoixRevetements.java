@@ -28,6 +28,9 @@ public class PanneauChoixRevetements extends JPanel {
         listeRevetements.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         listeRevetements.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         listeRevetements.setVisibleRowCount(-1);
+        this.controller = controller;
+        listeRevetements.setPreferredSize(new Dimension(180, 400));
+        listeRevetements.setLayout(null);
         JScrollPane listScroller = new JScrollPane(listeRevetements);
         this.add(listScroller, BorderLayout.CENTER);
     }

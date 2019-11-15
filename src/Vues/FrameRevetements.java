@@ -5,7 +5,6 @@ import java.awt.*;
 
 public class FrameRevetements extends JFrame{
     private PanneauChoixRevetements panelChoixRevetements;
-    private PanneauAjouterRevetement panelAjouterRevenement;
     private PanneauInformationsRevetement panelInformationsRevetements;
     private Controller controller;
 
@@ -16,8 +15,6 @@ public class FrameRevetements extends JFrame{
         this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         panelChoixRevetements = new PanneauChoixRevetements(controller);
         this.add(panelChoixRevetements, BorderLayout.WEST);
-        panelAjouterRevenement = new PanneauAjouterRevetement(controller);
-        this.add(panelAjouterRevenement, BorderLayout.CENTER);
         panelInformationsRevetements = new PanneauInformationsRevetement(controller);
         this.add(panelInformationsRevetements, BorderLayout.EAST);
 

@@ -5,10 +5,12 @@ import javafx.scene.control.RadioButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class PanneauConfiguration extends JScrollPane {
 
-    private JButton boutonAjouter, boutonSupprimer;
+    private JButton boutonAjouter, boutonSupprimer, boutonAllignement;
     private JRadioButton radioSurface, radioVide;
     private JComboBox listeMateriau, listeAlignement;
 
@@ -74,6 +76,15 @@ public class PanneauConfiguration extends JScrollPane {
         listeAlignement.setSize(135, 30);
         listeAlignement.setLocation(100, 265);
 
+        boutonAllignement = new JButton("Alligner/Coller");
+        boutonAllignement.setSize(200, 30);
+        boutonAllignement.setLocation(25,300);
+        boutonAllignement.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                new FrameAllignement().setVisible(true);
+            }
+        });
+
         this.add(boutonAjouter);
         this.add(boutonSupprimer);
         this.add(line);
@@ -83,6 +94,7 @@ public class PanneauConfiguration extends JScrollPane {
         this.add(listeMateriau);
         this.add(labelAlignement);
         this.add(listeAlignement);
+        this.add(boutonAllignement);
         this.setVisible(true);
     }
 
