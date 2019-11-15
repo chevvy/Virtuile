@@ -22,7 +22,9 @@ public class PanneauAllignement extends JPanel{
     }
     private void SetUpUi () {
         try {
-            BufferedImage imageGauche01 = ImageIO.read(new File("path-to-file"));
+            String currentDirectory = System.getProperty("user.dir");
+            System.out.println("The current working directory is " + currentDirectory);
+            BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/gaucheExt.png"));
             JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
             add(picLabel);
         } catch (IOException ex) {
