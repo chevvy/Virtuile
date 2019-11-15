@@ -4,10 +4,12 @@ import MVC.Etat;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Plan {
 
     private ArrayList<Surface> listeSurfaces = new ArrayList<>();
+    public Surface surfaceOriginale;
     public Surface surfaceSelectionnee;
     private Point premierPoint;
     private Point pointPrecedent;
@@ -24,7 +26,7 @@ public class Plan {
         }
         for(Surface surface : listeSurfaces){
             if(surface.polygone.contains(position)){
-                surfaceSelectionnee = surface;
+                surfaceOriginale = surfaceSelectionnee = surface;
                 return Etat.LECTURE;
             }
         }
@@ -37,15 +39,17 @@ public class Plan {
         surfaceSelectionnee = null;
     }
 
-    public Etat initialiserSurfaceCarre(Point position){
+    public Etat initialiserSurface(Point position, ArrayList<Point> patron){
         premierPoint = position;
 
-        surfaceSelectionnee = new Surface(new ArrayList<>());
+        patron = patron.stream().map(point -> new Point(point.x + position.x, point.y + position.y))
+                .collect(Collectors.toCollection(ArrayList::new));
+        surfaceOriginale = surfaceSelectionnee = new Surface(patron);
         listeSurfaces.add(surfaceSelectionnee);
         return Etat.ETIRER_SURFACE;
     }
 
-    public void initialiserSufraceLibre(){
+    public void initialiserSurfaceLibre(){
         surfaceLibre = new ArrayList<>();
     }
 
@@ -90,13 +94,18 @@ public class Plan {
     }
 
     public void etirerSurface(Point position){
-        int x  = position.x;
-        int y = position.y;
-        ArrayList<Point> points = new ArrayList<>();
-        points.add(premierPoint);
-        points.add(new Point(x ,premierPoint.y));
-        points.add(new Point(x ,y));
-        points.add(new Point(premierPoint.x,y));
+        int x  = position.x - premierPoint.x;
+        int y = position.y - premierPoint.y;
+        ArrayList<Point> points = surfaceOriginale.getListePoints();
+        Rectangle limites = surfaceOriginale.polygone.getBounds();
+        if(x != 0 && y!= 0){
+            points = points.stream().map(point ->{
+                int nouveau_x = (x * (point.x - limites.x) / limites.height) + limites.x;
+                int nouveau_y = (y * (point.y - limites.y) / limites.width) + limites.y;
+                return new Point(nouveau_x, nouveau_y);
+            }).collect(Collectors.toCollection(ArrayList::new));
+        }
+
         Surface nouvelleSurface = new Surface(points);
         listeSurfaces.remove(surfaceSelectionnee);
         listeSurfaces.add(nouvelleSurface);
