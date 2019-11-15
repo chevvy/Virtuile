@@ -138,42 +138,44 @@ public class Plan {
         Rectangle boiteSelect = surfaceSelectionnee.polygone.getBounds();
         switch(alignement){
             case "gaucheExt":
-                deplacerSurface(new Point(boiteAncre.x - boiteSelect.width, pointPrecedent.y));
+                deplacerSurface(new Point(boiteAncre.x - boiteSelect.width - pointPrecedent.x, 0));
                 break;
             case "gaucheInt":
-                deplacerSurface(new Point(boiteAncre.x, pointPrecedent.y));
+                deplacerSurface(new Point(boiteAncre.x - pointPrecedent.x, 0));
                 break;
             case "droiteExt":
-                deplacerSurface(new Point(boiteAncre.x + boiteAncre.width, pointPrecedent.y));
+                deplacerSurface(new Point(boiteAncre.x + boiteAncre.width - pointPrecedent.x, 0));
                 break;
             case "droiteInt":
-                deplacerSurface(new Point(boiteAncre.x + boiteAncre.width - boiteSelect.width, pointPrecedent.y));
+                deplacerSurface(new Point(boiteAncre.x + boiteAncre.width - boiteSelect.width - pointPrecedent.x,
+                        0));
                 break;
             case "centreHorizontal":
-                deplacerSurface(new Point(boiteAncre.x + (boiteAncre.width - boiteSelect.width)/2,
-                                pointPrecedent.y));
+                deplacerSurface(new Point(boiteAncre.x + (boiteAncre.width - boiteSelect.width)/2 - pointPrecedent.x,
+                        0));
                 break;
             case "basExt":
-                deplacerSurface(new Point(pointPrecedent.x, boiteAncre.y - boiteAncre.height));
+                deplacerSurface(new Point(0, boiteAncre.y - boiteAncre.height - pointPrecedent.y));
                 break;
             case "basInt":
-                deplacerSurface(new Point(pointPrecedent.x, boiteAncre.y - boiteAncre.height + boiteSelect.height));
+                deplacerSurface(new Point(0,
+                        boiteAncre.y - boiteAncre.height + boiteSelect.height - pointPrecedent.y));
                 break;
             case "hautExt":
-                deplacerSurface(new Point(pointPrecedent.x, boiteAncre.y + boiteSelect.height));
+                deplacerSurface(new Point(0, boiteAncre.y + boiteSelect.height - pointPrecedent.y));
                 break;
             case "hautInt":
-                deplacerSurface(new Point(pointPrecedent.x, boiteAncre.y));
+                deplacerSurface(new Point(0, boiteAncre.y - pointPrecedent.y));
                 break;
             case "centreVertical":
-                deplacerSurface(new Point(pointPrecedent.x
-                        , boiteAncre.y + (boiteAncre.height - boiteSelect.height)/2));
+                deplacerSurface(new Point(0,
+                        boiteAncre.y + (boiteAncre.height - boiteSelect.height)/2 - pointPrecedent.y));
                 break;
             case "rienHorizontal":
-                deplacerSurface(new Point(premierPoint.x, pointPrecedent.y));
+                deplacerSurface(new Point(premierPoint.x, 0));
                 break;
             case "rienVertical":
-                deplacerSurface(new Point(pointPrecedent.x, premierPoint.y));
+                deplacerSurface(new Point(0, premierPoint.y));
                 break;
             default:
                 break;
