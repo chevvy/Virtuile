@@ -13,6 +13,7 @@ public class Controller {
     public ArrayList<Point> patronForme;
     private Etat etat = Etat.LECTURE;
 
+
     public Controller(){
         observers = new ArrayList<>();
         plan = new Plan();
@@ -45,7 +46,7 @@ public class Controller {
                     {
                         add(new Point(0, 0));
                         add(new Point(2, 0));
-                        add(new Point(1, 1));
+                        add(new Point(1, 2));
                     }
                 };
                 etat = Etat.AJOUTER_SURFACE;
@@ -54,21 +55,32 @@ public class Controller {
                 etat = Etat.CREER_FORME_LIBRE;
                 plan.initialiserSurfaceLibre();
                 break;
+            case 3: // Pentagramme
+                patronForme = new ArrayList<Point>() {
+                    {
+                        add(new Point(5, 0));
+                        add(new Point(0, 3));
+                        add(new Point(2, 8));
+                        add(new Point(8, 8));
+                        add(new Point(10, 3));
+                    }
+                };
+                etat = Etat.AJOUTER_SURFACE;
+                break;
         }
         notifyObservers();
     }
 
-    public void clic(int x, int y){
+    public void clic(Point p){
         switch(etat){
             case AJOUTER_SURFACE:
-
-                etat = plan.initialiserSurface(new Point(x, y), patronForme);
+                etat = plan.initialiserSurface(p, patronForme);
                 break;
             case LECTURE:
-                etat = plan.selectionner(new Point(x, y));
+                etat = plan.selectionner(p);
                 break;
             case CREER_FORME_LIBRE:
-                etat = plan.ajouterPointSurfaceLibre(new Point(x, y));
+                etat = plan.ajouterPointSurfaceLibre(p);
                 break;
             default:
                 break;
@@ -76,13 +88,13 @@ public class Controller {
         notifyObservers();
     }
 
-    public void glisser(int x, int y){
+    public void glisser(Point p){
         switch(etat){
             case ETIRER_SURFACE:
-                plan.etirerSurface(new Point(x, y));
+                plan.etirerSurface(p);
                 break;
             case DEPLACER_SURFACE:
-                plan.deplacerSurface(new Point(x, y));
+                plan.deplacerSurface(p);
                 break;
             default:
                 break;
@@ -169,5 +181,18 @@ public class Controller {
             g.drawOval(surfaceLibre.get(0).x-5, surfaceLibre.get(0).y-5, 10, 10);
             g.drawLine(surfaceLibre.get(0).x, surfaceLibre.get(0).y, mouse.x, mouse.y);
         }
+    }
+
+    public void setGridSize(int size){
+        this.plan.setGridSize(size);
+        notifyObservers();
+    }
+
+    public int getGridSize(){
+        return this.plan.getGridSize();
+    }
+
+    public void setGrilleMagnetiqueActive(boolean active){
+        this.plan.setGrilleMagnetiqueActive(active);
     }
 }

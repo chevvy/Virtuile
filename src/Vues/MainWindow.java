@@ -38,7 +38,7 @@ public class MainWindow extends JFrame implements Observer {
         menuCheckboxMagnetiser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panelVuePlan.setGrilleMagnetiqueActive(menuCheckboxMagnetiser.getState());
+                controller.setGrilleMagnetiqueActive(menuCheckboxMagnetiser.getState());
             }
         });
         menuItemTailleGrilleMagnetique = new JMenuItem("Modifier la taille de la grille magnétique");
@@ -46,9 +46,9 @@ public class MainWindow extends JFrame implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    int initial = panelVuePlan.getGrilleSize();
+                    int initial = controller.getGridSize();
                     int size = Integer.parseInt(JOptionPane.showInputDialog("Entrez la taille de la grille magnétique désiré", initial));
-                    panelVuePlan.setGrilleSize(size);
+                    controller.setGridSize(size);
                 }catch(Exception ex){}
             }
         });
