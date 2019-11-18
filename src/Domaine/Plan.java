@@ -95,7 +95,8 @@ public class Plan {
             int x = surfaceSelectionnee.polygone.getBounds().x;
             int y = surfaceSelectionnee.polygone.getBounds().y;
             Point top = new Point(x, y);
-            Point newTop = convertMouseCoordWithMagnetique(top);
+            Point newTop = new Point(top.x, top.y);
+            newTop = convertMouseCoordWithMagnetique(top);
             deplacement_x = newTop.x - top.x;
             deplacement_y = newTop.y - top.y;
             surfaceSelectionnee.deplacerSurface(deplacement_x, deplacement_y);
@@ -233,8 +234,7 @@ public class Plan {
         this.isGrilleMagnetiqueActive = active;
     }
 
-    public Point convertMouseCoordWithMagnetique(Point old){
-        Point point = new Point(old.x, old.y);
+    public Point convertMouseCoordWithMagnetique(Point point){
         if (isGrilleMagnetiqueActive){
             int offX = point.x % grid_size;
             int offY = point.y % grid_size;
