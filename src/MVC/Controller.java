@@ -13,7 +13,6 @@ public class Controller {
     public ArrayList<Point> patronForme;
     private Etat etat = Etat.LECTURE;
 
-
     public Controller(){
         observers = new ArrayList<>();
         plan = new Plan();
@@ -71,6 +70,18 @@ public class Controller {
         notifyObservers();
     }
 
+    public void selectionnerAligner(){
+        etat = Etat.SELECTIONNER_ALIGNER;
+    }
+
+    public void aligner(String alignement){
+        plan.aligner(alignement);
+    }
+
+    public void annulerAligner(){
+        plan.annulerAligner();
+    }
+
     public void clic(Point p){
         switch(etat){
             case AJOUTER_SURFACE:
@@ -82,6 +93,8 @@ public class Controller {
             case CREER_FORME_LIBRE:
                 etat = plan.ajouterPointSurfaceLibre(p);
                 break;
+            case SELECTIONNER_ALIGNER:
+                etat = plan.selectionnerAligner(p);
             default:
                 break;
         }
@@ -194,5 +207,9 @@ public class Controller {
 
     public void setGrilleMagnetiqueActive(boolean active){
         this.plan.setGrilleMagnetiqueActive(active);
+    }
+
+    public Plan getPlan() {
+        return plan;
     }
 }

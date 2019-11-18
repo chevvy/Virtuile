@@ -60,7 +60,7 @@ public class MainWindow extends JFrame implements Observer {
         menuEdition.add(menuMateriaux);
         menuMateriaux.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                new FrameRevetements().setVisible(true);
+                new FrameRevetements(controller).setVisible(true);
             }
         });
         menuEdition.add(new JMenuItem("Ajouter une surface"));
