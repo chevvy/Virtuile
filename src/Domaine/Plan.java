@@ -44,9 +44,10 @@ public class Plan {
     }
 
     public Etat initialiserSurface(Point position, ArrayList<Point> patron){
-        premierPoint = convertMouseCoordWithMagnetique(position);
+        Point positionAjustee = convertMouseCoordWithMagnetique(position);
+        premierPoint = convertMouseCoordWithMagnetique(positionAjustee);
 
-        patron = patron.stream().map(point -> new Point(point.x + position.x, point.y + position.y))
+        patron = patron.stream().map(point -> new Point(point.x + positionAjustee.x, point.y + positionAjustee.y))
                 .collect(Collectors.toCollection(ArrayList::new));
         surfaceOriginale = surfaceSelectionnee = new Surface(patron);
         listeSurfaces.add(surfaceSelectionnee);
@@ -95,14 +96,12 @@ public class Plan {
             int x = surfaceSelectionnee.polygone.getBounds().x;
             int y = surfaceSelectionnee.polygone.getBounds().y;
             Point top = new Point(x, y);
-            Point newTop = new Point(top.x, top.y);
-            newTop = convertMouseCoordWithMagnetique(top);
+            Point newTop = convertMouseCoordWithMagnetique(top);
             deplacement_x = newTop.x - top.x;
             deplacement_y = newTop.y - top.y;
             surfaceSelectionnee.deplacerSurface(deplacement_x, deplacement_y);
-            position.x = newTop.x - deplacement_x;
-            position.y = newTop.y - deplacement_y;
-            pointPrecedent = position;
+            pointPrecedent.x += deplacement_x;
+            pointPrecedent.y += deplacement_y;
         }
         if(surfaceSelectionnee.intersecte(listeSurfaces)){
             surfaceSelectionnee.rendreInvalide();
@@ -238,8 +237,10 @@ public class Plan {
         if (isGrilleMagnetiqueActive){
             int offX = point.x % grid_size;
             int offY = point.y % grid_size;
-            point.x = offX < grid_size / 2 ? point.x - offX : point.x - offX + grid_size;
-            point.y = offY < grid_size / 2 ? point.y - offY : point.y - offY + grid_size;
+            Point nouveauPoint = new Point();
+            nouveauPoint.x = offX < grid_size / 2 ? point.x - offX : point.x - offX + grid_size;
+            nouveauPoint.y = offY < grid_size / 2 ? point.y - offY : point.y - offY + grid_size;
+            return nouveauPoint;
         }
         return point;
     }

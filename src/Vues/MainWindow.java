@@ -47,7 +47,7 @@ public class MainWindow extends JFrame implements Observer {
             public void actionPerformed(ActionEvent e) {
                 try{
                     int initial = controller.getGridSize();
-                    int size = Integer.parseInt(JOptionPane.showInputDialog("Entrez la taille de la grille magnétique désiré", initial));
+                    int size = Integer.parseInt(JOptionPane.showInputDialog("Entrez la taille de la grille magnétique désirée", initial));
                     controller.setGridSize(size);
                 }catch(Exception ex){}
             }
