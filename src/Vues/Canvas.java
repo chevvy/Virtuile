@@ -14,10 +14,8 @@ public class Canvas extends JPanel implements Observer{
     private Controller controller;
     private Point dragOrigine;
     private Point translate;
-    private boolean isGrilleMagnetiqueActive = false;
     private boolean isRightClicked = false;
     private boolean isLeftClicked = false;
-    private int grid_size = 50;
     private Point mouse;
 
 
@@ -80,7 +78,7 @@ public class Canvas extends JPanel implements Observer{
         }
         if(isLeftClicked){
             Point temp = relativeToAbsolute(e.getPoint());
-            controller.glisser(temp.x, temp.y);
+            controller.glisser(temp);
         }
     }
 
@@ -88,7 +86,7 @@ public class Canvas extends JPanel implements Observer{
         switch (e.getButton()){
             case 1:
                 Point temp = relativeToAbsolute(e.getPoint());
-                controller.clic(temp.x, temp.y);
+                controller.clic(temp);
                 isLeftClicked = true;
                 break;
             case 2:
@@ -126,27 +124,11 @@ public class Canvas extends JPanel implements Observer{
         Point absolute = new Point();
         absolute.x = relative.x - translate.x;
         absolute.y = relative.y - translate.y;
-        if (isGrilleMagnetiqueActive){
-            int offX = absolute.x % grid_size;
-            int offY = absolute.y % grid_size;
-            absolute.x = offX < grid_size / 2 ? absolute.x - offX : absolute.x - offX + grid_size;
-            absolute.y = offY < grid_size / 2 ? absolute.y - offY : absolute.y - offY + grid_size;
-        }
         return absolute;
     }
 
-    public void setGrilleMagnetiqueActive(boolean active){
-        this.isGrilleMagnetiqueActive = active;
-    }
 
-    public void setGrilleSize(int size){
-        this.grid_size = size;
-        repaint();
-    }
 
-    public int getGrilleSize(){
-        return this.grid_size;
-    }
 
     @Override
     public void paint(Graphics g) {
@@ -154,6 +136,7 @@ public class Canvas extends JPanel implements Observer{
         g.setColor(Color.gray);
         int sizeX = this.getWidth()-1;
         int sizeY = this.getHeight()-1;
+        int grid_size = controller.getGridSize();
         int gridOffX = translate.x % grid_size;
         int gridOffY = translate.y % grid_size;
         for(int i = -grid_size + gridOffX; i < sizeX + grid_size; i += grid_size){

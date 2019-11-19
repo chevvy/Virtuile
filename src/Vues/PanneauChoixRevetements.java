@@ -22,14 +22,19 @@ public class PanneauChoixRevetements extends JPanel {
         // Model c'est ça qui va contenir les éléments de ta liste
         this.controller = controller;
         model = new DefaultListModel();
+        controller.plan.ajouter15Revetement();
 
-        for (int i = 0; i < 15; i++) {
-            // addElement pour ajouter un élément à la liste
-            model.addElement("Revètement "+(i+1));
+        for(Revetement revetement : controller.plan.getListeRevetements())
+        {
+            model.addElement(revetement.getNom());
         }
+//        for (int i = 0; i < 15; i++) {
+//            // addElement pour ajouter un élément à la liste
+//            model.addElement("Revètement "+(i+1));
+//        }
         listeRevetements = new JList(model);
         listeRevetements.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        listeRevetements.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        listeRevetements.setLayoutOrientation(JList.VERTICAL_WRAP);
         listeRevetements.setVisibleRowCount(-1);
 
         listeRevetements.setPreferredSize(new Dimension(180, 400));

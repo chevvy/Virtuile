@@ -15,7 +15,9 @@ public class Plan {
     private Point premierPoint;
     private Point pointPrecedent;
     private ArrayList<Point> surfaceLibre;
-    private ArrayList<Revetement> listeRevetements;
+    private boolean isGrilleMagnetiqueActive = false;
+    private int grid_size = 50;
+    private ArrayList<Revetement> listeRevetements = new ArrayList<>();
 
 
     public Plan(){
@@ -42,9 +44,10 @@ public class Plan {
     }
 
     public Etat initialiserSurface(Point position, ArrayList<Point> patron){
-        premierPoint = position;
+        Point positionAjustee = convertMouseCoordWithMagnetique(position);
+        premierPoint = convertMouseCoordWithMagnetique(positionAjustee);
 
-        patron = patron.stream().map(point -> new Point(point.x + position.x, point.y + position.y))
+        patron = patron.stream().map(point -> new Point(point.x + positionAjustee.x, point.y + positionAjustee.y))
                 .collect(Collectors.toCollection(ArrayList::new));
         surfaceOriginale = surfaceSelectionnee = new Surface(patron);
         listeSurfaces.add(surfaceSelectionnee);
@@ -61,6 +64,7 @@ public class Plan {
     }
 
     public Etat ajouterPointSurfaceLibre(Point point){
+        point = convertMouseCoordWithMagnetique(point);
         if(surfaceLibreIsFirst(point)) {
             terminerSurfaceLibre();
             return Etat.LECTURE;
@@ -88,6 +92,17 @@ public class Plan {
         int deplacement_y = position.y - pointPrecedent.y;
         surfaceSelectionnee.deplacerSurface(deplacement_x, deplacement_y);
         pointPrecedent = position;
+        if(isGrilleMagnetiqueActive){
+            int x = surfaceSelectionnee.polygone.getBounds().x;
+            int y = surfaceSelectionnee.polygone.getBounds().y;
+            Point top = new Point(x, y);
+            Point newTop = convertMouseCoordWithMagnetique(top);
+            deplacement_x = newTop.x - top.x;
+            deplacement_y = newTop.y - top.y;
+            surfaceSelectionnee.deplacerSurface(deplacement_x, deplacement_y);
+            pointPrecedent.x += deplacement_x;
+            pointPrecedent.y += deplacement_y;
+        }
         if(surfaceSelectionnee.intersecte(listeSurfaces)){
             surfaceSelectionnee.rendreInvalide();
         }else{
@@ -96,14 +111,15 @@ public class Plan {
     }
 
     public void etirerSurface(Point position){
+        position = convertMouseCoordWithMagnetique(position);
         int x  = position.x - premierPoint.x;
         int y = position.y - premierPoint.y;
         ArrayList<Point> points = surfaceOriginale.getListePoints();
         Rectangle limites = surfaceOriginale.polygone.getBounds();
         if(x != 0 && y!= 0){
             points = points.stream().map(point ->{
-                int nouveau_x = (x * (point.x - limites.x) / limites.height) + limites.x;
-                int nouveau_y = (y * (point.y - limites.y) / limites.width) + limites.y;
+                int nouveau_x = (x * (point.x - limites.x) / limites.width) + limites.x;
+                int nouveau_y = (y * (point.y - limites.y) / limites.height) + limites.y;
                 return new Point(nouveau_x, nouveau_y);
             }).collect(Collectors.toCollection(ArrayList::new));
         }
@@ -206,15 +222,40 @@ public class Plan {
         return listeSurfaces;
     }
 
+    public void setGridSize(int size){
+        grid_size = size;
+    }
+
+    public int getGridSize(){
+        return grid_size;
+    }
+
+    public void setGrilleMagnetiqueActive(boolean active){
+        this.isGrilleMagnetiqueActive = active;
+    }
+
+    public Point convertMouseCoordWithMagnetique(Point point){
+        if (isGrilleMagnetiqueActive){
+            int offX = point.x % grid_size;
+            int offY = point.y % grid_size;
+            Point nouveauPoint = new Point();
+            nouveauPoint.x = offX < grid_size / 2 ? point.x - offX : point.x - offX + grid_size;
+            nouveauPoint.y = offY < grid_size / 2 ? point.y - offY : point.y - offY + grid_size;
+            return nouveauPoint;
+        }
+        return point;
+    }
+
 
     public void ajouterRevetement(String nom){
-        listeRevetements.add(new Revetement(nom));
+        Revetement nouveauRevetement = new Revetement(nom);
+        this.listeRevetements.add(nouveauRevetement);
     }
 
     // TODO fonction test à supprimer !
     public void ajouter15Revetement(){
         for (int i = 0; i < 15; i++){
-            ajouterRevetement("Revètement "+(i+1));
+            ajouterRevetement("Fuck "+(i+1));
         }
     }
 

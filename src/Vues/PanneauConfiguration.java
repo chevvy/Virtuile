@@ -105,7 +105,7 @@ public class PanneauConfiguration extends JScrollPane {
     }
 
     private void setCreateShape(){
-        Object[] options = { "Carré", "Triangle", "Forme libre"};
+        Object[] options = { "Carré", "Triangle", "Forme libre", "Pentagramme"};
         String res = (String)JOptionPane.showInputDialog(null, "Forme pour la création", "Forme à créer",
                 JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
         int i = -1;
