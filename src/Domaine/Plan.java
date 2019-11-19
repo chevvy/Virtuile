@@ -133,7 +133,7 @@ public class Plan {
         return Etat.LECTURE;
     }
 
-    public void aligner(String alignement){
+    public Etat aligner(String alignement){
         Rectangle boiteAncre = ancre.polygone.getBounds();
         Rectangle boiteSelect = surfaceSelectionnee.polygone.getBounds();
         switch(alignement){
@@ -180,6 +180,7 @@ public class Plan {
             default:
                 break;
         }
+        return Etat.LECTURE;
     }
 
     public void annulerAligner(){

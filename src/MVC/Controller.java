@@ -18,6 +18,10 @@ public class Controller {
         plan = new Plan();
     }
 
+    public Etat getEtat(){
+        return etat;
+    }
+
     public void addObserver(Observer observer){
         observers.add(observer);
     }

@@ -4,20 +4,29 @@ import javax.swing.*;
 import java.awt.*;
 
 public class FrameAlignement extends JFrame{
-    private PanneauAlignementHorizontal panelAlignementHorizontal;
-    private PanneauAlignementVertical panelAlignementVertical;
+    private PanneauAlignementVertical panelAlignementHorizontal;
+    private PanneauAlignementHorizontal panelAlignementVertical;
+    private PanneauAlignementVerticalImage panelAlignementVerticalImage;
+    private PanneauAlignementHorizontalImage panelAlignementHorizontalImage;
+    private PanneauConfirmerAnnuler panelConfirmerAnnuler;
 
     private Controller controller;
 
     public FrameAlignement(Controller controller) {
-        this.setSize(1000, 400);
+        this.setSize(1100, 400);
         this.setLocation(100,100);
-        this.setTitle("Alligment des surfaces");
+        this.setTitle("Aligment des surfaces");
         this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        panelAlignementVertical = new PanneauAlignementVertical(controller);
-        this.add(panelAlignementVertical, BorderLayout.NORTH);
-        panelAlignementHorizontal = new PanneauAlignementHorizontal(controller);
-        this.add(panelAlignementHorizontal, BorderLayout.SOUTH);
-
+        this.setLayout(new GridLayout(5,1));
+        panelAlignementVerticalImage = new PanneauAlignementVerticalImage();
+        this.add(panelAlignementVerticalImage);
+        panelAlignementVertical = new PanneauAlignementHorizontal(controller);
+        this.add(panelAlignementVertical);
+        panelAlignementHorizontalImage = new PanneauAlignementHorizontalImage();
+        this.add(panelAlignementHorizontalImage);
+        panelAlignementHorizontal = new PanneauAlignementVertical(controller);
+        this.add(panelAlignementHorizontal);
+        panelConfirmerAnnuler = new PanneauConfirmerAnnuler(controller);
+        this.add(panelConfirmerAnnuler);
     }
 }

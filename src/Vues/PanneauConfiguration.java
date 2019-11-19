@@ -86,10 +86,8 @@ public class PanneauConfiguration extends JScrollPane {
         boutonAlligment = new JButton("Alligner/Coller");
         boutonAlligment.setSize(200, 50);
         boutonAlligment.setLocation(25,360);
-        boutonAlligment.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {new FrameAlignement(controller).setVisible(true);}
-        });
+        boutonAlligment.addActionListener(e -> controller.selectionnerAligner());
+
 
         this.add(boutonAjouter);
         this.add(boutonSupprimer);

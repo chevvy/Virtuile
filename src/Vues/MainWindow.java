@@ -1,6 +1,7 @@
 package Vues;
 
 import MVC.Controller;
+import MVC.Etat;
 import MVC.Observer;
 
 import javax.swing.*;
@@ -85,6 +86,8 @@ public class MainWindow extends JFrame implements Observer {
 
     @Override
     public void update() {
-
+        if( controller.getEtat() == Etat.ALIGNER){
+            new FrameAlignement(controller).setVisible(true);
+        }
     }
 }
