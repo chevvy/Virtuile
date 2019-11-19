@@ -11,7 +11,6 @@ import java.io.IOException;
 
 public class PanneauAlignementVerticalImage extends JPanel {
     private BufferedImage imageGauche01;
-    private JButton boutonMenuRevetement;
 
     public PanneauAlignementVerticalImage() {
         SetUpUi();
@@ -29,10 +28,5 @@ public class PanneauAlignementVerticalImage extends JPanel {
         } catch (IOException ex) {
             System.out.println("Pas d'image :(");
         }
-
-        boutonMenuRevetement = new JButton("Édition de a");
-        boutonMenuRevetement.setSize(100, 30);
-        boutonMenuRevetement.setLocation(25,25);
-        this.add(boutonMenuRevetement);
     }
 }

@@ -22,7 +22,7 @@ public class PanneauConfirmerAnnuler extends JPanel {
             public void actionPerformed(ActionEvent actionEvent) { controller.plan.confirmerDeplacement();}
         });
 
-        JButton boutonAnnuler = new JButton("Annuler la dsd");
+        JButton boutonAnnuler = new JButton("Annuler");
         boutonAnnuler.setSize(80, 40);
         boutonAnnuler.setLocation(140, 20);
         this.add(boutonAnnuler);
