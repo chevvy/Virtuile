@@ -207,6 +207,7 @@ public class Plan {
     public Etat confirmerSurface(){
         if(!surfaceSelectionnee.valide){
             listeSurfaces.remove(surfaceSelectionnee);
+            surfaceSelectionnee = null;
         }
         return Etat.LECTURE;
     }

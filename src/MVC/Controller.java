@@ -128,6 +128,7 @@ public class Controller {
             case ETIRER_SURFACE:
                 etat = plan.confirmerSurface();
                 break;
+            case ALIGNER:
             case DEPLACER_SURFACE:
                 etat = plan.confirmerDeplacement();
                 break;
