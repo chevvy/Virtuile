@@ -22,6 +22,10 @@ public class Controller {
         return etat;
     }
 
+    public void setEtat(Etat etat){
+        this.etat = etat;
+    }
+
     public void addObserver(Observer observer){
         observers.add(observer);
     }
@@ -155,7 +159,7 @@ public class Controller {
                 value = "Relachez pour créer la forme";
                 break;
             case DEPLACER_SURFACE:
-                value = "Déplacez la forme avec la sourie";
+                value = "Déplacez la forme avec la souris";
                 break;
         }
         return value;

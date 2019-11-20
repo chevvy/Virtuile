@@ -17,19 +17,13 @@ public class PanneauConfirmerAnnuler extends JPanel {
         boutonOk.setSize(80, 40);
         boutonOk.setLocation(20, 20);
         this.add(boutonOk);
-        boutonOk.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) { controller.plan.confirmerDeplacement();}
-        });
+        boutonOk.addActionListener(actionEvent -> controller.plan.confirmerDeplacement());
 
         JButton boutonAnnuler = new JButton("Annuler");
         boutonAnnuler.setSize(80, 40);
         boutonAnnuler.setLocation(140, 20);
         this.add(boutonAnnuler);
-        boutonOk.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {controller.plan.annulerAligner(); }
-        });
+        boutonOk.addActionListener(actionEvent -> controller.plan.annulerAligner());
         this.setVisible(true);
     }
 }

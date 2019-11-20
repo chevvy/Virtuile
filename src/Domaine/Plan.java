@@ -143,7 +143,7 @@ public class Plan {
                 premierPoint = pointPrecedent = new Point(
                         surface.polygone.getBounds().x,
                         surface.polygone.getBounds().y);
-                return Etat.ALIGNER;
+                return Etat.OUVRIR_FENETRE_ALIGNER;
             }
         }
         return Etat.LECTURE;

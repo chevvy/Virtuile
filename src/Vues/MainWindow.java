@@ -86,8 +86,9 @@ public class MainWindow extends JFrame implements Observer {
 
     @Override
     public void update() {
-        if( controller.getEtat() == Etat.ALIGNER){
+        if( controller.getEtat() == Etat.OUVRIR_FENETRE_ALIGNER){
             new FrameAlignement(controller).setVisible(true);
+            controller.setEtat(Etat.ALIGNER);
         }
     }
 }
