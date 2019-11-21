@@ -253,6 +253,10 @@ public class Plan {
         this.listeRevetements.add(nouveauRevetement);
     }
 
+    public ArrayList<Surface> getListeSurfaces() {
+        return listeSurfaces;
+    }
+
     // TODO fonction test à supprimer !
     public void ajouter15Revetement(){
         for (int i = 0; i < 15; i++){

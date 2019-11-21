@@ -1,6 +1,7 @@
 package Vues;
 
 import MVC.Controller;
+import Vues.Revetements.FrameRevetements;
 
 import javax.swing.*;
 import java.awt.*;

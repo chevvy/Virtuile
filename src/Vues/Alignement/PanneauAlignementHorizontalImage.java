@@ -1,4 +1,4 @@
-package Vues;
+package Vues.Alignement;
 
 import MVC.Controller;
 
@@ -9,21 +9,20 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class PanneauAlignementVerticalImage extends JPanel {
+public class PanneauAlignementHorizontalImage extends JPanel {
     private BufferedImage imageGauche01;
 
-    public PanneauAlignementVerticalImage() {
+    public PanneauAlignementHorizontalImage() {
         SetUpUi();
     }
 
     private void SetUpUi() {
         try {
-            String currentDirectory = System.getProperty("user.dir");
-            System.out.println("The current working directory is " + currentDirectory);
             BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/gaucheExt.png"));
             JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
-            picLabel.setBounds(25, 250, 40, 40);
-            //this.add(picLabel);
+            picLabel.setBounds(25, 250, 50, 50);
+            add(picLabel);
+
 
         } catch (IOException ex) {
             System.out.println("Pas d'image :(");

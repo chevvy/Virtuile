@@ -1,4 +1,4 @@
-package Vues;
+package Vues.Alignement;
 
 import MVC.Controller;
 import javax.swing.*;
