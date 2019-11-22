@@ -59,18 +59,7 @@ public class Surface {
         valide = true;
     }
 
-    public void getInfoSurface(){
 
-    }
-    public void editerAlligmentSurface(){
-
-    }
-    public void deplacerModifierMotif(){
-
-    }
-    public void editerMotif(){
-
-    }
 
     // TODO regrouper les setters/getters ensemble ?
     public void setRevetement(Revetement revetement) {

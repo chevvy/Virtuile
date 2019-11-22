@@ -1,6 +1,7 @@
 package Vues;
 
 import MVC.Controller;
+import MVC.Etat;
 import Vues.Revetements.FrameRevetements;
 
 import javax.swing.*;
@@ -100,6 +101,17 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
         boutonAlligment.setLocation(25,340);
         boutonAlligment.addActionListener(e -> controller.selectionnerAligner());
 
+        JButton boutonTestFusionner;
+        boutonTestFusionner = new JButton("test Fusionner");
+        boutonTestFusionner.setSize(200,25);
+        boutonTestFusionner.setLocation(25, 370);
+        boutonTestFusionner.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                controller.setEtat(Etat.FUSIONNER);
+            }
+        });
+
 
         this.add(boutonAjouter);
         this.add(boutonSupprimer);
@@ -112,6 +124,7 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
         this.add(listeAlignement);
         this.add(boutonMenuRevetement);
         this.add(boutonAlligment);
+        this.add(boutonTestFusionner);
         this.setVisible(true);
 
     }
