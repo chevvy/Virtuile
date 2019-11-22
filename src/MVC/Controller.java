@@ -82,8 +82,6 @@ public class Controller {
         notifyObservers();
     }
 
-    public void selectionSurface() {
-        etat = Etat.SURFACE_SELECTIONNE;}
 
     public void selectionnerAligner(){
         etat = Etat.SELECTIONNER_ALIGNER;
