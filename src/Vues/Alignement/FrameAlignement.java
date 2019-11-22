@@ -1,6 +1,5 @@
 package Vues.Alignement;
 import MVC.Controller;
-import Vues.PanneauConfirmerAnnuler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,25 +9,27 @@ public class FrameAlignement extends JFrame{
     private PanneauAlignementHorizontal panelAlignementVertical;
     private PanneauAlignementVerticalImage panelAlignementVerticalImage;
     private PanneauAlignementHorizontalImage panelAlignementHorizontalImage;
-    private PanneauConfirmerAnnuler panelConfirmerAnnuler;
+    private PanneauAlignementConfirmerAnnuler panelConfirmerAnnuler;
+    public FrameAlignement frame;
 
     private Controller controller;
 
     public FrameAlignement(Controller controller) {
-        this.setSize(1100, 400);
-        this.setLocation(100,100);
-        this.setTitle("Aligment des surfaces");
-        this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        this.setLayout(new GridLayout(5,1));
+        frame = this;
+        frame.setSize(1100, 400);
+        frame.setLocation(100,100);
+        frame.setTitle("Aligment des surfaces");
+        frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+        frame.setLayout(new GridLayout(5,1));
         panelAlignementVerticalImage = new PanneauAlignementVerticalImage();
-        this.add(panelAlignementVerticalImage);
+        frame.add(panelAlignementVerticalImage);
         panelAlignementVertical = new PanneauAlignementHorizontal(controller);
-        this.add(panelAlignementVertical);
+        frame.add(panelAlignementVertical);
         panelAlignementHorizontalImage = new PanneauAlignementHorizontalImage();
-        this.add(panelAlignementHorizontalImage);
+        frame.add(panelAlignementHorizontalImage);
         panelAlignementHorizontal = new PanneauAlignementVertical(controller);
-        this.add(panelAlignementHorizontal);
-        panelConfirmerAnnuler = new PanneauConfirmerAnnuler(controller);
-        this.add(panelConfirmerAnnuler);
+        frame.add(panelAlignementHorizontal);
+        panelConfirmerAnnuler = new PanneauAlignementConfirmerAnnuler(controller, frame);
+        frame.add(panelConfirmerAnnuler);
     }
 }
