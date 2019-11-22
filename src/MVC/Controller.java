@@ -6,6 +6,7 @@ import Domaine.Surface;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Controller {
@@ -14,6 +15,7 @@ public class Controller {
     public Plan plan;
     public ArrayList<Point> patronForme;
     private Etat etat = Etat.LECTURE;
+    public String nomRevetementSelectionne = "";
 
     public Controller(){
         observers = new ArrayList<>();
@@ -80,7 +82,6 @@ public class Controller {
         notifyObservers();
     }
 
-    public void selectionSurface() {etat = Etat.SURFACE_SELECTIONNE;}
 
     public void selectionnerAligner(){
         etat = Etat.SELECTIONNER_ALIGNER;
