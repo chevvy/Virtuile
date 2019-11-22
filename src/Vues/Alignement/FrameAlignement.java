@@ -5,36 +5,22 @@ import javax.swing.*;
 import java.awt.*;
 
 public class FrameAlignement extends JFrame{
-    private PanneauAlignementVertical panelAlignementHorizontal;
-    private PanneauAlignementHorizontal panelAlignementVertical;
-    private PanneauAlignementVerticalImage panelAlignementVerticalImage;
-    private PanneauAlignementHorizontalImage panelAlignementHorizontalImage;
-    private PanneauAlignementConfirmerAnnuler panelConfirmerAnnuler;
+    private PanneauAlignement panelAlignement;
+
     public FrameAlignement frame;
 
     private Controller controller;
 
     public FrameAlignement(Controller controller) {
         frame = this;
-        frame.setSize(1100, 400);
+        frame.setSize(600, 300);
         frame.setLocation(100,100);
-        frame.setTitle("Aligment des surfaces");
+        frame.setTitle("Alignement des surfaces");
         frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        frame.setLayout(new GridLayout(5,1));
 
-        panelAlignementHorizontalImage = new PanneauAlignementHorizontalImage();
-        frame.add(panelAlignementHorizontalImage);
 
-        panelAlignementVertical = new PanneauAlignementHorizontal(controller);
-        frame.add(panelAlignementVertical);
+        panelAlignement = new PanneauAlignement(controller);
+        frame.add(panelAlignement);
 
-        panelAlignementVerticalImage = new PanneauAlignementVerticalImage();
-        frame.add(panelAlignementVerticalImage);
-
-        panelAlignementHorizontal = new PanneauAlignementVertical(controller);
-        frame.add(panelAlignementHorizontal);
-
-        panelConfirmerAnnuler = new PanneauAlignementConfirmerAnnuler(controller, frame);
-        frame.add(panelConfirmerAnnuler);
     }
 }

@@ -15,6 +15,7 @@ public class PanneauAlignementConfirmerAnnuler extends JPanel {
 
         SetUpUi();
         this.controller = controller;
+        this.frame = frame;
     }
     private void SetUpUi() {
 
@@ -25,14 +26,19 @@ public class PanneauAlignementConfirmerAnnuler extends JPanel {
         boutonOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controller.relacher();
-                //frame.dispose();
+                frame.dispose();
             }
         });
         JButton boutonAnnuler = new JButton("Annuler");
         boutonAnnuler.setSize(80, 40);
         boutonAnnuler.setLocation(140, 20);
         this.add(boutonAnnuler);
-        boutonOk.addActionListener(actionEvent -> controller.annulerAligner());
+        boutonAnnuler.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                controller.annulerAligner();
+                frame.dispose();
+            }
+        });
         this.setVisible(true);
     }
 }
