@@ -68,6 +68,14 @@ public class PanneauConfiguration extends JScrollPane {
 
         JTextField surfaceSelectionne = new JTextField();
         // surfaceSelectionne.addActionListener(); action -> si surface selectioner, fetch le nom du revetement
+        surfaceSelectionne.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.out.println("Surface selectionne");
+                // TODO créer un custom actionEvent pour la selection d'une surface
+                // https://stackoverflow.com/questions/2919828/creating-actionevent-object-for-custombutton-in-java
+            }
+        });
 
 
         String [] materiaux = {"Brique", "Terre"}; // TODO à remplacer par surface Selectionne
@@ -75,14 +83,7 @@ public class PanneauConfiguration extends JScrollPane {
         listeMateriau.setSize(135, 30);
         listeMateriau.setLocation(100, 225);
 
-
-        String revetementDeLaSurface = "";
-
-        if (controller != null && controller.getEtat() == Etat.LECTURE)
-        {
-            revetementDeLaSurface = controller.plan.surfaceSelectionnee.getRevetement().getNom();
-        }
-        JLabel labelRevetementDeLaSurface = new JLabel("Revetement : " + revetementDeLaSurface);
+        JLabel labelRevetementDeLaSurface = new JLabel("Revetement : ");
         labelRevetementDeLaSurface.setSize(100, 20);
         labelRevetementDeLaSurface.setLocation(15, 290);
 

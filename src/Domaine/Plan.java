@@ -31,7 +31,7 @@ public class Plan {
         for(Surface surface : listeSurfaces){
             if(surface.polygone.contains(position)){
                 surfaceOriginale = surfaceSelectionnee = surface;
-                return Etat.LECTURE;
+                return Etat.SURFACE_SELECTIONNE;
             }
         }
         surfaceSelectionnee = null;

@@ -3,7 +3,9 @@ package MVC;
 import Domaine.Plan;
 import Domaine.Surface;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class Controller {
@@ -77,6 +79,8 @@ public class Controller {
         }
         notifyObservers();
     }
+
+    public void selectionSurface() {etat = Etat.SURFACE_SELECTIONNE;}
 
     public void selectionnerAligner(){
         etat = Etat.SELECTIONNER_ALIGNER;
