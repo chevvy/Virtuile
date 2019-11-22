@@ -3,6 +3,8 @@ package Domaine;
 import javafx.util.Pair;
 
 import java.awt.Point;
+import java.awt.geom.Area;
+import java.awt.geom.PathIterator;
 import java.util.ArrayList;
 import java.awt.Polygon;
 import java.util.Arrays;
@@ -49,6 +51,25 @@ public class Surface {
             listePoints.add(new Point(polygone.xpoints[i], polygone.ypoints[i]));
         }
         return listePoints;
+    }
+
+    public boolean fusionner(Surface s){
+        Area aire = new Area(polygone);
+        aire.add(new Area(s.polygone));
+        if(!aire.isSingular()){return false;}
+        PathIterator iterator = aire.getPathIterator(null);
+        double[] coords = new double[6];
+        Polygon nouveau_polygone = new Polygon();
+        while (!iterator.isDone()) {
+            int type = iterator.currentSegment(coords);
+            int x = (int) coords[0];
+            int y = (int) coords[1];
+            if(type != PathIterator.SEG_CLOSE) {
+                nouveau_polygone.addPoint(x, y);
+            }
+            iterator.next();
+        }
+        return true;
     }
 
     public void rendreInvalide(){
