@@ -1,7 +1,6 @@
 package Vues;
 
 import MVC.Controller;
-import MVC.Etat;
 import Vues.Revetements.FrameRevetements;
 
 import javax.swing.*;
@@ -13,7 +12,8 @@ public class PanneauConfiguration extends JScrollPane {
 
     private JButton boutonAjouter, boutonSupprimer, boutonMenuRevetement, boutonAlligment;
     private JRadioButton radioSurface, radioVide;
-    private JComboBox listeMateriau, listeAlignement;
+    private JComboBox listeAlignement;
+    private JTextField revetementSurfaceSelectionnee;
 
     private Controller controller;
 
@@ -44,14 +44,15 @@ public class PanneauConfiguration extends JScrollPane {
         line.setSize(250,50);
         line.setLocation(10,150);
 
-        // Premier element
+
+        // Premier element (rangee 1)
         radioSurface = new JRadioButton("Surface");
         radioSurface.setSelected(true);
         radioSurface.setBackground(Color.gray);
         radioSurface.setSize(100, 20);
         radioSurface.setLocation(15, 190);
 
-        // Premier element
+        // Premier element (range 2)
         radioVide = new JRadioButton("Vide");
         radioVide.setBackground(Color.gray);
         radioVide.setSize(100, 20);
@@ -61,36 +62,22 @@ public class PanneauConfiguration extends JScrollPane {
         group.add(radioSurface);
         group.add(radioVide);
 
-        // 2eme element
+        // 2eme element - rangee 1
         JLabel labelMateriau = new JLabel("Revêtement : ");
         labelMateriau.setSize(100, 20);
         labelMateriau.setLocation(15, 230);
 
-        JTextField surfaceSelectionne = new JTextField();
-        // surfaceSelectionne.addActionListener(); action -> si surface selectioner, fetch le nom du revetement
-        surfaceSelectionne.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                System.out.println("Surface selectionne");
-                // TODO créer un custom actionEvent pour la selection d'une surface
-                // https://stackoverflow.com/questions/2919828/creating-actionevent-object-for-custombutton-in-java
-            }
-        });
+        // 2eme element - rangee 2
+        revetementSurfaceSelectionnee = new JTextField();
+        revetementSurfaceSelectionnee.setText("Revetement 1"); // TODO à remplacer par vrai code pour fecth
+        revetementSurfaceSelectionnee.setEditable(false);
+        revetementSurfaceSelectionnee.setSize(135, 30);
+        revetementSurfaceSelectionnee.setLocation(100, 225);
 
-
-        String [] materiaux = {"Brique", "Terre"}; // TODO à remplacer par surface Selectionne
-        listeMateriau = new JComboBox(materiaux);
-        listeMateriau.setSize(135, 30);
-        listeMateriau.setLocation(100, 225);
-
-        JLabel labelRevetementDeLaSurface = new JLabel("Revetement : ");
-        labelRevetementDeLaSurface.setSize(100, 20);
-        labelRevetementDeLaSurface.setLocation(15, 290);
-
-
+        // 3eme element
         boutonMenuRevetement = new JButton("Édition revêtement");
-        boutonMenuRevetement.setSize(200, 50);
-        boutonMenuRevetement.setLocation(25,320);
+        boutonMenuRevetement.setSize(200, 25);
+        boutonMenuRevetement.setLocation(25,265);
         boutonMenuRevetement.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {new FrameRevetements(controller).setVisible(true);}
@@ -98,16 +85,16 @@ public class PanneauConfiguration extends JScrollPane {
 
         JLabel labelAlignement = new JLabel("Alignement : ");
         labelAlignement.setSize(100, 20);
-        labelAlignement.setLocation(15, 270);
+        labelAlignement.setLocation(15, 305);
 
         String [] alignement = {"Aligné", "Pas aligné"};
         listeAlignement = new JComboBox(alignement);
         listeAlignement.setSize(135, 30);
-        listeAlignement.setLocation(100, 265);
+        listeAlignement.setLocation(100, 300);
 
         boutonAlligment = new JButton("Alligner/Coller");
-        boutonAlligment.setSize(200, 50);
-        boutonAlligment.setLocation(25,380);
+        boutonAlligment.setSize(200, 25);
+        boutonAlligment.setLocation(25,340);
         boutonAlligment.addActionListener(e -> controller.selectionnerAligner());
 
 
@@ -117,12 +104,11 @@ public class PanneauConfiguration extends JScrollPane {
         this.add(radioSurface);
         this.add(radioVide);
         this.add(labelMateriau);
-        this.add(listeMateriau);
+        this.add(revetementSurfaceSelectionnee);
         this.add(labelAlignement);
         this.add(listeAlignement);
         this.add(boutonMenuRevetement);
         this.add(boutonAlligment);
-        this.add(labelRevetementDeLaSurface);
         this.setVisible(true);
 
     }

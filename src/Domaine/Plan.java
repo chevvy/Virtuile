@@ -3,6 +3,8 @@ package Domaine;
 import MVC.Etat;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -247,14 +249,14 @@ public class Plan {
         return point;
     }
 
+    public ArrayList<Surface> getListeSurfaces() {
+        return listeSurfaces;
+    }
+
 
     public void ajouterRevetement(String nom){
         Revetement nouveauRevetement = new Revetement(nom);
         this.listeRevetements.add(nouveauRevetement);
-    }
-
-    public ArrayList<Surface> getListeSurfaces() {
-        return listeSurfaces;
     }
 
     // TODO fonction test à supprimer !
