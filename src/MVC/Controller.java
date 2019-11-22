@@ -15,7 +15,6 @@ public class Controller {
     public Plan plan;
     public ArrayList<Point> patronForme;
     private Etat etat = Etat.LECTURE;
-    public String nomRevetementSelectionne = "";
 
     public Controller(){
         observers = new ArrayList<>();
@@ -102,6 +101,7 @@ public class Controller {
                 break;
             case LECTURE:
                 etat = plan.selectionner(p);
+                notifyObservers();
                 break;
             case CREER_FORME_LIBRE:
                 etat = plan.ajouterPointSurfaceLibre(p);
