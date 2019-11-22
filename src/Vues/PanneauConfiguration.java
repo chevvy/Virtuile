@@ -8,7 +8,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PanneauConfiguration extends JScrollPane {
+import MVC.Observer;
+
+
+public class PanneauConfiguration extends JScrollPane implements Observer{
 
     private JButton boutonAjouter, boutonSupprimer, boutonMenuRevetement, boutonAlligment;
     private JRadioButton radioSurface, radioVide;
@@ -18,8 +21,8 @@ public class PanneauConfiguration extends JScrollPane {
     private Controller controller;
 
     public PanneauConfiguration(Controller controller){
+        controller.addObserver(this);
         this.setBackground(Color.gray);
-
         this.setPreferredSize(new Dimension(250, 500));
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         this.setLayout(null);
@@ -122,6 +125,14 @@ public class PanneauConfiguration extends JScrollPane {
             if (options[j] == (String)res){ i = j; }
         }
         controller.ajouterSurface(i);
+    }
+
+    @Override
+    public void update() {
+        if (controller.getPlan().surfaceSelectionnee != null)
+        {
+            revetementSurfaceSelectionnee.setText(controller.getPlan().surfaceSelectionnee.getRevetement().getNom());
+        }
     }
 
     private class PanelSommet extends JFrame{

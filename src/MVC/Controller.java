@@ -102,6 +102,7 @@ public class Controller {
                 break;
             case LECTURE:
                 etat = plan.selectionner(p);
+                notifyObservers();
                 break;
             case CREER_FORME_LIBRE:
                 etat = plan.ajouterPointSurfaceLibre(p);
