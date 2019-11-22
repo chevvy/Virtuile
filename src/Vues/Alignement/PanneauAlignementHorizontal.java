@@ -14,7 +14,9 @@ public class PanneauAlignementHorizontal extends JPanel{
     private JRadioButton boutonGauche01, boutonGauche02, boutonCentreHorinzontal, boutonDroite01, boutonDroite02, aucunAlligmentHorizontal;
     private Controller controller;
     public PanneauAlignementHorizontal(Controller controller) {
+
         SetUpUi();
+        this.controller = controller;
     }
     private void SetUpUi () {
 

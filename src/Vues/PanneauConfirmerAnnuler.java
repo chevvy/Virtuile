@@ -9,7 +9,9 @@ import java.awt.event.ActionListener;
 public class PanneauConfirmerAnnuler extends JPanel {
     private Controller controller;
     public PanneauConfirmerAnnuler(Controller controller) {
+
         SetUpUi();
+        this.controller = controller;
     }
     private void SetUpUi() {
 

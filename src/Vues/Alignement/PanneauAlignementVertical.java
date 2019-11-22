@@ -10,7 +10,10 @@ public class PanneauAlignementVertical extends JPanel{
     private JRadioButton boutonHaut01, boutonHaut02, boutonCentreVertical, boutonBas01, boutonBas02, aucunAlligmentVertical;
     private Controller controller;
     public PanneauAlignementVertical(Controller controller) {
+
         SetUpUi();
+        this.controller = controller;
+
     }
     private void SetUpUi () {
         //Groupe Vertical
@@ -36,6 +39,7 @@ public class PanneauAlignementVertical extends JPanel{
 
         //Bouton03 - Centre vert
         JRadioButton boutonCentreVertical = new JRadioButton("Centré verticalement");
+        this.add(boutonCentreVertical);
         buttonGroupVertical.add(boutonCentreVertical);
         boutonCentreVertical.addActionListener(new ActionListener() {
             @Override
