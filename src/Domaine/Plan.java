@@ -135,8 +135,8 @@ public class Plan {
             if(surface.polygone.contains(position)){
                 ancre = surface;
                 premierPoint = pointPrecedent = new Point(
-                        surface.polygone.getBounds().x,
-                        surface.polygone.getBounds().y);
+                        surfaceSelectionnee.polygone.getBounds().x,
+                        surfaceSelectionnee.polygone.getBounds().y);
                 return Etat.OUVRIR_FENETRE_ALIGNER;
             }
         }
@@ -162,48 +162,45 @@ public class Plan {
         Rectangle boiteSelect = surfaceSelectionnee.polygone.getBounds();
         switch(alignement){
             case "gaucheExt":
-                deplacerSurface(new Point(boiteAncre.x - boiteSelect.width - pointPrecedent.x, 0));
+                surfaceSelectionnee.deplacerSurface(boiteAncre.x - boiteSelect.width - pointPrecedent.x, 0);
                 break;
             case "gaucheInt":
-                deplacerSurface(new Point(boiteAncre.x - pointPrecedent.x, 0));
+                surfaceSelectionnee.deplacerSurface(boiteAncre.x - pointPrecedent.x, 0);
                 break;
             case "droiteExt":
-                deplacerSurface(new Point(boiteAncre.x + boiteAncre.width - pointPrecedent.x, 0));
+                surfaceSelectionnee.deplacerSurface(boiteAncre.x + boiteAncre.width - pointPrecedent.x, 0);
                 break;
             case "droiteInt":
-                deplacerSurface(new Point(boiteAncre.x + boiteAncre.width - boiteSelect.width - pointPrecedent.x,
-                        0));
+                surfaceSelectionnee.deplacerSurface(boiteAncre.x + boiteAncre.width - boiteSelect.width - pointPrecedent.x, 0);
                 break;
             case "centreHorizontal":
-                deplacerSurface(new Point(boiteAncre.x + (boiteAncre.width - boiteSelect.width)/2 - pointPrecedent.x,
-                        0));
+                surfaceSelectionnee.deplacerSurface(boiteAncre.x + (boiteAncre.width - boiteSelect.width)/2 - pointPrecedent.x, 0);
                 break;
             case "basExt":
-                deplacerSurface(new Point(0, boiteAncre.y - boiteAncre.height - pointPrecedent.y));
+                surfaceSelectionnee.deplacerSurface(0, boiteAncre.y + boiteAncre.height - pointPrecedent.y);
                 break;
             case "basInt":
-                deplacerSurface(new Point(0,
-                        boiteAncre.y - boiteAncre.height + boiteSelect.height - pointPrecedent.y));
+                surfaceSelectionnee.deplacerSurface(0, boiteAncre.y + boiteAncre.height - boiteSelect.height - pointPrecedent.y);
                 break;
             case "hautExt":
-                deplacerSurface(new Point(0, boiteAncre.y + boiteSelect.height - pointPrecedent.y));
+                surfaceSelectionnee.deplacerSurface(0, boiteAncre.y - boiteSelect.height - pointPrecedent.y);
                 break;
             case "hautInt":
-                deplacerSurface(new Point(0, boiteAncre.y - pointPrecedent.y));
+                surfaceSelectionnee.deplacerSurface(0, boiteAncre.y - pointPrecedent.y);
                 break;
             case "centreVertical":
-                deplacerSurface(new Point(0,
-                        boiteAncre.y + (boiteAncre.height - boiteSelect.height)/2 - pointPrecedent.y));
+                surfaceSelectionnee.deplacerSurface(0, boiteAncre.y + (boiteAncre.height - boiteSelect.height)/2 - pointPrecedent.y);
                 break;
             case "rienHorizontal":
-                deplacerSurface(new Point(premierPoint.x, 0));
+                surfaceSelectionnee.deplacerSurface(premierPoint.x - pointPrecedent.x, 0);
                 break;
             case "rienVertical":
-                deplacerSurface(new Point(0, premierPoint.y));
+                surfaceSelectionnee.deplacerSurface(0, premierPoint.y - pointPrecedent.y);
                 break;
             default:
                 break;
         }
+        pointPrecedent = surfaceSelectionnee.polygone.getBounds().getLocation();
     }
 
     public void annulerAligner(){

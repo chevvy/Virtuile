@@ -94,6 +94,7 @@ public class Controller {
 
     public void annulerAligner(){
         plan.annulerAligner();
+        notifyObservers();
     }
 
     public void clic(Point p){
@@ -137,7 +138,6 @@ public class Controller {
     public void relacher(){
         switch(etat){
             case ETIRER_SURFACE:
-            case ALIGNER:
             case DEPLACER_SURFACE:
                 etat = Etat.LECTURE;
                 break;

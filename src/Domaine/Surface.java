@@ -33,6 +33,7 @@ public class Surface {
         int[] nouveaux_y = Arrays.stream(polygone.ypoints).map(x -> x + deplacement_y).toArray();
         polygone = new Polygon(nouveaux_x, nouveaux_y, polygone.npoints);
     }
+
     //méthode permettant de modifier un point d'une surface
     //on lui fournit une liste de tous les nouveaux points
     public void modifierSommets(ArrayList<Point> coordonneesNouvellesCardinalites){
@@ -73,17 +74,7 @@ public class Surface {
         return true;
     }
 
-    public void rendreInvalide(){
-        valide = false;
-    }
-
-    public void rendreValide(){
-        valide = true;
-    }
-
-
-
-    // TODO regrouper les setters/getters ensemble ?
+    // TODO regrouper les setteures/getteures ensemble ?
     public void setRevetement(Revetement revetement) {
         this.revetement = revetement;
     }
