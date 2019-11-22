@@ -20,4 +20,5 @@ public class Tuile{
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
     }
+
 }

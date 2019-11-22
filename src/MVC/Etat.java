@@ -9,4 +9,5 @@ public enum Etat {
     ALIGNER,
     OUVRIR_FENETRE_ALIGNER,
     SELECTIONNER_ALIGNER,
+    FUSIONNER,
 }

@@ -5,9 +5,8 @@ import MVC.Observer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
+import java.awt.geom.AffineTransform;
 
 public class Canvas extends JPanel implements Observer{
 
@@ -17,6 +16,7 @@ public class Canvas extends JPanel implements Observer{
     private boolean isRightClicked = false;
     private boolean isLeftClicked = false;
     private Point mouse;
+    private double zoomFactor = 1;
 
 
     public Canvas(Controller controller){
@@ -62,6 +62,21 @@ public class Canvas extends JPanel implements Observer{
 
             }
         });
+        this.addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent mouseWheelEvent) { MouseWheelMovedEvent(mouseWheelEvent);}
+        });
+    }
+
+    private void MouseWheelMovedEvent(MouseWheelEvent evt){
+        if (evt.getPreciseWheelRotation() > 0 && zoomFactor >= 0.1) {
+            // zoom out
+            zoomFactor -= 0.07;
+        } else {
+            // zoom in
+            zoomFactor += 0.07;
+        }
+        repaint();
     }
 
     private void mouseMovedEvent(MouseEvent e){
@@ -124,32 +139,43 @@ public class Canvas extends JPanel implements Observer{
         Point absolute = new Point();
         absolute.x = relative.x - translate.x;
         absolute.y = relative.y - translate.y;
-        return absolute;
+        return zoomOut(absolute);
     }
 
+    private int zoom(int value) {
+        return (int) (value * zoomFactor);
+    }
 
-
+    private Point zoomOut(Point point) {
+        int x = (int) (point.x / zoomFactor);
+        int y = (int) (point.y / zoomFactor);
+        return new Point(x, y);
+    }
 
     @Override
-    public void paint(Graphics g) {
-        super.paintComponent(g);
+    public void paint(Graphics gb) {
+        super.paintComponent(gb);
+        Graphics2D g = (Graphics2D) gb;
         g.setColor(Color.gray);
         int sizeX = this.getWidth()-1;
         int sizeY = this.getHeight()-1;
         int grid_size = controller.getGridSize();
-        int gridOffX = translate.x % grid_size;
-        int gridOffY = translate.y % grid_size;
-        for(int i = -grid_size + gridOffX; i < sizeX + grid_size; i += grid_size){
-            for(int j = -grid_size + gridOffY; j < sizeY + grid_size; j+= grid_size){
-                g.drawRect(i, j, grid_size, grid_size);
+        int grid = zoom(grid_size);
+        int gridOffX = translate.x % grid;
+        int gridOffY = translate.y % grid;
+        for(int i = -grid + gridOffX; i < sizeX + grid; i += grid){
+            for(int j = -grid + gridOffY; j < sizeY + grid; j+= grid){
+                g.drawRect(i, j, grid, grid);
             }
         }
         g.setColor(Color.DARK_GRAY);
         g.drawLine(translate.x, 0, translate.x, sizeY);
         g.drawLine(0, translate.y, sizeX, translate.y);
+        AffineTransform oldTransform = g.getTransform();
         g.translate(translate.x, translate.y);
+        g.scale(zoomFactor, zoomFactor);
         this.controller.paintCanevas(g, mouse);
-        g.translate(-translate.x, -translate.y);
+        g.setTransform(oldTransform );
         g.setColor(Color.black);
         g.drawString(controller.getStatusString(), 10, 20);
     }

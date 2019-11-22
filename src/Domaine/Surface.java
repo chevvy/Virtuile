@@ -3,6 +3,8 @@ package Domaine;
 import javafx.util.Pair;
 
 import java.awt.Point;
+import java.awt.geom.Area;
+import java.awt.geom.PathIterator;
 import java.util.ArrayList;
 import java.awt.Polygon;
 import java.util.Arrays;
@@ -24,11 +26,7 @@ public class Surface {
         // liste de tuiles
         revetement = new Revetement();
     }
-    //méthode contains de Polygon
-    //return True si le point est dans la surface
-    public boolean estDansSurface(Point point){
-        return false;
-    }
+
     //méthode permettant de déplacer une surface selon le vecteur de déplacement reçu
     public void deplacerSurface(int deplacement_x, int deplacement_y){
         int[] nouveaux_x = Arrays.stream(polygone.xpoints).map(x -> x + deplacement_x).toArray();
@@ -55,45 +53,24 @@ public class Surface {
         return listePoints;
     }
 
-    public boolean intersecte(ArrayList<Surface> surfaces){
-
-        for(Surface surface : surfaces){
-            if(!(surface == this)){
-                ArrayList<Point> points = surface.getListePoints(); //commentaire
-                Point pointPrecedent = points.get(points.size() - 1);
-                for(Point point : points){
-                    ArrayList<Point> pointsSelect = this.getListePoints();
-                    Point pointPrecedentSelect = pointsSelect.get(pointsSelect.size() - 1); //commentaire
-                    for(Point pointSelect : pointsSelect) {
-                        if(segmentsIntersectent(pointPrecedentSelect, pointSelect, pointPrecedent, point)){
-                            return true;
-                        }
-                        pointPrecedentSelect = pointSelect;
-                    }
-                    pointPrecedent = point;
-                }
-                if(surface.polygone.contains(this.getListePoints().get(0)) ||
-                        this.polygone.contains(surface.getListePoints().get(0))){
-                    return true; //Cas où une surface est entièrement dans une autre
-                }
+    public boolean fusionner(Surface s){
+        Area aire = new Area(polygone);
+        aire.add(new Area(s.polygone));
+        if(!aire.isSingular()){return false;}
+        PathIterator iterator = aire.getPathIterator(null);
+        double[] coords = new double[6];
+        Polygon nouveau_polygone = new Polygon();
+        while (!iterator.isDone()) {
+            int type = iterator.currentSegment(coords);
+            int x = (int) coords[0];
+            int y = (int) coords[1];
+            if(type != PathIterator.SEG_CLOSE) {
+                nouveau_polygone.addPoint(x, y);
             }
+            iterator.next();
         }
-        return false;
-    }
-
-    private boolean segmentsIntersectent(Point s1p1, Point s1p2, Point s2p1, Point s2p2){
-        double t = (double)((s1p1.x - s2p1.x)*(s2p1.y - s2p2.y) - (s1p1.y - s2p1.y)*(s2p1.x - s2p2.x))/
-                ((s1p1.x - s1p2.x)*(s2p1.y - s2p2.y) - (s1p1.y - s1p2.y)*(s2p1.x - s2p2.x));
-        if(t<0||t>1.0||Double.isNaN(t)){ //le code fait des choses
-            return false;
-        }
-        double u = (double)-((s1p1.x - s1p2.x)*(s1p1.y - s2p1.y) - (s1p1.y - s1p2.y)*(s1p1.x - s2p1.x))/
-                ((s1p1.x - s1p2.x)*(s2p1.y - s2p2.y) - (s1p1.y - s1p2.y)*(s2p1.x - s2p2.x));
-        if(u<0||u>1.0||Double.isNaN(u)){
-            return false; //aussi ici
-        }else{
-            return true;
-        }
+        polygone = nouveau_polygone;
+        return true;
     }
 
     public void rendreInvalide(){
@@ -104,18 +81,7 @@ public class Surface {
         valide = true;
     }
 
-    public void getInfoSurface(){
 
-    }
-    public void editerAlligmentSurface(){
-
-    }
-    public void deplacerModifierMotif(){
-
-    }
-    public void editerMotif(){
-
-    }
 
     // TODO regrouper les setters/getters ensemble ?
     public void setRevetement(Revetement revetement) {
