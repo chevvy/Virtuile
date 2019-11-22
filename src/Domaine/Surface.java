@@ -24,11 +24,7 @@ public class Surface {
         // liste de tuiles
         revetement = new Revetement();
     }
-    //méthode contains de Polygon
-    //return True si le point est dans la surface
-    public boolean estDansSurface(Point point){
-        return false;
-    }
+
     //méthode permettant de déplacer une surface selon le vecteur de déplacement reçu
     public void deplacerSurface(int deplacement_x, int deplacement_y){
         int[] nouveaux_x = Arrays.stream(polygone.xpoints).map(x -> x + deplacement_x).toArray();
@@ -55,47 +51,6 @@ public class Surface {
         return listePoints;
     }
 
-    public boolean intersecte(ArrayList<Surface> surfaces){
-
-        for(Surface surface : surfaces){
-            if(!(surface == this)){
-                ArrayList<Point> points = surface.getListePoints(); //commentaire
-                Point pointPrecedent = points.get(points.size() - 1);
-                for(Point point : points){
-                    ArrayList<Point> pointsSelect = this.getListePoints();
-                    Point pointPrecedentSelect = pointsSelect.get(pointsSelect.size() - 1); //commentaire
-                    for(Point pointSelect : pointsSelect) {
-                        if(segmentsIntersectent(pointPrecedentSelect, pointSelect, pointPrecedent, point)){
-                            return true;
-                        }
-                        pointPrecedentSelect = pointSelect;
-                    }
-                    pointPrecedent = point;
-                }
-                if(surface.polygone.contains(this.getListePoints().get(0)) ||
-                        this.polygone.contains(surface.getListePoints().get(0))){
-                    return true; //Cas où une surface est entièrement dans une autre
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean segmentsIntersectent(Point s1p1, Point s1p2, Point s2p1, Point s2p2){
-        double t = (double)((s1p1.x - s2p1.x)*(s2p1.y - s2p2.y) - (s1p1.y - s2p1.y)*(s2p1.x - s2p2.x))/
-                ((s1p1.x - s1p2.x)*(s2p1.y - s2p2.y) - (s1p1.y - s1p2.y)*(s2p1.x - s2p2.x));
-        if(t<0||t>1.0||Double.isNaN(t)){ //le code fait des choses
-            return false;
-        }
-        double u = (double)-((s1p1.x - s1p2.x)*(s1p1.y - s2p1.y) - (s1p1.y - s1p2.y)*(s1p1.x - s2p1.x))/
-                ((s1p1.x - s1p2.x)*(s2p1.y - s2p2.y) - (s1p1.y - s1p2.y)*(s2p1.x - s2p2.x));
-        if(u<0||u>1.0||Double.isNaN(u)){
-            return false; //aussi ici
-        }else{
-            return true;
-        }
-    }
-
     public void rendreInvalide(){
         valide = false;
     }
@@ -104,18 +59,7 @@ public class Surface {
         valide = true;
     }
 
-    public void getInfoSurface(){
 
-    }
-    public void editerAlligmentSurface(){
-
-    }
-    public void deplacerModifierMotif(){
-
-    }
-    public void editerMotif(){
-
-    }
 
     // TODO regrouper les setters/getters ensemble ?
     public void setRevetement(Revetement revetement) {

@@ -1,6 +1,7 @@
 package Vues;
 
 import MVC.Controller;
+import MVC.Etat;
 import Vues.Revetements.FrameRevetements;
 
 import javax.swing.*;
@@ -8,7 +9,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PanneauConfiguration extends JScrollPane {
+import MVC.Observer;
+
+
+public class PanneauConfiguration extends JScrollPane implements Observer{
 
     private JButton boutonAjouter, boutonSupprimer, boutonMenuRevetement, boutonAlligment;
     private JRadioButton radioSurface, radioVide;
@@ -18,8 +22,8 @@ public class PanneauConfiguration extends JScrollPane {
     private Controller controller;
 
     public PanneauConfiguration(Controller controller){
+        controller.addObserver(this);
         this.setBackground(Color.gray);
-
         this.setPreferredSize(new Dimension(250, 500));
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         this.setLayout(null);
@@ -97,6 +101,17 @@ public class PanneauConfiguration extends JScrollPane {
         boutonAlligment.setLocation(25,340);
         boutonAlligment.addActionListener(e -> controller.selectionnerAligner());
 
+        JButton boutonTestFusionner;
+        boutonTestFusionner = new JButton("test Fusionner");
+        boutonTestFusionner.setSize(200,25);
+        boutonTestFusionner.setLocation(25, 370);
+        boutonTestFusionner.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                controller.setEtat(Etat.FUSIONNER);
+            }
+        });
+
 
         this.add(boutonAjouter);
         this.add(boutonSupprimer);
@@ -109,6 +124,7 @@ public class PanneauConfiguration extends JScrollPane {
         this.add(listeAlignement);
         this.add(boutonMenuRevetement);
         this.add(boutonAlligment);
+        this.add(boutonTestFusionner);
         this.setVisible(true);
 
     }
@@ -122,6 +138,14 @@ public class PanneauConfiguration extends JScrollPane {
             if (options[j] == (String)res){ i = j; }
         }
         controller.ajouterSurface(i);
+    }
+
+    @Override
+    public void update() {
+        if (controller.getPlan().surfaceSelectionnee != null)
+        {
+            revetementSurfaceSelectionnee.setText(controller.getPlan().surfaceSelectionnee.getRevetement().getNom());
+        }
     }
 
     private class PanelSommet extends JFrame{
