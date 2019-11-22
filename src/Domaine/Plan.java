@@ -148,7 +148,7 @@ public class Plan {
             return;
         }
         for(Surface surface : listeSurfaces){
-            if(surface.polygone.contains(p)){
+            if(surface.polygone.contains(p) && surface!=surfaceSelectionnee){
                 if(surfaceSelectionnee.fusionner(surface)){
                     listeSurfaces.remove(surface);
                 };
