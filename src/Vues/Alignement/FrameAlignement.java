@@ -21,14 +21,19 @@ public class FrameAlignement extends JFrame{
         frame.setTitle("Aligment des surfaces");
         frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         frame.setLayout(new GridLayout(5,1));
-        panelAlignementVerticalImage = new PanneauAlignementVerticalImage();
-        frame.add(panelAlignementVerticalImage);
-        panelAlignementVertical = new PanneauAlignementHorizontal(controller);
-        frame.add(panelAlignementVertical);
+
         panelAlignementHorizontalImage = new PanneauAlignementHorizontalImage();
         frame.add(panelAlignementHorizontalImage);
+
+        panelAlignementVertical = new PanneauAlignementHorizontal(controller);
+        frame.add(panelAlignementVertical);
+
+        panelAlignementVerticalImage = new PanneauAlignementVerticalImage();
+        frame.add(panelAlignementVerticalImage);
+
         panelAlignementHorizontal = new PanneauAlignementVertical(controller);
         frame.add(panelAlignementHorizontal);
+
         panelConfirmerAnnuler = new PanneauAlignementConfirmerAnnuler(controller, frame);
         frame.add(panelConfirmerAnnuler);
     }

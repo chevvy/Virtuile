@@ -88,7 +88,9 @@ public class Controller {
     }
 
     public void aligner(String alignement){
+
         plan.aligner(alignement);
+        notifyObservers();
     }
 
     public void annulerAligner(){

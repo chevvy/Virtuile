@@ -4,6 +4,7 @@ import MVC.Controller;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,11 +18,48 @@ public class PanneauAlignementHorizontalImage extends JPanel {
     }
 
     private void SetUpUi() {
+        this.setSize(new Dimension(1100, 400));
+
         try {
             BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/gaucheExt.png"));
             JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
-            picLabel.setBounds(25, 250, 50, 50);
-            add(picLabel);
+            this.add(picLabel);
+
+
+        } catch (IOException ex) {
+            System.out.println("Pas d'image :(");
+        }
+        try {
+            BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/gaucheInt.png"));
+            JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
+            this.add(picLabel);
+
+
+        } catch (IOException ex) {
+            System.out.println("Pas d'image :(");
+        }
+        try {
+            BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/centreHorizontal.png"));
+            JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
+            this.add(picLabel);
+
+
+        } catch (IOException ex) {
+            System.out.println("Pas d'image :(");
+        }
+        try {
+            BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/droiteInt.png"));
+            JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
+            this.add(picLabel);
+
+
+        } catch (IOException ex) {
+            System.out.println("Pas d'image :(");
+        }
+        try {
+            BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/droiteExt.png"));
+            JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
+            this.add(picLabel);
 
 
         } catch (IOException ex) {

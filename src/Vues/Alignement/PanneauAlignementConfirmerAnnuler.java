@@ -25,8 +25,7 @@ public class PanneauAlignementConfirmerAnnuler extends JPanel {
         boutonOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controller.relacher();
-                frame.dispose();
-
+                //frame.dispose();
             }
         });
         JButton boutonAnnuler = new JButton("Annuler");
