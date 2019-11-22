@@ -3,6 +3,8 @@ package Vues;
 import MVC.Controller;
 import MVC.Etat;
 import MVC.Observer;
+import Vues.Alignement.FrameAlignement;
+import Vues.Revetements.FrameRevetements;
 
 import javax.swing.*;
 import java.awt.*;

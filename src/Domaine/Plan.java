@@ -3,6 +3,8 @@ package Domaine;
 import MVC.Etat;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -220,6 +222,10 @@ public class Plan {
             return nouveauPoint;
         }
         return point;
+    }
+
+    public ArrayList<Surface> getListeSurfaces() {
+        return listeSurfaces;
     }
 
 

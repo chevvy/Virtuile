@@ -1,5 +1,7 @@
-package Vues;
+package Vues.Alignement;
 import MVC.Controller;
+import Vues.PanneauConfirmerAnnuler;
+
 import javax.swing.*;
 import java.awt.*;
 

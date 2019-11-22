@@ -1,4 +1,4 @@
-package Vues;
+package Vues.Revetements;
 
 import MVC.Controller;
 

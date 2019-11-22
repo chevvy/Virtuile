@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class Surface {
 
     public Polygon polygone;
+    private Revetement revetement;
 
     public boolean valide;
 
@@ -21,7 +22,7 @@ public class Surface {
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
         valide = true;
         // liste de tuiles
-        // revetement assigné
+        revetement = new Revetement();
     }
 
     //méthode permettant de déplacer une surface selon le vecteur de déplacement reçu
@@ -69,5 +70,14 @@ public class Surface {
     }
     public void editerMotif(){
 
+    }
+
+    // TODO regrouper les setters/getters ensemble ?
+    public void setRevetement(Revetement revetement) {
+        this.revetement = revetement;
+    }
+
+    public Revetement getRevetement() {
+        return revetement;
     }
 }
