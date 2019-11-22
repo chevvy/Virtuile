@@ -103,11 +103,6 @@ public class Plan {
             pointPrecedent.x += deplacement_x;
             pointPrecedent.y += deplacement_y;
         }
-        if(surfaceSelectionnee.intersecte(listeSurfaces)){
-            surfaceSelectionnee.rendreInvalide();
-        }else{
-            surfaceSelectionnee.rendreValide();
-        }
     }
 
     public void etirerSurface(Point position){
@@ -127,9 +122,6 @@ public class Plan {
         Surface nouvelleSurface = new Surface(points);
         listeSurfaces.remove(surfaceSelectionnee);
         listeSurfaces.add(nouvelleSurface);
-        if(nouvelleSurface.intersecte(listeSurfaces)){
-            nouvelleSurface.rendreInvalide();
-        }
         surfaceSelectionnee = nouvelleSurface;
     }
 
@@ -149,7 +141,7 @@ public class Plan {
         return Etat.LECTURE;
     }
 
-    public Etat aligner(String alignement){
+    public void aligner(String alignement){
         Rectangle boiteAncre = ancre.polygone.getBounds();
         Rectangle boiteSelect = surfaceSelectionnee.polygone.getBounds();
         switch(alignement){
@@ -196,27 +188,10 @@ public class Plan {
             default:
                 break;
         }
-        return Etat.LECTURE;
     }
 
     public void annulerAligner(){
-        surfaceSelectionnee.rendreInvalide();
-        confirmerDeplacement();
-    }
-
-    public Etat confirmerSurface(){
-        if(!surfaceSelectionnee.valide){
-            listeSurfaces.remove(surfaceSelectionnee);
-            surfaceSelectionnee = null;
-        }
-        return Etat.LECTURE;
-    }
-
-    public Etat confirmerDeplacement(){
-        if(!surfaceSelectionnee.valide){
-            deplacerSurface(premierPoint);
-        }
-        return Etat.LECTURE;
+        deplacerSurface(premierPoint);
     }
 
     public ArrayList<Surface> recupererSurfaces(){
@@ -235,7 +210,7 @@ public class Plan {
         this.isGrilleMagnetiqueActive = active;
     }
 
-    public Point convertMouseCoordWithMagnetique(Point point){
+    private Point convertMouseCoordWithMagnetique(Point point){
         if (isGrilleMagnetiqueActive){
             int offX = point.x % grid_size;
             int offY = point.y % grid_size;

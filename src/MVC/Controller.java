@@ -126,11 +126,9 @@ public class Controller {
     public void relacher(){
         switch(etat){
             case ETIRER_SURFACE:
-                etat = plan.confirmerSurface();
-                break;
             case ALIGNER:
             case DEPLACER_SURFACE:
-                etat = plan.confirmerDeplacement();
+                etat = Etat.LECTURE;
                 break;
             default:
                 break;
@@ -174,19 +172,13 @@ public class Controller {
         }
 
         if(surfaceSelectionnee != null){
-            g.setColor(surfaceSelectionnee.valide?Color.blue.brighter():Color.red);
+            g.setColor(Color.blue.brighter());
             g.fillPolygon(surfaceSelectionnee.polygone);
 
             g.setColor(Color.yellow);
-            if(surfaceSelectionnee.valide){
-                g.setColor(Color.yellow);
-                g.drawPolygon(plan.surfaceSelectionnee.polygone);
-            }
+            g.drawPolygon(plan.surfaceSelectionnee.polygone);
         }
-        g.setColor(Color.RED);
-        if(etat == Etat.AJOUTER_SURFACE || etat == Etat.CREER_FORME_LIBRE){
-            g.drawOval(mouse.x-5, mouse.y-5, 10, 10);
-        }
+
         ArrayList<Point> surfaceLibre = plan.getSurfaceLibre();
         if(etat == Etat.CREER_FORME_LIBRE && surfaceLibre.size()>1){
             g.drawOval(surfaceLibre.get(0).x-5, surfaceLibre.get(0).y-5, 10, 10);
