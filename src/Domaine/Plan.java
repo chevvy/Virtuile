@@ -143,6 +143,20 @@ public class Plan {
         return Etat.LECTURE;
     }
 
+    public void fusionner(Point p){
+        if(surfaceSelectionnee == null){
+            return;
+        }
+        for(Surface surface : listeSurfaces){
+            if(surface.polygone.contains(p)){
+                if(surfaceSelectionnee.fusionner(surface)){
+                    listeSurfaces.remove(surface);
+                };
+                return;
+            }
+        }
+    }
+
     public void aligner(String alignement){
         Rectangle boiteAncre = ancre.polygone.getBounds();
         Rectangle boiteSelect = surfaceSelectionnee.polygone.getBounds();

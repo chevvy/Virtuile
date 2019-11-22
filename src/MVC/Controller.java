@@ -106,6 +106,10 @@ public class Controller {
             case CREER_FORME_LIBRE:
                 etat = plan.ajouterPointSurfaceLibre(p);
                 break;
+            case FUSIONNER:
+                plan.fusionner(p);
+                etat = Etat.LECTURE;
+                break;
             case SELECTIONNER_ALIGNER:
                 etat = plan.selectionnerAligner(p);
             default:

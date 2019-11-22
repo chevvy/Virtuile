@@ -69,6 +69,7 @@ public class Surface {
             }
             iterator.next();
         }
+        polygone = nouveau_polygone;
         return true;
     }
 
