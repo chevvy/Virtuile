@@ -18,8 +18,6 @@ public class PanneauAlignementVerticalImage extends JPanel {
 
     private void SetUpUi() {
         try {
-            String currentDirectory = System.getProperty("user.dir");
-            System.out.println("The current working directory is " + currentDirectory);
             BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/gaucheExt.png"));
             JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
             picLabel.setBounds(25, 250, 40, 40);
