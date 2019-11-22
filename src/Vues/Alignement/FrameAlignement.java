@@ -19,7 +19,7 @@ public class FrameAlignement extends JFrame{
         frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
 
-        panelAlignement = new PanneauAlignement(controller);
+        panelAlignement = new PanneauAlignement(controller, this);
         frame.add(panelAlignement);
 
     }

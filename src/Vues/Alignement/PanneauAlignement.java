@@ -14,7 +14,7 @@ public class PanneauAlignement extends JPanel{
 
     private Controller controller;
 
-    public PanneauAlignement(Controller controller) {
+    public PanneauAlignement(Controller controller, FrameAlignement frame) {
         this.frame = frame;
         this.controller = controller;
 

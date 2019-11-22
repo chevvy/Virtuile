@@ -69,7 +69,7 @@ public class PanneauAlignementHorizontal extends JPanel{
         });
 
         //Aucun alignement horizontal
-        JRadioButton aucunAlligmentHorizontal = new JRadioButton("     ");
+        JRadioButton aucunAlligmentHorizontal = new JRadioButton("Aucun Allignement Horizontal");
         aucunAlligmentHorizontal.setSelected(true);
         this.add(aucunAlligmentHorizontal);
         buttonGroupHorizontal.add(aucunAlligmentHorizontal);
