@@ -2,6 +2,7 @@ package MVC;
 
 import Domaine.Plan;
 import Domaine.Surface;
+import Domaine.Tuile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -80,7 +81,6 @@ public class Controller {
         }
         notifyObservers();
     }
-
 
     public void selectionnerAligner(){
         etat = Etat.SELECTIONNER_ALIGNER;
@@ -205,6 +205,14 @@ public class Controller {
         else if (etat == Etat.CREER_FORME_LIBRE && surfaceLibre.size() == 1){
             g.drawOval(surfaceLibre.get(0).x-5, surfaceLibre.get(0).y-5, 10, 10);
             g.drawLine(surfaceLibre.get(0).x, surfaceLibre.get(0).y, mouse.x, mouse.y);
+        }
+
+        for(Surface surface : plan.recupererSurfaces()){
+            for (Tuile tuile : surface.getListeTuiles()){
+                g.setColor(Color.GREEN);
+                g.fillPolygon(tuile.getPolygone());
+                g.drawPolygon(tuile.getPolygone());
+            }
         }
     }
 

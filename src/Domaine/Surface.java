@@ -35,6 +35,7 @@ public class Surface {
         int[] nouveaux_x = Arrays.stream(polygone.xpoints).map(x -> x + deplacement_x).toArray();
         int[] nouveaux_y = Arrays.stream(polygone.ypoints).map(x -> x + deplacement_y).toArray();
         polygone = new Polygon(nouveaux_x, nouveaux_y, polygone.npoints);
+        genererListeDeTuiles();
     }
 
 
@@ -85,8 +86,6 @@ public class Surface {
     }
 
 
-
-    // TODO regrouper les setters/getters ensemble ?
     public void setRevetement(Revetement revetement) {
         this.revetement = revetement;
     }
@@ -95,32 +94,31 @@ public class Surface {
         return revetement;
     }
 
-    private ArrayList<Tuile> genererListeDeTuiles(){
+    public ArrayList<Tuile> genererListeDeTuiles(){
         // reçoit un motif en argument
         // correspond au coin supérieur gauche
-        int coordXduBound = polygone.getBounds().x; int coordYduBond = polygone.getBounds().y;
-        int boundsWidth = polygone.getBounds().width;int boundsHeight = polygone.getBounds().height;
-        int tuileWidth = revetement.getLongueurTuile() ;int tuileHeight = revetement.getHauteurTuile() ;
+        int coordXduBound = polygone.getBounds().x;
+        int coordYduBond = polygone.getBounds().y;
+        int boundsWidth = polygone.getBounds().width;
+        int boundsHeight = polygone.getBounds().height;
+        int tuileWidth = revetement.getLongueurTuile() ;
+        int tuileHeight = revetement.getHauteurTuile() ;
         //on +1 pour qu'on sorte un peu du bound box
-        int nbTuilesX = (boundsWidth / tuileWidth) +1 ;int nbTuilesY = (boundsHeight / tuileHeight) +1 ;
+        int nbTuilesX = (boundsWidth / tuileWidth) +1 ; int nbTuilesY = (boundsHeight / tuileHeight) +1 ;
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
 
-        // on génère le nb de tuile en partant du bounds.x et bounds.y (ceux-ci sont au coin supérieur gauche)
-        // for nbTuilesX
-            // for nbTuilesY
-            // tuile(listes points x, liste point y, points.size())
-            // ajouter à la liste de tuile
-        int i = 0; int j = 0;
-        while (j < nbTuilesY){
-            int [] pointsY = genererListePoints(coordYduBond, boundsHeight);
-            while (i < nbTuilesX) {
-                int [] pointsX = genererListePoints(coordXduBound, boundsWidth);
-                newListeTuiles.add(new Tuile(pointsX, pointsY));
-                coordXduBound += boundsWidth;
+        int j = 0;
+        while (j <= nbTuilesY){
+            int i = 0;
+            int positionEnX = coordXduBound;
+            while (i <= nbTuilesX) {
+                newListeTuiles.add(new Tuile(genereSommetsTuile(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                positionEnX += tuileWidth;
                 i++;
             }
-            coordYduBond += boundsHeight;
-          j++;
+            coordYduBond += tuileHeight;
+            positionEnX = coordXduBound;
+            j++;
         } ;
         return newListeTuiles;
     }
@@ -139,4 +137,14 @@ public class Surface {
         listePoints[1] = pointOrigine + longueur;
         return listePoints;
     }
+
+    private ArrayList<Point> genereSommetsTuile(int x, int y, int width, int height){
+        ArrayList<Point> listeSommets = new ArrayList<Point>();
+        listeSommets.add(new Point(x,y));
+        listeSommets.add(new Point(x, y + height));
+        listeSommets.add(new Point(x + width, y + height));
+        listeSommets.add(new Point(x + width, y));
+        return listeSommets;
+    }
+
 }
