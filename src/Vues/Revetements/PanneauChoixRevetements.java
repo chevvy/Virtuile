@@ -25,7 +25,7 @@ public class PanneauChoixRevetements extends JPanel {
 
         for(Revetement revetement : controller.plan.getListeRevetements())
         {
-            model.addElement(revetement.getNom());
+            model.addElement(revetement.getNomDuRevetement());
         }
 
         // for Surface in controller.getPlan()

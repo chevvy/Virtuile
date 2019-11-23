@@ -183,7 +183,7 @@ public class Controller {
         }
 
         if(surfaceSelectionnee != null){
-            g.setColor(Color.blue.brighter());
+            g.setColor(Color.BLUE.darker());
             g.fillPolygon(surfaceSelectionnee.polygone);
 
             g.setColor(Color.yellow);

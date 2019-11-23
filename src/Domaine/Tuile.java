@@ -12,13 +12,40 @@ public class Tuile{
     // elle contient, sa taille, ses points,
     // elle a un getter et un setter pour sa taille
     // ceux-ci viennent affecter ses points ? Pas sûr
-    public Polygon polygone;
+    private Polygon polygone;
+    private int length;
+    private int height;
 
 
     public Tuile(List<Point> listePoints){
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
-        polygone = new Polygon(coords_x, coords_y, listePoints.size());
+        this.polygone = new Polygon(coords_x, coords_y, listePoints.size());
+        length = polygone.xpoints.length;
+        height = polygone.ypoints.length;
     }
 
+    public Polygon getPolygone() {
+        return polygone;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setPolygone(Polygon polygone) {
+        this.polygone = polygone;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
 }

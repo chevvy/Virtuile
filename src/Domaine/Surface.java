@@ -15,7 +15,7 @@ public class Surface {
 
     public Polygon polygone;
     private Revetement revetement;
-
+    private Tuile [] listeTuiles;
     public boolean valide;
 
     public Surface(List<Point> listePoints) {
@@ -25,6 +25,7 @@ public class Surface {
         valide = true;
         // liste de tuiles
         revetement = new Revetement();
+        genererTuile();
     }
 
     //méthode permettant de déplacer une surface selon le vecteur de déplacement reçu
@@ -33,8 +34,8 @@ public class Surface {
         int[] nouveaux_y = Arrays.stream(polygone.ypoints).map(x -> x + deplacement_y).toArray();
         polygone = new Polygon(nouveaux_x, nouveaux_y, polygone.npoints);
     }
-    //méthode permettant de modifier un point d'une surface
-    //on lui fournit une liste de tous les nouveaux points
+
+
     public void modifierSommets(ArrayList<Point> coordonneesNouvellesCardinalites){
 
     }
@@ -90,5 +91,35 @@ public class Surface {
 
     public Revetement getRevetement() {
         return revetement;
+    }
+
+    private void genererTuile(){
+        // reçoit un motif en argument
+            // si pas de motif, fait juste loader des tuiles 1 pour 1
+        int boundsWidth = polygone.getBounds().width;
+        int heightWidth = polygone.getBounds().width;
+        int tuileWidth = revetement.getLongueurTuile() + 1; //on +1 pour qu'on sorte un peu du bound box
+        int tuileHeight = revetement.getHauteurTuile() + 1;
+        int nbTuilesX = (boundsWidth / tuileWidth) ;
+        int nbTuilesY = (heightWidth / tuileHeight);
+
+        // on génère le nb de tuile en partant du min(x) min(y)
+        // for nbTuilesX
+            // for nbTuilesY
+            // tuile(listes points x, liste point y, points.size())
+            // ajouter à la liste de tuile
+
+
+    }
+
+    // prend une position x et genere tous les points pour une taille donnée
+    private int [] genererListePoints(int position, int taille){
+        int [] listePoint = new int[0];
+        int i = 0;
+        while (i < position + taille){
+            listePoint[i] = position + 1;
+            i++;
+        }
+        return listePoint;
     }
 }
