@@ -8,6 +8,9 @@ public class Revetement {
     // taille des tuiles par défaut
     private int longueurTuile;
     private int hauteurTuile;
+
+    private int tailleDuCoulis = 2;
+    private Color couleurCoulis = Color.WHITE;
     // contient le motif
     // methode : genererRevetement(boundingbox) -> selon le bound et le motif, modifie la liste des tuiles pour quelles soient de la bonne taille
 
@@ -19,8 +22,8 @@ public class Revetement {
 
     public Revetement(){
         // revetement avec motif / taille par defaut (TBD)
-        this.longueurTuile = 2;
-        this.hauteurTuile = 1;
+        this.longueurTuile = 15;
+        this.hauteurTuile = 10;
         this.nomDuRevetement = "revetement par defaut";
     }
 
@@ -56,5 +59,20 @@ public class Revetement {
         this.hauteurTuile = hauteurTuile;
     }
 
+    public int getTailleDuCoulis() {
+        return tailleDuCoulis;
+    }
+
+    public void setTailleDuCoulis(int tailleDuCoulis) {
+        this.tailleDuCoulis = tailleDuCoulis;
+    }
+
+    public Color getCouleurCoulis() {
+        return couleurCoulis;
+    }
+
+    public void setCouleurCoulis(Color couleurCoulis) {
+        this.couleurCoulis = couleurCoulis;
+    }
 }
 

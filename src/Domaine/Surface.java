@@ -2,20 +2,21 @@ package Domaine;
 
 import javafx.util.Pair;
 
-import java.awt.Point;
+import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
 import java.util.ArrayList;
-import java.awt.Polygon;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 public class Surface {
 
     public Polygon polygone;
     private Revetement revetement;
-    private Tuile [] listeTuiles;
+    private ArrayList<Tuile> listeTuiles = new ArrayList<>();
+
     public boolean valide;
 
     public Surface(List<Point> listePoints) {
@@ -25,7 +26,7 @@ public class Surface {
         valide = true;
         // liste de tuiles
         revetement = new Revetement();
-        genererTuile();
+        setListeTuiles(genererListeDeTuiles());
     }
 
     //méthode permettant de déplacer une surface selon le vecteur de déplacement reçu
@@ -33,6 +34,7 @@ public class Surface {
         int[] nouveaux_x = Arrays.stream(polygone.xpoints).map(x -> x + deplacement_x).toArray();
         int[] nouveaux_y = Arrays.stream(polygone.ypoints).map(x -> x + deplacement_y).toArray();
         polygone = new Polygon(nouveaux_x, nouveaux_y, polygone.npoints);
+        setListeTuiles(genererListeDeTuiles());
     }
 
 
@@ -83,8 +85,6 @@ public class Surface {
     }
 
 
-
-    // TODO regrouper les setters/getters ensemble ?
     public void setRevetement(Revetement revetement) {
         this.revetement = revetement;
     }
@@ -93,33 +93,55 @@ public class Surface {
         return revetement;
     }
 
-    private void genererTuile(){
-        // reçoit un motif en argument
-            // si pas de motif, fait juste loader des tuiles 1 pour 1
-        int boundsWidth = polygone.getBounds().width;
-        int heightWidth = polygone.getBounds().width;
-        int tuileWidth = revetement.getLongueurTuile() + 1; //on +1 pour qu'on sorte un peu du bound box
-        int tuileHeight = revetement.getHauteurTuile() + 1;
-        int nbTuilesX = (boundsWidth / tuileWidth) ;
-        int nbTuilesY = (heightWidth / tuileHeight);
+    public ArrayList<Tuile> genererListeDeTuiles(){
+        // reçoit un motif en argument  test
+        int tailleCoulis = revetement.getTailleDuCoulis();
+        Color couleurCoulis = revetement.getCouleurCoulis();
 
-        // on génère le nb de tuile en partant du min(x) min(y)
-        // for nbTuilesX
-            // for nbTuilesY
-            // tuile(listes points x, liste point y, points.size())
-            // ajouter à la liste de tuile
+        int coordXduBound = polygone.getBounds().x; int coordYduBond = polygone.getBounds().y;
+        int boundsWidth = polygone.getBounds().width; int boundsHeight = polygone.getBounds().height;
+        int tuileWidth = revetement.getLongueurTuile() ; int tuileHeight = revetement.getHauteurTuile() ;
+        int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis)); int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis));
+        ArrayList<Tuile> newListeTuiles = new ArrayList<>();
 
-
+        int j = 0;
+        while (j <= nbTuilesY){
+            int i = 0;
+            int positionEnX = coordXduBound;
+            while (i <= nbTuilesX ) {
+                newListeTuiles.add(new Tuile(genereSommetsTuile(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                positionEnX += tuileWidth + tailleCoulis;
+                i++;
+            }
+            coordYduBond += tuileHeight + tailleCoulis;
+            positionEnX = coordXduBound;
+            j++;
+        } ;
+        return newListeTuiles;
     }
 
-    // prend une position x et genere tous les points pour une taille donnée
-    private int [] genererListePoints(int position, int taille){
-        int [] listePoint = new int[0];
-        int i = 0;
-        while (i < position + taille){
-            listePoint[i] = position + 1;
-            i++;
-        }
-        return listePoint;
+    public ArrayList<Tuile> getListeTuiles() {
+        return listeTuiles;
     }
+
+    public void setListeTuiles(ArrayList<Tuile> listeTuiles) {
+        this.listeTuiles = listeTuiles;
+    }
+
+    private int [] genererListePoints(int pointOrigine, int longueur){
+        int [] listePoints = new int[2];
+        listePoints[0] = pointOrigine;
+        listePoints[1] = pointOrigine + longueur;
+        return listePoints;
+    }
+
+    private ArrayList<Point> genereSommetsTuile(int x, int y, int width, int height){
+        ArrayList<Point> listeSommets = new ArrayList<Point>();
+        listeSommets.add(new Point(x,y));
+        listeSommets.add(new Point(x, y + height));
+        listeSommets.add(new Point(x + width, y + height));
+        listeSommets.add(new Point(x + width, y));
+        return listeSommets;
+    }
+
 }
