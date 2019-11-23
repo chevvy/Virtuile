@@ -17,7 +17,6 @@ public class Tuile{
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
-        System.out.println("coords x = " + Arrays.toString(coords_x) + "coords y : " + Arrays.toString(coords_y) + "nbDEPoints" + listePoints.size());
         length = polygone.xpoints.length;
         height = polygone.ypoints.length;
     }

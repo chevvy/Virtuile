@@ -2,11 +2,10 @@ package Domaine;
 
 import javafx.util.Pair;
 
-import java.awt.Point;
+import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
 import java.util.ArrayList;
-import java.awt.Polygon;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,7 +34,7 @@ public class Surface {
         int[] nouveaux_x = Arrays.stream(polygone.xpoints).map(x -> x + deplacement_x).toArray();
         int[] nouveaux_y = Arrays.stream(polygone.ypoints).map(x -> x + deplacement_y).toArray();
         polygone = new Polygon(nouveaux_x, nouveaux_y, polygone.npoints);
-        genererListeDeTuiles();
+        setListeTuiles(genererListeDeTuiles());
     }
 
 
@@ -96,27 +95,25 @@ public class Surface {
 
     public ArrayList<Tuile> genererListeDeTuiles(){
         // reçoit un motif en argument
-        // correspond au coin supérieur gauche
-        int coordXduBound = polygone.getBounds().x;
-        int coordYduBond = polygone.getBounds().y;
-        int boundsWidth = polygone.getBounds().width;
-        int boundsHeight = polygone.getBounds().height;
-        int tuileWidth = revetement.getLongueurTuile() ;
-        int tuileHeight = revetement.getHauteurTuile() ;
-        //on +1 pour qu'on sorte un peu du bound box
-        int nbTuilesX = (boundsWidth / tuileWidth) +1 ; int nbTuilesY = (boundsHeight / tuileHeight) +1 ;
+        int tailleCoulis = revetement.getTailleDuCoulis();
+        Color couleurCoulis = revetement.getCouleurCoulis();
+
+        int coordXduBound = polygone.getBounds().x; int coordYduBond = polygone.getBounds().y;
+        int boundsWidth = polygone.getBounds().width; int boundsHeight = polygone.getBounds().height;
+        int tuileWidth = revetement.getLongueurTuile() ; int tuileHeight = revetement.getHauteurTuile() ;
+        int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis)); int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis));
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
 
         int j = 0;
         while (j <= nbTuilesY){
             int i = 0;
             int positionEnX = coordXduBound;
-            while (i <= nbTuilesX) {
+            while (i <= nbTuilesX ) {
                 newListeTuiles.add(new Tuile(genereSommetsTuile(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
-                positionEnX += tuileWidth;
+                positionEnX += tuileWidth + tailleCoulis;
                 i++;
             }
-            coordYduBond += tuileHeight;
+            coordYduBond += tuileHeight + tailleCoulis;
             positionEnX = coordXduBound;
             j++;
         } ;
