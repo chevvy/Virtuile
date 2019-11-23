@@ -1,5 +1,6 @@
 package Domaine;
 import java.awt.*;
+import java.util.Arrays;
 
 public class Tuile{
     // la classe tuile est un extend de polygon
@@ -12,7 +13,7 @@ public class Tuile{
 
 
     Tuile(int[] coords_x, int[] coords_y){
-        int nPoints = coords_x.length;
+        int nPoints = coords_y.length;
         this.polygone = new Polygon(coords_x, coords_y, nPoints);
         length = polygone.xpoints.length;
         height = polygone.ypoints.length;

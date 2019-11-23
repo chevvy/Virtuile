@@ -116,8 +116,10 @@ public class Surface {
             while (i < nbTuilesX) {
                 int [] pointsX = genererListePoints(coordXduBound, boundsWidth);
                 newListeTuiles.add(new Tuile(pointsX, pointsY));
+                coordXduBound += boundsWidth;
                 i++;
             }
+            coordYduBond += boundsHeight;
           j++;
         } ;
         return newListeTuiles;
@@ -132,13 +134,9 @@ public class Surface {
     }
 
     private int [] genererListePoints(int pointOrigine, int longueur){
-        int [] listePoints = new int[longueur + 1];
+        int [] listePoints = new int[2];
         listePoints[0] = pointOrigine;
-        int i = 1;
-        while (i <= longueur){
-            listePoints[i] = pointOrigine +1 ;
-            i++;
-        }
+        listePoints[1] = pointOrigine + longueur;
         return listePoints;
     }
 }

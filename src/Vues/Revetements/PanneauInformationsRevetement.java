@@ -17,10 +17,11 @@ public class PanneauInformationsRevetement extends JPanel{
 
     public PanneauInformationsRevetement(Controller controller) {
 
-        SetUpUi();
+
         this.controller = controller;
         this.setPreferredSize(new Dimension(480, 500));
         this.setLayout(null);
+        SetUpUi();
 
     }
 

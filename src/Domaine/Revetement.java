@@ -12,15 +12,15 @@ public class Revetement {
     // methode : genererRevetement(boundingbox) -> selon le bound et le motif, modifie la liste des tuiles pour quelles soient de la bonne taille
 
     public Revetement(String nom){
-        this.longueurTuile = 2;
-        this.hauteurTuile = 1;
+        this.longueurTuile = 10;
+        this.hauteurTuile = 5;
         this.nomDuRevetement = nom;
     }
 
     public Revetement(){
         // revetement avec motif / taille par defaut (TBD)
-        this.longueurTuile = 2;
-        this.hauteurTuile = 1;
+        this.longueurTuile = 10;
+        this.hauteurTuile = 5;
         this.nomDuRevetement = "revetement par defaut";
     }
 
