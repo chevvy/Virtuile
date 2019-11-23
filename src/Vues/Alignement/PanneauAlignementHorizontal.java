@@ -24,7 +24,8 @@ public class PanneauAlignementHorizontal extends JPanel{
         //Groupe Horizontal
         ButtonGroup buttonGroupHorizontal = new ButtonGroup();
 
-        JRadioButton boutonGauche01 = new JRadioButton("Gauche - Extérieur  ");
+        //Gauche/Extérieur
+        JRadioButton boutonGauche01 = new JRadioButton("     ");
         this.add(boutonGauche01);
         buttonGroupHorizontal.add(boutonGauche01);
         boutonGauche01.addActionListener(new ActionListener() {
@@ -32,15 +33,16 @@ public class PanneauAlignementHorizontal extends JPanel{
             public void actionPerformed(ActionEvent e1) { controller.aligner("gaucheExt"); }
         });
 
-        JRadioButton boutonGauche02 = new JRadioButton("Gauche - Intérieur  ");
+        //Gauche/Intérieur
+        JRadioButton boutonGauche02 = new JRadioButton("     ");
         this.add(boutonGauche02);
         buttonGroupHorizontal.add(boutonGauche02);
         boutonGauche02.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e1) { controller.aligner("gaucheInt"); }
         });
-
-        JRadioButton boutonCentreHorizontal = new JRadioButton(" Centré horizontalement  ");
+        //Centré horizontalement
+        JRadioButton boutonCentreHorizontal = new JRadioButton("     ");
         this.add(boutonCentreHorizontal);
         buttonGroupHorizontal.add(boutonCentreHorizontal);
         boutonCentreHorizontal.addActionListener(new ActionListener() {
@@ -48,7 +50,8 @@ public class PanneauAlignementHorizontal extends JPanel{
             public void actionPerformed(ActionEvent e1) { controller.aligner("centreHorizontal"); }
         });
 
-        JRadioButton boutonDroite01 = new JRadioButton("Droite - Intérieur  ");
+        //Centré horizontalement
+        JRadioButton boutonDroite01 = new JRadioButton("     ");
         this.add(boutonDroite01);
         buttonGroupHorizontal.add(boutonDroite01);
         boutonDroite01.addActionListener(new ActionListener() {
@@ -56,8 +59,8 @@ public class PanneauAlignementHorizontal extends JPanel{
             public void actionPerformed(ActionEvent e1) { controller.aligner("droiteInt"); }
         });
 
-
-        JRadioButton boutonDroite02 = new JRadioButton("Droite - Extérieur  ");
+        //Droite/Extérieur
+        JRadioButton boutonDroite02 = new JRadioButton("     ");
         this.add(boutonDroite02);
         buttonGroupHorizontal.add(boutonDroite02);
         boutonDroite02.addActionListener(new ActionListener() {
@@ -65,10 +68,15 @@ public class PanneauAlignementHorizontal extends JPanel{
             public void actionPerformed(ActionEvent e1) { controller.aligner("droiteExt"); }
         });
 
-        JRadioButton aucunAlligmentHorizontal = new JRadioButton("Aucun allignement vertical    ");
+        //Aucun alignement horizontal
+        JRadioButton aucunAlligmentHorizontal = new JRadioButton("Aucun Allignement Horizontal");
         aucunAlligmentHorizontal.setSelected(true);
         this.add(aucunAlligmentHorizontal);
         buttonGroupHorizontal.add(aucunAlligmentHorizontal);
+        aucunAlligmentHorizontal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e1) { controller.aligner("rienHorizontal"); }
+        });
 
         this.setVisible(true);
 

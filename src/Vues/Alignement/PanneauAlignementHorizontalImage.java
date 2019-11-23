@@ -18,8 +18,8 @@ public class PanneauAlignementHorizontalImage extends JPanel {
     }
 
     private void SetUpUi() {
-        this.setSize(new Dimension(1100, 400));
 
+        //gaucheExt
         try {
             BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/gaucheExt.png"));
             JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
@@ -29,6 +29,8 @@ public class PanneauAlignementHorizontalImage extends JPanel {
         } catch (IOException ex) {
             System.out.println("Pas d'image :(");
         }
+
+        //gaucheInt
         try {
             BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/gaucheInt.png"));
             JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
@@ -38,8 +40,10 @@ public class PanneauAlignementHorizontalImage extends JPanel {
         } catch (IOException ex) {
             System.out.println("Pas d'image :(");
         }
+
+        //centreHorizontal
         try {
-            BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/centreHorizontal.png"));
+            BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/gaucheExt.png"));
             JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
             this.add(picLabel);
 
@@ -47,6 +51,8 @@ public class PanneauAlignementHorizontalImage extends JPanel {
         } catch (IOException ex) {
             System.out.println("Pas d'image :(");
         }
+
+        //droiteInt
         try {
             BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/droiteInt.png"));
             JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
@@ -56,6 +62,8 @@ public class PanneauAlignementHorizontalImage extends JPanel {
         } catch (IOException ex) {
             System.out.println("Pas d'image :(");
         }
+
+        //droiteExt
         try {
             BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/droiteExt.png"));
             JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
