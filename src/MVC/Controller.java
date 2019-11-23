@@ -213,6 +213,7 @@ public class Controller {
         notifyObservers();
     }
 
+
     public int getGridSize(){
         return this.plan.getGridSize();
     }
@@ -224,4 +225,26 @@ public class Controller {
     public Plan getPlan() {
         return plan;
     }
+
+    //Couleurs des tuiles
+    public void ajouterCouleur(String couleur){
+
+        plan.ajouterCouleur(couleur);
+    }
+
+    public ArrayList<String> getCouleurs(){ return plan.getListeCouleur(); }
+
+
+    //Type de matériaux
+    public void ajouterTypeMateriau(String typeMateriau){
+
+        plan.ajouterTypeMateriau(typeMateriau);
+    }
+
+    public ArrayList<String> getTypeMatériaux(){ return plan.getListeTypeMateriau(); }
+
+    //Type de motifs de tuiles
+    public ArrayList<String> getMotifs(){ return plan.getListeMotifs(); }
+
+
 }

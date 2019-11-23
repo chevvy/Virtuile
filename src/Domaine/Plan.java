@@ -3,9 +3,8 @@ package Domaine;
 import MVC.Etat;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class Plan {
@@ -20,6 +19,11 @@ public class Plan {
     private boolean isGrilleMagnetiqueActive = false;
     private int grid_size = 50;
     private ArrayList<Revetement> listeRevetements = new ArrayList<>();
+    private ArrayList<String> listeCouleurs = new ArrayList<>( Arrays.asList("Rouge", "Noir", "Gris"));
+    private ArrayList<String> listeTypeMateriau = new ArrayList<>( Arrays.asList("Béton", "Terre cuite", "Ardoise",
+            "Bois"));
+    private ArrayList<String> listeMotifs= new ArrayList<>( Arrays.asList("Installation droite", "Installation " +
+            "imitation parquet", "Installation en décallé", "Installation en chevron", "Installation en L"));
 
 
     public Plan(){
@@ -256,4 +260,27 @@ public class Plan {
     }
 
     public ArrayList<Revetement> getListeRevetements(){return listeRevetements;}
+
+    // Liste des couleurs de tuiles
+    public void ajouterCouleur(String nom){
+        //if (!(listeCouleurs.contains(nom)))
+            this.listeCouleurs.add(nom);
+    }
+
+    public ArrayList<String> getListeCouleur(){return listeCouleurs;}
+
+    //Liste des types de matériaux
+    public void ajouterTypeMateriau(String nom){
+        //if (!(listeCouleurs.contains(nom)))
+        this.listeTypeMateriau.add(nom);
+    }
+
+    public ArrayList<String> getListeTypeMateriau(){return listeTypeMateriau;}
+
+    //Liste des types de motifs
+    public ArrayList<String> getListeMotifs(){return listeMotifs;}
+
 }
+
+
+

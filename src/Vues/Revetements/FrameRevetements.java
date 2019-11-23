@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class FrameRevetements extends JFrame{
+    private Controller controller;
 
     public FrameRevetements(Controller controller) {
         this.setSize(800, 500);
