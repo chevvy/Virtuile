@@ -73,7 +73,7 @@ public class PanneauAlignementHorizontalImage extends JPanel {
 
         //vide
         try {
-            BufferedImage imageNoAlignement = ImageIO.read(new File("src/Ressources/noAlignement.png"));
+            BufferedImage imageNoAlignement = ImageIO.read(new File("src/Ressources/non.png"));
             JLabel image = new JLabel(new ImageIcon(imageNoAlignement));
             this.add(image);
 

@@ -1,6 +1,5 @@
 package Vues.Alignement;
 
-import MVC.Controller;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -70,7 +69,7 @@ public class PanneauAlignementVerticalImage extends JPanel {
         //pas d'alignement vertical
         //vide
         try {
-            BufferedImage imageNoAlignement = ImageIO.read(new File("src/Ressources/noAlignement.png"));
+            BufferedImage imageNoAlignement = ImageIO.read(new File("src/Ressources/non.png"));
             JLabel image = new JLabel(new ImageIcon(imageNoAlignement));
             this.add(image);
 

@@ -7,9 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PanneauAlignementVertical extends JPanel{
-    private ButtonGroup buttonGroupVertical;
-    private JRadioButton boutonHaut01, boutonHaut02, boutonCentreVertical, boutonBas01, boutonBas02, aucunAlligmentVertical;
     private Controller controller;
+
     public PanneauAlignementVertical(Controller controller) {
 
         SetUpUi();
@@ -20,7 +19,7 @@ public class PanneauAlignementVertical extends JPanel{
         setLayout(new GridLayout(1,6));
         //Groupe Vertical
 
-        buttonGroupVertical = new ButtonGroup();
+        ButtonGroup buttonGroupVertical = new ButtonGroup();
 
 
         //Bouton01 - Haut Ext

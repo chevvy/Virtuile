@@ -6,15 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PanneauInformationsRevetement extends JPanel{
-    private JLabel nomRevetementLabel, typeMateriauLabel, couleurMateriauLabel, motifRecouvrementLabel, hauteurTuileLabel, largeurTuileLabel, nbTuilesBoiteLabel, couleurCoulisLabel, epaisseurCoulisLabel ;
-    private JTextField nomRevetementField, hauteurTuileText, largeurTuileText, nbTuilesBoiteText, epaisseurCoulisText;
-    private JComboBox TypeMateriauxCombo, couleurMateriauCombo, motifRecouvrementCombo, couleurCoulisCombo;
-    private JButton BoutonAjouter, boutonModifier;
-    private Controller controller;
+
 
     public PanneauInformationsRevetement(Controller controller) {
         SetUpUi();
-        this.controller = controller;
         this.setPreferredSize(new Dimension(480, 500));
         this.setLayout(null);
     }
@@ -36,7 +31,7 @@ public class PanneauInformationsRevetement extends JPanel{
 
         String [] materiaux = {"Céramique", "Composite"};
         JComboBox TypeMateriauxCombo = new JComboBox(materiaux); //this.controller.getListeMateriaux()
-        TypeMateriauxCombo.setSize(200, 25);
+        TypeMateriauxCombo.setSize(130, 25);
         TypeMateriauxCombo.setLocation(220, 50);
         this.add(TypeMateriauxCombo);
 
@@ -47,9 +42,14 @@ public class PanneauInformationsRevetement extends JPanel{
 
         String [] couleurMateriaux = {"Gris", "Beige", "Blanc", "Noir"};
         JComboBox couleurMateriauCombo = new JComboBox(couleurMateriaux); //this.controller.getListeMateriaux()
-        couleurMateriauCombo.setSize(200, 25);
+        couleurMateriauCombo.setSize(130, 25);
         couleurMateriauCombo.setLocation(220, 90);
         this.add(couleurMateriauCombo);
+
+        JButton boutonAjouterCouleur = new JButton("Ajouter");
+        boutonAjouterCouleur.setSize(100, 25);
+        boutonAjouterCouleur.setLocation(360, 90);
+        this.add(boutonAjouterCouleur);
 
         //Motif recouvrement
         JLabel motifRecouvrementLabel = new JLabel("Motif du recouvrement :");
@@ -123,7 +123,6 @@ public class PanneauInformationsRevetement extends JPanel{
         boutonModifier.setSize(300, 30);
         boutonModifier.setLocation(100, 390);
         this.add(boutonModifier);
-        this.setVisible(true);
 
         JButton boutonAjouter = new JButton("Ajouter un nouveau revêtement");
         boutonAjouter.setSize(300, 30);

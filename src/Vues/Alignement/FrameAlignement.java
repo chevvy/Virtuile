@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class FrameAlignement extends JFrame{
-    private PanneauAlignement panelAlignement;
 
     public FrameAlignement frame;
 
@@ -19,7 +18,7 @@ public class FrameAlignement extends JFrame{
         frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
 
-        panelAlignement = new PanneauAlignement(controller, this);
+        PanneauAlignement panelAlignement = new PanneauAlignement(controller, this);
         frame.add(panelAlignement);
 
     }

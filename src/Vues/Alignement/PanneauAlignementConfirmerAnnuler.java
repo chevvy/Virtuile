@@ -4,7 +4,6 @@ import MVC.Etat;
 import Vues.Revetements.FrameRevetements;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
