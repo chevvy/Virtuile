@@ -94,7 +94,7 @@ public class Surface {
     }
 
     public ArrayList<Tuile> genererListeDeTuiles(){
-        // reçoit un motif en argument
+        // reçoit un motif en argument  test
         int tailleCoulis = revetement.getTailleDuCoulis();
         Color couleurCoulis = revetement.getCouleurCoulis();
 
