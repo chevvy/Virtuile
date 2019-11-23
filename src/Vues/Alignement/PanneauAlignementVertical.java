@@ -2,6 +2,7 @@ package Vues.Alignement;
 
 import MVC.Controller;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,11 +17,14 @@ public class PanneauAlignementVertical extends JPanel{
 
     }
     private void SetUpUi () {
+        setLayout(new GridLayout(1,6));
         //Groupe Vertical
 
-        //Bouton01 - Haut Ext
         buttonGroupVertical = new ButtonGroup();
-        JRadioButton boutonHaut01 = new JRadioButton("Haut - Extérieur  ");
+
+
+        //Bouton01 - Haut Ext
+        JRadioButton boutonHaut01 = new JRadioButton("                   ");
         this.add(boutonHaut01);
         buttonGroupVertical.add(boutonHaut01);
         boutonHaut01.addActionListener(new ActionListener() {
@@ -29,7 +33,7 @@ public class PanneauAlignementVertical extends JPanel{
         });
 
         //Bouton02 - Haut Int
-        JRadioButton boutonHaut02 = new JRadioButton("Haut - Intérieur  ");
+        JRadioButton boutonHaut02 = new JRadioButton("                   ");
         this.add(boutonHaut02);
         buttonGroupVertical.add(boutonHaut02);
         boutonHaut02.addActionListener(new ActionListener() {
@@ -38,7 +42,7 @@ public class PanneauAlignementVertical extends JPanel{
         });
 
         //Bouton03 - Centre vert
-        JRadioButton boutonCentreVertical = new JRadioButton("Centré verticalement");
+        JRadioButton boutonCentreVertical = new JRadioButton("                   ");
         this.add(boutonCentreVertical);
         buttonGroupVertical.add(boutonCentreVertical);
         boutonCentreVertical.addActionListener(new ActionListener() {
@@ -47,7 +51,7 @@ public class PanneauAlignementVertical extends JPanel{
         });
 
         //bouton 04 - bas int
-        JRadioButton boutonBas01 = new JRadioButton("Bas - Intérieur   ");
+        JRadioButton boutonBas01 = new JRadioButton("                   ");
         this.add(boutonBas01);
         buttonGroupVertical.add(boutonBas01);
         boutonBas01.addActionListener(new ActionListener() {
@@ -56,7 +60,7 @@ public class PanneauAlignementVertical extends JPanel{
         });
 
         //Bouton 05 - Bas ext
-        JRadioButton boutonBas02 = new JRadioButton("Bas - Extérieur   ");
+        JRadioButton boutonBas02 = new JRadioButton("                   ");
         this.add(boutonBas02);
         buttonGroupVertical.add(boutonBas02);
         boutonBas02.addActionListener(new ActionListener() {
@@ -65,7 +69,7 @@ public class PanneauAlignementVertical extends JPanel{
         });
 
         //Bouton 06 - rien vertical
-        JRadioButton aucunAlligmentVertical = new JRadioButton("Aucun alignement vertical");
+        JRadioButton aucunAlligmentVertical = new JRadioButton("                   ");
         aucunAlligmentVertical.setSelected(true);
         this.add(aucunAlligmentVertical);
         buttonGroupVertical.add(aucunAlligmentVertical);
@@ -78,9 +82,3 @@ public class PanneauAlignementVertical extends JPanel{
 
     }
 }
-
-//call controler selectionner aligmner quand on clique sur le bouton aligner/coller ( entre deux surfaces)
-//apres update
-//si on clique sur radio - call controler.aligner(le nom de l'image)
-//caller confirmerdeplacement()
-//sinon (annuler ou fermer fenetre) annulerAligner()

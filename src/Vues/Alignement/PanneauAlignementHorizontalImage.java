@@ -11,19 +11,20 @@ import java.io.IOException;
 
 
 public class PanneauAlignementHorizontalImage extends JPanel {
-    private BufferedImage imageGauche01;
+
 
     public PanneauAlignementHorizontalImage() {
         SetUpUi();
     }
 
     private void SetUpUi() {
+        setLayout(new GridLayout(1,6));
 
         //gaucheExt
         try {
             BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/gaucheExt.png"));
-            JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
-            this.add(picLabel);
+            JLabel image = new JLabel(new ImageIcon(imageGauche01));
+            this.add(image);
 
 
         } catch (IOException ex) {
@@ -32,10 +33,9 @@ public class PanneauAlignementHorizontalImage extends JPanel {
 
         //gaucheInt
         try {
-            BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/gaucheInt.png"));
-            JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
-            this.add(picLabel);
-
+            BufferedImage imageGauche02 = ImageIO.read(new File("src/Ressources/gaucheInt.png"));
+            JLabel image = new JLabel(new ImageIcon(imageGauche02));
+            this.add(image);
 
         } catch (IOException ex) {
             System.out.println("Pas d'image :(");
@@ -43,10 +43,9 @@ public class PanneauAlignementHorizontalImage extends JPanel {
 
         //centreHorizontal
         try {
-            BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/gaucheExt.png"));
-            JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
-            this.add(picLabel);
-
+            BufferedImage imageCentre = ImageIO.read(new File("src/Ressources/gaucheExt.png"));
+            JLabel image = new JLabel(new ImageIcon(imageCentre));
+            this.add(image);
 
         } catch (IOException ex) {
             System.out.println("Pas d'image :(");
@@ -54,10 +53,9 @@ public class PanneauAlignementHorizontalImage extends JPanel {
 
         //droiteInt
         try {
-            BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/droiteInt.png"));
-            JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
-            this.add(picLabel);
-
+            BufferedImage imageDroite01 = ImageIO.read(new File("src/Ressources/droiteInt.png"));
+            JLabel image = new JLabel(new ImageIcon(imageDroite01));
+            this.add(image);
 
         } catch (IOException ex) {
             System.out.println("Pas d'image :(");
@@ -65,13 +63,23 @@ public class PanneauAlignementHorizontalImage extends JPanel {
 
         //droiteExt
         try {
-            BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/droiteExt.png"));
-            JLabel picLabel = new JLabel(new ImageIcon(imageGauche01));
-            this.add(picLabel);
-
+            BufferedImage imagDroite02 = ImageIO.read(new File("src/Ressources/droiteExt.png"));
+            JLabel image = new JLabel(new ImageIcon(imagDroite02));
+            this.add(image);
 
         } catch (IOException ex) {
             System.out.println("Pas d'image :(");
         }
+
+        //vide
+        try {
+            BufferedImage imageNoAlignement = ImageIO.read(new File("src/Ressources/noAlignement.png"));
+            JLabel image = new JLabel(new ImageIcon(imageNoAlignement));
+            this.add(image);
+
+        } catch (IOException ex) {
+            System.out.println("Pas d'image :(");
+        }
+
     }
 }

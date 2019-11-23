@@ -21,15 +21,19 @@ public class PanneauAlignement extends JPanel{
         this.setSize(1100, 400);
 
         panelAlignementHorizontalImage = new PanneauAlignementHorizontalImage();
+        panelAlignementHorizontalImage.setLayout(new GridLayout(1,6));
         this.add(panelAlignementHorizontalImage);
 
         panelAlignementVertical = new PanneauAlignementHorizontal(controller);
+        panelAlignementVertical.setLayout(new GridLayout(1,6));
         this.add(panelAlignementVertical);
 
         panelAlignementVerticalImage = new PanneauAlignementVerticalImage();
+        panelAlignementVerticalImage.setLayout(new GridLayout(1,6));
         this.add(panelAlignementVerticalImage);
 
         panelAlignementHorizontal = new PanneauAlignementVertical(controller);
+        panelAlignementHorizontal.setLayout(new GridLayout(1,6));
         this.add(panelAlignementHorizontal);
 
         panelConfirmerAnnuler = new PanneauAlignementConfirmerAnnuler(controller, frame);
