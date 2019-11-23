@@ -144,7 +144,7 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
     public void update() {
         if (controller.getPlan().surfaceSelectionnee != null)
         {
-            revetementSurfaceSelectionnee.setText(controller.getPlan().surfaceSelectionnee.getRevetement().getNom());
+            revetementSurfaceSelectionnee.setText(controller.getPlan().surfaceSelectionnee.getRevetement().getNomDuRevetement());
         }
     }
 
