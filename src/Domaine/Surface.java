@@ -11,11 +11,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 public class Surface {
 
     public Polygon polygone;
     private Revetement revetement;
-    private Tuile [] listeTuiles;
+    private ArrayList<Tuile> listeTuiles = new ArrayList<>();
+
     public boolean valide;
 
     public Surface(List<Point> listePoints) {
@@ -25,7 +27,7 @@ public class Surface {
         valide = true;
         // liste de tuiles
         revetement = new Revetement();
-        genererTuile();
+        setListeTuiles(genererListeDeTuiles());
     }
 
     //méthode permettant de déplacer une surface selon le vecteur de déplacement reçu
@@ -93,33 +95,50 @@ public class Surface {
         return revetement;
     }
 
-    private void genererTuile(){
+    private ArrayList<Tuile> genererListeDeTuiles(){
         // reçoit un motif en argument
-            // si pas de motif, fait juste loader des tuiles 1 pour 1
-        int boundsWidth = polygone.getBounds().width;
-        int heightWidth = polygone.getBounds().width;
-        int tuileWidth = revetement.getLongueurTuile() + 1; //on +1 pour qu'on sorte un peu du bound box
-        int tuileHeight = revetement.getHauteurTuile() + 1;
-        int nbTuilesX = (boundsWidth / tuileWidth) ;
-        int nbTuilesY = (heightWidth / tuileHeight);
+        // correspond au coin supérieur gauche
+        int coordXduBound = polygone.getBounds().x; int coordYduBond = polygone.getBounds().y;
+        int boundsWidth = polygone.getBounds().width;int boundsHeight = polygone.getBounds().height;
+        int tuileWidth = revetement.getLongueurTuile() ;int tuileHeight = revetement.getHauteurTuile() ;
+        //on +1 pour qu'on sorte un peu du bound box
+        int nbTuilesX = (boundsWidth / tuileWidth) +1 ;int nbTuilesY = (boundsHeight / tuileHeight) +1 ;
+        ArrayList<Tuile> newListeTuiles = new ArrayList<>();
 
-        // on génère le nb de tuile en partant du min(x) min(y)
+        // on génère le nb de tuile en partant du bounds.x et bounds.y (ceux-ci sont au coin supérieur gauche)
         // for nbTuilesX
             // for nbTuilesY
             // tuile(listes points x, liste point y, points.size())
             // ajouter à la liste de tuile
-
-
+        int i = 0; int j = 0;
+        while (j < nbTuilesY){
+            int [] pointsY = genererListePoints(coordYduBond, boundsHeight);
+            while (i < nbTuilesX) {
+                int [] pointsX = genererListePoints(coordXduBound, boundsWidth);
+                newListeTuiles.add(new Tuile(pointsX, pointsY));
+                i++;
+            }
+          j++;
+        } ;
+        return newListeTuiles;
     }
 
-    // prend une position x et genere tous les points pour une taille donnée
-    private int [] genererListePoints(int position, int taille){
-        int [] listePoint = new int[0];
-        int i = 0;
-        while (i < position + taille){
-            listePoint[i] = position + 1;
+    public ArrayList<Tuile> getListeTuiles() {
+        return listeTuiles;
+    }
+
+    public void setListeTuiles(ArrayList<Tuile> listeTuiles) {
+        this.listeTuiles = listeTuiles;
+    }
+
+    private int [] genererListePoints(int pointOrigine, int longueur){
+        int [] listePoints = new int[longueur + 1];
+        listePoints[0] = pointOrigine;
+        int i = 1;
+        while (i <= longueur){
+            listePoints[i] = pointOrigine +1 ;
             i++;
         }
-        return listePoint;
+        return listePoints;
     }
 }
