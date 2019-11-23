@@ -159,6 +159,7 @@ public class Plan {
                 return;
             }
         }
+
     }
 
     public void aligner(String alignement){

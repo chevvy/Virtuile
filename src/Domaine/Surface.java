@@ -73,6 +73,7 @@ public class Surface {
             iterator.next();
         }
         polygone = nouveau_polygone;
+        setListeTuiles((genererListeDeTuiles()));
         return true;
     }
 
