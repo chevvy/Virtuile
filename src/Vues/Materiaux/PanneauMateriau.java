@@ -2,6 +2,8 @@ package Vues.Materiaux;
 
 import MVC.Controller;
 import Vues.Alignement.FrameAlignement;
+import Vues.Revetements.FrameRevetements;
+import Vues.Revetements.PanneauInformationsRevetement;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -20,13 +22,13 @@ public class PanneauMateriau extends JPanel{
     }
     private void SetUpUi() {
         //Nouvelle couleur
-        JLabel nomRevetementLabel = new JLabel("Nouveau type de matériaux :");
-        nomRevetementLabel.setBounds(10,10,130,25);
-        this.add(nomRevetementLabel);
+        JLabel nomMateriauLabel = new JLabel("Nouveau type de matériaux :");
+        nomMateriauLabel.setBounds(10,10,130,25);
+        this.add(nomMateriauLabel);
 
-        JTextField nomRevetementField = new JTextField(14);
-        nomRevetementField.setBounds(180,10,40,25);
-        this.add(nomRevetementField);
+        JTextField nomMateriauField = new JTextField(14);
+        nomMateriauField.setBounds(180,10,40,25);
+        this.add(nomMateriauField);
 
 
         JButton boutonOk = new JButton("Ajouter");
@@ -35,8 +37,9 @@ public class PanneauMateriau extends JPanel{
         this.add(boutonOk);
         boutonOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //controller.ajouterCouleur();
+                controller.ajouterTypeMateriau(nomMateriauField.getText());
                 frame.dispose();
+                new FrameRevetements(controller).setVisible(true);
             }
         });
     }

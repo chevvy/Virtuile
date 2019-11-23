@@ -263,7 +263,7 @@ public class Plan {
 
     // Liste des couleurs de tuiles
     public void ajouterCouleur(String nom){
-        //if (!(listeCouleurs.contains(nom)))
+        if (!(listeCouleurs.contains(nom)) && !nom.equals(""))
             this.listeCouleurs.add(nom);
     }
 
@@ -271,7 +271,7 @@ public class Plan {
 
     //Liste des types de matériaux
     public void ajouterTypeMateriau(String nom){
-        //if (!(listeCouleurs.contains(nom)))
+        if (!(listeCouleurs.contains(nom)))
         this.listeTypeMateriau.add(nom);
     }
 

@@ -4,6 +4,8 @@ import MVC.Controller;
 import MVC.Etat;
 import MVC.Observer;
 import Vues.Alignement.FrameAlignement;
+import Vues.Materiaux.FrameCouleur;
+import Vues.Materiaux.FrameMateriau;
 import Vues.Revetements.FrameRevetements;
 
 import javax.swing.*;
@@ -64,6 +66,20 @@ public class MainWindow extends JFrame implements Observer {
         menuMateriaux.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 new FrameRevetements(controller).setVisible(true);
+            }
+        });
+        JMenuItem menuTypeMateriau = new JMenuItem("Ajouter un type de matériau");
+        menuEdition.add(menuTypeMateriau);
+        menuTypeMateriau.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                new FrameMateriau(controller).setVisible(true);
+            }
+        });
+        JMenuItem menuCouleur = new JMenuItem("Ajouter une nouvelle couleur");
+        menuEdition.add(menuCouleur);
+        menuCouleur.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                new FrameCouleur(controller).setVisible(true);
             }
         });
         menuEdition.add(new JMenuItem("Ajouter une surface"));

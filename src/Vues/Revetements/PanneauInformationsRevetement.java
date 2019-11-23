@@ -14,11 +14,12 @@ public class PanneauInformationsRevetement extends JPanel{
 
 
     private Controller controller;
+    private FrameRevetements frame;
 
-    public PanneauInformationsRevetement(Controller controller) {
-
-        SetUpUi();
+    public PanneauInformationsRevetement(Controller controller, FrameRevetements frame) {
         this.controller = controller;
+        this.frame = frame;
+        SetUpUi();
         this.setPreferredSize(new Dimension(480, 500));
         this.setLayout(null);
 
@@ -39,11 +40,11 @@ public class PanneauInformationsRevetement extends JPanel{
         typeMateriauLabel.setBounds(10,50,200,25);
         this.add(typeMateriauLabel);
 
-        String [] materiaux = {"Céramique", "Composite"};
-        JComboBox<String> TypeMateriauxCombo = new JComboBox<>(materiaux); //this.controller.getListeMateriaux()
-        TypeMateriauxCombo.setSize(130, 25);
-        TypeMateriauxCombo.setLocation(220, 50);
-        this.add(TypeMateriauxCombo);
+        ArrayList<String> listeMateriaux = controller.getTypeMatériaux();
+        JComboBox typeMateriauxCombo = new JComboBox<>(listeMateriaux.toArray());
+        typeMateriauxCombo.setSize(130, 25);
+        typeMateriauxCombo.setLocation(220, 50);
+        this.add(typeMateriauxCombo);
 
         JButton boutonAjouterMateriau = new JButton("Ajouter");
         boutonAjouterMateriau.setSize(100, 25);
@@ -52,7 +53,10 @@ public class PanneauInformationsRevetement extends JPanel{
 
         boutonAjouterMateriau.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent actionEvent) {new FrameMateriau(controller).setVisible(true);}
+            public void actionPerformed(ActionEvent actionEvent) {
+                new FrameMateriau(controller).setVisible(true);
+                frame.dispose();
+            }
         });
 
         //Couleur matériaux
@@ -73,7 +77,10 @@ public class PanneauInformationsRevetement extends JPanel{
 
         boutonAjouterCouleur.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent actionEvent) {new FrameCouleur(controller).setVisible(true);}
+            public void actionPerformed(ActionEvent actionEvent) {
+                new FrameCouleur(controller).setVisible(true);
+                frame.dispose();
+            }
         });
 
         //Motif recouvrement
@@ -81,8 +88,8 @@ public class PanneauInformationsRevetement extends JPanel{
         motifRecouvrementLabel.setBounds(10,130,200,25);
         this.add(motifRecouvrementLabel);
 
-        String [] motifRecouvrement = {"Installation droite", "Installation imitation parquet", "Installation en décallé", "Installation en chevron", "Installation en L"};
-        JComboBox<String> motifRecouvrementCombo = new JComboBox<>(motifRecouvrement); //this.controller.getListeMateriaux()
+        ArrayList<String> listeMotif = controller.getMotifs();
+        JComboBox motifRecouvrementCombo = new JComboBox<>(listeMotif.toArray());
         motifRecouvrementCombo.setSize(200, 25);
         motifRecouvrementCombo.setLocation(220, 130);
         this.add(motifRecouvrementCombo);
@@ -124,13 +131,29 @@ public class PanneauInformationsRevetement extends JPanel{
         this.add(tuilesParBoite);
 
 
-        //Couleur coulis
-        JLabel couleurCoulisLabel = new JLabel("Couleur du coulis :");
-        couleurCoulisLabel.setBounds(10,310,200,25);
-        this.add(couleurCoulisLabel);
+        JButton boutonModifier = new JButton("Modifier les propriétés du revêtement");
+        boutonModifier.setSize(300, 30);
+        boutonModifier.setLocation(100, 320);
+        this.add(boutonModifier);
 
-        String [] couleurCoulis = {"Rouge", "Blanc", "Gris"};
-        JComboBox<String> couleurCoulisCombo = new JComboBox<>(couleurCoulis); //this.controller.getListeMateriaux()
+        JButton boutonAjouter = new JButton("Ajouter un nouveau revêtement");
+        boutonAjouter.setSize(300, 30);
+        boutonAjouter.setLocation(100, 350);
+        this.add(boutonAjouter);
+        this.setVisible(true);
+    }
+}
+
+
+
+/*
+    //Couleur coulis
+    JLabel couleurCoulisLabel = new JLabel("Couleur du coulis :");
+        couleurCoulisLabel.setBounds(10,310,200,25);
+                this.add(couleurCoulisLabel);
+
+                String [] couleurCoulis = {"Rouge", "Blanc", "Gris"};
+                JComboBox<String> couleurCoulisCombo = new JComboBox<>(couleurCoulis); //this.controller.getListeMateriaux()
         couleurCoulisCombo.setSize(200, 25);
         couleurCoulisCombo.setLocation(220, 310);
         this.add(couleurCoulisCombo);
@@ -142,17 +165,4 @@ public class PanneauInformationsRevetement extends JPanel{
 
         JTextField epaisseurCoulisText = new JTextField(20);
         epaisseurCoulisText.setBounds(220,350,200,25);
-        this.add(epaisseurCoulisText);
-
-        JButton boutonModifier = new JButton("Modifier les propriétés du revêtement");
-        boutonModifier.setSize(300, 30);
-        boutonModifier.setLocation(100, 390);
-        this.add(boutonModifier);
-
-        JButton boutonAjouter = new JButton("Ajouter un nouveau revêtement");
-        boutonAjouter.setSize(300, 30);
-        boutonAjouter.setLocation(100, 420);
-        this.add(boutonAjouter);
-        this.setVisible(true);
-    }
-}
+        this.add(epaisseurCoulisText);*/

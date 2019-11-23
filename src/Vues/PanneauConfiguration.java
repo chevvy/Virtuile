@@ -35,13 +35,19 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
 
     private void SetUpUi(){
         boutonAjouter = new JButton("Ajouter une Surface");
-        boutonAjouter.setSize(200, 50);
+        boutonAjouter.setSize(200, 40);
         boutonAjouter.setLocation(25,20);
         boutonAjouter.addActionListener(e -> setCreateShape());
 
+        //ajouter option vide
+        boutonAjouter = new JButton("Ajouter une Surface vide");
+        boutonAjouter.setSize(200, 40);
+        boutonAjouter.setLocation(25,70);
+        boutonAjouter.addActionListener(e -> setCreateShape());
+
         boutonSupprimer = new JButton("Supprimer la surface");
-        boutonSupprimer.setSize(200, 50);
-        boutonSupprimer.setLocation(25,90);
+        boutonSupprimer.setSize(200, 40);
+        boutonSupprimer.setLocation(25,120);
         boutonSupprimer.addActionListener(e -> controller.supprimerSurface());
 
         JLabel line = new JLabel("_________________________________");
