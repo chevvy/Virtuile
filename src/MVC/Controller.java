@@ -183,9 +183,7 @@ public class Controller {
             g.setColor(surface.estUnTrou?Color.white:Color.blue.darker());
             g.fillPolygon(surface.polygone);
             g.setColor(Color.white);
-            for(Surface trou : surface.trous){
-                g.fillPolygon(trou.polygone);
-            }
+
         }
 
         if(surfaceSelectionnee != null){
@@ -224,6 +222,9 @@ public class Controller {
                     g.fillPolygon(tuile.getPolygone());
                     g.drawPolygon(tuile.getPolygone());
                 }
+            }
+            for(Surface trou : surface.trous){
+                g.fillPolygon(trou.polygone);
             }
 
         }
