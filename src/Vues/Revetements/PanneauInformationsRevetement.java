@@ -1,22 +1,28 @@
 package Vues.Revetements;
 
 import MVC.Controller;
+import Vues.Materiaux.FrameCouleur;
+import Vues.Materiaux.FrameMateriau;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class PanneauInformationsRevetement extends JPanel{
-    private JLabel nomRevetementLabel, typeMateriauLabel, couleurMateriauLabel, motifRecouvrementLabel, hauteurTuileLabel, largeurTuileLabel, nbTuilesBoiteLabel, couleurCoulisLabel, epaisseurCoulisLabel ;
-    private JTextField nomRevetementField, hauteurTuileText, largeurTuileText, nbTuilesBoiteText, epaisseurCoulisText;
-    private JComboBox TypeMateriauxCombo, couleurMateriauCombo, motifRecouvrementCombo, couleurCoulisCombo;
-    private JButton BoutonAjouter, boutonModifier;
+
+
     private Controller controller;
 
     public PanneauInformationsRevetement(Controller controller) {
-        SetUpUi();
+
+
         this.controller = controller;
         this.setPreferredSize(new Dimension(480, 500));
         this.setLayout(null);
+        SetUpUi();
+
     }
 
     private void SetUpUi() {
@@ -35,21 +41,41 @@ public class PanneauInformationsRevetement extends JPanel{
         this.add(typeMateriauLabel);
 
         String [] materiaux = {"Céramique", "Composite"};
-        JComboBox TypeMateriauxCombo = new JComboBox(materiaux); //this.controller.getListeMateriaux()
-        TypeMateriauxCombo.setSize(200, 25);
+        JComboBox<String> TypeMateriauxCombo = new JComboBox<>(materiaux); //this.controller.getListeMateriaux()
+        TypeMateriauxCombo.setSize(130, 25);
         TypeMateriauxCombo.setLocation(220, 50);
         this.add(TypeMateriauxCombo);
+
+        JButton boutonAjouterMateriau = new JButton("Ajouter");
+        boutonAjouterMateriau.setSize(100, 25);
+        boutonAjouterMateriau.setLocation(355, 50);
+        this.add(boutonAjouterMateriau);
+
+        boutonAjouterMateriau.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {new FrameMateriau(controller).setVisible(true);}
+        });
 
         //Couleur matériaux
         JLabel couleurMateriauLabel = new JLabel("Couleur du matériau :");
         couleurMateriauLabel.setBounds(10,90,200,25);
         this.add(couleurMateriauLabel);
 
-        String [] couleurMateriaux = {"Gris", "Beige", "Blanc", "Noir"};
-        JComboBox couleurMateriauCombo = new JComboBox(couleurMateriaux); //this.controller.getListeMateriaux()
-        couleurMateriauCombo.setSize(200, 25);
+        ArrayList<String> listeCouleurs = controller.getCouleurs();
+        JComboBox couleurMateriauCombo = new JComboBox<>(listeCouleurs.toArray());
+        couleurMateriauCombo.setSize(130, 25);
         couleurMateriauCombo.setLocation(220, 90);
         this.add(couleurMateriauCombo);
+
+        JButton boutonAjouterCouleur = new JButton("Ajouter");
+        boutonAjouterCouleur.setSize(100, 25);
+        boutonAjouterCouleur.setLocation(355, 90);
+        this.add(boutonAjouterCouleur);
+
+        boutonAjouterCouleur.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {new FrameCouleur(controller).setVisible(true);}
+        });
 
         //Motif recouvrement
         JLabel motifRecouvrementLabel = new JLabel("Motif du recouvrement :");
@@ -57,7 +83,7 @@ public class PanneauInformationsRevetement extends JPanel{
         this.add(motifRecouvrementLabel);
 
         String [] motifRecouvrement = {"Installation droite", "Installation imitation parquet", "Installation en décallé", "Installation en chevron", "Installation en L"};
-        JComboBox motifRecouvrementCombo = new JComboBox(motifRecouvrement); //this.controller.getListeMateriaux()
+        JComboBox<String> motifRecouvrementCombo = new JComboBox<>(motifRecouvrement); //this.controller.getListeMateriaux()
         motifRecouvrementCombo.setSize(200, 25);
         motifRecouvrementCombo.setLocation(220, 130);
         this.add(motifRecouvrementCombo);
@@ -105,7 +131,7 @@ public class PanneauInformationsRevetement extends JPanel{
         this.add(couleurCoulisLabel);
 
         String [] couleurCoulis = {"Rouge", "Blanc", "Gris"};
-        JComboBox couleurCoulisCombo = new JComboBox(couleurCoulis); //this.controller.getListeMateriaux()
+        JComboBox<String> couleurCoulisCombo = new JComboBox<>(couleurCoulis); //this.controller.getListeMateriaux()
         couleurCoulisCombo.setSize(200, 25);
         couleurCoulisCombo.setLocation(220, 310);
         this.add(couleurCoulisCombo);
@@ -123,7 +149,6 @@ public class PanneauInformationsRevetement extends JPanel{
         boutonModifier.setSize(300, 30);
         boutonModifier.setLocation(100, 390);
         this.add(boutonModifier);
-        this.setVisible(true);
 
         JButton boutonAjouter = new JButton("Ajouter un nouveau revêtement");
         boutonAjouter.setSize(300, 30);

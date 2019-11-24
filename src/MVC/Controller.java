@@ -2,6 +2,7 @@ package MVC;
 
 import Domaine.Plan;
 import Domaine.Surface;
+import Domaine.Tuile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -89,7 +90,6 @@ public class Controller {
         }
         notifyObservers();
     }
-
 
     public void selectionnerAligner(){
         etat = Etat.SELECTIONNER_ALIGNER;
@@ -196,7 +196,7 @@ public class Controller {
         }
 
         if(surfaceSelectionnee != null){
-            g.setColor(Color.blue.brighter());
+            g.setColor(Color.gray.darker());
             g.fillPolygon(surfaceSelectionnee.polygone);
 
             g.setColor(Color.yellow);
@@ -219,12 +219,21 @@ public class Controller {
             g.drawOval(surfaceLibre.get(0).x-5, surfaceLibre.get(0).y-5, 10, 10);
             g.drawLine(surfaceLibre.get(0).x, surfaceLibre.get(0).y, mouse.x, mouse.y);
         }
+
+        for(Surface surface : plan.recupererSurfaces()){
+            for (Tuile tuile : surface.getListeTuiles()){
+                g.setColor(new Color(203, 65, 84));
+                g.fillPolygon(tuile.getPolygone());
+                g.drawPolygon(tuile.getPolygone());
+            }
+        }
     }
 
     public void setGridSize(int size){
         this.plan.setGridSize(size);
         notifyObservers();
     }
+
 
     public int getGridSize(){
         return this.plan.getGridSize();
@@ -237,4 +246,26 @@ public class Controller {
     public Plan getPlan() {
         return plan;
     }
+
+    //Couleurs des tuiles
+    public void ajouterCouleur(String couleur){
+
+        plan.ajouterCouleur(couleur);
+    }
+
+    public ArrayList<String> getCouleurs(){ return plan.getListeCouleur(); }
+
+
+    //Type de matériaux
+    public void ajouterTypeMateriau(String typeMateriau){
+
+        plan.ajouterTypeMateriau(typeMateriau);
+    }
+
+    public ArrayList<String> getTypeMatériaux(){ return plan.getListeTypeMateriau(); }
+
+    //Type de motifs de tuiles
+    public ArrayList<String> getMotifs(){ return plan.getListeMotifs(); }
+
+
 }

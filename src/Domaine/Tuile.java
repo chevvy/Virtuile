@@ -1,24 +1,56 @@
 package Domaine;
-import java.awt.Polygon;
-import java.awt.Point;
+import java.awt.*;
 import java.util.ArrayList;
-import java.awt.Polygon;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Tuile{
     // la classe tuile est un extend de polygon
     // elle contient, sa taille, ses points,
     // elle a un getter et un setter pour sa taille
     // ceux-ci viennent affecter ses points ? Pas sûr
-    public Polygon polygone;
+    private Polygon polygone;
+    private int length;
+    private int height;
 
 
-    public Tuile(List<Point> listePoints){
+    Tuile(ArrayList<Point> listePoints){
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
+        length = polygone.xpoints.length;
+        height = polygone.ypoints.length;
     }
 
+    Tuile(Polygon polygon){
+        this.polygone = polygon;
+        length = polygone.xpoints.length;
+        height = polygone.ypoints.length;
+        System.out.println("coordx tuile = " + Arrays.toString(polygone.xpoints) + " coordy tuile = " + Arrays.toString(polygone.ypoints));
+    }
+
+    public Polygon getPolygone() {
+        return polygone;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setPolygone(Polygon polygone) {
+        this.polygone = polygone;
+        length = polygone.xpoints.length;
+        height = polygone.ypoints.length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
 }
