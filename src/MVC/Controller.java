@@ -142,6 +142,16 @@ public class Controller {
         notifyObservers();
     }
 
+    public void bouger(Point p){
+        switch (etat){
+            case LECTURE:
+                break;
+            default:
+                break;
+        }
+        notifyObservers();
+    }
+
     public void relacher(){
         switch (etat){
             case CREER_FORME_LIBRE:
