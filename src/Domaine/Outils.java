@@ -23,7 +23,6 @@ public class Outils {
         }
         return maxValue;
     }
-
     public static int getMinValue(int[] listeNombre) {
         int minValue = listeNombre[0];
         for (int i = 1; i < listeNombre.length; i++) {
