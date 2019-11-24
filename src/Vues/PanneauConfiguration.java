@@ -106,7 +106,7 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
         revetementSurfaceSelectionnee.setLocation(100, 225);
 
         // 3eme element
-        boutonMenuRevetement = new JButton("Édition revêtement");
+        boutonMenuRevetement = new JButton("Édition matériaux");
         boutonMenuRevetement.setSize(200, 25);
         boutonMenuRevetement.setLocation(25,265);
         boutonMenuRevetement.addActionListener(new ActionListener() {
