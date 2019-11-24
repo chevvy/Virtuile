@@ -16,7 +16,6 @@ public class PanneauChoixRevetements extends JPanel {
     PanneauChoixRevetements(Controller controller) {
         this.controller = controller;
         setUpUI();
-        getIndexSelectionner();
     }
 
     private void setUpUI() {
@@ -38,7 +37,7 @@ public class PanneauChoixRevetements extends JPanel {
         this.add(listScroller, BorderLayout.CENTER);
 
     }
-    private int getIndexSelectionner() {
-        return listeRevetements.getSelectedIndex();
-    }
+    //private int getIndexSelectionner() {
+        //return listeRevetements.getSelectedIndex();
+    //}
 }
