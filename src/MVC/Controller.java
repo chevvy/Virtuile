@@ -56,7 +56,6 @@ public class Controller {
                         add(new Point(1, 0));
                     }
                 };
-                trou = false;
                 etat = Etat.AJOUTER_SURFACE;
                 break;
             case 1: //Triangle
@@ -67,11 +66,9 @@ public class Controller {
                         add(new Point(1, 2));
                     }
                 };
-                trou = false;
                 etat = Etat.AJOUTER_SURFACE;
                 break;
             case 2:
-                trou = false;
                 etat = Etat.CREER_FORME_LIBRE;
                 plan.initialiserSurfaceLibre();
                 break;
@@ -85,7 +82,6 @@ public class Controller {
                         add(new Point(10, 3));
                     }
                 };
-                trou = false;
                 etat = Etat.AJOUTER_SURFACE;
                 break;
         }
@@ -184,7 +180,7 @@ public class Controller {
     public void paintCanevas(Graphics g, Point mouse){
         Surface surfaceSelectionnee = plan.surfaceSelectionnee;
         for(Surface surface : plan.recupererSurfaces()){
-            g.setColor(surface.estUnTrou?Color.white:Color.blue);
+            g.setColor(surface.estUnTrou?Color.white:Color.blue.darker());
             g.fillPolygon(surface.polygone);
             g.setColor(Color.white);
             for(Surface trou : surface.trous){
@@ -193,9 +189,10 @@ public class Controller {
         }
 
         if(surfaceSelectionnee != null){
-            g.setColor(Color.gray.darker());
+            g.setColor(surfaceSelectionnee.estUnTrou?Color.green:Color.blue);
             g.fillPolygon(surfaceSelectionnee.polygone);
-
+            g.setColor(Color.green);
+            surfaceSelectionnee.trous.forEach(trou -> g.fillPolygon(trou.polygone));
             g.setColor(Color.yellow);
             g.drawPolygon(plan.surfaceSelectionnee.polygone);
         }
