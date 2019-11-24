@@ -182,7 +182,6 @@ public class Controller {
         for(Surface surface : plan.recupererSurfaces()){
             g.setColor(surface.estUnTrou?Color.white:Color.blue.darker());
             g.fillPolygon(surface.polygone);
-            g.setColor(Color.white);
 
         }
 
@@ -224,6 +223,7 @@ public class Controller {
                 }
             }
             for(Surface trou : surface.trous){
+                g.setColor(Color.white);
                 g.fillPolygon(trou.polygone);
             }
 

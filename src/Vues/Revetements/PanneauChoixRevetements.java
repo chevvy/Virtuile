@@ -1,12 +1,13 @@
 package Vues.Revetements;
 import Domaine.Revetement;
 import MVC.Controller;
+import MVC.Observer;
 
 import java.awt.*;
 
 import javax.swing.*;
 
-public class PanneauChoixRevetements extends JPanel {
+public class PanneauChoixRevetements extends JPanel implements Observer {
 
 
     private Controller controller;
@@ -36,6 +37,11 @@ public class PanneauChoixRevetements extends JPanel {
         JScrollPane listScroller = new JScrollPane(listeRevetements);
         this.add(listScroller, BorderLayout.CENTER);
 
+    }
+
+    @Override
+    public void update() {
+        this.setUpUI();
     }
     //private int getIndexSelectionner() {
         //return listeRevetements.getSelectedIndex();
