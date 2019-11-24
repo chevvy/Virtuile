@@ -153,9 +153,17 @@ public class Plan {
         }
         for(Surface surface : listeSurfaces){
             if(surface.polygone.contains(p) && surface!=surfaceSelectionnee){
+                if(surfaceSelectionnee.estUnTrou ^ surface.estUnTrou){
+                    if(surface.estUnTrou){
+
+                    }
+                }
+
                 if(surfaceSelectionnee.fusionner(surface)){
                     listeSurfaces.remove(surface);
                 };
+
+
                 return;
             }
         }

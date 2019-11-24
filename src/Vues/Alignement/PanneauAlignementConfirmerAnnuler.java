@@ -22,21 +22,17 @@ public class PanneauAlignementConfirmerAnnuler extends JPanel {
         boutonOk.setSize(80, 40);
         boutonOk.setLocation(20, 20);
         this.add(boutonOk);
-        boutonOk.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                controller.relacher();
-                frame.dispose();
-            }
+        boutonOk.addActionListener(e -> {
+            controller.relacher();
+            frame.dispose();
         });
         JButton boutonAnnuler = new JButton("Annuler");
         boutonAnnuler.setSize(80, 40);
         boutonAnnuler.setLocation(140, 20);
         this.add(boutonAnnuler);
-        boutonAnnuler.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                controller.annulerAligner();
-                frame.dispose();
-            }
+        boutonAnnuler.addActionListener(e -> {
+            controller.annulerAligner();
+            frame.dispose();
         });
         this.setVisible(true);
     }

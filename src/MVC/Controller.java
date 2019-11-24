@@ -96,13 +96,13 @@ public class Controller {
     }
 
     public void aligner(String alignement){
-
         plan.aligner(alignement);
         notifyObservers();
     }
 
     public void annulerAligner(){
         plan.annulerAligner();
+        etat = Etat.LECTURE;
         notifyObservers();
     }
 
@@ -145,14 +145,7 @@ public class Controller {
     }
 
     public void relacher(){
-        switch(etat){
-            case ETIRER_SURFACE:
-            case DEPLACER_SURFACE:
-                etat = Etat.LECTURE;
-                break;
-            default:
-                break;
-        }
+        etat = Etat.LECTURE;
         notifyObservers();
     }
 
@@ -187,7 +180,7 @@ public class Controller {
     public void paintCanevas(Graphics g, Point mouse){
         Surface surfaceSelectionnee = plan.surfaceSelectionnee;
         for(Surface surface : plan.recupererSurfaces()){
-            g.setColor(Color.blue);
+            g.setColor(surface.estUnTrou?Color.white:Color.blue);
             g.fillPolygon(surface.polygone);
             g.setColor(Color.white);
             for(Surface trou : surface.trous){
