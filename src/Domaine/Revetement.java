@@ -107,5 +107,6 @@ public class Revetement {
     public void setCouleurCoulis(Color couleurCoulis) {
         this.couleurCoulis = couleurCoulis;
     }
+
 }
 

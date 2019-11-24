@@ -58,6 +58,7 @@ public class Surface {
 
     public boolean fusionner(Surface s){
         Area aire = new Area(polygone);
+        Area aireSurfaceOriginale = new Area(polygone);
         aire.add(new Area(s.polygone));
         if(!aire.isSingular()){return false;}
         PathIterator iterator = aire.getPathIterator(null);
@@ -72,6 +73,7 @@ public class Surface {
             }
             iterator.next();
         }
+
         polygone = nouveau_polygone;
         setListeTuiles((genererListeDeTuiles()));
         return true;
@@ -110,7 +112,7 @@ public class Surface {
             positionEnX = coordXduBound;
             j++;
         } ;
-        return intersectionTuiles(newListeTuiles);
+        return newIntersectionTuiles(newListeTuiles);
         // return  newListeTuiles;
     }
 
@@ -159,37 +161,25 @@ public class Surface {
     private ArrayList<Tuile> newIntersectionTuiles(ArrayList<Tuile> ListeDetuiles){
         // sera utilisé pour le calcul des intersections à partir de ligne pour forme irreguliere
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
-        int xMaxSurface = getMaxValue(polygone.xpoints);
-        int yMaxSurface = getMaxValue(polygone.ypoints);
+        Area areaSurface = new Area(polygone);
         for (Tuile tuile : ListeDetuiles){
-            PathIterator iterSTuile = tuile.getPolygone().getPathIterator(null);
+            Area areaTuile = new Area(tuile.getPolygone());
+            areaTuile.intersect(areaTuile);
+            PathIterator iterTuile = areaTuile.getPathIterator(null);
+            Polygon newPolyTuile = new Polygon();
             double[] coordsTuile = new double[6];
-            Polygon newPoly = new Polygon();
-            while(!iterSTuile.isDone()){
-                int typeSegmentTuile = iterSTuile.currentSegment(coordsTuile);
-                int xTuile = (int) coordsTuile[0];
-                int yTuile = (int) coordsTuile[1];
-
-                PathIterator iterSurface = polygone.getPathIterator(null);
-                double[] coordsSurface = new double[6];
-
-
-
-                while (!iterSurface.isDone()){
-                    int typeSegmentSurface = iterSurface.currentSegment(coordsSurface);
-                    int xSurface = (int) coordsSurface[0];
-                    int ySurface = (int) coordsSurface[1];
-
-
-                    //else if ( xTuile > xMaxSurface){xTuile = xMaxSurface;}
-                    // if (yTuile > yMaxSurface){yTuile = yMaxSurface;}
+            while (!iterTuile.isDone()){
+                int type = iterTuile.currentSegment(coordsTuile);
+                int x = (int) coordsTuile[0];
+                int y = (int) coordsTuile[1];
+                if(type != PathIterator.SEG_CLOSE) {
+                    newPolyTuile.addPoint(x, y);
                 }
-                newPoly.addPoint(xTuile, yTuile);
-                iterSTuile.next();
+                iterTuile.next();
             }
-            newListeTuiles.add(new Tuile(newPoly));
+            Tuile newTuile = new Tuile(newPolyTuile);
+            newListeTuiles.add(newTuile);
         }
-
         return newListeTuiles;
     }
 
