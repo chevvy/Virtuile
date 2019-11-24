@@ -81,7 +81,7 @@ public class Canvas extends JPanel implements Observer{
 
     private void mouseMovedEvent(MouseEvent e){
         mouse = relativeToAbsolute(e.getPoint());
-        repaint();
+        controller.bouger(mouse);
     }
 
     private void mousedDraggedEvent(MouseEvent e){
