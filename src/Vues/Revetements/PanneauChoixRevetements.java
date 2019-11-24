@@ -21,10 +21,7 @@ public class PanneauChoixRevetements extends JPanel {
     private void setUpUI() {
         DefaultListModel model = new DefaultListModel();
 
-        for(Revetement revetement : controller.getRevetements())
-        {
-            model.addElement(revetement.getNomDuRevetement());
-        }
+        controller.getNomRevetements().forEach(nom -> model.addElement(nom));
 
         JList listeRevetements = new JList(model);
         listeRevetements.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);

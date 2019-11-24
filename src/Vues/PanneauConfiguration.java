@@ -49,7 +49,7 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
         //ajouter option vide
         JButton boutonAjouterSurfaceVide = new JButton("Ajouter une surface vide");
         boutonAjouterSurfaceVide.setSize(200, 30);
-        boutonAjouterSurfaceVide.setLocation(25,60);
+        boutonAjouterSurfaceVide.setLocation(25,50);
         boutonAjouterSurfaceVide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -60,18 +60,18 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
 
         boutonSupprimer = new JButton("Supprimer la surface");
         boutonSupprimer.setSize(200, 30);
-        boutonSupprimer.setLocation(25,100);
+        boutonSupprimer.setLocation(25,80);
         boutonSupprimer.addActionListener(e -> controller.supprimerSurface());
 
         boutonAlligment = new JButton("Alligner/Coller");
         boutonAlligment.setSize(200, 30);
-        boutonAlligment.setLocation(25,140);
+        boutonAlligment.setLocation(25,110);
         boutonAlligment.addActionListener(e -> controller.selectionnerAligner());
 
         JButton boutonTestFusionner;
         boutonTestFusionner = new JButton("Fusionner");
         boutonTestFusionner.setSize(200,30);
-        boutonTestFusionner.setLocation(25, 180);
+        boutonTestFusionner.setLocation(25, 140);
         boutonTestFusionner.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -81,24 +81,24 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
 
         JLabel line = new JLabel("_________________________________");
         line.setSize(250,25);
-        line.setLocation(10,200);
+        line.setLocation(10,160);
 
         JLabel InfoSurface = new JLabel("Surface sélectionnée");
-        InfoSurface.setSize(250,30);
-        InfoSurface.setLocation(10,230);
+        InfoSurface.setSize(250,25);
+        InfoSurface.setLocation(10,180);
 
         // Premier element (rangee 1)
         radioSurface = new JRadioButton("Surface");
         radioSurface.setSelected(true);
         radioSurface.setBackground(Color.gray);
         radioSurface.setSize(100, 20);
-        radioSurface.setLocation(15, 260);
+        radioSurface.setLocation(15, 200);
 
         // Premier element (range 2)
         radioVide = new JRadioButton("Vide");
         radioVide.setBackground(Color.gray);
         radioVide.setSize(100, 20);
-        radioVide.setLocation(135, 190);
+        radioVide.setLocation(135, 200);
 
         ButtonGroup group = new ButtonGroup();
         group.add(radioSurface);

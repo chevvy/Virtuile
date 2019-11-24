@@ -1,20 +1,20 @@
 package MVC;
 
-import Domaine.Plan;
-import Domaine.Revetement;
-import Domaine.Surface;
-import Domaine.Tuile;
+import Domaine.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 
 public class Controller {
     private ArrayList<Observer> observers;
 
     public Plan plan;
+    public GestionnaireRevetements gestionnaireRevetements;
     private boolean trou;
     public ArrayList<Point> patronForme;
     private Etat etat = Etat.LECTURE;
@@ -22,6 +22,7 @@ public class Controller {
     public Controller(){
         observers = new ArrayList<>();
         plan = new Plan();
+        gestionnaireRevetements = new GestionnaireRevetements();
     }
 
     public Etat getEtat(){
@@ -265,13 +266,17 @@ public class Controller {
     public ArrayList<String> getMotifs(){ return plan.getListeMotifs(); }
 
     //Revêtements
-    public ArrayList<Revetement> getRevetements(){return plan.getListeRevetements();}
+    public Map<String, Revetement> getRevetements(){return gestionnaireRevetements.getMapRevetements();}
+
+    public Set getNomRevetements(){return gestionnaireRevetements.getNomRevetements();}
+
+    public Map<String, String> getInfosRevetements(String nom){return gestionnaireRevetements.getInfosRevetement(nom);}
 
     public void ajouterRevetement(String nomRevetement, String typeMateriauTuile, Color couleurTuile, String couleurTuileText,
                                                  String motifTuile, int hauteurTuile, int longueurTuile, int nbTuilesBoite){
         Revetement revetement = new Revetement(nomRevetement, typeMateriauTuile, couleurTuile, couleurTuileText,
                 motifTuile, hauteurTuile, longueurTuile, nbTuilesBoite);
-        plan.ajouterRevetement(revetement);
+        gestionnaireRevetements.ajouterRevetement(nomRevetement, revetement);
     }
 
     public Color getCouleur(String couleur){

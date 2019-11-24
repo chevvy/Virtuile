@@ -107,5 +107,21 @@ public class Revetement {
     public void setCouleurCoulis(Color couleurCoulis) {
         this.couleurCoulis = couleurCoulis;
     }
+
+    public String getCouleurTuileText() { return couleurTuileText; }
+
+    public void setCouleurTuileText(String couleurTuileText) { this.couleurTuileText = couleurTuileText; }
+
+    public String getTypeMateriauTuile() { return TypeMateriauTuile; }
+
+    public void setTypeMateriauTuile(String typeMateriauTuile) { TypeMateriauTuile = typeMateriauTuile; }
+
+    public String getMotifTuiles() { return motifTuiles; }
+
+    public void setMotifTuiles(String motifTuiles) { this.motifTuiles = motifTuiles; }
+
+    public int getNbTuilesBoite() { return nbTuilesBoite; }
+
+    public void setNbTuilesBoite(int nbTuilesBoite) { this.nbTuilesBoite = nbTuilesBoite; }
 }
 
