@@ -193,6 +193,9 @@ public class Controller {
             g.fillPolygon(surfaceSelectionnee.polygone);
             g.setColor(Color.green);
             surfaceSelectionnee.trous.forEach(trou -> g.fillPolygon(trou.polygone));
+            g.setColor(Color.black);
+            Rectangle limites = plan.surfaceSelectionnee.polygone.getBounds();
+            g.drawRect(limites.x, limites.y, limites.width, limites.height);
             g.setColor(Color.yellow);
             g.drawPolygon(plan.surfaceSelectionnee.polygone);
         }
