@@ -15,6 +15,7 @@ public class Controller {
     private ArrayList<Observer> observers;
 
     public Plan plan;
+    private boolean trou;
     public ArrayList<Point> patronForme;
     private Etat etat = Etat.LECTURE;
 
@@ -40,6 +41,10 @@ public class Controller {
         notifyObservers();
     }
 
+    public void setTrou(boolean trou) {
+        this.trou = trou;
+    }
+
     public void ajouterSurface(int value){
         switch(value){
             case 0: //Rectangle
@@ -51,6 +56,7 @@ public class Controller {
                         add(new Point(1, 0));
                     }
                 };
+                trou = false;
                 etat = Etat.AJOUTER_SURFACE;
                 break;
             case 1: //Triangle
@@ -61,9 +67,11 @@ public class Controller {
                         add(new Point(1, 2));
                     }
                 };
+                trou = false;
                 etat = Etat.AJOUTER_SURFACE;
                 break;
             case 2:
+                trou = false;
                 etat = Etat.CREER_FORME_LIBRE;
                 plan.initialiserSurfaceLibre();
                 break;
@@ -77,6 +85,7 @@ public class Controller {
                         add(new Point(10, 3));
                     }
                 };
+                trou = false;
                 etat = Etat.AJOUTER_SURFACE;
                 break;
         }
@@ -95,19 +104,20 @@ public class Controller {
 
     public void annulerAligner(){
         plan.annulerAligner();
+        notifyObservers();
     }
 
     public void clic(Point p){
         switch(etat){
             case AJOUTER_SURFACE:
-                etat = plan.initialiserSurface(p, patronForme);
+                etat = plan.initialiserSurface(p, patronForme, trou);
                 break;
             case LECTURE:
                 etat = plan.selectionner(p);
                 notifyObservers();
                 break;
             case CREER_FORME_LIBRE:
-                etat = plan.ajouterPointSurfaceLibre(p);
+                etat = plan.ajouterPointSurfaceLibre(p, trou);
                 break;
             case FUSIONNER:
                 plan.fusionner(p);
@@ -138,7 +148,6 @@ public class Controller {
     public void relacher(){
         switch(etat){
             case ETIRER_SURFACE:
-            case ALIGNER:
             case DEPLACER_SURFACE:
                 etat = Etat.LECTURE;
                 break;
@@ -182,12 +191,16 @@ public class Controller {
     public void paintCanevas(Graphics g, Point mouse){
         Surface surfaceSelectionnee = plan.surfaceSelectionnee;
         for(Surface surface : plan.recupererSurfaces()){
-            g.setColor(surface.valide?Color.blue:Color.red);
+            g.setColor(Color.blue);
             g.fillPolygon(surface.polygone);
+            g.setColor(Color.white);
+            for(Surface trou : surface.trous){
+                g.fillPolygon(trou.polygone);
+            }
         }
 
         if(surfaceSelectionnee != null){
-            g.setColor(Color.BLUE.darker());
+            g.setColor(Color.gray.darker());
             g.fillPolygon(surfaceSelectionnee.polygone);
 
             g.setColor(Color.yellow);
@@ -213,7 +226,7 @@ public class Controller {
 
         for(Surface surface : plan.recupererSurfaces()){
             for (Tuile tuile : surface.getListeTuiles()){
-                g.setColor(Color.GREEN);
+                g.setColor(new Color(203, 65, 84));
                 g.fillPolygon(tuile.getPolygone());
                 g.drawPolygon(tuile.getPolygone());
             }

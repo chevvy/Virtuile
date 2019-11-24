@@ -13,7 +13,7 @@ public class Revetement {
     private int longueurTuile;
     private int hauteurTuile;
 
-    private int tailleDuCoulis = 2;
+    private int tailleDuCoulis = 4;
     private Color couleurCoulis = Color.WHITE;
     // contient le motif
     // methode : genererRevetement(boundingbox) -> selon le bound et le motif, modifie la liste des tuiles pour quelles soient de la bonne taille
@@ -30,6 +30,10 @@ public class Revetement {
     }
 
     public Revetement(){
+        // revetement avec motif / taille par defaut (TBD)
+        this.longueurTuile = 50;
+        this.hauteurTuile = 20;
+        this.nomDuRevetement = "revetement par defaut";
         this.nomDuRevetement = "revetement par defaut";
         this.TypeMateriauTuile = "Céramique";
         this.couleurTuile = Color.YELLOW;

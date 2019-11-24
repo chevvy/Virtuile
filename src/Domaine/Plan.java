@@ -53,13 +53,13 @@ public class Plan {
         surfaceSelectionnee = null;
     }
 
-    public Etat initialiserSurface(Point position, ArrayList<Point> patron){
+    public Etat initialiserSurface(Point position, ArrayList<Point> patron, boolean trou){
         Point positionAjustee = convertMouseCoordWithMagnetique(position);
         premierPoint = convertMouseCoordWithMagnetique(positionAjustee);
 
         patron = patron.stream().map(point -> new Point(point.x + positionAjustee.x, point.y + positionAjustee.y))
                 .collect(Collectors.toCollection(ArrayList::new));
-        surfaceOriginale = surfaceSelectionnee = new Surface(patron);
+        surfaceOriginale = surfaceSelectionnee = new Surface(patron, trou);
         listeSurfaces.add(surfaceSelectionnee);
         return Etat.ETIRER_SURFACE;
     }
@@ -68,15 +68,15 @@ public class Plan {
         surfaceLibre = new ArrayList<>();
     }
 
-    private void terminerSurfaceLibre(){
-        surfaceSelectionnee = new Surface(surfaceLibre);
+    private void terminerSurfaceLibre(boolean trou){
+        surfaceSelectionnee = new Surface(surfaceLibre, trou);
         listeSurfaces.add(surfaceSelectionnee);
     }
 
-    public Etat ajouterPointSurfaceLibre(Point point){
+    public Etat ajouterPointSurfaceLibre(Point point, boolean trou){
         point = convertMouseCoordWithMagnetique(point);
         if(surfaceLibreIsFirst(point)) {
-            terminerSurfaceLibre();
+            terminerSurfaceLibre(trou);
             return Etat.LECTURE;
         }
         else{
@@ -129,7 +129,7 @@ public class Plan {
             }).collect(Collectors.toCollection(ArrayList::new));
         }
 
-        Surface nouvelleSurface = new Surface(points);
+        Surface nouvelleSurface = new Surface(points, surfaceOriginale.estUnTrou);
         listeSurfaces.remove(surfaceSelectionnee);
         listeSurfaces.add(nouvelleSurface);
         surfaceSelectionnee = nouvelleSurface;
@@ -143,8 +143,8 @@ public class Plan {
             if(surface.polygone.contains(position)){
                 ancre = surface;
                 premierPoint = pointPrecedent = new Point(
-                        surface.polygone.getBounds().x,
-                        surface.polygone.getBounds().y);
+                        surfaceSelectionnee.polygone.getBounds().x,
+                        surfaceSelectionnee.polygone.getBounds().y);
                 return Etat.OUVRIR_FENETRE_ALIGNER;
             }
         }
@@ -163,6 +163,7 @@ public class Plan {
                 return;
             }
         }
+
     }
 
     public void aligner(String alignement){
@@ -170,48 +171,45 @@ public class Plan {
         Rectangle boiteSelect = surfaceSelectionnee.polygone.getBounds();
         switch(alignement){
             case "gaucheExt":
-                deplacerSurface(new Point(boiteAncre.x - boiteSelect.width - pointPrecedent.x, 0));
+                surfaceSelectionnee.deplacerSurface(boiteAncre.x - boiteSelect.width - pointPrecedent.x, 0);
                 break;
             case "gaucheInt":
-                deplacerSurface(new Point(boiteAncre.x - pointPrecedent.x, 0));
+                surfaceSelectionnee.deplacerSurface(boiteAncre.x - pointPrecedent.x, 0);
                 break;
             case "droiteExt":
-                deplacerSurface(new Point(boiteAncre.x + boiteAncre.width - pointPrecedent.x, 0));
+                surfaceSelectionnee.deplacerSurface(boiteAncre.x + boiteAncre.width - pointPrecedent.x, 0);
                 break;
             case "droiteInt":
-                deplacerSurface(new Point(boiteAncre.x + boiteAncre.width - boiteSelect.width - pointPrecedent.x,
-                        0));
+                surfaceSelectionnee.deplacerSurface(boiteAncre.x + boiteAncre.width - boiteSelect.width - pointPrecedent.x, 0);
                 break;
             case "centreHorizontal":
-                deplacerSurface(new Point(boiteAncre.x + (boiteAncre.width - boiteSelect.width)/2 - pointPrecedent.x,
-                        0));
+                surfaceSelectionnee.deplacerSurface(boiteAncre.x + (boiteAncre.width - boiteSelect.width)/2 - pointPrecedent.x, 0);
                 break;
             case "basExt":
-                deplacerSurface(new Point(0, boiteAncre.y - boiteAncre.height - pointPrecedent.y));
+                surfaceSelectionnee.deplacerSurface(0, boiteAncre.y + boiteAncre.height - pointPrecedent.y);
                 break;
             case "basInt":
-                deplacerSurface(new Point(0,
-                        boiteAncre.y - boiteAncre.height + boiteSelect.height - pointPrecedent.y));
+                surfaceSelectionnee.deplacerSurface(0, boiteAncre.y + boiteAncre.height - boiteSelect.height - pointPrecedent.y);
                 break;
             case "hautExt":
-                deplacerSurface(new Point(0, boiteAncre.y + boiteSelect.height - pointPrecedent.y));
+                surfaceSelectionnee.deplacerSurface(0, boiteAncre.y - boiteSelect.height - pointPrecedent.y);
                 break;
             case "hautInt":
-                deplacerSurface(new Point(0, boiteAncre.y - pointPrecedent.y));
+                surfaceSelectionnee.deplacerSurface(0, boiteAncre.y - pointPrecedent.y);
                 break;
             case "centreVertical":
-                deplacerSurface(new Point(0,
-                        boiteAncre.y + (boiteAncre.height - boiteSelect.height)/2 - pointPrecedent.y));
+                surfaceSelectionnee.deplacerSurface(0, boiteAncre.y + (boiteAncre.height - boiteSelect.height)/2 - pointPrecedent.y);
                 break;
             case "rienHorizontal":
-                deplacerSurface(new Point(premierPoint.x, 0));
+                surfaceSelectionnee.deplacerSurface(premierPoint.x - pointPrecedent.x, 0);
                 break;
             case "rienVertical":
-                deplacerSurface(new Point(0, premierPoint.y));
+                surfaceSelectionnee.deplacerSurface(0, premierPoint.y - pointPrecedent.y);
                 break;
             default:
                 break;
         }
+        pointPrecedent = surfaceSelectionnee.polygone.getBounds().getLocation();
     }
 
     public void annulerAligner(){
