@@ -176,7 +176,7 @@ public class Canvas extends JPanel implements Observer{
         g.drawLine(0, -absTranslate.y, 0, sizeY - absTranslate.y);
         g.drawLine(-absTranslate.x, 0, sizeX - absTranslate.x, 0);
         this.controller.paintCanevas(g, mouse);
-        g.setTransform(oldTransform );
+        g.setTransform(oldTransform);
         g.setColor(Color.black);
         g.drawString(controller.getStatusString(), 10, 20);
     }

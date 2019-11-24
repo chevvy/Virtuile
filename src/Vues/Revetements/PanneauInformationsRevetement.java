@@ -1,6 +1,5 @@
 package Vues.Revetements;
 
-import Domaine.Revetement;
 import MVC.Controller;
 import Vues.Materiaux.FrameCouleur;
 import Vues.Materiaux.FrameMateriau;
@@ -29,7 +28,7 @@ public class PanneauInformationsRevetement extends JPanel{
 
     private void SetUpUi() {
         //Nom du revêtement
-        JLabel nomRevetementLabel = new JLabel("Nom du revêtement :");
+        JLabel nomRevetementLabel = new JLabel("Nom du matériau :");
         nomRevetementLabel.setBounds(10,10,200,25);
         this.add(nomRevetementLabel);
 
@@ -133,7 +132,7 @@ public class PanneauInformationsRevetement extends JPanel{
         this.add(tuilesParBoite);
 
 
-        JButton boutonModifier = new JButton("Consulter les propriétés du revêtement");
+        JButton boutonModifier = new JButton("Consulter les propriétés du matériau");
         boutonModifier.setSize(300, 30);
         boutonModifier.setLocation(100, 320);
         this.add(boutonModifier);
@@ -146,7 +145,7 @@ public class PanneauInformationsRevetement extends JPanel{
         //});
 
 
-        JButton boutonAjouter = new JButton("Ajouter un nouveau revêtement");
+        JButton boutonAjouter = new JButton("Ajouter un nouveau matériau");
         boutonAjouter.setSize(300, 30);
         boutonAjouter.setLocation(100, 350);
         this.add(boutonAjouter);
@@ -179,23 +178,4 @@ public class PanneauInformationsRevetement extends JPanel{
 /*
 (String nomDuRevetement, String typeMateriauTuile, Color couleurTuile, String couleurTuileText, String motifTuile,
                       int hauteurTuile, int longueurTuile, int nbTuilesBoite)
-
-    //Couleur coulis
-    JLabel couleurCoulisLabel = new JLabel("Couleur du coulis :");
-        couleurCoulisLabel.setBounds(10,310,200,25);
-                this.add(couleurCoulisLabel);
-
-                String [] couleurCoulis = {"Rouge", "Blanc", "Gris"};
-                JComboBox<String> couleurCoulisCombo = new JComboBox<>(couleurCoulis); //this.controller.getListeMateriaux()
-        couleurCoulisCombo.setSize(200, 25);
-        couleurCoulisCombo.setLocation(220, 310);
-        this.add(couleurCoulisCombo);
-
-        //Epaisseur coulis
-        JLabel epaisseurCoulisLabel = new JLabel("Épaisseur du coulis :");
-        epaisseurCoulisLabel.setBounds(10,350,200,25);
-        this.add(epaisseurCoulisLabel);
-
-        JTextField epaisseurCoulisText = new JTextField(20);
-        epaisseurCoulisText.setBounds(220,350,200,25);
-        this.add(epaisseurCoulisText);*/
+*/

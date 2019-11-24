@@ -1,5 +1,5 @@
 package Vues.Revetements;
-import Domaine.Revetement;
+
 import MVC.Controller;
 import MVC.Observer;
 
@@ -31,8 +31,7 @@ public class PanneauChoixRevetements extends JPanel implements Observer {
         listeRevetements.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         listeRevetements.setLayoutOrientation(JList.VERTICAL_WRAP);
         listeRevetements.setVisibleRowCount(-1);
-
-
+        
         listeRevetements.setPreferredSize(new Dimension(150, 350));
         listeRevetements.setLayout(null);
         listeRevetements.addListSelectionListener(e -> new ListSelectionListener() {

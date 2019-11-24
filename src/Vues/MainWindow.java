@@ -61,7 +61,7 @@ public class MainWindow extends JFrame implements Observer {
         menuFichier.add(menuItemSauvegarder);
         menuFichier.add(menuItemCharger);
 
-        JMenuItem menuMateriaux = new JMenuItem("Propriétés des revêtements");
+        JMenuItem menuMateriaux = new JMenuItem("Propriétés des matériaux");
         menuEdition.add(menuMateriaux);
         menuMateriaux.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {

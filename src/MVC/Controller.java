@@ -226,10 +226,18 @@ public class Controller {
             g.setColor(Color.black);
             Rectangle limites = plan.surfaceSelectionnee.polygone.getBounds();
             g.drawRect(limites.x, limites.y, limites.width, limites.height);
+            if (etat == Etat.LECTURE){
+                g.drawRect(limites.x, limites.y, limites.width, limites.height);
+                g.drawOval(limites.x-5, limites.y-5, 10, 10);
+                g.drawOval(limites.x+limites.width-5, limites.y-5, 10, 10);
+                g.drawOval(limites.x+limites.width-5, limites.y+limites.height-5, 10, 10);
+                g.drawOval(limites.x-5, limites.y+limites.height-5, 10, 10);
+            }
             g.setColor(Color.yellow);
             g.drawPolygon(plan.surfaceSelectionnee.polygone);
         }
 
+        g.setColor(new Color(145, 7, 12));
         ArrayList<Point> surfaceLibre = plan.getSurfaceLibre();
         if(etat == Etat.CREER_FORME_LIBRE && surfaceLibre.size()>1){
             g.drawOval(surfaceLibre.get(0).x-5, surfaceLibre.get(0).y-5, 10, 10);
@@ -292,6 +300,14 @@ public class Controller {
     public Set getNomRevetements(){return gestionnaireRevetements.getNomRevetements();}
 
     public Map<String, String> getInfosRevetements(String nom){return gestionnaireRevetements.getInfosRevetement(nom);}
+
+    public Map<String, String> getInfosRevetementSelect() {
+        String nom = plan.surfaceSelectionnee.getRevetement().getNomDuRevetement();
+        return gestionnaireRevetements.getInfosRevetement(nom);}
+
+    //public Map<String, String> getInfosSurfaceSelect() {
+        //String nom = plan.surfaceSelectionnee.get;
+        //return gestionnaireRevetements.getInfosRevetement(nom);}
 
     public void ajouterRevetement(String nomRevetement, String typeMateriauTuile, Color couleurTuile, String couleurTuileText,
                                                  String motifTuile, int hauteurTuile, int longueurTuile, int nbTuilesBoite){
