@@ -168,14 +168,11 @@ public class Canvas extends JPanel implements Observer{
                 g.drawRect(i, j, grid, grid);
             }
         }
-        g.setColor(Color.DARK_GRAY);
-        g.drawLine(translate.x, 0, translate.x, sizeY);
-        g.drawLine(0, translate.y, sizeX, translate.y);
         AffineTransform oldTransform = g.getTransform();
         g.translate(translate.x, translate.y);
         g.scale(zoomFactor, zoomFactor);
         this.controller.paintCanevas(g, mouse);
-        g.setTransform(oldTransform );
+        g.setTransform(oldTransform);
         g.setColor(Color.black);
         g.drawString(controller.getStatusString(), 10, 20);
     }

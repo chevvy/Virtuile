@@ -18,6 +18,7 @@ public class Plan {
     private ArrayList<Point> surfaceLibre;
     private boolean isGrilleMagnetiqueActive = false;
     private int grid_size = 50;
+    private Point pointAncre;
     private ArrayList<String> listeCouleurs = new ArrayList<>( Arrays.asList("Rouge", "Noir", "Gris", "Jaune"));
     private ArrayList<String> listeTypeMateriau = new ArrayList<>( Arrays.asList("Béton", "Terre cuite", "Ardoise",
             "Bois"));
@@ -29,6 +30,26 @@ public class Plan {
     }
 
     public Etat selectionner(Point position){
+        if(surfaceSelectionnee != null){
+            Rectangle rect = surfaceSelectionnee.polygone.getBounds();
+
+            if(isCloseToPoint(position, new Point(rect.x, rect.y))){
+                premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y + rect.height);
+                return  Etat.ETIRER_SURFACE;
+            }
+            if(isCloseToPoint(position, new Point(rect.x + rect.width, rect.y))){
+                premierPoint = pointAncre = new Point(rect.x, rect.y + rect.height);
+                return  Etat.ETIRER_SURFACE;
+            }
+            if(isCloseToPoint(position, new Point(rect.x + rect.width, rect.y + rect.height))){
+                premierPoint = pointAncre = new Point(rect.x, rect.y);
+                return  Etat.ETIRER_SURFACE;
+            }
+            if(isCloseToPoint(position, new Point(rect.x, rect.y + rect.height))){
+                premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y);
+                return  Etat.ETIRER_SURFACE;
+            }
+        }
         if(surfaceSelectionnee != null && surfaceSelectionnee.polygone.contains(position)){
             pointPrecedent = premierPoint = position;
             return Etat.DEPLACER_SURFACE;
@@ -51,7 +72,7 @@ public class Plan {
     public Etat initialiserSurface(Point position, ArrayList<Point> patron, boolean trou){
         Point positionAjustee = convertMouseCoordWithMagnetique(position);
         premierPoint = convertMouseCoordWithMagnetique(positionAjustee);
-
+        pointAncre = premierPoint;
         patron = patron.stream().map(point -> new Point(point.x + positionAjustee.x, point.y + positionAjustee.y))
                 .collect(Collectors.toCollection(ArrayList::new));
         surfaceOriginale = surfaceSelectionnee = new Surface(patron, trou);
@@ -83,8 +104,12 @@ public class Plan {
     private boolean surfaceLibreIsFirst(Point point){
         if (surfaceLibre.size() < 3) { return false; }
         Point first = surfaceLibre.get(0);
-        if (point.x < first.x-5 || point.x > first.x+5) {return false;}
-        if (point.y < first.y-5 || point.y > first.y+5) {return false;}
+        return isCloseToPoint(point, first);
+    }
+
+    private boolean isCloseToPoint(Point test, Point location){
+        if (test.x < location.x-5 || test.x > location.x+5) {return false;}
+        if (test.y < location.y-5 || test.y > location.y+5) {return false;}
         return true;
     }
 
@@ -118,8 +143,8 @@ public class Plan {
         Rectangle limites = surfaceOriginale.polygone.getBounds();
         if(x != 0 && y!= 0){
             points = points.stream().map(point ->{
-                int nouveau_x = (x * (point.x - limites.x) / limites.width) + limites.x;
-                int nouveau_y = (y * (point.y - limites.y) / limites.height) + limites.y;
+                int nouveau_x = (x * Math.abs(point.x - limites.x) / limites.width) + pointAncre.x;
+                int nouveau_y = (y * Math.abs(point.y - limites.y) / limites.height) + pointAncre.y;
                 return new Point(nouveau_x, nouveau_y);
             }).collect(Collectors.toCollection(ArrayList::new));
         }
