@@ -136,7 +136,7 @@ public class Plan {
     }
 
     public Etat selectionnerAligner(Point position){
-        if(surfaceSelectionnee == null){
+        if(surfaceSelectionnee == null || surfaceSelectionnee.polygone.contains(position)){
             return Etat.LECTURE;
         }
         for(Surface surface : listeSurfaces){
