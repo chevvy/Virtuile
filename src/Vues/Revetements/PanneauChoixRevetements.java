@@ -8,24 +8,25 @@ import javax.swing.*;
 
 public class PanneauChoixRevetements extends JPanel {
 
-    /*
-    pour retirer un élement de ta liste tu fais
-    int index = list.getSelectedIndex();
-    listModel.remove(index);
-    * */
 
-    public PanneauChoixRevetements(Controller controller) {
+    private Controller controller;
+    private JList<Object> listeRevetements;
+
+
+    PanneauChoixRevetements(Controller controller) {
+        this.controller = controller;
+        setUpUI();
+        getIndexSelectionner();
+    }
+
+    private void setUpUI() {
         DefaultListModel model = new DefaultListModel();
-        controller.plan.ajouter15Revetement(); //TODO à retirer
 
-        for(Revetement revetement : controller.plan.getListeRevetements())
+        for(Revetement revetement : controller.getRevetements())
         {
             model.addElement(revetement.getNomDuRevetement());
         }
 
-        // for Surface in controller.getPlan()
-            // model.addElement(surface.getRevetement())
-            // est-ce que ça consiste à du tx intelligent
         JList listeRevetements = new JList(model);
         listeRevetements.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         listeRevetements.setLayoutOrientation(JList.VERTICAL_WRAP);
@@ -35,5 +36,9 @@ public class PanneauChoixRevetements extends JPanel {
         listeRevetements.setLayout(null);
         JScrollPane listScroller = new JScrollPane(listeRevetements);
         this.add(listScroller, BorderLayout.CENTER);
+
+    }
+    private int getIndexSelectionner() {
+        return listeRevetements.getSelectedIndex();
     }
 }

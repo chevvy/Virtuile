@@ -1,5 +1,6 @@
 package Vues.Revetements;
 
+import Domaine.Revetement;
 import MVC.Controller;
 import Vues.Materiaux.FrameCouleur;
 import Vues.Materiaux.FrameMateriau;
@@ -8,15 +9,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.BreakIterator;
 import java.util.ArrayList;
 
 public class PanneauInformationsRevetement extends JPanel{
 
-
     private Controller controller;
     private FrameRevetements frame;
 
-    public PanneauInformationsRevetement(Controller controller, FrameRevetements frame) {
+    PanneauInformationsRevetement(Controller controller, FrameRevetements frame) {
         this.controller = controller;
         this.frame = frame;
         SetUpUi();
@@ -24,6 +25,7 @@ public class PanneauInformationsRevetement extends JPanel{
         this.setLayout(null);
 
     }
+
 
     private void SetUpUi() {
         //Nom du revêtement
@@ -40,7 +42,7 @@ public class PanneauInformationsRevetement extends JPanel{
         typeMateriauLabel.setBounds(10,50,200,25);
         this.add(typeMateriauLabel);
 
-        ArrayList<String> listeMateriaux = controller.getTypeMatériaux();
+        ArrayList<String> listeMateriaux = controller.getTypeMateriaux();
         JComboBox typeMateriauxCombo = new JComboBox<>(listeMateriaux.toArray());
         typeMateriauxCombo.setSize(130, 25);
         typeMateriauxCombo.setLocation(220, 50);
@@ -131,22 +133,53 @@ public class PanneauInformationsRevetement extends JPanel{
         this.add(tuilesParBoite);
 
 
-        JButton boutonModifier = new JButton("Modifier les propriétés du revêtement");
+        JButton boutonModifier = new JButton("Consulter les propriétés du revêtement");
         boutonModifier.setSize(300, 30);
         boutonModifier.setLocation(100, 320);
         this.add(boutonModifier);
+        //boutonModifier.addActionListener(new ActionListener() {
+            //@Override
+            //public void actionPerformed(ActionEvent actionEvent) {
+                //frame.
+
+            //}
+        //});
+
 
         JButton boutonAjouter = new JButton("Ajouter un nouveau revêtement");
         boutonAjouter.setSize(300, 30);
         boutonAjouter.setLocation(100, 350);
         this.add(boutonAjouter);
+        boutonAjouter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String nomRevetement = nomRevetementField.getText();
+                String typeMateriauTuile = String.valueOf(typeMateriauxCombo.getSelectedItem());
+                String couleurTuileText = String.valueOf(couleurMateriauCombo.getSelectedItem());
+                Color couleurTuile = controller.getCouleur(couleurTuileText);
+                String motifTuile = String.valueOf(motifRecouvrementCombo.getSelectedItem());
+                int hauteurTuile = Integer.parseInt(hauteurTuileText.getText());
+                int longueurTuile = Integer.parseInt(largeurTuileText.getText());
+                int nbTuilesBoite = Integer.parseInt(nbTuilesBoiteText.getText());
+                controller.ajouterRevetement(nomRevetement, typeMateriauTuile, couleurTuile, couleurTuileText,
+                        motifTuile, hauteurTuile, longueurTuile, nbTuilesBoite);
+                frame.dispose();
+                new FrameRevetements(controller).setVisible(true);
+            }
+        });
+
         this.setVisible(true);
+
     }
+
 }
 
 
 
 /*
+(String nomDuRevetement, String typeMateriauTuile, Color couleurTuile, String couleurTuileText, String motifTuile,
+                      int hauteurTuile, int longueurTuile, int nbTuilesBoite)
+
     //Couleur coulis
     JLabel couleurCoulisLabel = new JLabel("Couleur du coulis :");
         couleurCoulisLabel.setBounds(10,310,200,25);
