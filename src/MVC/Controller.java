@@ -1,6 +1,7 @@
 package MVC;
 
 import Domaine.Plan;
+import Domaine.Revetement;
 import Domaine.Surface;
 import Domaine.Tuile;
 
@@ -173,6 +174,9 @@ public class Controller {
             case DEPLACER_SURFACE:
                 value = "Déplacez la forme avec la souris";
                 break;
+            case SELECTIONNER_ALIGNER:
+                value = "Cliquer sur la forme avec laquelle vous désirez aligner";
+                break;
         }
         return value;
     }
@@ -255,10 +259,31 @@ public class Controller {
         plan.ajouterTypeMateriau(typeMateriau);
     }
 
-    public ArrayList<String> getTypeMatériaux(){ return plan.getListeTypeMateriau(); }
+    public ArrayList<String> getTypeMateriaux(){ return plan.getListeTypeMateriau(); }
 
     //Type de motifs de tuiles
     public ArrayList<String> getMotifs(){ return plan.getListeMotifs(); }
 
+    //Revêtements
+    public ArrayList<Revetement> getRevetements(){return plan.getListeRevetements();}
 
+    public void ajouterRevetement(String nomRevetement, String typeMateriauTuile, Color couleurTuile, String couleurTuileText,
+                                                 String motifTuile, int hauteurTuile, int longueurTuile, int nbTuilesBoite){
+        Revetement revetement = new Revetement(nomRevetement, typeMateriauTuile, couleurTuile, couleurTuileText,
+                motifTuile, hauteurTuile, longueurTuile, nbTuilesBoite);
+        plan.ajouterRevetement(revetement);
+    }
+
+    public Color getCouleur(String couleur){
+        switch (couleur) {
+            case "Rouge":
+                return Color.RED;
+            case "Blanc":
+                return Color.WHITE;
+            case "Noir":
+                return Color.BLACK;
+            default:
+                return Color.YELLOW;
+        }
+    }
 }

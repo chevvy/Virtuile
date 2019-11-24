@@ -34,27 +34,65 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
     }
 
     private void SetUpUi(){
-        boutonAjouter = new JButton("Ajouter une Surface");
-        boutonAjouter.setSize(200, 50);
+
+        boutonAjouter = new JButton("Ajouter une surface");
+        boutonAjouter.setSize(200, 30);
         boutonAjouter.setLocation(25,20);
-        boutonAjouter.addActionListener(e -> setCreateShape());
+        boutonAjouter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                //controller.setTrou(false);
+                setCreateShape();;
+            }
+        });
+
+        //ajouter option vide
+        JButton boutonAjouterSurfaceVide = new JButton("Ajouter une surface vide");
+        boutonAjouterSurfaceVide.setSize(200, 30);
+        boutonAjouterSurfaceVide.setLocation(25,60);
+        boutonAjouterSurfaceVide.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                //controller.setTrou(true);
+                setCreateShape();;
+            }
+        });
 
         boutonSupprimer = new JButton("Supprimer la surface");
-        boutonSupprimer.setSize(200, 50);
-        boutonSupprimer.setLocation(25,90);
+        boutonSupprimer.setSize(200, 30);
+        boutonSupprimer.setLocation(25,100);
         boutonSupprimer.addActionListener(e -> controller.supprimerSurface());
 
-        JLabel line = new JLabel("_________________________________");
-        line.setSize(250,50);
-        line.setLocation(10,150);
+        boutonAlligment = new JButton("Alligner/Coller");
+        boutonAlligment.setSize(200, 30);
+        boutonAlligment.setLocation(25,140);
+        boutonAlligment.addActionListener(e -> controller.selectionnerAligner());
 
+        JButton boutonTestFusionner;
+        boutonTestFusionner = new JButton("Fusionner");
+        boutonTestFusionner.setSize(200,30);
+        boutonTestFusionner.setLocation(25, 180);
+        boutonTestFusionner.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                controller.setEtat(Etat.FUSIONNER);
+            }
+        });
+
+        JLabel line = new JLabel("_________________________________");
+        line.setSize(250,25);
+        line.setLocation(10,200);
+
+        JLabel InfoSurface = new JLabel("Surface sélectionnée");
+        InfoSurface.setSize(250,30);
+        InfoSurface.setLocation(10,230);
 
         // Premier element (rangee 1)
         radioSurface = new JRadioButton("Surface");
         radioSurface.setSelected(true);
         radioSurface.setBackground(Color.gray);
         radioSurface.setSize(100, 20);
-        radioSurface.setLocation(15, 190);
+        radioSurface.setLocation(15, 260);
 
         // Premier element (range 2)
         radioVide = new JRadioButton("Vide");
@@ -96,26 +134,13 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
         listeAlignement.setSize(135, 30);
         listeAlignement.setLocation(100, 300);
 
-        boutonAlligment = new JButton("Alligner/Coller");
-        boutonAlligment.setSize(200, 25);
-        boutonAlligment.setLocation(25,340);
-        boutonAlligment.addActionListener(e -> controller.selectionnerAligner());
-
-        JButton boutonTestFusionner;
-        boutonTestFusionner = new JButton("test Fusionner");
-        boutonTestFusionner.setSize(200,25);
-        boutonTestFusionner.setLocation(25, 370);
-        boutonTestFusionner.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                controller.setEtat(Etat.FUSIONNER);
-            }
-        });
 
 
         this.add(boutonAjouter);
+        this.add(boutonAjouterSurfaceVide);
         this.add(boutonSupprimer);
         this.add(line);
+        this.add(InfoSurface);
         this.add(radioSurface);
         this.add(radioVide);
         this.add(labelMateriau);
@@ -142,7 +167,7 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
 
     @Override
     public void update() {
-        if (controller.getPlan().surfaceSelectionnee != null)
+        if (controller.getPlan().surfaceSelectionnee != null && controller.getEtat().equals(Etat.LECTURE)  )
         {
             revetementSurfaceSelectionnee.setText(controller.getPlan().surfaceSelectionnee.getRevetement().getNomDuRevetement());
         }

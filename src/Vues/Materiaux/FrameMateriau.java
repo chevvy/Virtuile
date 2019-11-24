@@ -15,11 +15,12 @@ public class FrameMateriau extends JFrame{
         frameMateriau = this;
         frameMateriau.setSize(330, 100);
         frameMateriau.setLocation(400,300);
-        frameMateriau.setTitle("Ajouter une nouvelle couleur");
+        frameMateriau.setTitle("Ajouter un nouveau type de matériau");
         frameMateriau.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
         PanneauMateriau panelMateriau = new PanneauMateriau(controller, this);
         frameMateriau.add(panelMateriau) ;
+
 
     }
 }

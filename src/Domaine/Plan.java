@@ -18,8 +18,12 @@ public class Plan {
     private ArrayList<Point> surfaceLibre;
     private boolean isGrilleMagnetiqueActive = false;
     private int grid_size = 50;
-    private ArrayList<Revetement> listeRevetements = new ArrayList<>();
-    private ArrayList<String> listeCouleurs = new ArrayList<>( Arrays.asList("Rouge", "Noir", "Gris"));
+    private ArrayList<Revetement> listeRevetements = new ArrayList<Revetement>(Arrays.asList(new Revetement(),
+            new Revetement("Aucun revêtement"),
+            new Revetement("Revêtement 1"),
+            new Revetement("Revêtement 2", "Béton", Color.RED, "Rouge",
+                    "Installation en chevron", 13 , 13, 30)));
+    private ArrayList<String> listeCouleurs = new ArrayList<>( Arrays.asList("Rouge", "Noir", "Gris", "Jaune"));
     private ArrayList<String> listeTypeMateriau = new ArrayList<>( Arrays.asList("Béton", "Terre cuite", "Ardoise",
             "Bois"));
     private ArrayList<String> listeMotifs= new ArrayList<>( Arrays.asList("Installation droite", "Installation " +
@@ -253,23 +257,18 @@ public class Plan {
     }
 
 
-    public void ajouterRevetement(String nom){
-        Revetement nouveauRevetement = new Revetement(nom);
-        this.listeRevetements.add(nouveauRevetement);
+    public void ajouterRevetement(Revetement revetement){
+        this.listeRevetements.add(revetement);
     }
 
-    // TODO fonction test à supprimer !
-    public void ajouter15Revetement(){
-        for (int i = 0; i < 15; i++){
-            ajouterRevetement("Fuck "+(i+1));
-        }
-    }
 
+    //Liste des revêtements
     public ArrayList<Revetement> getListeRevetements(){return listeRevetements;}
+
 
     // Liste des couleurs de tuiles
     public void ajouterCouleur(String nom){
-        //if (!(listeCouleurs.contains(nom)))
+        if (!(listeCouleurs.contains(nom)) && !nom.equals(""))
             this.listeCouleurs.add(nom);
     }
 
@@ -277,7 +276,7 @@ public class Plan {
 
     //Liste des types de matériaux
     public void ajouterTypeMateriau(String nom){
-        //if (!(listeCouleurs.contains(nom)))
+        if (!(listeCouleurs.contains(nom)))
         this.listeTypeMateriau.add(nom);
     }
 

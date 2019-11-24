@@ -2,6 +2,7 @@ package Vues.Materiaux;
 
 import MVC.Controller;
 import Vues.Alignement.FrameAlignement;
+import Vues.Revetements.FrameRevetements;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -20,13 +21,13 @@ public class PanneauCouleur extends JPanel{
         }
         private void SetUpUi() {
             //Nouvelle couleur
-            JLabel nomRevetementLabel = new JLabel("Nouvelle couleur :");
-            nomRevetementLabel.setBounds(10,10,130,25);
-            this.add(nomRevetementLabel);
+            JLabel couleurNom= new JLabel("Nouvelle couleur :");
+            couleurNom.setBounds(10,10,130,25);
+            this.add(couleurNom);
 
-            JTextField nomRevetementField = new JTextField(14);
-            nomRevetementField.setBounds(180,10,40,25);
-            this.add(nomRevetementField);
+            JTextField couleurField = new JTextField(14);
+            couleurField.setBounds(180,10,40,25);
+            this.add(couleurField);
 
 
             JButton boutonOk = new JButton("Ajouter");
@@ -35,8 +36,10 @@ public class PanneauCouleur extends JPanel{
             this.add(boutonOk);
             boutonOk.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    controller.ajouterCouleur(nomRevetementField.getText());
+                    controller.ajouterCouleur(couleurField.getText());
                     frame.dispose();
+                    new FrameRevetements(controller).setVisible(true);
+
                 }
             });
         }
