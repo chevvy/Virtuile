@@ -80,8 +80,8 @@ public class Canvas extends JPanel implements Observer{
     }
 
     private void mouseMovedEvent(MouseEvent e){
-        mouse = relativeToAbsolute(e.getPoint());
-        controller.bouger(mouse);
+        mouse = e.getPoint();
+        controller.bouger(relativeToAbsolute(mouse));
     }
 
     private void mousedDraggedEvent(MouseEvent e){
@@ -142,10 +142,6 @@ public class Canvas extends JPanel implements Observer{
         return zoomOut(absolute);
     }
 
-    private int zoom(int value) {
-        return (int) (value * zoomFactor);
-    }
-
     private Point zoomOut(Point point) {
         int x = (int) (point.x / zoomFactor);
         int y = (int) (point.y / zoomFactor);
@@ -156,24 +152,29 @@ public class Canvas extends JPanel implements Observer{
     public void paint(Graphics gb) {
         super.paintComponent(gb);
         Graphics2D g = (Graphics2D) gb;
+
+        int grid = controller.getGridSize();
+
+        AffineTransform oldTransform = g.getTransform();
+        g.translate(translate.x, translate.y);
+        g.scale(zoomFactor, zoomFactor);
+
+        Point absTranslate = zoomOut(translate);
+        int gridOffX = absTranslate.x % grid;
+
+        int gridOffY = absTranslate.y % grid;
         g.setColor(Color.gray);
-        int sizeX = this.getWidth()-1;
-        int sizeY = this.getHeight()-1;
-        int grid_size = controller.getGridSize();
-        int grid = zoom(grid_size);
-        int gridOffX = translate.x % grid;
-        int gridOffY = translate.y % grid;
-        for(int i = -grid + gridOffX; i < sizeX + grid; i += grid){
-            for(int j = -grid + gridOffY; j < sizeY + grid; j+= grid){
+
+        int sizeX = (int)((this.getWidth()-1)/zoomFactor);
+        int sizeY = (int)((this.getHeight()-1)/zoomFactor);
+        for(int i = gridOffX - absTranslate.x - grid; i < sizeX - absTranslate.x; i += grid){
+            for(int j = gridOffY - absTranslate.y - grid; j < sizeY - absTranslate.y; j+= grid){
                 g.drawRect(i, j, grid, grid);
             }
         }
         g.setColor(Color.DARK_GRAY);
-        g.drawLine(translate.x, 0, translate.x, sizeY);
-        g.drawLine(0, translate.y, sizeX, translate.y);
-        AffineTransform oldTransform = g.getTransform();
-        g.translate(translate.x, translate.y);
-        g.scale(zoomFactor, zoomFactor);
+        g.drawLine(0, -absTranslate.y, 0, sizeY - absTranslate.y);
+        g.drawLine(-absTranslate.x, 0, sizeX - absTranslate.x, 0);
         this.controller.paintCanevas(g, mouse);
         g.setTransform(oldTransform );
         g.setColor(Color.black);
