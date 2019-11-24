@@ -215,11 +215,14 @@ public class Controller {
         }
 
         for(Surface surface : plan.recupererSurfaces()){
-            for (Tuile tuile : surface.getListeTuiles()){
-                g.setColor(new Color(203, 65, 84));
-                g.fillPolygon(tuile.getPolygone());
-                g.drawPolygon(tuile.getPolygone());
+            if(!surface.estUnTrou){
+                for (Tuile tuile : surface.getListeTuiles()){
+                    g.setColor(new Color(203, 65, 84));
+                    g.fillPolygon(tuile.getPolygone());
+                    g.drawPolygon(tuile.getPolygone());
+                }
             }
+
         }
     }
 
