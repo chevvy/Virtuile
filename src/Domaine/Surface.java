@@ -14,15 +14,15 @@ import java.util.stream.Collectors;
 public class Surface {
 
     public Polygon polygone;
+    public boolean estUnTrou;
+    public ArrayList<Surface> trous;
     private Revetement revetement;
 
-    public boolean valide;
-
-    public Surface(List<Point> listePoints) {
+    public Surface(List<Point> listePoints, boolean trou) {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
-        valide = true;
+        this.estUnTrou = trou;
         // liste de tuiles
         revetement = new Revetement();
     }

@@ -3,8 +3,6 @@ package Domaine;
 import MVC.Etat;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -45,13 +43,13 @@ public class Plan {
         surfaceSelectionnee = null;
     }
 
-    public Etat initialiserSurface(Point position, ArrayList<Point> patron){
+    public Etat initialiserSurface(Point position, ArrayList<Point> patron, boolean trou){
         Point positionAjustee = convertMouseCoordWithMagnetique(position);
         premierPoint = convertMouseCoordWithMagnetique(positionAjustee);
 
         patron = patron.stream().map(point -> new Point(point.x + positionAjustee.x, point.y + positionAjustee.y))
                 .collect(Collectors.toCollection(ArrayList::new));
-        surfaceOriginale = surfaceSelectionnee = new Surface(patron);
+        surfaceOriginale = surfaceSelectionnee = new Surface(patron, trou);
         listeSurfaces.add(surfaceSelectionnee);
         return Etat.ETIRER_SURFACE;
     }
@@ -60,15 +58,15 @@ public class Plan {
         surfaceLibre = new ArrayList<>();
     }
 
-    private void terminerSurfaceLibre(){
-        surfaceSelectionnee = new Surface(surfaceLibre);
+    private void terminerSurfaceLibre(boolean trou){
+        surfaceSelectionnee = new Surface(surfaceLibre, trou);
         listeSurfaces.add(surfaceSelectionnee);
     }
 
-    public Etat ajouterPointSurfaceLibre(Point point){
+    public Etat ajouterPointSurfaceLibre(Point point, boolean trou){
         point = convertMouseCoordWithMagnetique(point);
         if(surfaceLibreIsFirst(point)) {
-            terminerSurfaceLibre();
+            terminerSurfaceLibre(trou);
             return Etat.LECTURE;
         }
         else{
@@ -121,7 +119,7 @@ public class Plan {
             }).collect(Collectors.toCollection(ArrayList::new));
         }
 
-        Surface nouvelleSurface = new Surface(points);
+        Surface nouvelleSurface = new Surface(points, surfaceOriginale.estUnTrou);
         listeSurfaces.remove(surfaceSelectionnee);
         listeSurfaces.add(nouvelleSurface);
         surfaceSelectionnee = nouvelleSurface;
