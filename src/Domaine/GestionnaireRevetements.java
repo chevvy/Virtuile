@@ -8,6 +8,7 @@ public class GestionnaireRevetements {
     public Revetement revetement;
 
     private Map<String, Revetement> mapRevetements = new HashMap<String, Revetement>(){{
+                put("revetement par defaut",  new Revetement());
                 put( "Aucun Revêtement", new Revetement("Aucun revêtement"));
                 put( "Revêtement 1", new Revetement("Revêtement 1"));
                 put("Revêtement 2", new Revetement("Revêtement 2", "Béton", Color.RED, "Rouge",
@@ -31,15 +32,15 @@ public class GestionnaireRevetements {
     }
 
     public Map<String, String> getInfosRevetement(String nom) {
-        //String revetement =
+        Revetement revetementSelect = mapRevetements.get(nom);
         Map<String, String> map = new HashMap<String, String>();
-        map.put("Nom Revêtement", revetement.getNomDuRevetement());
-        map.put("Type matériau", revetement.getTypeMateriauTuile());
-        map.put("Couleur tuiles", revetement.getCouleurTuileText());
-        map.put("Motif tuiles", revetement.getMotifTuiles());
-        map.put("Hauteur tuiles", Integer.toString(revetement.getHauteurTuile()));
-        map.put("Longueur tuiles", Integer.toString(revetement.getLongueurTuile()));
-        map.put("nb. tuiles par boite", Integer.toString(revetement.getLongueurTuile()));
+        map.put("Nom Revêtement", revetementSelect.getNomDuRevetement());
+        map.put("Type matériau", revetementSelect.getTypeMateriauTuile());
+        map.put("Couleur tuiles", revetementSelect.getCouleurTuileText());
+        map.put("Motif tuiles", revetementSelect.getMotifTuiles());
+        map.put("Hauteur tuiles", Integer.toString(revetementSelect.getHauteurTuile()));
+        map.put("Longueur tuiles", Integer.toString(revetementSelect.getLongueurTuile()));
+        map.put("nb. tuiles par boite", Integer.toString(revetementSelect.getLongueurTuile()));
         return map;
     }
 

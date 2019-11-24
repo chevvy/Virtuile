@@ -6,6 +6,14 @@ import java.util.Optional;
 
 public class Outils {
 
+    public static double impToMet(MesureImperiale frac){
+        return (double)frac.getTrentedeuxiemes() * 25.4/32.0;
+    }
+
+    public static MesureImperiale metToImp(double met){
+        return new MesureImperiale((int)Math.round(32.0*met/25.4)) ;
+    }
+
     public static int getMaxValue(int[] listeNombre){
         int maxValue = listeNombre[0];
         for(int i=1;i < listeNombre.length;i++){
@@ -47,5 +55,7 @@ public class Outils {
         listeSommets.add(new Point(x + width, y));
         return listeSommets;
     }
+
+
 
 }
