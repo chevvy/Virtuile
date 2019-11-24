@@ -146,7 +146,15 @@ public class Surface {
         return newListeTuiles;
     }
 
-    // TODO regrouper les setteures/getteures ensemble ?
+    public Tuile getTuileAtPoint(Point point){
+        for (Tuile tuile : listeTuiles){
+            if(tuile.getPolygone().contains(point)){
+                return tuile;
+            }
+        }
+        return new Tuile(new Polygon());
+    }
+
     public void setRevetement(Revetement revetement) {
         this.revetement = revetement;
     }
