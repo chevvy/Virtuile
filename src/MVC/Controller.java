@@ -57,7 +57,6 @@ public class Controller {
                         add(new Point(1, 0));
                     }
                 };
-                trou = false;
                 etat = Etat.AJOUTER_SURFACE;
                 break;
             case 1: //Triangle
@@ -68,11 +67,9 @@ public class Controller {
                         add(new Point(1, 2));
                     }
                 };
-                trou = false;
                 etat = Etat.AJOUTER_SURFACE;
                 break;
             case 2:
-                trou = false;
                 etat = Etat.CREER_FORME_LIBRE;
                 plan.initialiserSurfaceLibre();
                 break;
@@ -86,7 +83,6 @@ public class Controller {
                         add(new Point(10, 3));
                     }
                 };
-                trou = false;
                 etat = Etat.AJOUTER_SURFACE;
                 break;
         }
@@ -147,7 +143,14 @@ public class Controller {
     }
 
     public void relacher(){
-        etat = Etat.LECTURE;
+        switch (etat){
+            case CREER_FORME_LIBRE:
+                break;
+            default:
+                etat = Etat.LECTURE;
+                break;
+        }
+
         notifyObservers();
     }
 
@@ -185,18 +188,32 @@ public class Controller {
     public void paintCanevas(Graphics g, Point mouse){
         Surface surfaceSelectionnee = plan.surfaceSelectionnee;
         for(Surface surface : plan.recupererSurfaces()){
-            g.setColor(surface.estUnTrou?Color.white:Color.blue);
+            g.setColor(surface.estUnTrou?Color.white:Color.blue.darker());
             g.fillPolygon(surface.polygone);
-            g.setColor(Color.white);
-            for(Surface trou : surface.trous){
-                g.fillPolygon(trou.polygone);
+            if(!surface.estUnTrou){
+                for (Tuile tuile : surface.getListeTuiles()){
+                    g.setColor(new Color(203, 65, 84));
+                    g.fillPolygon(tuile.getPolygone());
+                }
             }
+            g.setColor(Color.white);
+            surface.trous.forEach(trou -> g.fillPolygon(trou.polygone));
         }
 
         if(surfaceSelectionnee != null){
-            g.setColor(Color.gray.darker());
+            g.setColor(surfaceSelectionnee.estUnTrou?Color.green:Color.blue);
             g.fillPolygon(surfaceSelectionnee.polygone);
-
+            if(!surfaceSelectionnee.estUnTrou){
+                g.setColor(new Color(203, 65, 84));
+                for (Tuile tuile : surfaceSelectionnee.getListeTuiles()){
+                    g.fillPolygon(tuile.getPolygone());
+                }
+            }
+            g.setColor(Color.green);
+            surfaceSelectionnee.trous.forEach(trou -> g.fillPolygon(trou.polygone));
+            g.setColor(Color.black);
+            Rectangle limites = plan.surfaceSelectionnee.polygone.getBounds();
+            g.drawRect(limites.x, limites.y, limites.width, limites.height);
             g.setColor(Color.yellow);
             g.drawPolygon(plan.surfaceSelectionnee.polygone);
         }
@@ -216,14 +233,6 @@ public class Controller {
         else if (etat == Etat.CREER_FORME_LIBRE && surfaceLibre.size() == 1){
             g.drawOval(surfaceLibre.get(0).x-5, surfaceLibre.get(0).y-5, 10, 10);
             g.drawLine(surfaceLibre.get(0).x, surfaceLibre.get(0).y, mouse.x, mouse.y);
-        }
-
-        for(Surface surface : plan.recupererSurfaces()){
-            for (Tuile tuile : surface.getListeTuiles()){
-                g.setColor(new Color(203, 65, 84));
-                g.fillPolygon(tuile.getPolygone());
-                g.drawPolygon(tuile.getPolygone());
-            }
         }
     }
 

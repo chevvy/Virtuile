@@ -4,11 +4,8 @@ package Domaine;
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
-import java.lang.reflect.Array;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Surface {
 
@@ -35,6 +32,7 @@ public class Surface {
         int[] nouveaux_y = Arrays.stream(polygone.ypoints).map(x -> x + deplacement_y).toArray();
         polygone = new Polygon(nouveaux_x, nouveaux_y, polygone.npoints);
         setListeTuiles(genererListeDeTuiles());
+        trous.forEach(trou -> trou.deplacerSurface(deplacement_x, deplacement_y));
     }
 
 
@@ -74,7 +72,16 @@ public class Surface {
         }
         polygone = nouveau_polygone;
         setListeTuiles((genererListeDeTuiles()));
+        trous.addAll(s.trous);
         return true;
+    }
+
+    public boolean fusionnerTrou(Surface s){
+        if (fusionner(s)){
+            trous.add(s);
+            return true;
+        }
+        return false;
     }
 
     // TODO regrouper les setteures/getteures ensemble ?
@@ -97,12 +104,15 @@ public class Surface {
         int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis)); int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis));
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
 
-        int j = 0;
+        if(estUnTrou){
+            return newListeTuiles;
+        }
+            int j = 0;
         while (j <= nbTuilesY){
             int i = 0;
             int positionEnX = coordXduBound;
             while (i <= nbTuilesX ) {
-                newListeTuiles.add(new Tuile(genereSommetsTuile(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                newListeTuiles.add(new Tuile(genererSommetsTuile(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
                 positionEnX += tuileWidth + tailleCoulis;
                 i++;
             }
@@ -110,11 +120,11 @@ public class Surface {
             positionEnX = coordXduBound;
             j++;
         } ;
-        return intersectionTuiles(newListeTuiles);
+        return newIntersectionTuiles(newListeTuiles);
         // return  newListeTuiles;
     }
 
-    private ArrayList<Tuile> intersectionTuiles(ArrayList<Tuile> ListeDetuiles){
+    private ArrayList<Tuile> intersectionTuiles(ArrayList<Tuile> ListeDetuiles){ //TODO détruire?
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
         int xMax = getMaxValue(polygone.xpoints);
         int yMax = getMaxValue(polygone.ypoints);
@@ -147,7 +157,7 @@ public class Surface {
         this.listeTuiles = listeTuiles;
     }
 
-    private ArrayList<Point> genereSommetsTuile(int x, int y, int width, int height){
+    private ArrayList<Point> genererSommetsTuile(int x, int y, int width, int height){
         ArrayList<Point> listeSommets = new ArrayList<Point>();
         listeSommets.add(new Point(x,y));
         listeSommets.add(new Point(x, y + height));
@@ -159,35 +169,24 @@ public class Surface {
     private ArrayList<Tuile> newIntersectionTuiles(ArrayList<Tuile> ListeDetuiles){
         // sera utilisé pour le calcul des intersections à partir de ligne pour forme irreguliere
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
-        int xMaxSurface = getMaxValue(polygone.xpoints);
-        int yMaxSurface = getMaxValue(polygone.ypoints);
+        Area areaSurface = new Area(polygone);
         for (Tuile tuile : ListeDetuiles){
-            PathIterator iterSTuile = tuile.getPolygone().getPathIterator(null);
+            Area areaTuile = new Area(tuile.getPolygone());
+            areaTuile.intersect(areaSurface);
+            PathIterator iterTuile = areaTuile.getPathIterator(null); //TODO isoler dans une méthode tout ça
+            Polygon newPolyTuile = new Polygon();
             double[] coordsTuile = new double[6];
-            Polygon newPoly = new Polygon();
-            while(!iterSTuile.isDone()){
-                int typeSegmentTuile = iterSTuile.currentSegment(coordsTuile);
-                int xTuile = (int) coordsTuile[0];
-                int yTuile = (int) coordsTuile[1];
-
-                PathIterator iterSurface = polygone.getPathIterator(null);
-                double[] coordsSurface = new double[6];
-
-
-
-                while (!iterSurface.isDone()){
-                    int typeSegmentSurface = iterSurface.currentSegment(coordsSurface);
-                    int xSurface = (int) coordsSurface[0];
-                    int ySurface = (int) coordsSurface[1];
-
-
-                    //else if ( xTuile > xMaxSurface){xTuile = xMaxSurface;}
-                    // if (yTuile > yMaxSurface){yTuile = yMaxSurface;}
+            while (!iterTuile.isDone()){
+                int type = iterTuile.currentSegment(coordsTuile);
+                int x = (int) coordsTuile[0];
+                int y = (int) coordsTuile[1];
+                if(type != PathIterator.SEG_CLOSE) {
+                    newPolyTuile.addPoint(x, y);
                 }
-                newPoly.addPoint(xTuile, yTuile);
-                iterSTuile.next();
+                iterTuile.next();
             }
-            newListeTuiles.add(new Tuile(newPoly));
+            Tuile newTuile = new Tuile(newPolyTuile);
+            newListeTuiles.add(newTuile);
         }
 
         return newListeTuiles;
@@ -212,7 +211,7 @@ public class Surface {
         return minValue;
     }
 
-    // TODO deplacer dans package Outils
+    // TODO deplacer dans package Outils (ou détruire)
     public Optional<Point> CalculIntersection(double m1,double b1,double m2,double b2) {
 
         if (m1 == m2) {
@@ -227,4 +226,4 @@ public class Surface {
         return Optional.of(point);
     }
 
-    }
+}

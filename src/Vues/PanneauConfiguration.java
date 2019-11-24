@@ -38,24 +38,18 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
         boutonAjouter = new JButton("Ajouter une surface");
         boutonAjouter.setSize(200, 30);
         boutonAjouter.setLocation(25,20);
-        boutonAjouter.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                //controller.setTrou(false);
-                setCreateShape();;
-            }
+        boutonAjouter.addActionListener(e -> {
+            controller.setTrou(false);
+            setCreateShape();;
         });
 
         //ajouter option vide
         JButton boutonAjouterSurfaceVide = new JButton("Ajouter une surface vide");
         boutonAjouterSurfaceVide.setSize(200, 30);
-        boutonAjouterSurfaceVide.setLocation(25,50);
-        boutonAjouterSurfaceVide.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                //controller.setTrou(true);
-                setCreateShape();;
-            }
+        boutonAjouterSurfaceVide.setLocation(25,60);
+        boutonAjouterSurfaceVide.addActionListener(e -> {
+            controller.setTrou(true);
+            setCreateShape();;
         });
 
         boutonSupprimer = new JButton("Supprimer la surface");
@@ -71,13 +65,8 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
         JButton boutonTestFusionner;
         boutonTestFusionner = new JButton("Fusionner");
         boutonTestFusionner.setSize(200,30);
-        boutonTestFusionner.setLocation(25, 140);
-        boutonTestFusionner.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                controller.setEtat(Etat.FUSIONNER);
-            }
-        });
+        boutonTestFusionner.setLocation(25, 180);
+        boutonTestFusionner.addActionListener(e -> controller.setEtat(Etat.FUSIONNER));
 
         JLabel line = new JLabel("_________________________________");
         line.setSize(250,25);

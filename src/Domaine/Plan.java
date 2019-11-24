@@ -131,7 +131,7 @@ public class Plan {
     }
 
     public Etat selectionnerAligner(Point position){
-        if(surfaceSelectionnee == null){
+        if(surfaceSelectionnee == null || surfaceSelectionnee.polygone.contains(position)){
             return Etat.LECTURE;
         }
         for(Surface surface : listeSurfaces){
@@ -154,19 +154,23 @@ public class Plan {
             if(surface.polygone.contains(p) && surface!=surfaceSelectionnee){
                 if(surfaceSelectionnee.estUnTrou ^ surface.estUnTrou){
                     if(surface.estUnTrou){
-
+                        if(surfaceSelectionnee.fusionnerTrou(surface)) {
+                            listeSurfaces.remove(surface);
+                        }
+                        return;
                     }
+                    if(surface.fusionnerTrou(surfaceSelectionnee)){
+                        listeSurfaces.remove(surfaceSelectionnee);
+                        surfaceSelectionnee = surface;
+                    }
+                    return;
                 }
-
                 if(surfaceSelectionnee.fusionner(surface)){
                     listeSurfaces.remove(surface);
-                };
-
-
+                }
                 return;
             }
         }
-
     }
 
     public void aligner(String alignement){
