@@ -4,8 +4,11 @@ package Domaine;
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
+import java.lang.reflect.Array;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Surface {
 
@@ -14,6 +17,8 @@ public class Surface {
     public ArrayList<Surface> trous;
     private Revetement revetement;
     private ArrayList<Tuile> listeTuiles = new ArrayList<>();
+    private int tailleDuCoulis = 4;
+    private Color couleurCoulis = Color.WHITE;
 
     public Surface(List<Point> listePoints, boolean trou) {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
@@ -35,16 +40,6 @@ public class Surface {
         trous.forEach(trou -> trou.deplacerSurface(deplacement_x, deplacement_y));
     }
 
-
-    public void modifierSommets(ArrayList<Point> coordonneesNouvellesCardinalites){
-
-    }
-    public void modifierSurface(){
-
-    }
-    public void modifierTypeSurface(){
-
-    }
 
     public ArrayList<Point> getListePoints(){
         ArrayList<Point> listePoints = new ArrayList<Point>();
@@ -84,19 +79,11 @@ public class Surface {
         return false;
     }
 
-    // TODO regrouper les setteures/getteures ensemble ?
-    public void setRevetement(Revetement revetement) {
-        this.revetement = revetement;
-    }
-
-    public Revetement getRevetement() {
-        return revetement;
-    }
 
     public ArrayList<Tuile> genererListeDeTuiles(){
         // reçoit un motif en argument  test
-        int tailleCoulis = revetement.getTailleDuCoulis();
-        Color couleurCoulis = revetement.getCouleurCoulis();
+        int tailleCoulis = tailleDuCoulis; // TODO refactor pour changer ça
+        Color couleurCoulis = getCouleurCoulis();
 
         int coordXduBound = polygone.getBounds().x; int coordYduBond = polygone.getBounds().y;
         int boundsWidth = polygone.getBounds().width; int boundsHeight = polygone.getBounds().height;
@@ -124,39 +111,6 @@ public class Surface {
         // return  newListeTuiles;
     }
 
-    private ArrayList<Tuile> intersectionTuiles(ArrayList<Tuile> ListeDetuiles){ //TODO détruire?
-        ArrayList<Tuile> newListeTuiles = new ArrayList<>();
-        int xMax = getMaxValue(polygone.xpoints);
-        int yMax = getMaxValue(polygone.ypoints);
-        for (Tuile tuile : ListeDetuiles){
-            PathIterator iterSTuile = tuile.getPolygone().getPathIterator(null);
-            double[] coords = new double[6];
-            Polygon newPoly = new Polygon();
-            while(!iterSTuile.isDone()){
-                int type = iterSTuile.currentSegment(coords);
-                int x = (int) coords[0];
-                int y = (int) coords[1];
-                if ( x > xMax){x = xMax;}
-                if (y > yMax){y = yMax;}
-                newPoly.addPoint(x, y);
-                iterSTuile.next();
-            }
-            newListeTuiles.add(new Tuile(newPoly));
-        }
-
-        return newListeTuiles;
-    }
-
-
-
-    public ArrayList<Tuile> getListeTuiles() {
-        return listeTuiles;
-    }
-
-    public void setListeTuiles(ArrayList<Tuile> listeTuiles) {
-        this.listeTuiles = listeTuiles;
-    }
-
     private ArrayList<Point> genererSommetsTuile(int x, int y, int width, int height){
         ArrayList<Point> listeSommets = new ArrayList<Point>();
         listeSommets.add(new Point(x,y));
@@ -166,7 +120,7 @@ public class Surface {
         return listeSommets;
     }
 
-    private ArrayList<Tuile> newIntersectionTuiles(ArrayList<Tuile> ListeDetuiles){
+    private ArrayList<Tuile> newIntersectionTuiles(ArrayList<Tuile> ListeDetuiles){ // TODO refactor le nom
         // sera utilisé pour le calcul des intersections à partir de ligne pour forme irreguliere
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
         Area areaSurface = new Area(polygone);
@@ -192,38 +146,46 @@ public class Surface {
         return newListeTuiles;
     }
 
-    public static int getMaxValue(int[] listeNombre){
-        int maxValue = listeNombre[0];
-        for(int i=1;i < listeNombre.length;i++){
-            if(listeNombre[i] > maxValue){
-                maxValue = listeNombre[i];
+    public Tuile getTuileAtPoint(Point point){
+        for (Tuile tuile : listeTuiles){
+            if(tuile.getPolygone().contains(point)){
+                return tuile;
             }
         }
-        return maxValue;
-    }
-    public static int getMinValue(int[] listeNombre) {
-        int minValue = listeNombre[0];
-        for (int i = 1; i < listeNombre.length; i++) {
-            if (listeNombre[i] < minValue) {
-                minValue = listeNombre[i];
-            }
-        }
-        return minValue;
+        return new Tuile(new Polygon());
     }
 
-    // TODO deplacer dans package Outils (ou détruire)
-    public Optional<Point> CalculIntersection(double m1,double b1,double m2,double b2) {
+    public void setRevetement(Revetement revetement) {
+        this.revetement = revetement;
+    }
 
-        if (m1 == m2) {
-            return Optional.empty();
-        }
+    public Revetement getRevetement() {
+        return revetement;
+    }
 
-        double x = (b2 - b1) / (m1 - m2);
-        double y = m1 * x + b1;
+    public ArrayList<Tuile> getListeTuiles() {
+        return listeTuiles;
+    }
 
-        Point point = new Point();
-        point.setLocation(x, y);
-        return Optional.of(point);
+    public void setListeTuiles(ArrayList<Tuile> listeTuiles) {
+        this.listeTuiles = listeTuiles;
+    }
+
+    public int getTailleDuCoulis() {
+        return tailleDuCoulis;
+    }
+
+    public void setTailleDuCoulis(int tailleDuCoulis) {
+        this.tailleDuCoulis = tailleDuCoulis;
+    }
+
+    public Color getCouleurCoulis() {
+        return couleurCoulis;
+    }
+
+    public void setCouleurCoulis(Color couleurCoulis) {
+        this.couleurCoulis = couleurCoulis;
     }
 
 }
+

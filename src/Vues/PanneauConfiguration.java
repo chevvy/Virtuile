@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.Arrays;
 
 import MVC.Observer;
 
@@ -19,6 +20,8 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
     private JButton boutonAjouter, boutonSupprimer, boutonMenuRevetement, boutonAlligment;
     private JRadioButton radioSurface, radioVide;
     private JTextField revetementSurfaceSelectionnee;
+    private JComboBox listeAlignement;
+    private JTextField revetementSurfaceSelectionnee, positionSouris;
 
     private Controller controller;
 
@@ -229,6 +232,12 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
         {
             revetementSurfaceSelectionnee.setText(controller.getInfosRevetementSelect().get("Nom Revêtement"));
         }
+//        if (controller.getPlan().surfaceSelectionnee != null){ TODO a remettre quand cath a fini panel config
+//            int [] xpointsTuile = controller.getPlan().surfaceSelectionnee.getTuileAtPoint(controller.getPositionSourisActuelle()).getPolygone().xpoints;
+//            int [] ypointsTuile = controller.getPlan().surfaceSelectionnee.getTuileAtPoint(controller.getPositionSourisActuelle()).getPolygone().xpoints;
+//            positionSouris.setText(" Points de la tuile actuelle : x = " + Arrays.toString(xpointsTuile) + " y = " + Arrays.toString(ypointsTuile));
+//        }
+
     }
 
     private class PanelSommet extends JFrame{

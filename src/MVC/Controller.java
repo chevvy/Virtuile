@@ -18,6 +18,7 @@ public class Controller {
     private boolean trou;
     public ArrayList<Point> patronForme;
     private Etat etat = Etat.LECTURE;
+    private Point positionSourisActuelle = new Point();
 
     public Controller(){
         observers = new ArrayList<>();
@@ -135,6 +136,17 @@ public class Controller {
                 break;
             case DEPLACER_SURFACE:
                 plan.deplacerSurface(p);
+                break;
+            default:
+                break;
+        }
+        notifyObservers();
+    }
+
+    public void bouger(Point p){
+        switch (etat){
+            case LECTURE:
+                this.positionSourisActuelle =  p;
                 break;
             default:
                 break;
@@ -307,5 +319,9 @@ public class Controller {
             default:
                 return Color.YELLOW;
         }
+    }
+
+    public Point getPositionSourisActuelle() {
+        return positionSourisActuelle;
     }
 }
