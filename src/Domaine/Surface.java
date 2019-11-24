@@ -4,11 +4,8 @@ package Domaine;
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
-import java.lang.reflect.Array;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Surface {
 
@@ -115,7 +112,7 @@ public class Surface {
             int i = 0;
             int positionEnX = coordXduBound;
             while (i <= nbTuilesX ) {
-                newListeTuiles.add(new Tuile(genereSommetsTuile(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                newListeTuiles.add(new Tuile(genererSommetsTuile(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
                 positionEnX += tuileWidth + tailleCoulis;
                 i++;
             }
@@ -127,7 +124,7 @@ public class Surface {
         // return  newListeTuiles;
     }
 
-    private ArrayList<Tuile> intersectionTuiles(ArrayList<Tuile> ListeDetuiles){
+    private ArrayList<Tuile> intersectionTuiles(ArrayList<Tuile> ListeDetuiles){ //TODO détruire?
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
         int xMax = getMaxValue(polygone.xpoints);
         int yMax = getMaxValue(polygone.ypoints);
@@ -160,7 +157,7 @@ public class Surface {
         this.listeTuiles = listeTuiles;
     }
 
-    private ArrayList<Point> genereSommetsTuile(int x, int y, int width, int height){
+    private ArrayList<Point> genererSommetsTuile(int x, int y, int width, int height){
         ArrayList<Point> listeSommets = new ArrayList<Point>();
         listeSommets.add(new Point(x,y));
         listeSommets.add(new Point(x, y + height));
@@ -176,7 +173,7 @@ public class Surface {
         for (Tuile tuile : ListeDetuiles){
             Area areaTuile = new Area(tuile.getPolygone());
             areaTuile.intersect(areaSurface);
-            PathIterator iterTuile = areaTuile.getPathIterator(null);
+            PathIterator iterTuile = areaTuile.getPathIterator(null); //TODO isoler dans une méthode tout ça
             Polygon newPolyTuile = new Polygon();
             double[] coordsTuile = new double[6];
             while (!iterTuile.isDone()){
@@ -214,7 +211,7 @@ public class Surface {
         return minValue;
     }
 
-    // TODO deplacer dans package Outils
+    // TODO deplacer dans package Outils (ou détruire)
     public Optional<Point> CalculIntersection(double m1,double b1,double m2,double b2) {
 
         if (m1 == m2) {

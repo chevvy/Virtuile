@@ -167,13 +167,12 @@ public class Plan {
                     if(surface.fusionnerTrou(surfaceSelectionnee)){
                         listeSurfaces.remove(surfaceSelectionnee);
                         surfaceSelectionnee = surface;
-                    };
+                    }
                     return;
                 }
                 if(surfaceSelectionnee.fusionner(surface)){
                     listeSurfaces.remove(surface);
-                };
-
+                }
                 return;
             }
         }

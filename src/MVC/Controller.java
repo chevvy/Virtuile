@@ -142,7 +142,14 @@ public class Controller {
     }
 
     public void relacher(){
-        etat = Etat.LECTURE;
+        switch (etat){
+            case CREER_FORME_LIBRE:
+                break;
+            default:
+                etat = Etat.LECTURE;
+                break;
+        }
+
         notifyObservers();
     }
 
@@ -182,12 +189,25 @@ public class Controller {
         for(Surface surface : plan.recupererSurfaces()){
             g.setColor(surface.estUnTrou?Color.white:Color.blue.darker());
             g.fillPolygon(surface.polygone);
-
+            if(!surface.estUnTrou){
+                for (Tuile tuile : surface.getListeTuiles()){
+                    g.setColor(new Color(203, 65, 84));
+                    g.fillPolygon(tuile.getPolygone());
+                }
+            }
+            g.setColor(Color.white);
+            surface.trous.forEach(trou -> g.fillPolygon(trou.polygone));
         }
 
         if(surfaceSelectionnee != null){
             g.setColor(surfaceSelectionnee.estUnTrou?Color.green:Color.blue);
             g.fillPolygon(surfaceSelectionnee.polygone);
+            if(!surfaceSelectionnee.estUnTrou){
+                g.setColor(new Color(203, 65, 84));
+                for (Tuile tuile : surfaceSelectionnee.getListeTuiles()){
+                    g.fillPolygon(tuile.getPolygone());
+                }
+            }
             g.setColor(Color.green);
             surfaceSelectionnee.trous.forEach(trou -> g.fillPolygon(trou.polygone));
             g.setColor(Color.black);
@@ -212,21 +232,6 @@ public class Controller {
         else if (etat == Etat.CREER_FORME_LIBRE && surfaceLibre.size() == 1){
             g.drawOval(surfaceLibre.get(0).x-5, surfaceLibre.get(0).y-5, 10, 10);
             g.drawLine(surfaceLibre.get(0).x, surfaceLibre.get(0).y, mouse.x, mouse.y);
-        }
-
-        for(Surface surface : plan.recupererSurfaces()){
-            if(!surface.estUnTrou){
-                for (Tuile tuile : surface.getListeTuiles()){
-                    g.setColor(new Color(203, 65, 84));
-                    g.fillPolygon(tuile.getPolygone());
-                    g.drawPolygon(tuile.getPolygone());
-                }
-            }
-            for(Surface trou : surface.trous){
-                g.setColor(Color.white);
-                g.fillPolygon(trou.polygone);
-            }
-
         }
     }
 
