@@ -25,7 +25,6 @@ public class Tuile{
         this.polygone = polygon;
         length = polygone.xpoints.length;
         height = polygone.ypoints.length;
-        System.out.println("coordx tuile = " + Arrays.toString(polygone.xpoints) + " coordy tuile = " + Arrays.toString(polygone.ypoints));
     }
 
     public Polygon getPolygone() {

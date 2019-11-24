@@ -1,6 +1,5 @@
 package Domaine;
 
-import javafx.util.Pair;
 
 import java.awt.*;
 import java.awt.geom.Area;
