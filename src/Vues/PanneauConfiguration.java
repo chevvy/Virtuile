@@ -21,7 +21,7 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
     private JRadioButton radioSurface, radioVide;
     private JTextField revetementSurfaceSelectionnee;
     private JComboBox listeAlignement;
-    private JTextField revetementSurfaceSelectionnee, positionSouris;
+    private JTextField positionSouris;
 
     private Controller controller;
 
