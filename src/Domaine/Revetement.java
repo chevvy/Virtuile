@@ -13,12 +13,11 @@ public class Revetement {
     private int longueurTuile;
     private int hauteurTuile;
 
-    private int tailleDuCoulis = 4;
-    private Color couleurCoulis = Color.WHITE;
+
     // contient le motif
     // methode : genererRevetement(boundingbox) -> selon le bound et le motif, modifie la liste des tuiles pour quelles soient de la bonne taille
 
-    public Revetement(String nom){
+    public Revetement(String nom) {
         this.nomDuRevetement = nom;
         this.TypeMateriauTuile = "Céramique";
         this.couleurTuile = Color.YELLOW;
@@ -29,7 +28,7 @@ public class Revetement {
         this.nbTuilesBoite = 20;
     }
 
-    public Revetement(){
+    public Revetement() {
         // revetement avec motif / taille par defaut (TBD)
         this.longueurTuile = 50;
         this.hauteurTuile = 20;
@@ -44,9 +43,10 @@ public class Revetement {
         this.nbTuilesBoite = 20;
         // revetement avec motif / taille par defaut (TBD)
     }
+
     //
     public Revetement(String nomDuRevetement, String typeMateriauTuile, Color couleurTuile, String couleurTuileText, String motifTuile,
-                      int hauteurTuile, int longueurTuile, int nbTuilesBoite){
+                      int hauteurTuile, int longueurTuile, int nbTuilesBoite) {
 
         this.nomDuRevetement = nomDuRevetement;
         this.TypeMateriauTuile = typeMateriauTuile;
@@ -57,7 +57,6 @@ public class Revetement {
         this.longueurTuile = longueurTuile;
         this.nbTuilesBoite = nbTuilesBoite;
     }
-
 
 
     public Color getCouleurTuile() {
@@ -91,22 +90,5 @@ public class Revetement {
     public void setHauteurTuile(int hauteurTuile) {
         this.hauteurTuile = hauteurTuile;
     }
-
-    public int getTailleDuCoulis() {
-        return tailleDuCoulis;
-    }
-
-    public void setTailleDuCoulis(int tailleDuCoulis) {
-        this.tailleDuCoulis = tailleDuCoulis;
-    }
-
-    public Color getCouleurCoulis() {
-        return couleurCoulis;
-    }
-
-    public void setCouleurCoulis(Color couleurCoulis) {
-        this.couleurCoulis = couleurCoulis;
-    }
-
 }
 

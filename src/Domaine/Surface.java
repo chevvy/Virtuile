@@ -17,6 +17,8 @@ public class Surface {
     public ArrayList<Surface> trous;
     private Revetement revetement;
     private ArrayList<Tuile> listeTuiles = new ArrayList<>();
+    private int tailleDuCoulis = 4;
+    private Color couleurCoulis = Color.WHITE;
 
     public Surface(List<Point> listePoints, boolean trou) {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
@@ -98,8 +100,8 @@ public class Surface {
 
     public ArrayList<Tuile> genererListeDeTuiles(){
         // reçoit un motif en argument  test
-        int tailleCoulis = revetement.getTailleDuCoulis();
-        Color couleurCoulis = revetement.getCouleurCoulis();
+        int tailleCoulis = tailleDuCoulis; // TODO refactor pour changer ça
+        Color couleurCoulis = getCouleurCoulis();
 
         int coordXduBound = polygone.getBounds().x; int coordYduBond = polygone.getBounds().y;
         int boundsWidth = polygone.getBounds().width; int boundsHeight = polygone.getBounds().height;
@@ -214,19 +216,23 @@ public class Surface {
         return minValue;
     }
 
-    // TODO deplacer dans package Outils
-    public Optional<Point> CalculIntersection(double m1,double b1,double m2,double b2) {
 
-        if (m1 == m2) {
-            return Optional.empty();
-        }
-
-        double x = (b2 - b1) / (m1 - m2);
-        double y = m1 * x + b1;
-
-        Point point = new Point();
-        point.setLocation(x, y);
-        return Optional.of(point);
+    public int getTailleDuCoulis() {
+        return tailleDuCoulis;
     }
+
+    public void setTailleDuCoulis(int tailleDuCoulis) {
+        this.tailleDuCoulis = tailleDuCoulis;
+    }
+
+    public Color getCouleurCoulis() {
+        return couleurCoulis;
+    }
+
+    public void setCouleurCoulis(Color couleurCoulis) {
+        this.couleurCoulis = couleurCoulis;
+    }
+
+
 
 }
