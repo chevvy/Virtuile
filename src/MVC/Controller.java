@@ -281,6 +281,14 @@ public class Controller {
 
     public Map<String, String> getInfosRevetements(String nom){return gestionnaireRevetements.getInfosRevetement(nom);}
 
+    public Map<String, String> getInfosRevetementSelect() {
+        String nom = plan.surfaceSelectionnee.getRevetement().getNomDuRevetement();
+        return gestionnaireRevetements.getInfosRevetement(nom);}
+
+    //public Map<String, String> getInfosSurfaceSelect() {
+        //String nom = plan.surfaceSelectionnee.get;
+        //return gestionnaireRevetements.getInfosRevetement(nom);}
+
     public void ajouterRevetement(String nomRevetement, String typeMateriauTuile, Color couleurTuile, String couleurTuileText,
                                                  String motifTuile, int hauteurTuile, int longueurTuile, int nbTuilesBoite){
         Revetement revetement = new Revetement(nomRevetement, typeMateriauTuile, couleurTuile, couleurTuileText,

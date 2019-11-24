@@ -178,23 +178,4 @@ public class PanneauInformationsRevetement extends JPanel{
 /*
 (String nomDuRevetement, String typeMateriauTuile, Color couleurTuile, String couleurTuileText, String motifTuile,
                       int hauteurTuile, int longueurTuile, int nbTuilesBoite)
-
-    //Couleur coulis
-    JLabel couleurCoulisLabel = new JLabel("Couleur du coulis :");
-        couleurCoulisLabel.setBounds(10,310,200,25);
-                this.add(couleurCoulisLabel);
-
-                String [] couleurCoulis = {"Rouge", "Blanc", "Gris"};
-                JComboBox<String> couleurCoulisCombo = new JComboBox<>(couleurCoulis); //this.controller.getListeMateriaux()
-        couleurCoulisCombo.setSize(200, 25);
-        couleurCoulisCombo.setLocation(220, 310);
-        this.add(couleurCoulisCombo);
-
-        //Epaisseur coulis
-        JLabel epaisseurCoulisLabel = new JLabel("Épaisseur du coulis :");
-        epaisseurCoulisLabel.setBounds(10,350,200,25);
-        this.add(epaisseurCoulisLabel);
-
-        JTextField epaisseurCoulisText = new JTextField(20);
-        epaisseurCoulisText.setBounds(220,350,200,25);
-        this.add(epaisseurCoulisText);*/
+*/
