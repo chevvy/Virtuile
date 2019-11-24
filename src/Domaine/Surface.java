@@ -58,7 +58,6 @@ public class Surface {
 
     public boolean fusionner(Surface s){
         Area aire = new Area(polygone);
-        Area aireSurfaceOriginale = new Area(polygone);
         aire.add(new Area(s.polygone));
         if(!aire.isSingular()){return false;}
         PathIterator iterator = aire.getPathIterator(null);
@@ -77,6 +76,7 @@ public class Surface {
         setListeTuiles((genererListeDeTuiles()));
         return true;
     }
+
 
     // TODO regrouper les setteures/getteures ensemble ?
     public void setRevetement(Revetement revetement) {
