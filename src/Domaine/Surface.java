@@ -35,6 +35,7 @@ public class Surface {
         int[] nouveaux_y = Arrays.stream(polygone.ypoints).map(x -> x + deplacement_y).toArray();
         polygone = new Polygon(nouveaux_x, nouveaux_y, polygone.npoints);
         setListeTuiles(genererListeDeTuiles());
+        trous.forEach(trou -> trou.deplacerSurface(deplacement_x, deplacement_y));
     }
 
 
@@ -74,9 +75,17 @@ public class Surface {
         }
         polygone = nouveau_polygone;
         setListeTuiles((genererListeDeTuiles()));
+        trous.addAll(s.trous);
         return true;
     }
 
+    public boolean fusionnerTrou(Surface s){
+        if (fusionner(s)){
+            trous.add(s);
+            return true;
+        }
+        return false;
+    }
 
     // TODO regrouper les setteures/getteures ensemble ?
     public void setRevetement(Revetement revetement) {
@@ -111,7 +120,7 @@ public class Surface {
             positionEnX = coordXduBound;
             j++;
         } ;
-        return newIntersectionTuiles(newListeTuiles);
+        return intersectionTuiles(newListeTuiles);
         // return  newListeTuiles;
     }
 
@@ -179,6 +188,7 @@ public class Surface {
             Tuile newTuile = new Tuile(newPolyTuile);
             newListeTuiles.add(newTuile);
         }
+
         return newListeTuiles;
     }
 
