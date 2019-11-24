@@ -18,11 +18,6 @@ public class Plan {
     private ArrayList<Point> surfaceLibre;
     private boolean isGrilleMagnetiqueActive = false;
     private int grid_size = 50;
-    private ArrayList<Revetement> listeRevetements = new ArrayList<Revetement>(Arrays.asList(new Revetement(),
-            new Revetement("Aucun revêtement"),
-            new Revetement("Revêtement 1"),
-            new Revetement("Revêtement 2", "Béton", Color.RED, "Rouge",
-                    "Installation en chevron", 13 , 13, 30)));
     private ArrayList<String> listeCouleurs = new ArrayList<>( Arrays.asList("Rouge", "Noir", "Gris", "Jaune"));
     private ArrayList<String> listeTypeMateriau = new ArrayList<>( Arrays.asList("Béton", "Terre cuite", "Ardoise",
             "Bois"));
@@ -136,7 +131,7 @@ public class Plan {
     }
 
     public Etat selectionnerAligner(Point position){
-        if(surfaceSelectionnee == null){
+        if(surfaceSelectionnee == null || surfaceSelectionnee.polygone.contains(position)){
             return Etat.LECTURE;
         }
         for(Surface surface : listeSurfaces){
@@ -167,13 +162,12 @@ public class Plan {
                     if(surface.fusionnerTrou(surfaceSelectionnee)){
                         listeSurfaces.remove(surfaceSelectionnee);
                         surfaceSelectionnee = surface;
-                    };
+                    }
                     return;
                 }
                 if(surfaceSelectionnee.fusionner(surface)){
                     listeSurfaces.remove(surface);
-                };
-
+                }
                 return;
             }
         }
@@ -260,15 +254,6 @@ public class Plan {
     public ArrayList<Surface> getListeSurfaces() {
         return listeSurfaces;
     }
-
-
-    public void ajouterRevetement(Revetement revetement){
-        this.listeRevetements.add(revetement);
-    }
-
-
-    //Liste des revêtements
-    public ArrayList<Revetement> getListeRevetements(){return listeRevetements;}
 
 
     // Liste des couleurs de tuiles

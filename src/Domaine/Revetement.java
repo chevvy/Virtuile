@@ -13,6 +13,8 @@ public class Revetement {
     private int longueurTuile;
     private int hauteurTuile;
 
+    private int tailleDuCoulis = 2;
+    private Color couleurCoulis = Color.WHITE;
 
     // contient le motif
     // methode : genererRevetement(boundingbox) -> selon le bound et le motif, modifie la liste des tuiles pour quelles soient de la bonne taille
