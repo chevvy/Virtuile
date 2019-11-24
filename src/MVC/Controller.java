@@ -183,7 +183,7 @@ public class Controller {
         }
 
         if(surfaceSelectionnee != null){
-            g.setColor(Color.BLUE.darker());
+            g.setColor(Color.gray.darker());
             g.fillPolygon(surfaceSelectionnee.polygone);
 
             g.setColor(Color.yellow);
@@ -209,7 +209,7 @@ public class Controller {
 
         for(Surface surface : plan.recupererSurfaces()){
             for (Tuile tuile : surface.getListeTuiles()){
-                g.setColor(Color.GREEN);
+                g.setColor(new Color(203, 65, 84));
                 g.fillPolygon(tuile.getPolygone());
                 g.drawPolygon(tuile.getPolygone());
             }

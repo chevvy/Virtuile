@@ -7,9 +7,7 @@ import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
 import java.lang.reflect.Array;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -149,6 +147,8 @@ public class Surface {
         return newListeTuiles;
     }
 
+
+
     public ArrayList<Tuile> getListeTuiles() {
         return listeTuiles;
     }
@@ -166,23 +166,75 @@ public class Surface {
         return listeSommets;
     }
 
-    public static int getMaxValue(int[] numbers){
-        int maxValue = numbers[0];
-        for(int i=1;i < numbers.length;i++){
-            if(numbers[i] > maxValue){
-                maxValue = numbers[i];
+    private ArrayList<Tuile> newIntersectionTuiles(ArrayList<Tuile> ListeDetuiles){
+        // sera utilisé pour le calcul des intersections à partir de ligne pour forme irreguliere
+        ArrayList<Tuile> newListeTuiles = new ArrayList<>();
+        int xMaxSurface = getMaxValue(polygone.xpoints);
+        int yMaxSurface = getMaxValue(polygone.ypoints);
+        for (Tuile tuile : ListeDetuiles){
+            PathIterator iterSTuile = tuile.getPolygone().getPathIterator(null);
+            double[] coordsTuile = new double[6];
+            Polygon newPoly = new Polygon();
+            while(!iterSTuile.isDone()){
+                int typeSegmentTuile = iterSTuile.currentSegment(coordsTuile);
+                int xTuile = (int) coordsTuile[0];
+                int yTuile = (int) coordsTuile[1];
+
+                PathIterator iterSurface = polygone.getPathIterator(null);
+                double[] coordsSurface = new double[6];
+
+
+
+                while (!iterSurface.isDone()){
+                    int typeSegmentSurface = iterSurface.currentSegment(coordsSurface);
+                    int xSurface = (int) coordsSurface[0];
+                    int ySurface = (int) coordsSurface[1];
+
+
+                    //else if ( xTuile > xMaxSurface){xTuile = xMaxSurface;}
+                    // if (yTuile > yMaxSurface){yTuile = yMaxSurface;}
+                }
+                newPoly.addPoint(xTuile, yTuile);
+                iterSTuile.next();
+            }
+            newListeTuiles.add(new Tuile(newPoly));
+        }
+
+        return newListeTuiles;
+    }
+
+    public static int getMaxValue(int[] listeNombre){
+        int maxValue = listeNombre[0];
+        for(int i=1;i < listeNombre.length;i++){
+            if(listeNombre[i] > maxValue){
+                maxValue = listeNombre[i];
             }
         }
         return maxValue;
     }
-    public static int getMinValue(int[] numbers) {
-        int minValue = numbers[0];
-        for (int i = 1; i < numbers.length; i++) {
-            if (numbers[i] < minValue) {
-                minValue = numbers[i];
+    public static int getMinValue(int[] listeNombre) {
+        int minValue = listeNombre[0];
+        for (int i = 1; i < listeNombre.length; i++) {
+            if (listeNombre[i] < minValue) {
+                minValue = listeNombre[i];
             }
         }
         return minValue;
+    }
+
+    // TODO deplacer dans package Outils
+    public Optional<Point> CalculIntersection(double m1,double b1,double m2,double b2) {
+
+        if (m1 == m2) {
+            return Optional.empty();
+        }
+
+        double x = (b2 - b1) / (m1 - m2);
+        double y = m1 * x + b1;
+
+        Point point = new Point();
+        point.setLocation(x, y);
+        return Optional.of(point);
     }
 
     }
