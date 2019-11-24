@@ -5,10 +5,14 @@ import javafx.util.Pair;
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
+import java.lang.reflect.Array;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 
 public class Surface {
@@ -118,6 +122,30 @@ public class Surface {
             positionEnX = coordXduBound;
             j++;
         } ;
+        return intersectionTuiles(newListeTuiles);
+        // return  newListeTuiles;
+    }
+
+    private ArrayList<Tuile> intersectionTuiles(ArrayList<Tuile> ListeDetuiles){
+        ArrayList<Tuile> newListeTuiles = new ArrayList<>();
+        int xMax = getMaxValue(polygone.xpoints);
+        int yMax = getMaxValue(polygone.ypoints);
+        for (Tuile tuile : ListeDetuiles){
+            PathIterator iterSTuile = tuile.getPolygone().getPathIterator(null);
+            double[] coords = new double[6];
+            Polygon newPoly = new Polygon();
+            while(!iterSTuile.isDone()){
+                int type = iterSTuile.currentSegment(coords);
+                int x = (int) coords[0];
+                int y = (int) coords[1];
+                if ( x > xMax){x = xMax;}
+                if (y > yMax){y = yMax;}
+                newPoly.addPoint(x, y);
+                iterSTuile.next();
+            }
+            newListeTuiles.add(new Tuile(newPoly));
+        }
+
         return newListeTuiles;
     }
 
@@ -129,13 +157,6 @@ public class Surface {
         this.listeTuiles = listeTuiles;
     }
 
-    private int [] genererListePoints(int pointOrigine, int longueur){
-        int [] listePoints = new int[2];
-        listePoints[0] = pointOrigine;
-        listePoints[1] = pointOrigine + longueur;
-        return listePoints;
-    }
-
     private ArrayList<Point> genereSommetsTuile(int x, int y, int width, int height){
         ArrayList<Point> listeSommets = new ArrayList<Point>();
         listeSommets.add(new Point(x,y));
@@ -145,4 +166,23 @@ public class Surface {
         return listeSommets;
     }
 
-}
+    public static int getMaxValue(int[] numbers){
+        int maxValue = numbers[0];
+        for(int i=1;i < numbers.length;i++){
+            if(numbers[i] > maxValue){
+                maxValue = numbers[i];
+            }
+        }
+        return maxValue;
+    }
+    public static int getMinValue(int[] numbers) {
+        int minValue = numbers[0];
+        for (int i = 1; i < numbers.length; i++) {
+            if (numbers[i] < minValue) {
+                minValue = numbers[i];
+            }
+        }
+        return minValue;
+    }
+
+    }
