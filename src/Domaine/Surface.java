@@ -163,7 +163,7 @@ public class Surface {
         Area areaSurface = new Area(polygone);
         for (Tuile tuile : ListeDetuiles){
             Area areaTuile = new Area(tuile.getPolygone());
-            areaTuile.intersect(areaTuile);
+            areaTuile.intersect(areaSurface);
             PathIterator iterTuile = areaTuile.getPathIterator(null);
             Polygon newPolyTuile = new Polygon();
             double[] coordsTuile = new double[6];
