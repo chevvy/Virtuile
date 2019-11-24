@@ -107,7 +107,10 @@ public class Surface {
         int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis)); int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis));
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
 
-        int j = 0;
+        if(estUnTrou){
+            return newListeTuiles;
+        }
+            int j = 0;
         while (j <= nbTuilesY){
             int i = 0;
             int positionEnX = coordXduBound;
@@ -120,7 +123,7 @@ public class Surface {
             positionEnX = coordXduBound;
             j++;
         } ;
-        return intersectionTuiles(newListeTuiles);
+        return newIntersectionTuiles(newListeTuiles);
         // return  newListeTuiles;
     }
 
@@ -226,4 +229,4 @@ public class Surface {
         return Optional.of(point);
     }
 
-    }
+}
