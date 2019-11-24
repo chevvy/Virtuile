@@ -6,7 +6,7 @@ public class Revetement {
     private Color couleurTuile;
     private String couleurTuileText;
     private String nomDuRevetement;
-    private String TypeMateriauTuile;
+    private String typeMateriauTuile;
     private String motifTuiles;
     private int nbTuilesBoite;
     // taille des tuiles par défaut
@@ -21,7 +21,7 @@ public class Revetement {
 
     public Revetement(String nom) {
         this.nomDuRevetement = nom;
-        this.TypeMateriauTuile = "Céramique";
+        this.typeMateriauTuile = "Céramique";
         this.couleurTuile = Color.YELLOW;
         this.couleurTuileText = "Jaune";
         this.motifTuiles = "Installation droite";
@@ -36,7 +36,7 @@ public class Revetement {
         this.hauteurTuile = 20;
         this.nomDuRevetement = "revetement par defaut";
         this.nomDuRevetement = "revetement par defaut";
-        this.TypeMateriauTuile = "Céramique";
+        this.typeMateriauTuile = "Céramique";
         this.couleurTuile = Color.YELLOW;
         this.couleurTuileText = "Jaune";
         this.motifTuiles = "Installation droite";
@@ -51,7 +51,7 @@ public class Revetement {
                       int hauteurTuile, int longueurTuile, int nbTuilesBoite) {
 
         this.nomDuRevetement = nomDuRevetement;
-        this.TypeMateriauTuile = typeMateriauTuile;
+        this.typeMateriauTuile = typeMateriauTuile;
         this.couleurTuile = couleurTuile;
         this.couleurTuileText = couleurTuileText;
         this.motifTuiles = motifTuile;
@@ -91,6 +91,18 @@ public class Revetement {
 
     public void setHauteurTuile(int hauteurTuile) {
         this.hauteurTuile = hauteurTuile;
+    }
+
+    public String getTypeMateriauTuile() {
+        return typeMateriauTuile;
+    }
+
+    public String getCouleurTuileText() {
+        return couleurTuileText;
+    }
+
+    public String getMotifTuiles() {
+        return motifTuiles;
     }
 }
 
