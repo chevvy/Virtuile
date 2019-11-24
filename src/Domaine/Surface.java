@@ -24,6 +24,7 @@ public class Surface {
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
         this.estUnTrou = trou;
+        this.trous = new ArrayList<>();
         // liste de tuiles
         revetement = new Revetement();
         setListeTuiles(genererListeDeTuiles());
