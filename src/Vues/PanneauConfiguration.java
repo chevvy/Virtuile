@@ -19,8 +19,7 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
 
     private JButton boutonAjouter, boutonSupprimer, boutonMenuRevetement, boutonAlligment;
     private JRadioButton radioSurface, radioVide;
-    private JTextField revetementSurfaceSelectionnee;
-    private JComboBox listeAlignement;
+    private JComboBox listeAlignement, revetementSurfaceSelectionnee;
     private JTextField positionSouris;
 
     private Controller controller;
@@ -39,6 +38,7 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
 
     private void SetUpUi(){
 
+        String uniteMesure = "mètres";
         boutonAjouter = new JButton("Ajouter une surface");
         boutonAjouter.setSize(200, 30);
         boutonAjouter.setLocation(50,20);
@@ -102,52 +102,36 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
         labelHauteurSurface.setSize(100, 30);
         labelHauteurSurface.setLocation(15, 240);
 
+        JTextField hauteurSurfaceText = new JTextField(10);
+        hauteurSurfaceText.setBounds(100,240,90,30);
+        hauteurSurfaceText.setEditable(false);
+        this.add(hauteurSurfaceText);
+
+        JLabel labelUniteMesureHauteurSurface = new JLabel(uniteMesure);
+        labelUniteMesureHauteurSurface.setSize(70, 30);
+        labelUniteMesureHauteurSurface.setLocation(200, 240);
+        this.add(labelUniteMesureHauteurSurface);
+
         // Largeur Surface
         JLabel labelLargeurSurface = new JLabel("Largeur : ");
         labelLargeurSurface.setSize(70, 30);
         labelLargeurSurface.setLocation(15, 270);
+
+        JTextField largeurSurfaceText = new JTextField(10);
+        largeurSurfaceText.setBounds(100,270,90,30);
+        largeurSurfaceText.setEditable(false);
+        this.add(largeurSurfaceText);
+
+        JLabel labelUniteMesureLargeurSurface = new JLabel(uniteMesure);
+        labelUniteMesureLargeurSurface.setSize(70, 30);
+        labelUniteMesureLargeurSurface.setLocation(200, 270);
+        this.add(labelUniteMesureLargeurSurface);
 
         // Nom Revêtement
         JLabel labelMateriau = new JLabel("Matériau : ");
         labelMateriau.setSize(70, 30);
         labelMateriau.setLocation(15, 300);
 
-        // Type Matériau
-        JLabel labelTypeMateriau = new JLabel("Type : ");
-        labelTypeMateriau.setSize(70, 30);
-        labelTypeMateriau.setLocation(15, 330);
-
-        // Couleur Matériau
-        JLabel labelCouleurMateriau = new JLabel("Couleur : ");
-        labelCouleurMateriau.setSize(70, 30);
-        labelCouleurMateriau.setLocation(15, 360);
-
-        // Motif Tuile
-        JLabel labelMotif = new JLabel("Motif : ");
-        labelMotif.setSize(70, 30);
-        labelMotif.setLocation(15, 390);
-
-        // Taille des Tuiles
-        JLabel labelTailleTuiles = new JLabel("Taille des tuiles ");
-        labelTailleTuiles.setSize(100, 30);
-        labelTailleTuiles.setLocation(15, 420);
-
-        // Hauteur des tuiles
-        JLabel labelHauteurTuiles = new JLabel("Hauteur : ");
-        labelHauteurTuiles.setSize(70, 30);
-        labelHauteurTuiles.setLocation(25, 445);
-
-        //Largeur des tuiles
-        JLabel labelLargeurTuiles = new JLabel("Largeur : ");
-        labelLargeurTuiles.setSize(70, 30);
-        labelLargeurTuiles.setLocation(25, 470);
-
-        //Largeur des tuiles
-        JLabel labelNbTuilesBoite = new JLabel("Nb. tuiles par boite : ");
-        labelNbTuilesBoite.setSize(100, 30);
-        labelNbTuilesBoite.setLocation(25, 500);
-
-        // 2eme element - rangee 2
         ArrayList model = new ArrayList();
         controller.getNomRevetements().forEach(nom -> model.add(nom));
         JComboBox revetementSurfaceSelectionnee = new JComboBox(model.toArray());
@@ -155,11 +139,85 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
         revetementSurfaceSelectionnee.setSize(180, 30);
         revetementSurfaceSelectionnee.setLocation(100, 300);
 
+        // Type Matériau
+        JLabel labelTypeMateriau = new JLabel("Type : ");
+        labelTypeMateriau.setSize(70, 30);
+        labelTypeMateriau.setLocation(15, 330);
+
+        JTextField typeMateriauText = new JTextField(20);
+        typeMateriauText.setBounds(100,330,180,30);
+        typeMateriauText.setEditable(false);
+        this.add(typeMateriauText);
+
+        // Couleur Matériau
+        JLabel labelCouleurMateriau = new JLabel("Couleur : ");
+        labelCouleurMateriau.setSize(70, 30);
+        labelCouleurMateriau.setLocation(15, 360);
+
+        JTextField couleurMateriauText = new JTextField(20);
+        couleurMateriauText.setBounds(100,360,180,30);
+        couleurMateriauText.setEditable(false);
+        this.add(couleurMateriauText);
+
+        // Motif Tuile
+        JLabel labelMotif = new JLabel("Motif : ");
+        labelMotif.setSize(70, 30);
+        labelMotif.setLocation(15, 390);
+
+        JTextField motifTuileText = new JTextField(20);
+        motifTuileText.setBounds(100,390,180,30);
+        motifTuileText.setEditable(false);
+        this.add(motifTuileText);
+
+        // Taille des Tuiles
+        JLabel labelTailleTuiles = new JLabel("Taille des tuiles ");
+        labelTailleTuiles.setSize(200, 30);
+        labelTailleTuiles.setLocation(15, 420);
+
+        // Hauteur des tuiles
+        JLabel labelHauteurTuiles = new JLabel("Hauteur : ");
+        labelHauteurTuiles.setSize(70, 30);
+        labelHauteurTuiles.setLocation(25, 445);
+
+        JTextField hauteurTuileText = new JTextField(10);
+        hauteurTuileText.setBounds(100,445,90,30);
+        hauteurTuileText.setEditable(false);
+        this.add(hauteurTuileText);
+
+        JLabel labelUniteMesureHauteurTuile = new JLabel(uniteMesure);
+        labelUniteMesureHauteurTuile.setSize(70, 30);
+        labelUniteMesureHauteurTuile.setLocation(200, 445);
+        this.add(labelUniteMesureHauteurTuile);
+
+        //Largeur des tuiles
+        JLabel labelLargeurTuiles = new JLabel("Largeur : ");
+        labelLargeurTuiles.setSize(70, 30);
+        labelLargeurTuiles.setLocation(25, 470);
+
+        JTextField largeurTuileText = new JTextField(10);
+        largeurTuileText.setBounds(100,470,90,30);
+        largeurTuileText.setEditable(false);
+        this.add(largeurTuileText);
+
+        JLabel labelUniteMesureLargeurTuile = new JLabel(uniteMesure);
+        labelUniteMesureLargeurTuile.setSize(70, 30);
+        labelUniteMesureLargeurTuile.setLocation(200, 470);
+        this.add(labelUniteMesureLargeurTuile);
+
+        //Largeur des tuiles
+        JLabel labelNbTuilesBoite = new JLabel("Nb. tuiles/boite : ");
+        labelNbTuilesBoite.setSize(120, 30);
+        labelNbTuilesBoite.setLocation(25, 500);
+
+        JTextField nbTuilesBoiteText = new JTextField(20);
+        nbTuilesBoiteText.setBounds(150,500,120,30);
+        nbTuilesBoiteText.setEditable(false);
+        this.add(nbTuilesBoiteText);
 
         // 3eme element
         boutonMenuRevetement = new JButton("Édition matériaux");
         boutonMenuRevetement.setSize(200, 25);
-        boutonMenuRevetement.setLocation(50,530);
+        boutonMenuRevetement.setLocation(50,535);
         boutonMenuRevetement.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {new FrameRevetements(controller).setVisible(true);}
@@ -168,7 +226,7 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
 
         //Couleur coulis
         JLabel couleurCoulisLabel = new JLabel("Couleur du coulis :");
-        couleurCoulisLabel.setBounds(15,560,100,30);
+        couleurCoulisLabel.setBounds(15,560,120,30);
         this.add(couleurCoulisLabel);
 
         String [] couleurCoulis = {"Rouge", "Blanc", "Gris"};
@@ -179,12 +237,26 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
 
         //Epaisseur coulis
         JLabel epaisseurCoulisLabel = new JLabel("Épaisseur du coulis :");
-        epaisseurCoulisLabel.setBounds(15,590,100,30);
+        epaisseurCoulisLabel.setBounds(15,590,150,30);
         this.add(epaisseurCoulisLabel);
 
         JTextField epaisseurCoulisText = new JTextField(20);
-        epaisseurCoulisText.setBounds(120,590,160,30);
+        epaisseurCoulisText.setBounds(150,590,50,30);
         this.add(epaisseurCoulisText);
+
+        JLabel labelUniteMesureLCoulis = new JLabel(uniteMesure);
+        labelUniteMesureLCoulis.setSize(60, 30);
+        labelUniteMesureLCoulis.setLocation(205, 590);
+        this.add(labelUniteMesureLCoulis);
+
+        JButton modifierEpaisseurCoulis = new JButton("+");
+        modifierEpaisseurCoulis.setSize(25, 25);
+        modifierEpaisseurCoulis.setLocation(255,590);
+        modifierEpaisseurCoulis.addActionListener(e -> {
+            setCreateShape();;
+        });
+        this.add(modifierEpaisseurCoulis);
+
 
 
 
@@ -228,9 +300,11 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
 
     @Override
     public void update() {
-        if (controller.getPlan().surfaceSelectionnee != null && controller.getEtat().equals(Etat.LECTURE)  )
+        if (controller.getPlan().surfaceSelectionnee != null )
         {
-            revetementSurfaceSelectionnee.setText(controller.getInfosRevetementSelect().get("Nom Revêtement"));
+            if (controller.getEtat().equals(Etat.LECTURE)) {
+                revetementSurfaceSelectionnee.setSelectedItem(controller.getInfosRevetementSelect().get("Nom Revêtement"));
+            }
         }
 //        if (controller.getPlan().surfaceSelectionnee != null){ TODO a remettre quand cath a fini panel config
 //            int [] xpointsTuile = controller.getPlan().surfaceSelectionnee.getTuileAtPoint(controller.getPositionSourisActuelle()).getPolygone().xpoints;
