@@ -57,15 +57,14 @@ public class PanneauChoixRevetements extends JPanel implements Observer {
 
     @Override
     public void update() {
-        if(controller.gestionnaireRevetements.getRevetementSelectionnee() != null)
-        {
-            String revSelectionnee = controller.gestionnaireRevetements.getRevetementSelectionnee();
-            int index = controller.gestionnaireRevetements.getPositionDansSet(controller.gestionnaireRevetements.getNomRevetements(), revSelectionnee);
-            listeRevetements.setSelectedIndex(index);
-        }
-
+        // TODO corriger pour que la sélection automatique se fasse bien
     }
-    //private int getIndexSelectionner() {
-        //return listeRevetements.getSelectedIndex();
-    //}
+//        if(controller.gestionnaireRevetements.getRevetementSelectionnee() != null)
+//        {
+//            String revSelectionnee = controller.gestionnaireRevetements.getRevetementSelectionnee();
+//            int index = controller.gestionnaireRevetements.getPositionDansSet(controller.gestionnaireRevetements.getNomRevetements(), revSelectionnee);
+//            listeRevetements.setSelectedIndex(index);
+//        }
+//
+//    }
 }
