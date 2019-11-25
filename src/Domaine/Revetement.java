@@ -104,5 +104,9 @@ public class Revetement {
     public String getMotifTuiles() {
         return motifTuiles;
     }
+
+    public int getNbTuilesBoite(){return nbTuilesBoite;}
+
+    public void setNbTuilesBoite(int nbTuilesBoite){ this.nbTuilesBoite = nbTuilesBoite;}
 }
 
