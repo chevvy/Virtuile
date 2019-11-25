@@ -295,6 +295,7 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
         labelUniteMesureLargeurTuileSelect.setLocation(200, 700);
         this.add(labelUniteMesureLargeurTuileSelect);
 
+
         this.add(boutonAjouter);
         this.add(boutonAjouterSurfaceVide);
         this.add(boutonSupprimer);
