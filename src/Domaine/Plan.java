@@ -344,7 +344,7 @@ public class Plan {
 
     //Liste des types de matériaux
     public void ajouterTypeMateriau(String nom){
-        if (!(listeCouleurs.contains(nom)))
+        if (!(listeTypeMateriau.contains(nom)))
         this.listeTypeMateriau.add(nom);
     }
 
