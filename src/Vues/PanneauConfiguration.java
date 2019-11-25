@@ -260,6 +260,7 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
 
 
 
+
         this.add(boutonAjouter);
         this.add(boutonAjouterSurfaceVide);
         this.add(boutonSupprimer);
