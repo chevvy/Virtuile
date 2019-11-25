@@ -19,6 +19,8 @@ public class Plan {
     private boolean isGrilleMagnetiqueActive = false;
     private int grid_size = 50;
     private Point pointAncre;
+    private int grab = 0;
+    private int base = 0;
     private ArrayList<String> listeCouleurs = new ArrayList<>( Arrays.asList("Rouge", "Noir", "Gris", "Jaune"));
     private ArrayList<String> listeTypeMateriau = new ArrayList<>( Arrays.asList("Béton", "Terre cuite", "Ardoise",
             "Bois"));
@@ -31,23 +33,8 @@ public class Plan {
 
     public Etat selectionner(Point position){
         if(surfaceSelectionnee != null){
-            Rectangle rect = surfaceSelectionnee.polygone.getBounds();
-
-            if(isCloseToPoint(position, new Point(rect.x, rect.y))){
-                premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y + rect.height);
-                return  Etat.ETIRER_SURFACE;
-            }
-            if(isCloseToPoint(position, new Point(rect.x + rect.width, rect.y))){
-                premierPoint = pointAncre = new Point(rect.x, rect.y + rect.height);
-                return  Etat.ETIRER_SURFACE;
-            }
-            if(isCloseToPoint(position, new Point(rect.x + rect.width, rect.y + rect.height))){
-                premierPoint = pointAncre = new Point(rect.x, rect.y);
-                return  Etat.ETIRER_SURFACE;
-            }
-            if(isCloseToPoint(position, new Point(rect.x, rect.y + rect.height))){
-                premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y);
-                return  Etat.ETIRER_SURFACE;
+            if(trouverPointAncrage(position) == Etat.ETIRER_SURFACE){
+                return Etat.ETIRER_SURFACE;
             }
         }
         if(surfaceSelectionnee != null && surfaceSelectionnee.polygone.contains(position)){
@@ -71,8 +58,8 @@ public class Plan {
 
     public Etat initialiserSurface(Point position, ArrayList<Point> patron, boolean trou){
         Point positionAjustee = convertMouseCoordWithMagnetique(position);
-        premierPoint = convertMouseCoordWithMagnetique(positionAjustee);
-        pointAncre = premierPoint;
+        premierPoint = pointAncre = convertMouseCoordWithMagnetique(positionAjustee);
+        grab = 0;
         patron = patron.stream().map(point -> new Point(point.x + positionAjustee.x, point.y + positionAjustee.y))
                 .collect(Collectors.toCollection(ArrayList::new));
         surfaceOriginale = surfaceSelectionnee = new Surface(patron, trou);
@@ -107,6 +94,67 @@ public class Plan {
         return isCloseToPoint(point, first);
     }
 
+    private Etat trouverPointAncrage(Point position){
+        Rectangle rect = surfaceSelectionnee.polygone.getBounds();
+        if(isCloseToPoint(position, new Point(rect.x, rect.y))){
+            premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y + rect.height);
+            grab = 0;
+            surfaceOriginale = surfaceSelectionnee;
+            return  Etat.ETIRER_SURFACE;
+        }
+        else if(isCloseToPoint(position, new Point(rect.x + rect.width, rect.y))){
+            premierPoint = pointAncre = new Point(rect.x, rect.y + rect.height);
+            grab = 0;
+            surfaceOriginale = surfaceSelectionnee;
+            return  Etat.ETIRER_SURFACE;
+        }
+        else if(isCloseToPoint(position, new Point(rect.x + rect.width, rect.y + rect.height))){
+            premierPoint = pointAncre = new Point(rect.x, rect.y);
+            grab = 0;
+            surfaceOriginale = surfaceSelectionnee;
+            return  Etat.ETIRER_SURFACE;
+        }
+        else if(isCloseToPoint(position, new Point(rect.x, rect.y + rect.height))){
+            premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y);
+            grab = 0;
+            surfaceOriginale = surfaceSelectionnee;
+            return  Etat.ETIRER_SURFACE;
+        }
+        else if(position.x < rect.x+5 && position.x > rect.x-5 && position.y > rect.y && position.y < rect.y+rect.height){
+            // Left
+            premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y);
+            grab = 1;
+            base = rect.y+rect.height;
+            surfaceOriginale = surfaceSelectionnee;
+            return  Etat.ETIRER_SURFACE;
+        }
+        else if(position.x < rect.x+rect.width+5 && position.x > rect.x+rect.width-5 && position.y > rect.y && position.y < rect.y+rect.height){
+            // Right
+            premierPoint = pointAncre = new Point(rect.x, rect.y);
+            grab = 1;
+            base = rect.y+rect.height;
+            surfaceOriginale = surfaceSelectionnee;
+            return  Etat.ETIRER_SURFACE;
+        }
+        else if(position.y < rect.y+5 && position.y > rect.y-5 && position.x > rect.x && position.x < rect.x+rect.width){
+            // Top
+            premierPoint = pointAncre = new Point(rect.x, rect.y + rect.height);
+            grab = 2;
+            base = rect.x+rect.width;
+            surfaceOriginale = surfaceSelectionnee;
+            return  Etat.ETIRER_SURFACE;
+        }
+        else if(position.y < rect.y+rect.height+5 && position.y > rect.y+rect.height-5 && position.x > rect.x && position.x < rect.x+rect.width){
+            // Bottom
+            premierPoint = pointAncre = new Point(rect.x, rect.y);
+            grab = 2;
+            base = rect.x+rect.width;
+            surfaceOriginale = surfaceSelectionnee;
+            return  Etat.ETIRER_SURFACE;
+        }
+        return Etat.LECTURE;
+    }
+
     private boolean isCloseToPoint(Point test, Point location){
         if (test.x < location.x-5 || test.x > location.x+5) {return false;}
         if (test.y < location.y-5 || test.y > location.y+5) {return false;}
@@ -136,6 +184,8 @@ public class Plan {
     }
 
     public void etirerSurface(Point position){
+        if (grab == 1){position.y = base;}
+        if (grab == 2){position.x = base;}
         position = convertMouseCoordWithMagnetique(position);
         int x  = position.x - premierPoint.x;
         int y = position.y - premierPoint.y;
