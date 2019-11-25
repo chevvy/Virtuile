@@ -31,7 +31,7 @@ public class PanneauChoixRevetements extends JPanel implements Observer {
 
         controller.getNomRevetements().forEach(nom -> model.addElement(nom));
 
-        JList listeRevetements = new JList(model);
+        this.listeRevetements = new JList(model);
         listeRevetements.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         listeRevetements.setLayoutOrientation(JList.VERTICAL_WRAP);
         listeRevetements.setVisibleRowCount(-1);
@@ -46,7 +46,8 @@ public class PanneauChoixRevetements extends JPanel implements Observer {
                     controller.ClicMenu();
                 }
             }
-                                                  });
+        });
+
 
         JScrollPane listScroller = new JScrollPane(listeRevetements);
         this.add(listScroller, BorderLayout.CENTER);
@@ -56,7 +57,12 @@ public class PanneauChoixRevetements extends JPanel implements Observer {
 
     @Override
     public void update() {
-
+        if(controller.gestionnaireRevetements.getRevetementSelectionnee() != null)
+        {
+            String revSelectionnee = controller.gestionnaireRevetements.getRevetementSelectionnee();
+            int index = controller.gestionnaireRevetements.getPositionDansSet(controller.gestionnaireRevetements.getNomRevetements(), revSelectionnee);
+            listeRevetements.setSelectedIndex(index);
+        }
 
     }
     //private int getIndexSelectionner() {
