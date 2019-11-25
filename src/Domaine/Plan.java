@@ -64,7 +64,8 @@ public class Plan {
         grab = 0;
         patron = patron.stream().map(point -> new Point(point.x + positionAjustee.x, point.y + positionAjustee.y))
                 .collect(Collectors.toCollection(ArrayList::new));
-        surfaceOriginale = surfaceSelectionnee = new Surface(patron, trou);
+        Revetement revetement = new Revetement();
+        surfaceOriginale = surfaceSelectionnee = new Surface(patron, trou, revetement);
         listeSurfaces.add(surfaceSelectionnee);
         return Etat.ETIRER_SURFACE;
     }
@@ -74,7 +75,8 @@ public class Plan {
     }
 
     private void terminerSurfaceLibre(boolean trou){
-        surfaceSelectionnee = new Surface(surfaceLibre, trou);
+        Revetement revetement = new Revetement();
+        surfaceSelectionnee = new Surface(surfaceLibre, trou, revetement);
         listeSurfaces.add(surfaceSelectionnee);
     }
 
@@ -200,8 +202,7 @@ public class Plan {
                 return new Point(nouveau_x, nouveau_y);
             }).collect(Collectors.toCollection(ArrayList::new));
         }
-
-        Surface nouvelleSurface = new Surface(points, surfaceOriginale.estUnTrou);
+        Surface nouvelleSurface = new Surface(points, surfaceOriginale.estUnTrou, surfaceOriginale.getRevetement());
         listeSurfaces.remove(surfaceSelectionnee);
         listeSurfaces.add(nouvelleSurface);
         surfaceSelectionnee = nouvelleSurface;

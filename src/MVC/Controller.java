@@ -350,5 +350,12 @@ public class Controller {
 
     public Map<String, String> getInfosSurfaceSelect() {
         return plan.getInfosSurface(plan.surfaceSelectionnee);}
+
+    public void setRevetement(Revetement revetement) {
+        if(this.plan.surfaceSelectionnee != null) {
+            this.plan.surfaceSelectionnee.setRevetement(revetement);
+        }
+        notifyObservers();
+    }
 }
 

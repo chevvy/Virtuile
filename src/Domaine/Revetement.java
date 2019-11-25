@@ -106,12 +106,5 @@ public class Revetement {
 
     public void setNbTuilesBoite(int nbTuilesBoite){ this.nbTuilesBoite = nbTuilesBoite;}
 
-    public int getNbTuilesBoite() {
-        return nbTuilesBoite;
-    }
-
-    public void setNbTuilesBoite(int nbTuilesBoite) {
-        this.nbTuilesBoite = nbTuilesBoite;
-    }
 }
 

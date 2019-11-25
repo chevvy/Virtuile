@@ -37,8 +37,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String s = (String) revetementSurfaceSelectionnee.getSelectedItem();
-                controller.plan.surfaceSelectionnee.setRevetement(controller.gestionnaireRevetements.getRevetementFromNom(s));
-
+                controller.setRevetement(controller.gestionnaireRevetements.getRevetementFromNom(s));
             }
         };
     }
@@ -354,17 +353,21 @@ public class PanneauConfiguration extends JPanel implements Observer{
 
     @Override
     public void update() {
+        ArrayList model = new ArrayList();
+        controller.getNomRevetements().forEach(nom -> model.add(nom));
+        revetementSurfaceSelectionnee.setModel(new DefaultComboBoxModel(model.toArray()));
         if(controller.plan.surfaceSelectionnee != null && controller.getEtat().equals(Etat.LECTURE)){
             hauteurSurfaceText.setText(controller.plan.surfaceSelectionnee.polygone.getBounds().height+"");
             largeurSurfaceText.setText(controller.plan.surfaceSelectionnee.polygone.getBounds().width+"");
             revetementSurfaceSelectionnee.removeActionListener(selectRevetementAction);
-            revetementSurfaceSelectionnee.setSelectedItem(controller.getInfosRevetementSelect().get("Nom Revêtement"));
+            String nom = controller.getInfosRevetementSelect().get("Nom Revêtement");
+            revetementSurfaceSelectionnee.setSelectedItem(nom);
             revetementSurfaceSelectionnee.addActionListener(selectRevetementAction);
             typeMateriauText.setText(controller.plan.surfaceSelectionnee.getRevetement().getNomDuRevetement()+"");
             couleurMateriauText.setText(controller.plan.surfaceSelectionnee.getRevetement().getCouleurTuileText()+"");
             motifTuileText.setText(controller.plan.surfaceSelectionnee.getRevetement().getMotifTuiles());
             hauteurTuileText.setText(controller.plan.surfaceSelectionnee.getRevetement().getHauteurTuile()+"");
-            largeurTuileText.setText(controller.plan.surfaceSelectionnee.getRevetement().getHauteurTuile()+"");
+            largeurTuileText.setText(controller.plan.surfaceSelectionnee.getRevetement().getLongueurTuile()+"");
             nbTuilesBoiteText.setText(controller.plan.surfaceSelectionnee.getRevetement().getNbTuilesBoite()+"");
             couleurCoulisCombo.setSelectedItem(controller.plan.surfaceSelectionnee.getCouleurCoulisText());
             epaisseurCoulisText.setText(controller.plan.surfaceSelectionnee.getTailleDuCoulis()+"");
@@ -384,6 +387,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
             couleurCoulisCombo.setSelectedItem("");
             epaisseurCoulisText.setText("");
         }
+
 /*        if ( controller.getPlan().surfaceSelectionnee != null )
         {
             if (controller.getEtat().equals(Etat.LECTURE)) {

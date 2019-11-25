@@ -10,7 +10,7 @@ public class GestionnaireRevetements {
 
     private Map<String, Revetement> mapRevetements = new HashMap<String, Revetement>(){{
                 put("revetement par defaut",  new Revetement());
-                put("Revêtement 1", new Revetement("Revêtement 2", "Béton", Color.RED, "Rouge",
+                put("Revêtement 1", new Revetement("Revêtement 1", "Béton", Color.RED, "Rouge",
                         "Installation en chevron", 13 , 13, 30));
 
 

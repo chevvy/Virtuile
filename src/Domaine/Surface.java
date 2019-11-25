@@ -21,14 +21,14 @@ public class Surface {
     private Color couleurCoulis = Color.WHITE;;
     private String couleurCoulisText = "Blanc";
 
-    public Surface(List<Point> listePoints, boolean trou) {
+    public Surface(List<Point> listePoints, boolean trou, Revetement revetement) {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
         this.estUnTrou = trou;
         this.trous = new ArrayList<>();
         // liste de tuiles
-        revetement = new Revetement();
+        this.revetement = revetement;
         setListeTuiles(genererListeDeTuiles());
     }
 
@@ -174,6 +174,7 @@ public class Surface {
 
     public void setRevetement(Revetement revetement) {
         this.revetement = revetement;
+        setListeTuiles((genererListeDeTuiles()));
     }
 
     public Revetement getRevetement() {
