@@ -5,6 +5,8 @@ import MVC.Etat;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Plan {
@@ -299,6 +301,15 @@ public class Plan {
 
     //Liste des types de motifs
     public ArrayList<String> getListeMotifs(){return listeMotifs;}
+
+    public Map<String, String> getInfosSurface(Surface surface) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("Hauteur surface", Integer.toString(surface.polygone.getBounds().height));
+        map.put("Longueur surface", Integer.toString(surface.polygone.getBounds().width));
+        map.put("Couleur coulis", surface.getCouleurCoulisText());
+        map.put("Épaisseur coulis", Integer.toString(surface.getTailleDuCoulis()));
+        return map;
+    }
 
 }
 

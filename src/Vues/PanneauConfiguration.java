@@ -9,8 +9,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Set;
-import java.util.Arrays;
 
 import MVC.Observer;
 
@@ -20,7 +18,7 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
     private JButton boutonAjouter, boutonSupprimer, boutonMenuRevetement, boutonAlligment;
     private JRadioButton radioSurface, radioVide;
     private JComboBox listeAlignement, revetementSurfaceSelectionnee;
-    private JTextField positionSouris;
+    private JTextField positionSouris, largeurTuileSelectText, hauteurTuileSelectText;
 
     private Controller controller;
 
@@ -38,7 +36,7 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
 
     private void SetUpUi(){
 
-        String uniteMesure = "mètres";
+        String uniteMesure = "cm";
         boutonAjouter = new JButton("Ajouter une surface");
         boutonAjouter.setSize(200, 30);
         boutonAjouter.setLocation(50,20);
@@ -207,7 +205,7 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
         //Largeur des tuiles
         JLabel labelNbTuilesBoite = new JLabel("Nb. tuiles/boite : ");
         labelNbTuilesBoite.setSize(120, 30);
-        labelNbTuilesBoite.setLocation(25, 500);
+        labelNbTuilesBoite.setLocation(15, 500);
 
         JTextField nbTuilesBoiteText = new JTextField(20);
         nbTuilesBoiteText.setBounds(150,500,120,30);
@@ -252,13 +250,50 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
         JButton modifierEpaisseurCoulis = new JButton("+");
         modifierEpaisseurCoulis.setSize(25, 25);
         modifierEpaisseurCoulis.setLocation(255,590);
-        modifierEpaisseurCoulis.addActionListener(e -> {
-            setCreateShape();;
-        });
         this.add(modifierEpaisseurCoulis);
+        modifierEpaisseurCoulis.addActionListener(e -> {
+            setEpaisseurCoulis();;
+        });
 
+        JLabel line02 = new JLabel("_______________________________________");
+        line02.setBounds(15,610,300,20);
+        this.add(line02);
 
+        JLabel infosTuiles = new JLabel("Informations sur la tuile");
+        infosTuiles.setBounds(15,640,300,20);
+        this.add(infosTuiles);
 
+        // Hauteur des tuiles
+        JLabel labelHauteurTuileSelect = new JLabel("Hauteur : ");
+        labelHauteurTuileSelect.setSize(70, 30);
+        labelHauteurTuileSelect.setLocation(25, 670);
+        this.add(labelHauteurTuileSelect);
+
+        JTextField hauteurTuileSelectText = new JTextField(10);
+        hauteurTuileSelectText.setBounds(100,670,90,30);
+        hauteurTuileSelectText.setEditable(false);
+        this.add(hauteurTuileSelectText);
+
+        JLabel labelUniteMesureHauteurTuileSelect = new JLabel(uniteMesure);
+        labelUniteMesureHauteurTuileSelect.setSize(70, 30);
+        labelUniteMesureHauteurTuileSelect.setLocation(200, 670);
+        this.add(labelUniteMesureHauteurTuileSelect);
+
+        //Largeur des tuiles
+        JLabel labelLargeurTuileSelect = new JLabel("Largeur : ");
+        labelLargeurTuileSelect.setSize(70, 30);
+        labelLargeurTuileSelect.setLocation(25, 700);
+        this.add(labelLargeurTuileSelect);
+
+        JTextField largeurTuileSelectText = new JTextField(10);
+        largeurTuileSelectText.setBounds(100,700,90,30);
+        largeurTuileSelectText.setEditable(false);
+        this.add(largeurTuileSelectText);
+
+        JLabel labelUniteMesureLargeurTuileSelect = new JLabel(uniteMesure);
+        labelUniteMesureLargeurTuileSelect.setSize(70, 30);
+        labelUniteMesureLargeurTuileSelect.setLocation(200, 700);
+        this.add(labelUniteMesureLargeurTuileSelect);
 
         this.add(boutonAjouter);
         this.add(boutonAjouterSurfaceVide);
@@ -298,19 +333,30 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
         controller.ajouterSurface(i);
     }
 
+    private void setEpaisseurCoulis(){
+        String tailleCoulisString = (String)JOptionPane.showInputDialog(null, "Entrez l'épaisseur du coulis (en cm)", "Épaisseur du coulis", JOptionPane.PLAIN_MESSAGE );
+        if (!tailleCoulisString.equals("")){
+            int tailleCoulis = Integer.parseInt(tailleCoulisString);
+            controller.setEpaisseurCoulis(tailleCoulis);
+        }
+    }
+
     @Override
     public void update() {
-        if (controller.getPlan().surfaceSelectionnee != null )
+/*        if ( controller.getPlan().surfaceSelectionnee != null )
         {
             if (controller.getEtat().equals(Etat.LECTURE)) {
+                controller.getInfosRevetementSelect().get("Nom Revêtement");
                 revetementSurfaceSelectionnee.setSelectedItem(controller.getInfosRevetementSelect().get("Nom Revêtement"));
             }
-        }
-//        if (controller.getPlan().surfaceSelectionnee != null){ TODO a remettre quand cath a fini panel config
-//            int [] xpointsTuile = controller.getPlan().surfaceSelectionnee.getTuileAtPoint(controller.getPositionSourisActuelle()).getPolygone().xpoints;
-//            int [] ypointsTuile = controller.getPlan().surfaceSelectionnee.getTuileAtPoint(controller.getPositionSourisActuelle()).getPolygone().xpoints;
-//            positionSouris.setText(" Points de la tuile actuelle : x = " + Arrays.toString(xpointsTuile) + " y = " + Arrays.toString(ypointsTuile));
-//        }
+        }*/
+        //if (controller.getPlan().surfaceSelectionnee != null){
+           //int [] xpointsTuile = controller.getPlan().surfaceSelectionnee.getTuileAtPoint(controller.getPositionSourisActuelle()).getPolygone().xpoints;
+           //int [] ypointsTuile = controller.getPlan().surfaceSelectionnee.getTuileAtPoint(controller.getPositionSourisActuelle()).getPolygone().xpoints;
+            //largeurTuileSelectText.setText(" Points de la tuile actuelle : x = " + Arrays.toString(xpointsTuile) + " y = " + Arrays.toString(ypointsTuile));
+            //largeurTuileSelectText.setText(Integer.toString(controller.getLargeurTuile()));
+            //hauteurTuileSelectText.setText(Integer.toString(controller.getHauteurTuile()));
+        //}
 
     }
 

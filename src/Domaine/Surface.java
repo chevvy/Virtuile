@@ -18,7 +18,8 @@ public class Surface {
     private Revetement revetement;
     private ArrayList<Tuile> listeTuiles = new ArrayList<>();
     private int tailleDuCoulis = 4;
-    private Color couleurCoulis = Color.WHITE;
+    private Color couleurCoulis = Color.WHITE;;
+    private String couleurCoulisText = "Blanc";
 
     public Surface(List<Point> listePoints, boolean trou) {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
@@ -84,7 +85,7 @@ public class Surface {
         // reçoit un motif en argument  test
         int tailleCoulis = tailleDuCoulis; // TODO refactor pour changer ça
         Color couleurCoulis = getCouleurCoulis();
-
+        String couleurCoulisText = getCouleurCoulisText();
         int coordXduBound = polygone.getBounds().x; int coordYduBond = polygone.getBounds().y;
         int boundsWidth = polygone.getBounds().width; int boundsHeight = polygone.getBounds().height;
         int tuileWidth = revetement.getLongueurTuile() ; int tuileHeight = revetement.getHauteurTuile() ;
@@ -186,6 +187,11 @@ public class Surface {
     public void setCouleurCoulis(Color couleurCoulis) {
         this.couleurCoulis = couleurCoulis;
     }
+
+    public String getCouleurCoulisText() {
+        return couleurCoulisText;
+    }
+
 
 }
 
