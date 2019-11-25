@@ -1,6 +1,8 @@
 package Vues.Revetements;
 
+import Domaine.Revetement;
 import MVC.Controller;
+import MVC.Observer;
 import Vues.Materiaux.FrameCouleur;
 import Vues.Materiaux.FrameMateriau;
 
@@ -8,15 +10,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.BreakIterator;
 import java.util.ArrayList;
 
-public class PanneauInformationsRevetement extends JPanel{
+public class PanneauInformationsRevetement extends JPanel implements Observer {
 
     private Controller controller;
     private FrameRevetements frame;
+    private JTextField nomRevetementField, hauteurTuileText, largeurTuileText, nbTuilesBoiteText;
+    public String nomRevetementSelectionnee;
+    private JComboBox typeMateriauxCombo, couleurMateriauCombo, motifRecouvrementCombo;
 
     PanneauInformationsRevetement(Controller controller, FrameRevetements frame) {
+        controller.addObserver(this);
         this.controller = controller;
         this.frame = frame;
         SetUpUi();
@@ -32,7 +37,7 @@ public class PanneauInformationsRevetement extends JPanel{
         nomRevetementLabel.setBounds(10,10,200,25);
         this.add(nomRevetementLabel);
 
-        JTextField nomRevetementField = new JTextField(20);
+        this.nomRevetementField = new JTextField(20);
         nomRevetementField.setBounds(220,10,200,25);
         this.add(nomRevetementField);
 
@@ -42,7 +47,7 @@ public class PanneauInformationsRevetement extends JPanel{
         this.add(typeMateriauLabel);
 
         ArrayList<String> listeMateriaux = controller.getTypeMateriaux();
-        JComboBox typeMateriauxCombo = new JComboBox<>(listeMateriaux.toArray());
+        this.typeMateriauxCombo = new JComboBox<>(listeMateriaux.toArray());
         typeMateriauxCombo.setSize(130, 25);
         typeMateriauxCombo.setLocation(220, 50);
         this.add(typeMateriauxCombo);
@@ -66,7 +71,7 @@ public class PanneauInformationsRevetement extends JPanel{
         this.add(couleurMateriauLabel);
 
         ArrayList<String> listeCouleurs = controller.getCouleurs();
-        JComboBox couleurMateriauCombo = new JComboBox<>(listeCouleurs.toArray());
+        this.couleurMateriauCombo = new JComboBox<>(listeCouleurs.toArray());
         couleurMateriauCombo.setSize(130, 25);
         couleurMateriauCombo.setLocation(220, 90);
         this.add(couleurMateriauCombo);
@@ -90,7 +95,7 @@ public class PanneauInformationsRevetement extends JPanel{
         this.add(motifRecouvrementLabel);
 
         ArrayList<String> listeMotif = controller.getMotifs();
-        JComboBox motifRecouvrementCombo = new JComboBox<>(listeMotif.toArray());
+        this.motifRecouvrementCombo = new JComboBox<>(listeMotif.toArray());
         motifRecouvrementCombo.setSize(200, 25);
         motifRecouvrementCombo.setLocation(220, 130);
         this.add(motifRecouvrementCombo);
@@ -105,7 +110,7 @@ public class PanneauInformationsRevetement extends JPanel{
         hauteurTuileLabel.setBounds(40,200,170,25);
         this.add(hauteurTuileLabel);
 
-        JTextField hauteurTuileText = new JTextField(20);
+        this.hauteurTuileText = new JTextField(20);
         hauteurTuileText.setBounds(220,200,150,25);
         this.add(hauteurTuileText);
 
@@ -114,7 +119,7 @@ public class PanneauInformationsRevetement extends JPanel{
         largeurTuileLabel.setBounds(40,230,170,25);
         this.add(largeurTuileLabel);
 
-        JTextField largeurTuileText = new JTextField(20);
+        this.largeurTuileText = new JTextField(20);
         largeurTuileText.setBounds(220,230,150,25);
         this.add(largeurTuileText);
 
@@ -123,7 +128,7 @@ public class PanneauInformationsRevetement extends JPanel{
         nbTuilesBoiteLabel.setBounds(10,270,200 ,25);
         this.add(nbTuilesBoiteLabel);
 
-        JTextField nbTuilesBoiteText = new JTextField(20);
+        this.nbTuilesBoiteText = new JTextField(20);
         nbTuilesBoiteText.setBounds(220,270,100,25);
         this.add(nbTuilesBoiteText);
 
@@ -171,6 +176,40 @@ public class PanneauInformationsRevetement extends JPanel{
 
     }
 
+    @Override
+    public void update() {
+
+        this.nomRevetementSelectionnee = controller.gestionnaireRevetements.getRevetementSelectionnee();
+        Revetement revetementSelectionnee = controller.gestionnaireRevetements.getMapRevetements().get(this.nomRevetementSelectionnee);
+
+        if (controller != null && revetementSelectionnee != null){
+            this.nomRevetementField.setText(revetementSelectionnee.getNomDuRevetement());
+
+            String typeMateriau = revetementSelectionnee.getTypeMateriauTuile();
+            int selectionComboMateriau = controller.gestionnaireRevetements.getPositionDansArray(controller.getTypeMateriaux(), typeMateriau);
+            this.typeMateriauxCombo.setSelectedIndex(selectionComboMateriau);
+
+            String couleurMateriau = revetementSelectionnee.getCouleurTuileText();
+            int selectionComboCouleur = controller.gestionnaireRevetements.getPositionDansArray(controller.getCouleurs(), couleurMateriau);
+            this.couleurMateriauCombo.setSelectedIndex(selectionComboCouleur);
+
+            String motifRecouvrement = revetementSelectionnee.getMotifTuiles();
+            int selectionComboMotif = controller.gestionnaireRevetements.getPositionDansArray(controller.getMotifs(), motifRecouvrement);
+            this.motifRecouvrementCombo.setSelectedIndex(selectionComboMotif);
+
+            this.hauteurTuileText.setText(String.valueOf(revetementSelectionnee.getHauteurTuile()));
+            this.largeurTuileText.setText(String.valueOf(revetementSelectionnee.getLongueurTuile()));
+            this.nbTuilesBoiteText.setText(String.valueOf(revetementSelectionnee.getNbTuilesBoite()));
+
+
+        }
+
+
+
+
+
+
+    }
 }
 
 

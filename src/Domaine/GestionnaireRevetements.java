@@ -6,10 +6,11 @@ import java.util.*;
 public class GestionnaireRevetements {
 
     public Revetement revetement;
+    private String revetementSelectionnee;
 
     private Map<String, Revetement> mapRevetements = new HashMap<String, Revetement>(){{
                 put("revetement par defaut",  new Revetement());
-                put( "Aucun Revêtement", new Revetement("Aucun revêtement"));
+                put( "Aucun Revêtement", new Revetement("Aucun Revêtement"));
                 put( "Revêtement 1", new Revetement("Revêtement 1"));
                 put("Revêtement 2", new Revetement("Revêtement 2", "Béton", Color.RED, "Rouge",
                         "Installation en chevron", 13 , 13, 30));
@@ -44,4 +45,24 @@ public class GestionnaireRevetements {
         return map;
     }
 
+    public String getRevetementSelectionnee() {
+        return revetementSelectionnee;
+    }
+
+    public void setRevetementSelectionnee(String revetementSelectionnee) {
+        if(revetementSelectionnee != null) {
+            this.revetementSelectionnee = revetementSelectionnee;
+        }
+    }
+
+    public int getPositionDansArray(ArrayList<String> list, String elementRecherche){
+        int i = 0;
+        for(String element : list){
+            if (element.equals(elementRecherche)){
+                return i;
+            }
+            i++;
+        }
+        return i;
+    }
 }
