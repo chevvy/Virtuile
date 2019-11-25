@@ -71,11 +71,16 @@ public class Canvas extends JPanel implements Observer{
     private void MouseWheelMovedEvent(MouseWheelEvent evt){
         if (evt.getPreciseWheelRotation() > 0 && zoomFactor >= 0.1) {
             // zoom out
-            zoomFactor -= 0.07;
+            zoomFactor *= 0.95;
+            translate.x += (int)Math.round((mouse.x - translate.x)*(0.05));
+            translate.y += (int)Math.round((mouse.y - translate.y)*(0.05));
         } else {
             // zoom in
-            zoomFactor += 0.07;
+            zoomFactor *= 1.05;
+            translate.x -= (int)Math.round((mouse.x - translate.x)*(0.05));
+            translate.y -= (int)Math.round((mouse.y - translate.y)*(0.05));
         }
+
         repaint();
     }
 
@@ -108,7 +113,6 @@ public class Canvas extends JPanel implements Observer{
                 //Wheel click
                 break;
             case 3:
-                //Left click
                 dragOrigine.x = e.getX() - translate.x;
                 dragOrigine.y = e.getY() - translate.y;
                 isRightClicked = true;
@@ -160,6 +164,7 @@ public class Canvas extends JPanel implements Observer{
         g.scale(zoomFactor, zoomFactor);
 
         Point absTranslate = zoomOut(translate);
+
         int gridOffX = absTranslate.x % grid;
 
         int gridOffY = absTranslate.y % grid;
