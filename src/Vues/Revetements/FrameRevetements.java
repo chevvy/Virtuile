@@ -11,32 +11,7 @@ public class FrameRevetements extends JFrame{
     private FrameRevetements frame;
 
     public FrameRevetements(Controller controller) {
-        this.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent mouseEvent) {
-                controller.ClicMenu();
-            }
 
-            @Override
-            public void mousePressed(MouseEvent mouseEvent) {
-                controller.ClicMenu();
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent mouseEvent) {
-                controller.ClicMenu();
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent mouseEvent) {
-                controller.ClicMenu();
-            }
-
-            @Override
-            public void mouseExited(MouseEvent mouseEvent) {
-                controller.ClicMenu();
-            }
-        });
 
         this.setSize(800, 410);
         this.setLocation(100,100);
