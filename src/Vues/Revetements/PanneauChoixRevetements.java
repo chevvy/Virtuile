@@ -14,10 +14,12 @@ public class PanneauChoixRevetements extends JPanel implements Observer {
 
     private Controller controller;
     private JList<Object> listeRevetements;
+    public String nomRevetementSelectionne;
 
 
     PanneauChoixRevetements(Controller controller) {
         controller.addObserver(this);
+
         this.controller = controller;
         setUpUI();
     }
@@ -34,21 +36,25 @@ public class PanneauChoixRevetements extends JPanel implements Observer {
         
         listeRevetements.setPreferredSize(new Dimension(150, 350));
         listeRevetements.setLayout(null);
-        listeRevetements.addListSelectionListener(e -> new ListSelectionListener() {
+        listeRevetements.addListSelectionListener(new ListSelectionListener() {
             @Override
-            public void valueChanged(ListSelectionEvent e) {
-                System.out.println("Revetement selectionne = " + e.toString());
+            public void valueChanged(ListSelectionEvent arg){
+                if(!arg.getValueIsAdjusting()){
+                    System.out.println(listeRevetements.getSelectedValue().toString());
+                }
             }
-        });
+                                                  });
+
         JScrollPane listScroller = new JScrollPane(listeRevetements);
 
-        this.add(listScroller, BorderLayout.CENTER);
+        this.add(listeRevetements, BorderLayout.CENTER);
 
     }
 
     @Override
     public void update() {
-        this.setUpUI();
+
+
     }
     //private int getIndexSelectionner() {
         //return listeRevetements.getSelectedIndex();
