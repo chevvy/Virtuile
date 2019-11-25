@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import MVC.Observer;
 
 
-public class PanneauConfiguration extends JScrollPane implements Observer{
+public class PanneauConfiguration extends JPanel implements Observer{
 
     private JButton boutonAjouter, boutonSupprimer, boutonMenuRevetement, boutonAlligment;
     private JRadioButton radioSurface, radioVide;
@@ -25,13 +25,11 @@ public class PanneauConfiguration extends JScrollPane implements Observer{
     public PanneauConfiguration(Controller controller){
         controller.addObserver(this);
         this.setBackground(Color.gray);
-        this.setPreferredSize(new Dimension(300, 500));
+        this.setPreferredSize(new Dimension(300, 800));
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         this.setLayout(null);
-        this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         this.controller = controller;
         SetUpUi();
-
     }
 
     private void SetUpUi(){
