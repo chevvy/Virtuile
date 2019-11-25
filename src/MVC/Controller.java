@@ -166,6 +166,10 @@ public class Controller {
         notifyObservers();
     }
 
+    public void ClicMenu(){
+        notifyObservers();
+    }
+
     private void notifyObservers(){
         for (Observer observer: observers) {
             observer.update();

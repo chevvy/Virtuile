@@ -82,24 +82,40 @@ public class Surface {
 
 
     public ArrayList<Tuile> genererListeDeTuiles(){
-        // reçoit un motif en argument  test
-        int tailleCoulis = tailleDuCoulis; // TODO refactor pour changer ça
+        // "Installation droite", "Installation " "imitation parquet", "Installation en décallé", "Installation en chevron", "Installation en L"
+        String motif = this.revetement.getMotifTuiles();
+        // String motif = "Installation en décallé"; // TODO enlever
+        int tailleCoulis = this.getTailleDuCoulis();
         Color couleurCoulis = getCouleurCoulis();
         String couleurCoulisText = getCouleurCoulisText();
+
         int coordXduBound = polygone.getBounds().x; int coordYduBond = polygone.getBounds().y;
         int boundsWidth = polygone.getBounds().width; int boundsHeight = polygone.getBounds().height;
         int tuileWidth = revetement.getLongueurTuile() ; int tuileHeight = revetement.getHauteurTuile() ;
+
+        if (motif.equals("Installation Droite")){
+            int ancienneWidth = tuileWidth;
+            tuileWidth = tuileHeight;
+            tuileHeight = ancienneWidth;
+        }
+
         int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis)); int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis));
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
 
-        if(estUnTrou){
-            return newListeTuiles;
-        }
-            int j = 0;
+
+
+        if(estUnTrou){return newListeTuiles;}
+
+        int j = 0;
         while (j <= nbTuilesY){
             int i = 0;
             int positionEnX = coordXduBound;
+            if (motif.equals("Installation en décallé") && (j % 2 == 0) ){
+                int offset = tuileWidth / 2;
+                positionEnX = positionEnX -offset;
+            }
             while (i <= nbTuilesX ) {
+
                 newListeTuiles.add(new Tuile(genererSommetsTuile(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
                 positionEnX += tuileWidth + tailleCoulis;
                 i++;

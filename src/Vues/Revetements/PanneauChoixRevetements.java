@@ -4,6 +4,9 @@ import MVC.Controller;
 import MVC.Observer;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -14,22 +17,21 @@ public class PanneauChoixRevetements extends JPanel implements Observer {
 
     private Controller controller;
     private JList<Object> listeRevetements;
-    public String nomRevetementSelectionne;
 
 
     PanneauChoixRevetements(Controller controller) {
         controller.addObserver(this);
-
         this.controller = controller;
         setUpUI();
     }
 
     private void setUpUI() {
+
         DefaultListModel model = new DefaultListModel();
 
         controller.getNomRevetements().forEach(nom -> model.addElement(nom));
 
-        JList listeRevetements = new JList(model);
+        this.listeRevetements = new JList(model);
         listeRevetements.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         listeRevetements.setLayoutOrientation(JList.VERTICAL_WRAP);
         listeRevetements.setVisibleRowCount(-1);
@@ -40,23 +42,29 @@ public class PanneauChoixRevetements extends JPanel implements Observer {
             @Override
             public void valueChanged(ListSelectionEvent arg){
                 if(!arg.getValueIsAdjusting()){
-                    System.out.println(listeRevetements.getSelectedValue().toString());
+                    controller.gestionnaireRevetements.setRevetementSelectionnee(listeRevetements.getSelectedValue().toString());
+                    controller.ClicMenu();
                 }
             }
-                                                  });
+        });
+
 
         JScrollPane listScroller = new JScrollPane(listeRevetements);
+        this.add(listScroller, BorderLayout.CENTER);
 
-        this.add(listeRevetements, BorderLayout.CENTER);
 
     }
 
     @Override
     public void update() {
-
-
+        // TODO corriger pour que la sélection automatique se fasse bien
     }
-    //private int getIndexSelectionner() {
-        //return listeRevetements.getSelectedIndex();
-    //}
+//        if(controller.gestionnaireRevetements.getRevetementSelectionnee() != null)
+//        {
+//            String revSelectionnee = controller.gestionnaireRevetements.getRevetementSelectionnee();
+//            int index = controller.gestionnaireRevetements.getPositionDansSet(controller.gestionnaireRevetements.getNomRevetements(), revSelectionnee);
+//            listeRevetements.setSelectedIndex(index);
+//        }
+//
+//    }
 }

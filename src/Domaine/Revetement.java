@@ -16,17 +16,14 @@ public class Revetement {
     private int tailleDuCoulis = 2;
     private Color couleurCoulis = Color.WHITE;
 
-    // contient le motif
-    // methode : genererRevetement(boundingbox) -> selon le bound et le motif, modifie la liste des tuiles pour quelles soient de la bonne taille
-
     public Revetement(String nom) {
         this.nomDuRevetement = nom;
         this.typeMateriauTuile = "Céramique";
         this.couleurTuile = Color.YELLOW;
         this.couleurTuileText = "Jaune";
         this.motifTuiles = "Installation droite";
-        this.hauteurTuile = 1;
-        this.longueurTuile = 2;
+        this.hauteurTuile = 20;
+        this.longueurTuile = 50;
         this.nbTuilesBoite = 20;
     }
 
@@ -35,13 +32,13 @@ public class Revetement {
         this.longueurTuile = 50;
         this.hauteurTuile = 20;
         this.nomDuRevetement = "revetement par defaut";
-        this.nomDuRevetement = "revetement par defaut";
+        this.nomDuRevetement = "revetement par defaut"; // TODO doublon?
         this.typeMateriauTuile = "Céramique";
         this.couleurTuile = Color.YELLOW;
         this.couleurTuileText = "Jaune";
         this.motifTuiles = "Installation droite";
-        this.hauteurTuile = 10;
-        this.longueurTuile = 15;
+        this.hauteurTuile = 20;
+        this.longueurTuile = 50;
         this.nbTuilesBoite = 20;
         // revetement avec motif / taille par defaut (TBD)
     }
@@ -108,5 +105,13 @@ public class Revetement {
     public int getNbTuilesBoite(){return nbTuilesBoite;}
 
     public void setNbTuilesBoite(int nbTuilesBoite){ this.nbTuilesBoite = nbTuilesBoite;}
+
+    public int getNbTuilesBoite() {
+        return nbTuilesBoite;
+    }
+
+    public void setNbTuilesBoite(int nbTuilesBoite) {
+        this.nbTuilesBoite = nbTuilesBoite;
+    }
 }
 

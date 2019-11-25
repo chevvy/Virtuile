@@ -2,12 +2,17 @@ package Vues.Revetements;
 import MVC.Controller;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 public class FrameRevetements extends JFrame{
     private Controller controller;
     private FrameRevetements frame;
 
     public FrameRevetements(Controller controller) {
+
+
         this.setSize(800, 410);
         this.setLocation(100,100);
         this.setTitle("Propriétés des matériaux");
