@@ -187,10 +187,18 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
 
             String typeMateriau = revetementSelectionnee.getTypeMateriauTuile();
             int selectionComboMateriau = controller.gestionnaireRevetements.getPositionDansArray(controller.getTypeMateriaux(), typeMateriau);
+            if(controller.getTypeMateriaux().size() != typeMateriauxCombo.getItemCount()){
+                this.typeMateriauxCombo = new JComboBox<>(controller.getTypeMateriaux().toArray());
+                this.add(typeMateriauxCombo);
+            }
             this.typeMateriauxCombo.setSelectedIndex(selectionComboMateriau);
 
             String couleurMateriau = revetementSelectionnee.getCouleurTuileText();
             int selectionComboCouleur = controller.gestionnaireRevetements.getPositionDansArray(controller.getCouleurs(), couleurMateriau);
+            if(controller.getCouleurs().size() != couleurMateriauCombo.getItemCount()){
+                this.couleurMateriauCombo = new JComboBox<>(controller.getCouleurs().toArray());
+                this.add(couleurMateriauCombo);
+            }
             this.couleurMateriauCombo.setSelectedIndex(selectionComboCouleur);
 
             String motifRecouvrement = revetementSelectionnee.getMotifTuiles();

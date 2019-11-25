@@ -13,13 +13,14 @@ public class FrameRevetements extends JFrame{
     public FrameRevetements(Controller controller) {
 
 
+        this.controller = controller;
         this.setSize(800, 410);
         this.setLocation(100,100);
         this.setTitle("Propriétés des matériaux");
         this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        PanneauChoixRevetements panelChoixRevetements = new PanneauChoixRevetements(controller);
+        PanneauChoixRevetements panelChoixRevetements = new PanneauChoixRevetements(this.controller);
         this.add(panelChoixRevetements, BorderLayout.WEST);
-        PanneauInformationsRevetement panelInformationsRevetements = new PanneauInformationsRevetement(controller, this);
+        PanneauInformationsRevetement panelInformationsRevetements = new PanneauInformationsRevetement(this.controller, this);
         this.add(panelInformationsRevetements, BorderLayout.EAST);
 
     }
