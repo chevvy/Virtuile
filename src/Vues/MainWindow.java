@@ -95,9 +95,13 @@ public class MainWindow extends JFrame implements Observer {
         panelVuePlan = new Canvas(controller);
         panelVueInfo = new PanneauConfiguration(controller);
 
+        JScrollPane scrollPane = new JScrollPane(panelVueInfo);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setPreferredSize(new Dimension(300, 500));
 
         this.add(panelVuePlan, BorderLayout.CENTER);
-        this.add(panelVueInfo, BorderLayout.EAST);
+        this.add(scrollPane, BorderLayout.EAST);
 
         this.setVisible(true);
     }
