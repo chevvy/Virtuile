@@ -143,7 +143,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
         ArrayList model = new ArrayList();
         controller.getNomRevetements().forEach(nom -> model.add(nom));
         revetementSurfaceSelectionnee = new JComboBox(model.toArray());
-        revetementSurfaceSelectionnee.setSelectedItem("revetement par defaut");
+        revetementSurfaceSelectionnee.setSelectedItem("Revêtement par défaut");
         revetementSurfaceSelectionnee.addActionListener(selectRevetementAction);
         revetementSurfaceSelectionnee.setSize(180, 30);
         revetementSurfaceSelectionnee.setLocation(100, 300);
@@ -251,6 +251,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
 
         epaisseurCoulisText = new JTextField(20);
         epaisseurCoulisText.setBounds(150,590,50,30);
+        epaisseurCoulisText.setEditable(false);
         this.add(epaisseurCoulisText);
 
         JLabel labelUniteMesureLCoulis = new JLabel(uniteMesure);
@@ -385,7 +386,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
             hauteurSurfaceText.setText("");
             largeurSurfaceText.setText("");
             revetementSurfaceSelectionnee.removeActionListener(selectRevetementAction);
-            revetementSurfaceSelectionnee.setSelectedItem("revetement par defaut");
+            revetementSurfaceSelectionnee.setSelectedItem("Revêtement par défaut");
             revetementSurfaceSelectionnee.addActionListener(selectRevetementAction);
             typeMateriauText.setText("");
             couleurMateriauText.setText("");

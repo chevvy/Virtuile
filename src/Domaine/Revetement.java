@@ -31,8 +31,7 @@ public class Revetement {
         // revetement avec motif / taille par defaut (TBD)
         this.longueurTuile = 50;
         this.hauteurTuile = 20;
-        this.nomDuRevetement = "revetement par defaut";
-        this.nomDuRevetement = "revetement par defaut"; // TODO doublon?
+        this.nomDuRevetement = "Revêtement par défaut";
         this.typeMateriauTuile = "Céramique";
         this.couleurTuile = Color.YELLOW;
         this.couleurTuileText = "Jaune";

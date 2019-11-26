@@ -32,6 +32,7 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
 
 
     private void SetUpUi() {
+        String uniteMesure = "cm.";
         //Nom du revêtement
         JLabel nomRevetementLabel = new JLabel("Nom du matériau :");
         nomRevetementLabel.setBounds(10,10,200,25);
@@ -111,8 +112,12 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
         this.add(hauteurTuileLabel);
 
         this.hauteurTuileText = new JTextField(20);
-        hauteurTuileText.setBounds(220,200,150,25);
+        hauteurTuileText.setBounds(220,200,100,25);
         this.add(hauteurTuileText);
+
+        JLabel hauteurTuileUniteMesure = new JLabel(uniteMesure);
+        hauteurTuileUniteMesure.setBounds(330,200,100,25);
+        this.add(hauteurTuileUniteMesure);
 
         //Largeur
         JLabel largeurTuileLabel = new JLabel("Largeur des tuiles :");
@@ -120,8 +125,12 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
         this.add(largeurTuileLabel);
 
         this.largeurTuileText = new JTextField(20);
-        largeurTuileText.setBounds(220,230,150,25);
+        largeurTuileText.setBounds(220,230,100,25);
         this.add(largeurTuileText);
+
+        JLabel largeurTuileUniteMesure = new JLabel(uniteMesure);
+        largeurTuileUniteMesure.setBounds(330,230,100,25);
+        this.add(largeurTuileUniteMesure);
 
         //Nombre de tuiles par boîte
         JLabel nbTuilesBoiteLabel = new JLabel("Nombre de tuiles par boîte :");

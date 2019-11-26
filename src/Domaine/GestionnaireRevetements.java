@@ -9,10 +9,11 @@ public class GestionnaireRevetements {
     private String revetementSelectionnee;
 
     private Map<String, Revetement> mapRevetements = new HashMap<String, Revetement>(){{
-                put("revetement par defaut",  new Revetement());
+                put("Revêtement par défaut",  new Revetement());
                 put("Revêtement 1", new Revetement("Revêtement 1", "Béton", Color.RED, "Rouge",
                         "Installation en chevron", 13 , 13, 30));
-
+                put("Revêtement 2", new Revetement("Revêtement 2", "Terre cuite", Color.GRAY, "Gris",
+                "Installation en décallé", 20 , 30, 20));
 
     }};
 
@@ -44,7 +45,7 @@ public class GestionnaireRevetements {
     }
 
     public Revetement getRevetementFromNom(String nom){
-        return mapRevetements.containsKey(nom) ? mapRevetements.get(nom) : mapRevetements.get("revetement par defaut");
+        return mapRevetements.containsKey(nom) ? mapRevetements.get(nom) : mapRevetements.get("Revêtement par défaut");
     }
 
     public String getRevetementSelectionnee() {
