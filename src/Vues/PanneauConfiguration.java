@@ -371,7 +371,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
             String nom = controller.getInfosRevetementSelect().get("Nom Revêtement");
             revetementSurfaceSelectionnee.setSelectedItem(nom);
             revetementSurfaceSelectionnee.addActionListener(selectRevetementAction);
-            typeMateriauText.setText(controller.plan.surfaceSelectionnee.getRevetement().getNomDuRevetement()+"");
+            typeMateriauText.setText(controller.plan.surfaceSelectionnee.getRevetement().getTypeMateriauTuile()+"");
             couleurMateriauText.setText(controller.plan.surfaceSelectionnee.getRevetement().getCouleurTuileText()+"");
             motifTuileText.setText(controller.plan.surfaceSelectionnee.getRevetement().getMotifTuiles());
             hauteurTuileText.setText(controller.plan.surfaceSelectionnee.getRevetement().getHauteurTuile()+"");
