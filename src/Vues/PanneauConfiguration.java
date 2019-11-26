@@ -18,7 +18,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
 
     private JButton boutonAjouter, boutonSupprimer, boutonMenuRevetement, boutonAlligment;
     private JRadioButton radioSurface, radioVide;
-    private ActionListener selectRevetementAction;
+    private ActionListener selectRevetementAction, selectCouleurCoulisAction;
     private JComboBox revetementSurfaceSelectionnee, couleurCoulisCombo;
     private JTextField hauteurSurfaceText, largeurSurfaceText, typeMateriauText, couleurMateriauText, motifTuileText,
             hauteurTuileText, largeurTuileText, nbTuilesBoiteText, epaisseurCoulisText, hauteurTuileSelectText, largeurTuileSelectText;
@@ -40,6 +40,13 @@ public class PanneauConfiguration extends JPanel implements Observer{
             public void actionPerformed(ActionEvent actionEvent) {
                 String s = (String) revetementSurfaceSelectionnee.getSelectedItem();
                 controller.setRevetement(controller.gestionnaireRevetements.getRevetementFromNom(s));
+            }
+        };
+        selectCouleurCoulisAction = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String s = (String) couleurCoulisCombo.getSelectedItem();
+                controller.setCouleurCoulis(s);
             }
         };
     }
@@ -238,8 +245,9 @@ public class PanneauConfiguration extends JPanel implements Observer{
         couleurCoulisLabel.setBounds(15,560,120,30);
         this.add(couleurCoulisLabel);
 
-        String [] couleurCoulis = {"Rouge", "Blanc", "Gris"};
+        String [] couleurCoulis = {"Rouge", "Blanc", "Gris", "Bleu", "Vert"};
         couleurCoulisCombo = new JComboBox<>(couleurCoulis); //this.controller.getListeMateriaux()
+        couleurCoulisCombo.addActionListener(selectCouleurCoulisAction);
         couleurCoulisCombo.setSize(130, 30);
         couleurCoulisCombo.setLocation(150, 560);
         this.add(couleurCoulisCombo);
@@ -363,7 +371,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
         ArrayList model = new ArrayList();
         controller.getNomRevetements().forEach(nom -> model.add(nom));
         revetementSurfaceSelectionnee.setModel(new DefaultComboBoxModel(model.toArray()));
-        if(controller.plan.surfaceSelectionnee != null && controller.getEtat().equals(Etat.LECTURE)){
+        if(controller.plan.surfaceSelectionnee != null){
             hauteurSurfaceText.setText(controller.plan.surfaceSelectionnee.polygone.getBounds().height+"");
             largeurSurfaceText.setText(controller.plan.surfaceSelectionnee.polygone.getBounds().width+"");
             revetementSurfaceSelectionnee.removeActionListener(selectRevetementAction);
@@ -376,10 +384,11 @@ public class PanneauConfiguration extends JPanel implements Observer{
             hauteurTuileText.setText(controller.plan.surfaceSelectionnee.getRevetement().getHauteurTuile()+"");
             largeurTuileText.setText(controller.plan.surfaceSelectionnee.getRevetement().getLongueurTuile()+"");
             nbTuilesBoiteText.setText(controller.plan.surfaceSelectionnee.getRevetement().getNbTuilesBoite()+"");
+            couleurCoulisCombo.removeActionListener(selectCouleurCoulisAction);
             couleurCoulisCombo.setSelectedItem(controller.plan.surfaceSelectionnee.getCouleurCoulisText());
+            couleurCoulisCombo.addActionListener(selectCouleurCoulisAction);
             epaisseurCoulisText.setText(controller.plan.surfaceSelectionnee.getTailleDuCoulis()+"");
             hauteurTuileSelectText.setText(Integer.toString(controller.getHauteurTuile()));
-            System.out.println(controller.getHauteurTuile());
             largeurTuileSelectText.setText(Integer.toString(controller.getLargeurTuile()));
         }
         else{
@@ -394,8 +403,12 @@ public class PanneauConfiguration extends JPanel implements Observer{
             hauteurTuileText.setText("");
             largeurTuileText.setText("");
             nbTuilesBoiteText.setText("");
+            couleurCoulisCombo.removeActionListener(selectCouleurCoulisAction);
             couleurCoulisCombo.setSelectedItem("");
+            couleurCoulisCombo.addActionListener(selectCouleurCoulisAction);
             epaisseurCoulisText.setText("");
+            hauteurTuileSelectText.setText("");
+            largeurTuileSelectText.setText("");
         }
 
 /*        if ( controller.getPlan().surfaceSelectionnee != null )
