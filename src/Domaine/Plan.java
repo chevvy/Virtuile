@@ -347,6 +347,7 @@ public class Plan {
         this.listeTypeMateriau.add(nom);
     }
 
+
     public ArrayList<String> getListeTypeMateriau(){return listeTypeMateriau;}
 
     //Liste des types de motifs
@@ -358,6 +359,7 @@ public class Plan {
         map.put("Longueur surface", Integer.toString(surface.polygone.getBounds().width));
         map.put("Couleur coulis", surface.getCouleurCoulisText());
         map.put("Épaisseur coulis", Integer.toString(surface.getTailleDuCoulis()));
+        map.put("Est un trou", Boolean.toString(surface.estUnTrou));
         return map;
     }
 
