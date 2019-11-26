@@ -21,21 +21,14 @@ public class Surface {
     private Color couleurCoulis = Color.WHITE;;
     private String couleurCoulisText = "Blanc";
 
-    public Surface(List<Point> listePoints, boolean trou) {
+    public Surface(List<Point> listePoints, boolean trou, Revetement revetement) {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
         this.estUnTrou = trou;
         this.trous = new ArrayList<>();
         // liste de tuiles
-        this.revetement = new Revetement();
-        setListeTuiles(genererListeDeTuiles());
-    }
-
-    public void changerPoints(List<Point> listePoints){
-        int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
-        int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
-        polygone = new Polygon(coords_x, coords_y, listePoints.size());
+        this.revetement = revetement;
         setListeTuiles(genererListeDeTuiles());
     }
 
@@ -208,29 +201,8 @@ public class Surface {
         return couleurCoulis;
     }
 
-    public void setCouleurCoulis(String couleurCoulis) {
-        switch (couleurCoulis){
-            case "Rouge":
-                this.couleurCoulis = Color.red;
-                this.couleurCoulisText = couleurCoulis;
-                break;
-            case "Blanc":
-                this.couleurCoulis = Color.white;
-                this.couleurCoulisText = couleurCoulis;
-                break;
-            case "Gris":
-                this.couleurCoulis = Color.lightGray;
-                this.couleurCoulisText = couleurCoulis;
-                break;
-            case "Bleu":
-                this.couleurCoulis = Color.blue;
-                this.couleurCoulisText = couleurCoulis;
-                break;
-            case "Vert":
-                this.couleurCoulis = Color.green;
-                this.couleurCoulisText = couleurCoulis;
-                break;
-        }
+    public void setCouleurCoulis(Color couleurCoulis) {
+        this.couleurCoulis = couleurCoulis;
     }
 
     public String getCouleurCoulisText() {
