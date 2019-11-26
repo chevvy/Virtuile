@@ -324,6 +324,8 @@ public class Controller {
                 return Color.WHITE;
             case "Noir":
                 return Color.BLACK;
+            case "Bleu":
+                return Color.BLUE;
             default:
                 return Color.YELLOW;
         }

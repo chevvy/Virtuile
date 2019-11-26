@@ -10,10 +10,10 @@ public class GestionnaireRevetements {
 
     private Map<String, Revetement> mapRevetements = new HashMap<String, Revetement>(){{
                 put("Revêtement par défaut",  new Revetement());
-                put("Revêtement 1", new Revetement("Revêtement 1", "Béton", Color.RED, "Rouge",
+                put("Revêtement 1", new Revetement("Revêtement 1", "Béton", Color.BLUE, "Bleu",
                         "Installation en chevron", 13 , 13, 30));
                 put("Revêtement 2", new Revetement("Revêtement 2", "Terre cuite", Color.GRAY, "Gris",
-                "Installation en décallé", 20 , 30, 20));
+                "Installation en décallé", 20 , 30, 18));
 
     }};
 
@@ -40,7 +40,7 @@ public class GestionnaireRevetements {
         map.put("Motif tuiles", revetementSelect.getMotifTuiles());
         map.put("Hauteur tuiles", Integer.toString(revetementSelect.getHauteurTuile()));
         map.put("Longueur tuiles", Integer.toString(revetementSelect.getLongueurTuile()));
-        map.put("nb. tuiles par boite", Integer.toString(revetementSelect.getLongueurTuile()));
+        map.put("nb. tuiles par boite", Integer.toString(revetementSelect.getNbTuilesBoite()));
         return map;
     }
 

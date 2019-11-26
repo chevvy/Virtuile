@@ -23,7 +23,7 @@ public class Plan {
     private Point pointAncre;
     private int grab = 0;
     private int base = 0;
-    private ArrayList<String> listeCouleurs = new ArrayList<>( Arrays.asList("Rouge", "Noir", "Gris", "Jaune"));
+    private ArrayList<String> listeCouleurs = new ArrayList<>( Arrays.asList("Rouge", "Noir", "Gris", "Jaune", "Bleu"));
     private ArrayList<String> listeTypeMateriau = new ArrayList<>( Arrays.asList("Béton", "Terre cuite", "Ardoise", "Céramique",
             "Bois", "Aucun Revêtement"));
     private ArrayList<String> listeMotifs= new ArrayList<>( Arrays.asList("Installation droite", "Installation " +
@@ -354,8 +354,8 @@ public class Plan {
 
     public Map<String, String> getInfosSurface(Surface surface) {
         Map<String, String> map = new HashMap<String, String>();
-        map.put("Hauteur surface", Integer.toString(surface.polygone.getBounds().height));
-        map.put("Longueur surface", Integer.toString(surface.polygone.getBounds().width));
+        map.put("Hauteur surface", Integer.toString(surfaceSelectionnee.polygone.getBounds().height));
+        map.put("Longueur surface", Integer.toString(surfaceSelectionnee.polygone.getBounds().width));
         map.put("Couleur coulis", surface.getCouleurCoulisText());
         map.put("Épaisseur coulis", Integer.toString(surface.getTailleDuCoulis()));
         return map;

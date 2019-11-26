@@ -372,22 +372,22 @@ public class PanneauConfiguration extends JPanel implements Observer{
         controller.getNomRevetements().forEach(nom -> model.add(nom));
         revetementSurfaceSelectionnee.setModel(new DefaultComboBoxModel(model.toArray()));
         if(controller.plan.surfaceSelectionnee != null){
-            hauteurSurfaceText.setText(controller.plan.surfaceSelectionnee.polygone.getBounds().height+"");
-            largeurSurfaceText.setText(controller.plan.surfaceSelectionnee.polygone.getBounds().width+"");
+            hauteurSurfaceText.setText(controller.getInfosSurfaceSelect().get("Hauteur surface")+"");
+            largeurSurfaceText.setText(controller.getInfosSurfaceSelect().get("Longueur surface")+"");
             revetementSurfaceSelectionnee.removeActionListener(selectRevetementAction);
             String nom = controller.getInfosRevetementSelect().get("Nom Revêtement");
             revetementSurfaceSelectionnee.setSelectedItem(nom);
             revetementSurfaceSelectionnee.addActionListener(selectRevetementAction);
-            typeMateriauText.setText(controller.plan.surfaceSelectionnee.getRevetement().getTypeMateriauTuile()+"");
-            couleurMateriauText.setText(controller.plan.surfaceSelectionnee.getRevetement().getCouleurTuileText()+"");
-            motifTuileText.setText(controller.plan.surfaceSelectionnee.getRevetement().getMotifTuiles());
-            hauteurTuileText.setText(controller.plan.surfaceSelectionnee.getRevetement().getHauteurTuile()+"");
-            largeurTuileText.setText(controller.plan.surfaceSelectionnee.getRevetement().getLongueurTuile()+"");
-            nbTuilesBoiteText.setText(controller.plan.surfaceSelectionnee.getRevetement().getNbTuilesBoite()+"");
+            typeMateriauText.setText(controller.getInfosRevetementSelect().get("Type matériau")+"");
+            couleurMateriauText.setText(controller.getInfosRevetementSelect().get("Couleur tuiles")+"");
+            motifTuileText.setText(controller.getInfosRevetementSelect().get("Motif tuiles"));
+            hauteurTuileText.setText(controller.getInfosRevetementSelect().get("Hauteur tuiles")+"");
+            largeurTuileText.setText(controller.getInfosRevetementSelect().get("Longueur tuiles")+"");
+            nbTuilesBoiteText.setText(controller.getInfosRevetementSelect().get("nb. tuiles par boite")+"");
             couleurCoulisCombo.removeActionListener(selectCouleurCoulisAction);
-            couleurCoulisCombo.setSelectedItem(controller.plan.surfaceSelectionnee.getCouleurCoulisText());
+            couleurCoulisCombo.setSelectedItem(controller.getInfosSurfaceSelect().get("Couleur coulis"));
             couleurCoulisCombo.addActionListener(selectCouleurCoulisAction);
-            epaisseurCoulisText.setText(controller.plan.surfaceSelectionnee.getTailleDuCoulis()+"");
+            epaisseurCoulisText.setText(controller.getInfosSurfaceSelect().get("Épaisseur coulis")+"");
             hauteurTuileSelectText.setText(Integer.toString(controller.getHauteurTuile()));
             largeurTuileSelectText.setText(Integer.toString(controller.getLargeurTuile()));
         }
@@ -410,22 +410,6 @@ public class PanneauConfiguration extends JPanel implements Observer{
             hauteurTuileSelectText.setText("");
             largeurTuileSelectText.setText("");
         }
-
-/*        if ( controller.getPlan().surfaceSelectionnee != null )
-        {
-            if (controller.getEtat().equals(Etat.LECTURE)) {
-                controller.getInfosRevetementSelect().get("Nom Revêtement");
-                revetementSurfaceSelectionnee.setSelectedItem(controller.getInfosRevetementSelect().get("Nom Revêtement"));
-            }
-        }*/
-        //if (controller.getPlan().surfaceSelectionnee != null){
-           //int [] xpointsTuile = controller.getPlan().surfaceSelectionnee.getTuileAtPoint(controller.getPositionSourisActuelle()).getPolygone().xpoints;
-           //int [] ypointsTuile = controller.getPlan().surfaceSelectionnee.getTuileAtPoint(controller.getPositionSourisActuelle()).getPolygone().xpoints;
-            //largeurTuileSelectText.setText(" Points de la tuile actuelle : x = " + Arrays.toString(xpointsTuile) + " y = " + Arrays.toString(ypointsTuile));
-            //largeurTuileSelectText.setText(Integer.toString(controller.getLargeurTuile()));
-            //hauteurTuileSelectText.setText(Integer.toString(controller.getHauteurTuile()));
-        //}
-
     }
 
 }

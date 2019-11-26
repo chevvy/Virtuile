@@ -19,7 +19,7 @@ public class Revetement {
     public Revetement(String nom) {
         this.nomDuRevetement = nom;
         this.typeMateriauTuile = "Céramique";
-        this.couleurTuile = Color.YELLOW;
+        this.couleurTuile = Color.RED;
         this.couleurTuileText = "Jaune";
         this.motifTuiles = "Installation droite";
         this.hauteurTuile = 20;
@@ -33,7 +33,7 @@ public class Revetement {
         this.hauteurTuile = 20;
         this.nomDuRevetement = "Revêtement par défaut";
         this.typeMateriauTuile = "Céramique";
-        this.couleurTuile = Color.YELLOW;
+        this.couleurTuile = Color.RED;
         this.couleurTuileText = "Jaune";
         this.motifTuiles = "Installation droite";
         this.hauteurTuile = 20;
