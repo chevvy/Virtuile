@@ -1,5 +1,6 @@
 package Vues;
 
+import Domaine.Surface;
 import MVC.Controller;
 import MVC.Etat;
 import Vues.Revetements.FrameRevetements;
@@ -20,7 +21,8 @@ public class PanneauConfiguration extends JPanel implements Observer{
     private ActionListener selectRevetementAction;
     private JComboBox revetementSurfaceSelectionnee, couleurCoulisCombo;
     private JTextField hauteurSurfaceText, largeurSurfaceText, typeMateriauText, couleurMateriauText, motifTuileText,
-            hauteurTuileText, largeurTuileText, nbTuilesBoiteText, epaisseurCoulisText;
+            hauteurTuileText, largeurTuileText, nbTuilesBoiteText, epaisseurCoulisText, hauteurTuileSelectText, largeurTuileSelectText;
+    Surface surfaceSelectionnee;
 
     private Controller controller;
 
@@ -278,7 +280,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
         labelHauteurTuileSelect.setLocation(25, 670);
         this.add(labelHauteurTuileSelect);
 
-        JTextField hauteurTuileSelectText = new JTextField(10);
+        this.hauteurTuileSelectText = new JTextField(10);
         hauteurTuileSelectText.setBounds(100,670,90,30);
         hauteurTuileSelectText.setEditable(false);
         this.add(hauteurTuileSelectText);
@@ -294,7 +296,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
         labelLargeurTuileSelect.setLocation(25, 700);
         this.add(labelLargeurTuileSelect);
 
-        JTextField largeurTuileSelectText = new JTextField(10);
+        this.largeurTuileSelectText = new JTextField(10);
         largeurTuileSelectText.setBounds(100,700,90,30);
         largeurTuileSelectText.setEditable(false);
         this.add(largeurTuileSelectText);
@@ -353,6 +355,10 @@ public class PanneauConfiguration extends JPanel implements Observer{
 
     @Override
     public void update() {
+
+        this.surfaceSelectionnee = controller.getPlan().surfaceSelectionnee;
+
+
         ArrayList model = new ArrayList();
         controller.getNomRevetements().forEach(nom -> model.add(nom));
         revetementSurfaceSelectionnee.setModel(new DefaultComboBoxModel(model.toArray()));
@@ -371,6 +377,9 @@ public class PanneauConfiguration extends JPanel implements Observer{
             nbTuilesBoiteText.setText(controller.plan.surfaceSelectionnee.getRevetement().getNbTuilesBoite()+"");
             couleurCoulisCombo.setSelectedItem(controller.plan.surfaceSelectionnee.getCouleurCoulisText());
             epaisseurCoulisText.setText(controller.plan.surfaceSelectionnee.getTailleDuCoulis()+"");
+            hauteurTuileSelectText.setText(Integer.toString(controller.getHauteurTuile()));
+            System.out.println(controller.getHauteurTuile());
+            largeurTuileSelectText.setText(Integer.toString(controller.getLargeurTuile()));
         }
         else{
             hauteurSurfaceText.setText("");

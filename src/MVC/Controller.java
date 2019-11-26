@@ -334,11 +334,11 @@ public class Controller {
     }
 
     public int getHauteurTuile(){
-        return getPlan().surfaceSelectionnee.getTuileAtPoint(positionSourisActuelle).getHeight();
+        return getPlan().surfaceSelectionnee.getTuileAtPoint(getPositionSourisActuelle()).getHeight();
     }
 
     public int getLargeurTuile(){
-        return getPlan().surfaceSelectionnee.getTuileAtPoint(positionSourisActuelle).getLength();
+        return getPlan().surfaceSelectionnee.getTuileAtPoint(getPositionSourisActuelle()).getLength();
     }
 
     public void setEpaisseurCoulis(int epaisseur){

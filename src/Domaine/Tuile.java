@@ -17,14 +17,14 @@ public class Tuile{
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
-        length = polygone.xpoints.length;
-        height = polygone.ypoints.length;
+        length = (int)polygone.getBounds().getMaxX() - (int)polygone.getBounds().getMinX();
+        height = (int)polygone.getBounds().getMaxY() - (int)polygone.getBounds().getMinY();
     }
 
     Tuile(Polygon polygon){
         this.polygone = polygon;
-        length = polygone.xpoints.length;
-        height = polygone.ypoints.length;
+        length = (int)polygone.getBounds().getMaxX() - (int)polygone.getBounds().getMinX();
+        height = (int)polygone.getBounds().getMaxY() - (int)polygone.getBounds().getMinY();
     }
 
     public Polygon getPolygone() {
@@ -41,8 +41,8 @@ public class Tuile{
 
     public void setPolygone(Polygon polygone) {
         this.polygone = polygone;
-        length = polygone.xpoints.length;
-        height = polygone.ypoints.length;
+        length = (int)polygone.getBounds().getMaxX() - (int)polygone.getBounds().getMinX();
+        height = (int)polygone.getBounds().getMaxY() - (int)polygone.getBounds().getMinY();
     }
 
     public void setLength(int length) {
@@ -52,4 +52,6 @@ public class Tuile{
     public void setHeight(int height) {
         this.height = height;
     }
+
+
 }
