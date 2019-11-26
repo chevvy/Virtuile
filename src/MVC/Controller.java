@@ -332,7 +332,7 @@ public class Controller {
             case "Bleu":
                 return Color.BLUE;
             default:
-                return Color.YELLOW;
+                return Color.GRAY;
         }
     }
 

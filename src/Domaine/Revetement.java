@@ -20,7 +20,7 @@ public class Revetement {
         this.nomDuRevetement = nom;
         this.typeMateriauTuile = "Céramique";
         this.couleurTuile = Color.RED;
-        this.couleurTuileText = "Jaune";
+        this.couleurTuileText = "Rouge";
         this.motifTuiles = "Installation droite";
         this.hauteurTuile = 20;
         this.longueurTuile = 50;
@@ -34,7 +34,7 @@ public class Revetement {
         this.nomDuRevetement = "Revêtement par défaut";
         this.typeMateriauTuile = "Céramique";
         this.couleurTuile = Color.RED;
-        this.couleurTuileText = "Jaune";
+        this.couleurTuileText = "Rouge";
         this.motifTuiles = "Installation droite";
         this.hauteurTuile = 20;
         this.longueurTuile = 50;

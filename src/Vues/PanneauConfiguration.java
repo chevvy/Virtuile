@@ -272,7 +272,12 @@ public class PanneauConfiguration extends JPanel implements Observer{
 
         epaisseurCoulisText = new JTextField(20);
         epaisseurCoulisText.setBounds(150,590,50,30);
-        epaisseurCoulisText.setEditable(false);
+        epaisseurCoulisText.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                controller.setEpaisseurCoulis(Integer.parseInt(epaisseurCoulisText.getText()));
+            }
+        });
         this.add(epaisseurCoulisText);
 
         JLabel labelUniteMesureLCoulis = new JLabel(uniteMesure);
@@ -280,13 +285,6 @@ public class PanneauConfiguration extends JPanel implements Observer{
         labelUniteMesureLCoulis.setLocation(205, 590);
         this.add(labelUniteMesureLCoulis);
 
-        JButton modifierEpaisseurCoulis = new JButton("+");
-        modifierEpaisseurCoulis.setSize(25, 25);
-        modifierEpaisseurCoulis.setLocation(255,590);
-        this.add(modifierEpaisseurCoulis);
-        modifierEpaisseurCoulis.addActionListener(e -> {
-            setEpaisseurCoulis();;
-        });
 
         JLabel line02 = new JLabel("_______________________________________");
         line02.setBounds(15,610,300,20);
@@ -367,13 +365,6 @@ public class PanneauConfiguration extends JPanel implements Observer{
         controller.ajouterSurface(i);
     }
 
-    private void setEpaisseurCoulis(){
-        String tailleCoulisString = (String)JOptionPane.showInputDialog(null, "Entrez l'épaisseur du coulis (en cm)", "Épaisseur du coulis", JOptionPane.PLAIN_MESSAGE );
-        if (!tailleCoulisString.equals("") && tailleCoulisString != null){
-            int tailleCoulis = Integer.parseInt(tailleCoulisString);
-            controller.setEpaisseurCoulis(tailleCoulis);
-        }
-    }
 
     @Override
     public void update() {
