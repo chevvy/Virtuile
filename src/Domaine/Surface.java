@@ -208,6 +208,10 @@ public class Surface {
         return couleurCoulis;
     }
 
+    public boolean EstUnTrou() {
+        return estUnTrou;
+    }
+
     public void setCouleurCoulis(String couleurCoulis) {
         switch (couleurCoulis){
             case "Rouge":

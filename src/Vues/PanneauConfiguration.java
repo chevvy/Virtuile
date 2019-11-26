@@ -22,6 +22,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
     private JComboBox revetementSurfaceSelectionnee, couleurCoulisCombo;
     private JTextField hauteurSurfaceText, largeurSurfaceText, typeMateriauText, couleurMateriauText, motifTuileText,
             hauteurTuileText, largeurTuileText, nbTuilesBoiteText, epaisseurCoulisText, hauteurTuileSelectText, largeurTuileSelectText;
+    private ButtonGroup groupeRadioSurface;
     Surface surfaceSelectionnee;
 
     private Controller controller;
@@ -108,9 +109,9 @@ public class PanneauConfiguration extends JPanel implements Observer{
         radioVide.setSize(100, 20);
         radioVide.setLocation(155, 210);
 
-        ButtonGroup group = new ButtonGroup();
-        group.add(radioSurface);
-        group.add(radioVide);
+        this.groupeRadioSurface = new ButtonGroup();
+        groupeRadioSurface.add(radioSurface);
+        groupeRadioSurface.add(radioVide);
 
         // Hauteur Surface
         JLabel labelHauteurSurface = new JLabel("Hauteur : ");
@@ -372,6 +373,17 @@ public class PanneauConfiguration extends JPanel implements Observer{
         controller.getNomRevetements().forEach(nom -> model.add(nom));
         revetementSurfaceSelectionnee.setModel(new DefaultComboBoxModel(model.toArray()));
         if(controller.plan.surfaceSelectionnee != null){
+            if ( Boolean.parseBoolean(controller.getInfosSurfaceSelect().get("Est un trou"))){
+                groupeRadioSurface.clearSelection();
+                radioVide.setSelected(true);
+            }
+            else{
+                groupeRadioSurface.clearSelection();
+                radioSurface.setSelected(true);
+            }
+            hauteurSurfaceText.setText(controller.plan.surfaceSelectionnee.polygone.getBounds().height+"");
+            largeurSurfaceText.setText(controller.plan.surfaceSelectionnee.polygone.getBounds().width+"");
+
             hauteurSurfaceText.setText(controller.getInfosSurfaceSelect().get("Hauteur surface")+"");
             largeurSurfaceText.setText(controller.getInfosSurfaceSelect().get("Longueur surface")+"");
             revetementSurfaceSelectionnee.removeActionListener(selectRevetementAction);
