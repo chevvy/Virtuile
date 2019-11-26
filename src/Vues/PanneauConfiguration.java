@@ -381,9 +381,6 @@ public class PanneauConfiguration extends JPanel implements Observer{
                 groupeRadioSurface.clearSelection();
                 radioSurface.setSelected(true);
             }
-            hauteurSurfaceText.setText(controller.plan.surfaceSelectionnee.polygone.getBounds().height+"");
-            largeurSurfaceText.setText(controller.plan.surfaceSelectionnee.polygone.getBounds().width+"");
-
             hauteurSurfaceText.setText(controller.getInfosSurfaceSelect().get("Hauteur surface")+"");
             largeurSurfaceText.setText(controller.getInfosSurfaceSelect().get("Longueur surface")+"");
             revetementSurfaceSelectionnee.removeActionListener(selectRevetementAction);
