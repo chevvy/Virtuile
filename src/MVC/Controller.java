@@ -204,11 +204,11 @@ public class Controller {
     public void paintCanevas(Graphics g, Point mouse){
         Surface surfaceSelectionnee = plan.surfaceSelectionnee;
         for(Surface surface : plan.recupererSurfaces()){
-            g.setColor(surface.estUnTrou?Color.white:Color.blue.darker());
+            g.setColor(surface.estUnTrou?Color.white:surface.getCouleurCoulis().darker());
             g.fillPolygon(surface.polygone);
             if(!surface.estUnTrou){
                 for (Tuile tuile : surface.getListeTuiles()){
-                    g.setColor(new Color(203, 65, 84));
+                    g.setColor(surface.getRevetement().getCouleurTuile().darker());
                     g.fillPolygon(tuile.getPolygone());
                 }
             }
@@ -217,10 +217,10 @@ public class Controller {
         }
 
         if(surfaceSelectionnee != null){
-            g.setColor(surfaceSelectionnee.estUnTrou?Color.green:Color.blue);
+            g.setColor(surfaceSelectionnee.estUnTrou?Color.green:surfaceSelectionnee.getCouleurCoulis());
             g.fillPolygon(surfaceSelectionnee.polygone);
             if(!surfaceSelectionnee.estUnTrou){
-                g.setColor(new Color(203, 65, 84));
+                g.setColor(surfaceSelectionnee.getRevetement().getCouleurTuile());
                 for (Tuile tuile : surfaceSelectionnee.getListeTuiles()){
                     g.fillPolygon(tuile.getPolygone());
                 }
@@ -354,6 +354,13 @@ public class Controller {
     public void setRevetement(Revetement revetement) {
         if(this.plan.surfaceSelectionnee != null) {
             this.plan.surfaceSelectionnee.setRevetement(revetement);
+        }
+        notifyObservers();
+    }
+
+    public void setCouleurCoulis(String color) {
+        if(plan.surfaceSelectionnee != null){
+            this.plan.surfaceSelectionnee.setCouleurCoulis(color);
         }
         notifyObservers();
     }
