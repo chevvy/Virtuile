@@ -92,6 +92,7 @@ public class Controller {
 
     public void setDimensionsSurface(int hauteur, int largeur){
         plan.setDimensionsSurface(hauteur, largeur);
+        notifyObservers();
     }
 
     public void selectionnerAligner(){

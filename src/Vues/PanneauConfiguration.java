@@ -120,7 +120,13 @@ public class PanneauConfiguration extends JPanel implements Observer{
 
         hauteurSurfaceText = new JTextField(10);
         hauteurSurfaceText.setBounds(100,240,90,30);
-        hauteurSurfaceText.setEditable(false);
+        hauteurSurfaceText.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                int vieilleLargeur = Integer.parseInt(controller.getInfosSurfaceSelect().get("Longueur surface"));
+                controller.setDimensionsSurface(Integer.parseInt(hauteurSurfaceText.getText()), vieilleLargeur);
+            }
+        });
         this.add(hauteurSurfaceText);
 
         JLabel labelUniteMesureHauteurSurface = new JLabel(uniteMesure);
@@ -135,7 +141,13 @@ public class PanneauConfiguration extends JPanel implements Observer{
 
         largeurSurfaceText = new JTextField(10);
         largeurSurfaceText.setBounds(100,270,90,30);
-        largeurSurfaceText.setEditable(false);
+        largeurSurfaceText.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                int vieilleHauteur = Integer.parseInt(controller.getInfosSurfaceSelect().get("Hauteur surface"));
+                controller.setDimensionsSurface(vieilleHauteur, Integer.parseInt(largeurSurfaceText.getText()));
+            }
+        });
         this.add(largeurSurfaceText);
 
         JLabel labelUniteMesureLargeurSurface = new JLabel(uniteMesure);
@@ -419,6 +431,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
             hauteurTuileSelectText.setText("");
             largeurTuileSelectText.setText("");
         }
+
     }
 
 }
