@@ -202,6 +202,7 @@ public class Surface {
 
     public void setTailleDuCoulis(int tailleDuCoulis) {
         this.tailleDuCoulis = tailleDuCoulis;
+        setListeTuiles(genererListeDeTuiles());
     }
 
     public Color getCouleurCoulis() {
