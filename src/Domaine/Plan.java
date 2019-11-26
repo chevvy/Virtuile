@@ -185,6 +185,19 @@ public class Plan {
         }
     }
 
+    public void setDimensionsSurface(int hauteur, int largeur){ //À déplacer dans surface
+        ArrayList<Point> points = surfaceSelectionnee.getListePoints();
+        Rectangle limites = surfaceSelectionnee.polygone.getBounds();
+        if(hauteur != 0 && largeur != 0){
+            points = points.stream().map(point ->{
+                int nouveau_x = (largeur * Math.abs(point.x - limites.x) / limites.width);
+                int nouveau_y = (hauteur * Math.abs(point.y - limites.y) / limites.height);
+                return new Point(nouveau_x, nouveau_y);
+            }).collect(Collectors.toCollection(ArrayList::new));
+        }
+        surfaceSelectionnee.changerPoints(points);
+    }
+
     public void etirerSurface(Point position){
         if (grab == 1){position.y = base;}
         if (grab == 2){position.x = base;}

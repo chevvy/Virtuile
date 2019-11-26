@@ -90,6 +90,10 @@ public class Controller {
         notifyObservers();
     }
 
+    public void setDimensionsSurface(int hauteur, int largeur){
+        plan.setDimensionsSurface(hauteur, largeur);
+    }
+
     public void selectionnerAligner(){
         etat = Etat.SELECTIONNER_ALIGNER;
     }
