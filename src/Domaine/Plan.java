@@ -186,16 +186,8 @@ public class Plan {
     }
 
     public void setDimensionsSurface(int hauteur, int largeur){ //À déplacer dans surface
-        ArrayList<Point> points = surfaceSelectionnee.getListePoints();
-        Rectangle limites = surfaceSelectionnee.polygone.getBounds();
-        if(hauteur != 0 && largeur != 0){
-            points = points.stream().map(point ->{
-                int nouveau_x = (largeur * Math.abs(point.x - limites.x) / limites.width) + limites.x;
-                int nouveau_y = (hauteur * Math.abs(point.y - limites.y) / limites.height) + limites.y;
-                return new Point(nouveau_x, nouveau_y);
-            }).collect(Collectors.toCollection(ArrayList::new));
-        }
-        surfaceSelectionnee.changerPoints(points);
+        surfaceSelectionnee.setDimensions(hauteur, largeur);
+
     }
 
     public void etirerSurface(Point position){
