@@ -57,6 +57,27 @@ public class Surface {
         return listePoints;
     }
 
+    public void setDimensions(int hauteur, int largeur){
+        ArrayList<Point> points = getListePoints();
+        Rectangle limites = polygone.getBounds();
+        if(hauteur != 0 && largeur != 0){
+            points = points.stream().map(point ->{
+                int nouveau_x = (largeur * Math.abs(point.x - limites.x) / limites.width) + limites.x;
+                int nouveau_y = (hauteur * Math.abs(point.y - limites.y) / limites.height) + limites.y;
+                return new Point(nouveau_x, nouveau_y);
+            }).collect(Collectors.toCollection(ArrayList::new));
+            changerPoints(points);
+            for(Surface trou : trous){
+                points = trou.getListePoints().stream().map(point ->{
+                    int nouveau_x = (largeur * Math.abs(point.x - limites.x) / limites.width) + limites.x;
+                    int nouveau_y = (hauteur * Math.abs(point.y - limites.y) / limites.height) + limites.y;
+                    return new Point(nouveau_x, nouveau_y);
+                }).collect(Collectors.toCollection(ArrayList::new));
+                trou.changerPoints(points);
+            }
+        }
+    }
+
     public boolean fusionner(Surface s){
         Area aire = new Area(polygone);
         aire.add(new Area(s.polygone));
