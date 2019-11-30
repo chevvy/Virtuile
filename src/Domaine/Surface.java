@@ -67,6 +67,12 @@ public class Surface implements Cloneable{
         return listePoints;
     }
 
+    public Area getAireSansTrou(){
+        Area aireSansTrou = new Area(polygone);
+        trous.forEach(trou -> aireSansTrou.subtract(new Area(trou.polygone)));
+        return aireSansTrou;
+    }
+
     public void setDimensions(int hauteur, int largeur){
         ArrayList<Point> points = getListePoints();
         Rectangle limites = polygone.getBounds();

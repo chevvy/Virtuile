@@ -36,8 +36,6 @@ public class Revetement {
         this.couleurTuile = Color.RED;
         this.couleurTuileText = "Rouge";
         this.motifTuiles = "Installation droite";
-        this.hauteurTuile = 20;
-        this.longueurTuile = 50;
         this.nbTuilesBoite = 20;
         // revetement avec motif / taille par defaut (TBD)
     }
