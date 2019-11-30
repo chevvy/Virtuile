@@ -67,6 +67,12 @@ public class Surface implements Cloneable{
         return listePoints;
     }
 
+    public void setListePoints(ArrayList<Point> listePoints){
+        int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
+        int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
+        this.polygone = new Polygon(coords_x, coords_y, listePoints.size());
+    }
+
     public Area getAireSansTrou(){
         Area aireSansTrou = new Area(polygone);
         trous.forEach(trou -> aireSansTrou.subtract(new Area(trou.polygone)));
@@ -279,6 +285,22 @@ public class Surface implements Cloneable{
         return couleurCoulisText;
     }
 
+    public void flipHorizontal(){
+        int range = this.polygone.getBounds().width;
+        ArrayList<Point> points = this.getListePoints();
+        for (Point point : points){
+            point.x = (range - point.x);
+        }
+        this.setListePoints(points);
+    }
 
+    public void flipVertical(){
+        int range = this.polygone.getBounds().height;
+        ArrayList<Point> points = this.getListePoints();
+        for (Point point : points){
+            point.y = (range - point.y);
+        }
+        this.setListePoints(points);
+    }
 }
 

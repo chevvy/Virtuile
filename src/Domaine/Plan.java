@@ -59,12 +59,12 @@ public class Plan {
     }
 
     public Etat initialiserSurface(Point position, ArrayList<Point> patron, boolean trou){
-        Point positionAjustee = convertMouseCoordWithMagnetique(position);
-        premierPoint = pointAncre = convertMouseCoordWithMagnetique(positionAjustee);
+        premierPoint = pointAncre = convertMouseCoordWithMagnetique(position);
         grab = 0;
-        ArrayList<Point> patronAjuste = patron.stream().map(point -> new Point(point.x + positionAjustee.x, point.y + positionAjustee.y))
+        ArrayList<Point> patronAjuste = patron.stream().map(point -> new Point(point.x + premierPoint.x, point.y + premierPoint.y))
                 .collect(Collectors.toCollection(ArrayList::new));
-        surfaceOriginale = surfaceSelectionnee = new Surface(patronAjuste, trou);
+        surfaceSelectionnee = new Surface(patronAjuste, trou);
+        surfaceOriginale = surfaceSelectionnee.clone();
         listeSurfaces.add(surfaceSelectionnee);
         return Etat.ETIRER_SURFACE;
     }
@@ -99,27 +99,35 @@ public class Plan {
     private Etat trouverPointAncrage(Point position){
         Rectangle rect = surfaceSelectionnee.polygone.getBounds();
         if(isCloseToPoint(position, new Point(rect.x, rect.y))){
+            // Top Right
             premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y + rect.height);
             grab = 0;
             surfaceOriginale = surfaceSelectionnee.clone();
+            surfaceOriginale.flipHorizontal();
+            surfaceOriginale.flipVertical();
             return  Etat.ETIRER_SURFACE;
         }
         else if(isCloseToPoint(position, new Point(rect.x + rect.width, rect.y))){
+            // Top Left
             premierPoint = pointAncre = new Point(rect.x, rect.y + rect.height);
             grab = 0;
             surfaceOriginale = surfaceSelectionnee.clone();
+            surfaceOriginale.flipVertical();
             return  Etat.ETIRER_SURFACE;
         }
         else if(isCloseToPoint(position, new Point(rect.x + rect.width, rect.y + rect.height))){
+            // Bottom Left
             premierPoint = pointAncre = new Point(rect.x, rect.y);
             grab = 0;
             surfaceOriginale = surfaceSelectionnee.clone();
             return  Etat.ETIRER_SURFACE;
         }
         else if(isCloseToPoint(position, new Point(rect.x, rect.y + rect.height))){
+            // Bottom Right
             premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y);
             grab = 0;
             surfaceOriginale = surfaceSelectionnee.clone();
+            surfaceOriginale.flipHorizontal();
             return  Etat.ETIRER_SURFACE;
         }
         else if(position.x < rect.x+5 && position.x > rect.x-5 && position.y > rect.y && position.y < rect.y+rect.height){
@@ -128,6 +136,7 @@ public class Plan {
             grab = 1;
             base = rect.y+rect.height;
             surfaceOriginale = surfaceSelectionnee.clone();
+            surfaceOriginale.flipHorizontal();
             return  Etat.ETIRER_SURFACE;
         }
         else if(position.x < rect.x+rect.width+5 && position.x > rect.x+rect.width-5 && position.y > rect.y && position.y < rect.y+rect.height){
@@ -144,6 +153,7 @@ public class Plan {
             grab = 2;
             base = rect.x+rect.width;
             surfaceOriginale = surfaceSelectionnee.clone();
+            surfaceOriginale.flipVertical();
             return  Etat.ETIRER_SURFACE;
         }
         else if(position.y < rect.y+rect.height+5 && position.y > rect.y+rect.height-5 && position.x > rect.x && position.x < rect.x+rect.width){
@@ -155,18 +165,6 @@ public class Plan {
             return  Etat.ETIRER_SURFACE;
         }
         return Etat.LECTURE;
-    }
-
-    private ArrayList<Point> FlipHorizontal(ArrayList<Point> surface){
-        ArrayList<Point> newSurface = new ArrayList<>();
-
-        return newSurface;
-    }
-
-    private ArrayList<Point> FlipVertical(ArrayList<Point> surface){
-        ArrayList<Point> newSurface = new ArrayList<>();
-
-        return newSurface;
     }
 
     private boolean isCloseToPoint(Point test, Point location){
