@@ -13,11 +13,11 @@ public class MesureImperiale {
         this.denum = denum;
     }
 
-    public MesureImperiale(int trentedeuxiemes){
-        this.pieds = trentedeuxiemes / 384;
-        this.pouces = (trentedeuxiemes % 384) / 32;
-        int num = trentedeuxiemes % 32;
-        int denum = 32;
+    public MesureImperiale(int huitiemes){
+        this.pieds = huitiemes / 96;
+        this.pouces = (huitiemes % 96) / 8;
+        int num = huitiemes % 8;
+        int denum = 8;
         while(num % 2 == 0){
             num /= 2;
             denum /= 2;
@@ -26,8 +26,8 @@ public class MesureImperiale {
         this.denum = denum;
     }
 
-    public int getTrentedeuxiemes(){
-        return pouces *32 + num*32/denum;
+    public int getHuitiemes(){
+        return pieds * 96 + pouces * 8 + num*8 / denum;
     }
 
     @Override
