@@ -62,9 +62,9 @@ public class Plan {
         Point positionAjustee = convertMouseCoordWithMagnetique(position);
         premierPoint = pointAncre = convertMouseCoordWithMagnetique(positionAjustee);
         grab = 0;
-        patron = patron.stream().map(point -> new Point(point.x + positionAjustee.x, point.y + positionAjustee.y))
+        ArrayList<Point> patronAjuste = patron.stream().map(point -> new Point(point.x + positionAjustee.x, point.y + positionAjustee.y))
                 .collect(Collectors.toCollection(ArrayList::new));
-        surfaceOriginale = surfaceSelectionnee = new Surface(patron, trou);
+        surfaceOriginale = surfaceSelectionnee = new Surface(patronAjuste, trou);
         listeSurfaces.add(surfaceSelectionnee);
         return Etat.ETIRER_SURFACE;
     }
@@ -101,25 +101,25 @@ public class Plan {
         if(isCloseToPoint(position, new Point(rect.x, rect.y))){
             premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y + rect.height);
             grab = 0;
-            surfaceOriginale = surfaceSelectionnee;
+            surfaceOriginale = surfaceSelectionnee.clone();
             return  Etat.ETIRER_SURFACE;
         }
         else if(isCloseToPoint(position, new Point(rect.x + rect.width, rect.y))){
             premierPoint = pointAncre = new Point(rect.x, rect.y + rect.height);
             grab = 0;
-            surfaceOriginale = surfaceSelectionnee;
+            surfaceOriginale = surfaceSelectionnee.clone();
             return  Etat.ETIRER_SURFACE;
         }
         else if(isCloseToPoint(position, new Point(rect.x + rect.width, rect.y + rect.height))){
             premierPoint = pointAncre = new Point(rect.x, rect.y);
             grab = 0;
-            surfaceOriginale = surfaceSelectionnee;
+            surfaceOriginale = surfaceSelectionnee.clone();
             return  Etat.ETIRER_SURFACE;
         }
         else if(isCloseToPoint(position, new Point(rect.x, rect.y + rect.height))){
             premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y);
             grab = 0;
-            surfaceOriginale = surfaceSelectionnee;
+            surfaceOriginale = surfaceSelectionnee.clone();
             return  Etat.ETIRER_SURFACE;
         }
         else if(position.x < rect.x+5 && position.x > rect.x-5 && position.y > rect.y && position.y < rect.y+rect.height){
@@ -127,7 +127,7 @@ public class Plan {
             premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y);
             grab = 1;
             base = rect.y+rect.height;
-            surfaceOriginale = surfaceSelectionnee;
+            surfaceOriginale = surfaceSelectionnee.clone();
             return  Etat.ETIRER_SURFACE;
         }
         else if(position.x < rect.x+rect.width+5 && position.x > rect.x+rect.width-5 && position.y > rect.y && position.y < rect.y+rect.height){
@@ -135,7 +135,7 @@ public class Plan {
             premierPoint = pointAncre = new Point(rect.x, rect.y);
             grab = 1;
             base = rect.y+rect.height;
-            surfaceOriginale = surfaceSelectionnee;
+            surfaceOriginale = surfaceSelectionnee.clone();
             return  Etat.ETIRER_SURFACE;
         }
         else if(position.y < rect.y+5 && position.y > rect.y-5 && position.x > rect.x && position.x < rect.x+rect.width){
@@ -143,7 +143,7 @@ public class Plan {
             premierPoint = pointAncre = new Point(rect.x, rect.y + rect.height);
             grab = 2;
             base = rect.x+rect.width;
-            surfaceOriginale = surfaceSelectionnee;
+            surfaceOriginale = surfaceSelectionnee.clone();
             return  Etat.ETIRER_SURFACE;
         }
         else if(position.y < rect.y+rect.height+5 && position.y > rect.y+rect.height-5 && position.x > rect.x && position.x < rect.x+rect.width){
@@ -151,10 +151,22 @@ public class Plan {
             premierPoint = pointAncre = new Point(rect.x, rect.y);
             grab = 2;
             base = rect.x+rect.width;
-            surfaceOriginale = surfaceSelectionnee;
+            surfaceOriginale = surfaceSelectionnee.clone();
             return  Etat.ETIRER_SURFACE;
         }
         return Etat.LECTURE;
+    }
+
+    private ArrayList<Point> FlipHorizontal(ArrayList<Point> surface){
+        ArrayList<Point> newSurface = new ArrayList<>();
+
+        return newSurface;
+    }
+
+    private ArrayList<Point> FlipVertical(ArrayList<Point> surface){
+        ArrayList<Point> newSurface = new ArrayList<>();
+
+        return newSurface;
     }
 
     private boolean isCloseToPoint(Point test, Point location){

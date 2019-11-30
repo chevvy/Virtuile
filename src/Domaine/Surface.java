@@ -9,8 +9,9 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.lang.Cloneable;
 
-public class Surface {
+public class Surface implements Cloneable{
 
     public Polygon polygone;
     public boolean estUnTrou;
@@ -30,6 +31,15 @@ public class Surface {
         // liste de tuiles
         this.revetement = new Revetement();
         setListeTuiles(genererListeDeTuiles());
+    }
+
+    public Surface clone(){
+        try{
+            return (Surface) super.clone();
+        }
+        catch (CloneNotSupportedException e) {
+            return null;
+        }
     }
 
     public void changerPoints(List<Point> listePoints){
