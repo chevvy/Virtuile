@@ -34,12 +34,15 @@ public class Surface implements Cloneable{
     }
 
     public Surface clone(){
+        Surface nouvelleSurface;
         try{
-            return (Surface) super.clone();
+            nouvelleSurface = (Surface) super.clone();
+            nouvelleSurface.trous = trous.stream().map(Surface::clone).collect(Collectors.toCollection(ArrayList::new));
         }
         catch (CloneNotSupportedException e) {
-            return null;
+            nouvelleSurface =  null;
         }
+        return nouvelleSurface;
     }
 
     public void changerPoints(List<Point> listePoints){
@@ -285,22 +288,26 @@ public class Surface implements Cloneable{
         return couleurCoulisText;
     }
 
-    public void flipHorizontal(){
-        int range = this.polygone.getBounds().width;
+    public void flipHorizontal(){flipHorizontal(polygone.getBounds().width);}
+
+    public void flipHorizontal(int axe){
         ArrayList<Point> points = this.getListePoints();
         for (Point point : points){
-            point.x = (range - point.x);
+            point.x = (axe - point.x);
         }
         this.setListePoints(points);
+        trous.forEach(trou -> trou.flipHorizontal(axe));
     }
 
-    public void flipVertical(){
-        int range = this.polygone.getBounds().height;
+    public void flipVertical(){flipVertical(polygone.getBounds().height);}
+
+    public void flipVertical(int axe){
         ArrayList<Point> points = this.getListePoints();
         for (Point point : points){
-            point.y = (range - point.y);
+            point.y = (axe - point.y);
         }
         this.setListePoints(points);
+        trous.forEach(trou -> trou.flipVertical(axe));
     }
 }
 
