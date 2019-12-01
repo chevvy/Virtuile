@@ -16,12 +16,13 @@ import MVC.Observer;
 
 public class PanneauConfiguration extends JPanel implements Observer{
 
-    private JButton boutonAjouter, boutonSupprimer, boutonMenuRevetement, boutonAlligment;
+    private JButton boutonAjouter, boutonSupprimer, boutonMenuRevetement, boutonAlligment, boutonAjouterCouleurCoulis;
     private JRadioButton radioSurface, radioVide;
-    private ActionListener selectRevetementAction, selectCouleurCoulisAction;
-    private JComboBox revetementSurfaceSelectionnee, couleurCoulisCombo;
+    private ActionListener selectRevetementAction, selectTailleCoulis;
+    private JComboBox revetementSurfaceSelectionnee;
     private JTextField hauteurSurfaceText, largeurSurfaceText, typeMateriauText, couleurMateriauText, motifTuileText,
-            hauteurTuileText, largeurTuileText, nbTuilesBoiteText, epaisseurCoulisText, hauteurTuileSelectText, largeurTuileSelectText;
+            hauteurTuileText, largeurTuileText, nbTuilesBoiteText, epaisseurCoulisText, hauteurTuileSelectText,
+            largeurTuileSelectText, couleurCoulisText;
     private ButtonGroup groupeRadioSurface;
     Surface surfaceSelectionnee;
 
@@ -43,11 +44,10 @@ public class PanneauConfiguration extends JPanel implements Observer{
                 controller.setRevetement(controller.gestionnaireRevetements.getRevetementFromNom(s));
             }
         };
-        selectCouleurCoulisAction = new ActionListener() {
+        selectTailleCoulis = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String s = (String) couleurCoulisCombo.getSelectedItem();
-                controller.setCouleurCoulis(s);
+                controller.setEpaisseurCoulis(Integer.parseInt(epaisseurCoulisText.getText()));
             }
         };
     }
@@ -184,7 +184,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
         labelCouleurMateriau.setLocation(15, 360);
 
         couleurMateriauText = new JTextField(20);
-        couleurMateriauText.setBounds(100,360,180,30);
+        couleurMateriauText.setBounds(100,360,100,30);
         couleurMateriauText.setEditable(false);
         this.add(couleurMateriauText);
 
@@ -255,15 +255,25 @@ public class PanneauConfiguration extends JPanel implements Observer{
 
         //Couleur coulis
         JLabel couleurCoulisLabel = new JLabel("Couleur du coulis :");
-        couleurCoulisLabel.setBounds(15,560,120,30);
+        couleurCoulisLabel.setBounds(15,560,150,30);
         this.add(couleurCoulisLabel);
 
-        String [] couleurCoulis = {"Rouge", "Blanc", "Gris", "Bleu", "Vert"};
-        couleurCoulisCombo = new JComboBox<>(couleurCoulis); //this.controller.getListeMateriaux()
-        couleurCoulisCombo.addActionListener(selectCouleurCoulisAction);
-        couleurCoulisCombo.setSize(130, 30);
-        couleurCoulisCombo.setLocation(150, 560);
-        this.add(couleurCoulisCombo);
+        couleurCoulisText = new JTextField(20);
+        couleurCoulisText.setBounds(150,560,50,30);
+        this.add(couleurCoulisText);
+
+        boutonAjouterCouleurCoulis = new JButton("Couleur du matériau");
+        boutonAjouterCouleurCoulis.setSize(100, 25);
+        boutonAjouterCouleurCoulis.setLocation(205, 560);
+        this.add(boutonAjouterCouleurCoulis);
+
+        boutonAjouterCouleurCoulis.addActionListener(actionEvent -> {
+            Color couleurCoulis = JColorChooser.showDialog(null, "Couleur du coulis", Color.RED);
+            if (couleurCoulis != null){
+                couleurCoulisText.setBackground(couleurCoulis);
+                controller.setCouleurCoulis(couleurCoulis);
+            }
+        });
 
         //Epaisseur coulis
         JLabel epaisseurCoulisLabel = new JLabel("Épaisseur du coulis :");
@@ -272,12 +282,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
 
         epaisseurCoulisText = new JTextField(20);
         epaisseurCoulisText.setBounds(150,590,50,30);
-        epaisseurCoulisText.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                controller.setEpaisseurCoulis(Integer.parseInt(epaisseurCoulisText.getText()));
-            }
-        });
+        epaisseurCoulisText.addActionListener(selectTailleCoulis);
         this.add(epaisseurCoulisText);
 
         JLabel labelUniteMesureLCoulis = new JLabel(uniteMesure);
@@ -326,6 +331,13 @@ public class PanneauConfiguration extends JPanel implements Observer{
         labelUniteMesureLargeurTuileSelect.setLocation(200, 700);
         this.add(labelUniteMesureLargeurTuileSelect);
 
+        JCheckBox inspectionTuiles = new JCheckBox("Mode inspection des tuiles");
+        inspectionTuiles.setBounds(25,725, 250,50);
+        this.add(inspectionTuiles);
+
+        //JCheckBox labelUt = new JCheckBox("Aire minimale des tuiles");
+        //inspectionTuiles.setBounds(25,725, 250,50);
+        //this.add(inspectionTuiles);
 
         this.add(boutonAjouter);
         this.add(boutonAjouterSurfaceVide);
@@ -391,15 +403,15 @@ public class PanneauConfiguration extends JPanel implements Observer{
             revetementSurfaceSelectionnee.setSelectedItem(nom);
             revetementSurfaceSelectionnee.addActionListener(selectRevetementAction);
             typeMateriauText.setText(controller.getInfosRevetementSelect().get("Type matériau")+"");
-            couleurMateriauText.setText(controller.getInfosRevetementSelect().get("Couleur tuiles")+"");
+            couleurMateriauText.setBackground(new Color (Integer.parseInt(controller.getInfosRevetementSelect().get("Couleur tuiles")+"")));
             motifTuileText.setText(controller.getInfosRevetementSelect().get("Motif tuiles"));
             hauteurTuileText.setText(controller.getInfosRevetementSelect().get("Hauteur tuiles")+"");
             largeurTuileText.setText(controller.getInfosRevetementSelect().get("Longueur tuiles")+"");
             nbTuilesBoiteText.setText(controller.getInfosRevetementSelect().get("nb. tuiles par boite")+"");
-            couleurCoulisCombo.removeActionListener(selectCouleurCoulisAction);
-            couleurCoulisCombo.setSelectedItem(controller.getInfosSurfaceSelect().get("Couleur coulis"));
-            couleurCoulisCombo.addActionListener(selectCouleurCoulisAction);
+            couleurCoulisText.setBackground(new Color (Integer.parseInt(controller.getInfosSurfaceSelect().get("Couleur coulis")+"")));
+            epaisseurCoulisText.removeActionListener(selectTailleCoulis);
             epaisseurCoulisText.setText(controller.getInfosSurfaceSelect().get("Épaisseur coulis")+"");
+            epaisseurCoulisText.addActionListener(selectTailleCoulis);
             hauteurTuileSelectText.setText(Integer.toString(controller.getHauteurTuile()));
             largeurTuileSelectText.setText(Integer.toString(controller.getLargeurTuile()));
         }
@@ -410,14 +422,12 @@ public class PanneauConfiguration extends JPanel implements Observer{
             revetementSurfaceSelectionnee.setSelectedItem("Revêtement par défaut");
             revetementSurfaceSelectionnee.addActionListener(selectRevetementAction);
             typeMateriauText.setText("");
-            couleurMateriauText.setText("");
+            couleurMateriauText.setBackground(Color.WHITE);
             motifTuileText.setText("");
             hauteurTuileText.setText("");
             largeurTuileText.setText("");
             nbTuilesBoiteText.setText("");
-            couleurCoulisCombo.removeActionListener(selectCouleurCoulisAction);
-            couleurCoulisCombo.setSelectedItem("");
-            couleurCoulisCombo.addActionListener(selectCouleurCoulisAction);
+            couleurCoulisText.setBackground(Color.WHITE);
             epaisseurCoulisText.setText("");
             hauteurTuileSelectText.setText("");
             largeurTuileSelectText.setText("");

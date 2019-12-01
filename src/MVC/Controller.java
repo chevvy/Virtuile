@@ -283,14 +283,6 @@ public class Controller {
         return plan;
     }
 
-    //Couleurs des tuiles
-    public void ajouterCouleur(String couleur){
-
-        plan.ajouterCouleur(couleur);
-    }
-
-    public ArrayList<String> getCouleurs(){ return plan.getListeCouleur(); }
-
 
     //Type de matériaux
     public void ajouterTypeMateriau(String typeMateriau){
@@ -314,26 +306,11 @@ public class Controller {
         String nom = plan.surfaceSelectionnee.getRevetement().getNomDuRevetement();
         return gestionnaireRevetements.getInfosRevetement(nom);}
 
-    public void ajouterRevetement(String nomRevetement, String typeMateriauTuile, Color couleurTuile, String couleurTuileText,
+    public void ajouterRevetement(String nomRevetement, String typeMateriauTuile, Color couleurTuile,
                                                  String motifTuile, int hauteurTuile, int longueurTuile, int nbTuilesBoite){
-        Revetement revetement = new Revetement(nomRevetement, typeMateriauTuile, couleurTuile, couleurTuileText,
+        Revetement revetement = new Revetement(nomRevetement, typeMateriauTuile, couleurTuile,
                 motifTuile, hauteurTuile, longueurTuile, nbTuilesBoite);
         gestionnaireRevetements.ajouterRevetement(nomRevetement, revetement);
-    }
-
-    public Color getCouleur(String couleur){
-        switch (couleur) {
-            case "Rouge":
-                return Color.RED;
-            case "Blanc":
-                return Color.WHITE;
-            case "Noir":
-                return Color.BLACK;
-            case "Bleu":
-                return Color.BLUE;
-            default:
-                return Color.GRAY;
-        }
     }
 
     public Point getPositionSourisActuelle() {
@@ -351,8 +328,8 @@ public class Controller {
     public void setEpaisseurCoulis(int epaisseur){
         if (plan.surfaceSelectionnee != null) {
             plan.surfaceSelectionnee.setTailleDuCoulis(epaisseur);
-            notifyObservers();
         }
+        notifyObservers();
     }
 
     public Map<String, String> getInfosSurfaceSelect() {
@@ -365,9 +342,9 @@ public class Controller {
         notifyObservers();
     }
 
-    public void setCouleurCoulis(String color) {
+    public void setCouleurCoulis(Color couleurCoulis) {
         if(plan.surfaceSelectionnee != null){
-            this.plan.surfaceSelectionnee.setCouleurCoulis(color);
+            this.plan.surfaceSelectionnee.setCouleurCoulis(couleurCoulis);
         }
         notifyObservers();
     }

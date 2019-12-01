@@ -362,7 +362,7 @@ public class Plan {
         Map<String, String> map = new HashMap<String, String>();
         map.put("Hauteur surface", Integer.toString(surfaceSelectionnee.polygone.getBounds().height));
         map.put("Longueur surface", Integer.toString(surfaceSelectionnee.polygone.getBounds().width));
-        map.put("Couleur coulis", surface.getCouleurCoulisText());
+        map.put("Couleur coulis", String.valueOf(surface.getCouleurCoulis().getRGB()));
         map.put("Épaisseur coulis", Integer.toString(surface.getTailleDuCoulis()));
         map.put("Est un trou", Boolean.toString(surface.estUnTrou));
         return map;

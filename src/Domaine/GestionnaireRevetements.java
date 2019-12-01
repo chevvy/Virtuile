@@ -10,9 +10,9 @@ public class GestionnaireRevetements {
 
     private Map<String, Revetement> mapRevetements = new HashMap<String, Revetement>(){{
                 put("Revêtement par défaut",  new Revetement());
-                put("Revêtement 1", new Revetement("Revêtement 1", "Béton", Color.BLUE, "Bleu",
+                put("Revêtement 1", new Revetement("Revêtement 1", "Béton", Color.BLUE,
                         "Installation en chevron", 13 , 13, 30));
-                put("Revêtement 2", new Revetement("Revêtement 2", "Terre cuite", Color.GRAY, "Gris",
+                put("Revêtement 2", new Revetement("Revêtement 2", "Terre cuite", Color.GRAY,
                 "Installation en décallé", 20 , 30, 18));
 
     }};
@@ -36,7 +36,7 @@ public class GestionnaireRevetements {
         Map<String, String> map = new HashMap<String, String>();
         map.put("Nom Revêtement", revetementSelect.getNomDuRevetement());
         map.put("Type matériau", revetementSelect.getTypeMateriauTuile());
-        map.put("Couleur tuiles", revetementSelect.getCouleurTuileText());
+        map.put("Couleur tuiles", String.valueOf(revetementSelect.getCouleurTuile().getRGB()));
         map.put("Motif tuiles", revetementSelect.getMotifTuiles());
         map.put("Hauteur tuiles", Integer.toString(revetementSelect.getHauteurTuile()));
         map.put("Longueur tuiles", Integer.toString(revetementSelect.getLongueurTuile()));

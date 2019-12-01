@@ -4,7 +4,6 @@ import MVC.Controller;
 import MVC.Etat;
 import MVC.Observer;
 import Vues.Alignement.FrameAlignement;
-import Vues.Materiaux.FrameCouleur;
 import Vues.Materiaux.FrameMateriau;
 import Vues.Revetements.FrameRevetements;
 
@@ -75,13 +74,7 @@ public class MainWindow extends JFrame implements Observer {
                 new FrameMateriau(controller).setVisible(true);
             }
         });
-        JMenuItem menuCouleur = new JMenuItem("Ajouter une nouvelle couleur");
-        menuEdition.add(menuCouleur);
-        menuCouleur.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                new FrameCouleur(controller).setVisible(true);
-            }
-        });
+
         menuEdition.add(new JMenuItem("Ajouter une surface"));
         menuEdition.add(new JMenuItem("Modifier les sommets"));
         menuEdition.addSeparator();
