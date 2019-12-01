@@ -14,6 +14,8 @@ public class GestionnaireRevetements {
                         "Installation en chevron", 13 , 13, 30));
                 put("Revêtement 2", new Revetement("Revêtement 2", "Terre cuite", Color.GRAY,
                 "Installation en décallé", 20 , 30, 18));
+                put("Aucun Revêtement", new Revetement("Aucun Revêtement", "Aucun",
+                        Color.WHITE, "Aucun Motif", 0,0,0 ));
 
     }};
 

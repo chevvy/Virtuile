@@ -41,10 +41,6 @@ public class PanneauConfiguration extends JPanel implements Observer{
             String s = (String) revetementSurfaceSelectionnee.getSelectedItem();
             controller.setRevetement(controller.gestionnaireRevetements.getRevetementFromNom(s));
         };
-        selectCouleurCoulisAction = actionEvent -> {
-            String s = (String) couleurCoulisCombo.getSelectedItem();
-            controller.setCouleurCoulis(s);
-        };
     }
 
     private void SetUpUi(){
@@ -257,13 +253,14 @@ public class PanneauConfiguration extends JPanel implements Observer{
         couleurCoulisText.setBounds(150,560,50,30);
         this.add(couleurCoulisText);
 
-        boutonAjouterCouleurCoulis = new JButton("Couleur du matériau");
-        boutonAjouterCouleurCoulis.setSize(100, 25);
-        boutonAjouterCouleurCoulis.setLocation(205, 560);
+        boutonAjouterCouleurCoulis = new JButton("Modifier");
+        boutonAjouterCouleurCoulis.setSize(80, 30);
+        boutonAjouterCouleurCoulis.setLocation(200, 560);
         this.add(boutonAjouterCouleurCoulis);
 
         boutonAjouterCouleurCoulis.addActionListener(actionEvent -> {
-            Color couleurCoulis = JColorChooser.showDialog(null, "Couleur du coulis", Color.RED);
+            Color couleurCoulis = JColorChooser.showDialog(null, "Couleur du matériau",
+                    couleurCoulisText.getBackground());
             if (couleurCoulis != null){
                 couleurCoulisText.setBackground(couleurCoulis);
                 controller.setCouleurCoulis(couleurCoulis);
@@ -326,13 +323,19 @@ public class PanneauConfiguration extends JPanel implements Observer{
         labelUniteMesureLargeurTuileSelect.setLocation(200, 700);
         this.add(labelUniteMesureLargeurTuileSelect);
 
+        //Mode inspection tuiles
         JCheckBox inspectionTuiles = new JCheckBox("Mode inspection des tuiles");
-        inspectionTuiles.setBounds(25,725, 250,50);
+        inspectionTuiles.setBounds(25,730, 250,25);
         this.add(inspectionTuiles);
 
-        //JCheckBox labelUt = new JCheckBox("Aire minimale des tuiles");
-        //inspectionTuiles.setBounds(25,725, 250,50);
-        //this.add(inspectionTuiles);
+        JLabel labelInspectionTuiles = new JLabel("Dimension minimale");
+        labelInspectionTuiles.setSize(150, 30);
+        labelInspectionTuiles.setLocation(15, 755);
+        this.add(labelInspectionTuiles);
+
+        JSpinner inspectionTuilesMin = new JSpinner(new SpinnerNumberModel(1, 0, 1000, 1));
+        inspectionTuilesMin.setBounds(150,755, 70,25);
+        this.add(inspectionTuilesMin);
 
         this.add(boutonAjouter);
         this.add(boutonAjouterSurfaceVide);

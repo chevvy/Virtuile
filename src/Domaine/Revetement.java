@@ -12,9 +12,6 @@ public class Revetement {
     private int longueurTuile;
     private int hauteurTuile;
 
-    private int tailleDuCoulis = 2;
-    private Color couleurCoulis = Color.WHITE;
-
     public Revetement(String nom) {
         this.nomDuRevetement = nom;
         this.typeMateriauTuile = "Céramique";
@@ -94,6 +91,5 @@ public class Revetement {
     public int getNbTuilesBoite(){return nbTuilesBoite;}
 
     public void setNbTuilesBoite(int nbTuilesBoite){ this.nbTuilesBoite = nbTuilesBoite;}
-
 }
 

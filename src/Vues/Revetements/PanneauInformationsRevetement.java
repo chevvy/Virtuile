@@ -68,14 +68,14 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
 
         //Couleur matériaux
         JLabel couleurMateriauLabel = new JLabel("Couleur du matériau :");
-        couleurMateriauLabel.setBounds(10,90,90,25);
+        couleurMateriauLabel.setBounds(10,90,150,25);
         this.add(couleurMateriauLabel);
 
         couleurMateriauText = new JTextField(20);
         couleurMateriauText.setBounds(220 ,90,130,25);
         this.add(couleurMateriauText);
 
-        boutonAjouterCouleur = new JButton("Couleur du matériau");
+        boutonAjouterCouleur = new JButton("Modifier");
         boutonAjouterCouleur.setSize(100, 25);
         boutonAjouterCouleur.setLocation(335, 90);
         this.add(boutonAjouterCouleur);

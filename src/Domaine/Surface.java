@@ -262,10 +262,6 @@ public class Surface implements Cloneable{
         this.couleurCoulis = couleurCoulis;
     }
 
-    public String getCouleurCoulisText() {
-        return couleurCoulisText;
-    }
-
     public void flipHorizontal(){flipHorizontal(polygone.getBounds().width);}
 
     public void flipHorizontal(int axe){

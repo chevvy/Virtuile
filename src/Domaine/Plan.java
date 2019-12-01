@@ -24,9 +24,9 @@ public class Plan {
     private int base = 0;
     private ArrayList<String> listeCouleurs = new ArrayList<>( Arrays.asList("Rouge", "Noir", "Gris", "Jaune", "Bleu"));
     private ArrayList<String> listeTypeMateriau = new ArrayList<>( Arrays.asList("Béton", "Terre cuite", "Ardoise", "Céramique",
-            "Bois", "Aucun Revêtement"));
+            "Bois", "Aucun"));
     private ArrayList<String> listeMotifs= new ArrayList<>( Arrays.asList("Installation droite", "Installation " +
-            "imitation parquet", "Installation en décallé", "Installation en chevron", "Installation en L"));
+            "imitation parquet", "Installation en décallé", "Installation en chevron", "Installation en L", "Aucun Motif"));
 
 
     public Plan(){
