@@ -37,18 +37,13 @@ public class PanneauConfiguration extends JPanel implements Observer{
         this.controller = controller;
         SetUpUi();
 
-        selectRevetementAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                String s = (String) revetementSurfaceSelectionnee.getSelectedItem();
-                controller.setRevetement(controller.gestionnaireRevetements.getRevetementFromNom(s));
-            }
+        selectRevetementAction = actionEvent -> {
+            String s = (String) revetementSurfaceSelectionnee.getSelectedItem();
+            controller.setRevetement(controller.gestionnaireRevetements.getRevetementFromNom(s));
         };
-        selectTailleCoulis = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                controller.setEpaisseurCoulis(Integer.parseInt(epaisseurCoulisText.getText()));
-            }
+        selectCouleurCoulisAction = actionEvent -> {
+            String s = (String) couleurCoulisCombo.getSelectedItem();
+            controller.setCouleurCoulis(s);
         };
     }
 

@@ -209,6 +209,7 @@ public class Controller {
     public void paintCanevas(Graphics g, Point mouse){
         Surface surfaceSelectionnee = plan.surfaceSelectionnee;
         for(Surface surface : plan.recupererSurfaces()){
+            g.setClip(surface.getAireSansTrou());
             g.setColor(surface.estUnTrou?Color.white:surface.getCouleurCoulis().darker());
             g.fillPolygon(surface.polygone);
             if(!surface.estUnTrou){
@@ -217,8 +218,7 @@ public class Controller {
                     g.fillPolygon(tuile.getPolygone());
                 }
             }
-            g.setColor(Color.white);
-            surface.trous.forEach(trou -> g.fillPolygon(trou.polygone));
+            g.setClip(null);
         }
 
         if(surfaceSelectionnee != null){

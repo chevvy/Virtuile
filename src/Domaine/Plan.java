@@ -20,7 +20,6 @@ public class Plan {
     private ArrayList<Point> surfaceLibre;
     private boolean isGrilleMagnetiqueActive = false;
     private int grid_size = 50;
-    private Point pointAncre;
     private int grab = 0;
     private int base = 0;
     private ArrayList<String> listeCouleurs = new ArrayList<>( Arrays.asList("Rouge", "Noir", "Gris", "Jaune", "Bleu"));
@@ -40,7 +39,7 @@ public class Plan {
             }
         }
         if(surfaceSelectionnee != null && surfaceSelectionnee.polygone.contains(position)){
-            pointPrecedent = premierPoint = position;
+            pointPrecedent = position;
             return Etat.DEPLACER_SURFACE;
         }
         for(Surface surface : listeSurfaces){
@@ -59,12 +58,12 @@ public class Plan {
     }
 
     public Etat initialiserSurface(Point position, ArrayList<Point> patron, boolean trou){
-        Point positionAjustee = convertMouseCoordWithMagnetique(position);
-        premierPoint = pointAncre = convertMouseCoordWithMagnetique(positionAjustee);
+        premierPoint = convertMouseCoordWithMagnetique(position);
         grab = 0;
-        patron = patron.stream().map(point -> new Point(point.x + positionAjustee.x, point.y + positionAjustee.y))
+        ArrayList<Point> patronAjuste = patron.stream().map(point -> new Point(point.x + premierPoint.x, point.y + premierPoint.y))
                 .collect(Collectors.toCollection(ArrayList::new));
-        surfaceOriginale = surfaceSelectionnee = new Surface(patron, trou);
+        surfaceSelectionnee = new Surface(patronAjuste, trou);
+        surfaceOriginale = surfaceSelectionnee.clone();
         listeSurfaces.add(surfaceSelectionnee);
         return Etat.ETIRER_SURFACE;
     }
@@ -99,59 +98,69 @@ public class Plan {
     private Etat trouverPointAncrage(Point position){
         Rectangle rect = surfaceSelectionnee.polygone.getBounds();
         if(isCloseToPoint(position, new Point(rect.x, rect.y))){
-            premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y + rect.height);
+            // Top Right
+            premierPoint = new Point(rect.x + rect.width, rect.y + rect.height);
             grab = 0;
-            surfaceOriginale = surfaceSelectionnee;
+            surfaceOriginale = surfaceSelectionnee.clone();
+            surfaceOriginale.flipHorizontal();
+            surfaceOriginale.flipVertical();
             return  Etat.ETIRER_SURFACE;
         }
         else if(isCloseToPoint(position, new Point(rect.x + rect.width, rect.y))){
-            premierPoint = pointAncre = new Point(rect.x, rect.y + rect.height);
+            // Top Left
+            premierPoint = new Point(rect.x, rect.y + rect.height);
             grab = 0;
-            surfaceOriginale = surfaceSelectionnee;
+            surfaceOriginale = surfaceSelectionnee.clone();
+            surfaceOriginale.flipVertical();
             return  Etat.ETIRER_SURFACE;
         }
         else if(isCloseToPoint(position, new Point(rect.x + rect.width, rect.y + rect.height))){
-            premierPoint = pointAncre = new Point(rect.x, rect.y);
+            // Bottom Left
+            premierPoint = new Point(rect.x, rect.y);
             grab = 0;
-            surfaceOriginale = surfaceSelectionnee;
+            surfaceOriginale = surfaceSelectionnee.clone();
             return  Etat.ETIRER_SURFACE;
         }
         else if(isCloseToPoint(position, new Point(rect.x, rect.y + rect.height))){
-            premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y);
+            // Bottom Right
+            premierPoint = new Point(rect.x + rect.width, rect.y);
             grab = 0;
-            surfaceOriginale = surfaceSelectionnee;
+            surfaceOriginale = surfaceSelectionnee.clone();
+            surfaceOriginale.flipHorizontal();
             return  Etat.ETIRER_SURFACE;
         }
         else if(position.x < rect.x+5 && position.x > rect.x-5 && position.y > rect.y && position.y < rect.y+rect.height){
             // Left
-            premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y);
+            premierPoint = new Point(rect.x + rect.width, rect.y);
             grab = 1;
             base = rect.y+rect.height;
-            surfaceOriginale = surfaceSelectionnee;
+            surfaceOriginale = surfaceSelectionnee.clone();
+            surfaceOriginale.flipHorizontal();
             return  Etat.ETIRER_SURFACE;
         }
         else if(position.x < rect.x+rect.width+5 && position.x > rect.x+rect.width-5 && position.y > rect.y && position.y < rect.y+rect.height){
             // Right
-            premierPoint = pointAncre = new Point(rect.x, rect.y);
+            premierPoint = new Point(rect.x, rect.y);
             grab = 1;
             base = rect.y+rect.height;
-            surfaceOriginale = surfaceSelectionnee;
+            surfaceOriginale = surfaceSelectionnee.clone();
             return  Etat.ETIRER_SURFACE;
         }
         else if(position.y < rect.y+5 && position.y > rect.y-5 && position.x > rect.x && position.x < rect.x+rect.width){
             // Top
-            premierPoint = pointAncre = new Point(rect.x, rect.y + rect.height);
+            premierPoint = new Point(rect.x, rect.y + rect.height);
             grab = 2;
             base = rect.x+rect.width;
-            surfaceOriginale = surfaceSelectionnee;
+            surfaceOriginale = surfaceSelectionnee.clone();
+            surfaceOriginale.flipVertical();
             return  Etat.ETIRER_SURFACE;
         }
         else if(position.y < rect.y+rect.height+5 && position.y > rect.y+rect.height-5 && position.x > rect.x && position.x < rect.x+rect.width){
             // Bottom
-            premierPoint = pointAncre = new Point(rect.x, rect.y);
+            premierPoint = new Point(rect.x, rect.y);
             grab = 2;
             base = rect.x+rect.width;
-            surfaceOriginale = surfaceSelectionnee;
+            surfaceOriginale = surfaceSelectionnee.clone();
             return  Etat.ETIRER_SURFACE;
         }
         return Etat.LECTURE;
@@ -200,12 +209,20 @@ public class Plan {
         Rectangle limites = surfaceOriginale.polygone.getBounds();
         if(x != 0 && y!= 0){
             points = points.stream().map(point ->{
-                int nouveau_x = (x * Math.abs(point.x - limites.x) / limites.width) + pointAncre.x;
-                int nouveau_y = (y * Math.abs(point.y - limites.y) / limites.height) + pointAncre.y;
+                int nouveau_x = (x * Math.abs(point.x - limites.x) / limites.width) + premierPoint.x;
+                int nouveau_y = (y * Math.abs(point.y - limites.y) / limites.height) + premierPoint.y;
                 return new Point(nouveau_x, nouveau_y);
             }).collect(Collectors.toCollection(ArrayList::new));
+            surfaceSelectionnee.changerPoints(points);
+            for(int trou = 0; trou < surfaceOriginale.trous.size(); trou++){
+                points = surfaceOriginale.trous.get(trou).getListePoints().stream().map(point ->{
+                    int nouveau_x = (x * Math.abs(point.x - limites.x) / limites.width) + premierPoint.x;
+                    int nouveau_y = (y * Math.abs(point.y - limites.y) / limites.height) + premierPoint.y;
+                    return new Point(nouveau_x, nouveau_y);
+                }).collect(Collectors.toCollection(ArrayList::new));
+                surfaceSelectionnee.trous.get(trou).changerPoints(points);
+            }
         }
-        surfaceSelectionnee.changerPoints(points);
         //Surface nouvelleSurface = new Surface(points, surfaceOriginale.estUnTrou, surfaceOriginale.getRevetement());
         //listeSurfaces.remove(surfaceSelectionnee);
         //listeSurfaces.add(nouvelleSurface);
