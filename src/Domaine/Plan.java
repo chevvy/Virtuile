@@ -22,7 +22,6 @@ public class Plan implements Serializable {
     private ArrayList<Point> surfaceLibre;
     private boolean isGrilleMagnetiqueActive = false;
     private int grid_size = 50;
-    private Point pointAncre;
     private int grab = 0;
     private int base = 0;
     private ArrayList<String> listeCouleurs = new ArrayList<>( Arrays.asList("Rouge", "Noir", "Gris", "Jaune", "Bleu"));
@@ -42,7 +41,7 @@ public class Plan implements Serializable {
             }
         }
         if(surfaceSelectionnee != null && surfaceSelectionnee.polygone.contains(position)){
-            pointPrecedent = premierPoint = position;
+            pointPrecedent = position;
             return Etat.DEPLACER_SURFACE;
         }
         for(Surface surface : listeSurfaces){
@@ -61,7 +60,7 @@ public class Plan implements Serializable {
     }
 
     public Etat initialiserSurface(Point position, ArrayList<Point> patron, boolean trou){
-        premierPoint = pointAncre = convertMouseCoordWithMagnetique(position);
+        premierPoint = convertMouseCoordWithMagnetique(position);
         grab = 0;
         ArrayList<Point> patronAjuste = patron.stream().map(point -> new Point(point.x + premierPoint.x, point.y + premierPoint.y))
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -102,7 +101,7 @@ public class Plan implements Serializable {
         Rectangle rect = surfaceSelectionnee.polygone.getBounds();
         if(isCloseToPoint(position, new Point(rect.x, rect.y))){
             // Top Right
-            premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y + rect.height);
+            premierPoint = new Point(rect.x + rect.width, rect.y + rect.height);
             grab = 0;
             surfaceOriginale = surfaceSelectionnee.clone();
             surfaceOriginale.flipHorizontal();
@@ -111,7 +110,7 @@ public class Plan implements Serializable {
         }
         else if(isCloseToPoint(position, new Point(rect.x + rect.width, rect.y))){
             // Top Left
-            premierPoint = pointAncre = new Point(rect.x, rect.y + rect.height);
+            premierPoint = new Point(rect.x, rect.y + rect.height);
             grab = 0;
             surfaceOriginale = surfaceSelectionnee.clone();
             surfaceOriginale.flipVertical();
@@ -119,14 +118,14 @@ public class Plan implements Serializable {
         }
         else if(isCloseToPoint(position, new Point(rect.x + rect.width, rect.y + rect.height))){
             // Bottom Left
-            premierPoint = pointAncre = new Point(rect.x, rect.y);
+            premierPoint = new Point(rect.x, rect.y);
             grab = 0;
             surfaceOriginale = surfaceSelectionnee.clone();
             return  Etat.ETIRER_SURFACE;
         }
         else if(isCloseToPoint(position, new Point(rect.x, rect.y + rect.height))){
             // Bottom Right
-            premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y);
+            premierPoint = new Point(rect.x + rect.width, rect.y);
             grab = 0;
             surfaceOriginale = surfaceSelectionnee.clone();
             surfaceOriginale.flipHorizontal();
@@ -134,7 +133,7 @@ public class Plan implements Serializable {
         }
         else if(position.x < rect.x+5 && position.x > rect.x-5 && position.y > rect.y && position.y < rect.y+rect.height){
             // Left
-            premierPoint = pointAncre = new Point(rect.x + rect.width, rect.y);
+            premierPoint = new Point(rect.x + rect.width, rect.y);
             grab = 1;
             base = rect.y+rect.height;
             surfaceOriginale = surfaceSelectionnee.clone();
@@ -143,7 +142,7 @@ public class Plan implements Serializable {
         }
         else if(position.x < rect.x+rect.width+5 && position.x > rect.x+rect.width-5 && position.y > rect.y && position.y < rect.y+rect.height){
             // Right
-            premierPoint = pointAncre = new Point(rect.x, rect.y);
+            premierPoint = new Point(rect.x, rect.y);
             grab = 1;
             base = rect.y+rect.height;
             surfaceOriginale = surfaceSelectionnee.clone();
@@ -151,7 +150,7 @@ public class Plan implements Serializable {
         }
         else if(position.y < rect.y+5 && position.y > rect.y-5 && position.x > rect.x && position.x < rect.x+rect.width){
             // Top
-            premierPoint = pointAncre = new Point(rect.x, rect.y + rect.height);
+            premierPoint = new Point(rect.x, rect.y + rect.height);
             grab = 2;
             base = rect.x+rect.width;
             surfaceOriginale = surfaceSelectionnee.clone();
@@ -160,7 +159,7 @@ public class Plan implements Serializable {
         }
         else if(position.y < rect.y+rect.height+5 && position.y > rect.y+rect.height-5 && position.x > rect.x && position.x < rect.x+rect.width){
             // Bottom
-            premierPoint = pointAncre = new Point(rect.x, rect.y);
+            premierPoint = new Point(rect.x, rect.y);
             grab = 2;
             base = rect.x+rect.width;
             surfaceOriginale = surfaceSelectionnee.clone();
@@ -212,12 +211,20 @@ public class Plan implements Serializable {
         Rectangle limites = surfaceOriginale.polygone.getBounds();
         if(x != 0 && y!= 0){
             points = points.stream().map(point ->{
-                int nouveau_x = (x * Math.abs(point.x - limites.x) / limites.width) + pointAncre.x;
-                int nouveau_y = (y * Math.abs(point.y - limites.y) / limites.height) + pointAncre.y;
+                int nouveau_x = (x * Math.abs(point.x - limites.x) / limites.width) + premierPoint.x;
+                int nouveau_y = (y * Math.abs(point.y - limites.y) / limites.height) + premierPoint.y;
                 return new Point(nouveau_x, nouveau_y);
             }).collect(Collectors.toCollection(ArrayList::new));
+            surfaceSelectionnee.changerPoints(points);
+            for(int trou = 0; trou < surfaceOriginale.trous.size(); trou++){
+                points = surfaceOriginale.trous.get(trou).getListePoints().stream().map(point ->{
+                    int nouveau_x = (x * Math.abs(point.x - limites.x) / limites.width) + premierPoint.x;
+                    int nouveau_y = (y * Math.abs(point.y - limites.y) / limites.height) + premierPoint.y;
+                    return new Point(nouveau_x, nouveau_y);
+                }).collect(Collectors.toCollection(ArrayList::new));
+                surfaceSelectionnee.trous.get(trou).changerPoints(points);
+            }
         }
-        surfaceSelectionnee.changerPoints(points);
         //Surface nouvelleSurface = new Surface(points, surfaceOriginale.estUnTrou, surfaceOriginale.getRevetement());
         //listeSurfaces.remove(surfaceSelectionnee);
         //listeSurfaces.add(nouvelleSurface);
