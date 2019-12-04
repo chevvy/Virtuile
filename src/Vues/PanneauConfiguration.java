@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import MVC.Observer;
+import com.sun.tools.javac.Main;
 
 
 public class PanneauConfiguration extends JPanel implements Observer{
@@ -27,8 +28,10 @@ public class PanneauConfiguration extends JPanel implements Observer{
     Surface surfaceSelectionnee;
 
     private Controller controller;
+    public MainWindow mainWindow;
 
-    public PanneauConfiguration(Controller controller){
+    public PanneauConfiguration(Controller controller, MainWindow mainWindow){
+        this.mainWindow = mainWindow;
         controller.addObserver(this);
         this.setBackground(Color.gray);
         this.setPreferredSize(new Dimension(300, 800));
@@ -240,7 +243,10 @@ public class PanneauConfiguration extends JPanel implements Observer{
         boutonMenuRevetement.setLocation(50,535);
         boutonMenuRevetement.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent actionEvent) {new FrameRevetements(controller).setVisible(true);}
+            public void actionPerformed(ActionEvent actionEvent) {
+                mainWindow.setEnabled(false);
+                new FrameRevetements(controller).setVisible(true);
+                mainWindow.setEnabled(true);}
         });
 
 

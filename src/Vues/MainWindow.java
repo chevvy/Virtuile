@@ -21,8 +21,10 @@ public class MainWindow extends JFrame implements Observer {
     private PanneauConfiguration panelVueInfo;
     private Canvas panelVuePlan;
     private Controller controller;
+    public MainWindow mainWindow;
 
     public MainWindow(Controller controller){
+        mainWindow = this;
         controller.addObserver(this);
         this.controller = controller;
         this.setSize(500, 500);
@@ -86,7 +88,7 @@ public class MainWindow extends JFrame implements Observer {
         this.setJMenuBar(menuBar);
 
         panelVuePlan = new Canvas(controller);
-        panelVueInfo = new PanneauConfiguration(controller);
+        panelVueInfo = new PanneauConfiguration(controller, this);
 
         JScrollPane scrollPane = new JScrollPane(panelVueInfo);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

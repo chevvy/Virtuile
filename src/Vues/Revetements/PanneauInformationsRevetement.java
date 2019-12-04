@@ -77,7 +77,7 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
 
         boutonAjouterCouleur = new JButton("Modifier");
         boutonAjouterCouleur.setSize(100, 25);
-        boutonAjouterCouleur.setLocation(335, 90);
+        boutonAjouterCouleur.setLocation(355, 90);
         this.add(boutonAjouterCouleur);
 
         boutonAjouterCouleur.addActionListener(actionEvent -> {

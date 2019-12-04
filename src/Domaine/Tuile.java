@@ -11,14 +11,19 @@ public class Tuile{
     private Polygon polygone;
     private int length;
     private int height;
+    private Color couleur;
+    private int dimensionMin = 10;
+    private Surface surface;
+    private GestionnaireRevetements gestionnaireRevetement;
 
 
-    Tuile(ArrayList<Point> listePoints){
+    Tuile(ArrayList<Point> listePoints) {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
-        length = (int)polygone.getBounds().getMaxX() - (int)polygone.getBounds().getMinX();
-        height = (int)polygone.getBounds().getMaxY() - (int)polygone.getBounds().getMinY();
+        length = (int) polygone.getBounds().getMaxX() - (int) polygone.getBounds().getMinX();
+        height = (int) polygone.getBounds().getMaxY() - (int) polygone.getBounds().getMinY();
+        couleur = Color.white;
     }
 
     Tuile(Polygon polygon){
@@ -53,5 +58,21 @@ public class Tuile{
         this.height = height;
     }
 
+    public Color getCouleur(){
+        return couleur;
+    }
+
+    public void setCouleur(Color couleur){
+        this.couleur = couleur;
+    }
+
+    public Color getCouleurInspection() {
+        //if (length <= dimensionMin || height <= dimensionMin) {
+            return Color.RED;
+        //}
+        //else{
+        //return getCouleur();
+        //}
+    }
 
 }
