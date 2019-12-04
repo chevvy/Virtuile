@@ -15,7 +15,8 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
 
     private Controller controller;
     private FrameRevetements frame;
-    private JTextField nomRevetementField, hauteurTuileText, largeurTuileText, nbTuilesBoiteText, couleurMateriauText;
+    private JTextField nomRevetementField, hauteurTuileText, largeurTuileText, nbTuilesBoiteText, couleurMateriauText,
+            nbBoiteText, nbTuilesText;
     public String nomRevetementSelectionnee;
     private JComboBox typeMateriauxCombo, motifRecouvrementCombo;
     private JButton boutonAjouterCouleur;
@@ -142,9 +143,39 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
         tuilesParBoite.setBounds(330,270,100,25);
         this.add(tuilesParBoite);
 
+        //Nombre de tuiles
+        JLabel nbTuilesLabel = new JLabel("Nombre de tuiles :");
+        nbTuilesLabel.setBounds(10,310,200 ,25);
+        this.add(nbTuilesLabel);
+
+        this.nbTuilesText = new JTextField(20);
+        nbTuilesText.setBounds(220,310,100,25);
+        this.add(nbTuilesText);
+
+        JLabel tuilesLabel = new JLabel("Tuiles");
+        tuilesLabel.setBounds(330,310,100,25);
+        this.add(tuilesLabel);
+
+
+
+        //Nombre de boites necessaires
+        JLabel nbBoiteLabel = new JLabel("Nombre de boites nécessaires:");
+        nbBoiteLabel.setBounds(10,350,200 ,25);
+        this.add(nbBoiteLabel);
+
+        this.nbBoiteText = new JTextField(20);
+        nbBoiteText.setBounds(220,350,100,25);
+        nbBoiteText.setEditable(false);
+        this.add(nbBoiteText);
+
+        JLabel boitesLabel = new JLabel("Boîtes");
+        boitesLabel.setBounds(330,350,100,25);
+        this.add(boitesLabel);
+
+
         JButton boutonAjouter = new JButton("Ajouter un nouveau matériau");
         boutonAjouter.setSize(300, 30);
-        boutonAjouter.setLocation(100, 320);
+        boutonAjouter.setLocation(100, 390);
         this.add(boutonAjouter);
         boutonAjouter.addActionListener(new ActionListener() {
             @Override
@@ -194,6 +225,8 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
             this.hauteurTuileText.setText(String.valueOf(revetementSelectionnee.getHauteurTuile()));
             this.largeurTuileText.setText(String.valueOf(revetementSelectionnee.getLongueurTuile()));
             this.nbTuilesBoiteText.setText(String.valueOf(revetementSelectionnee.getNbTuilesBoite()));
+            this.nbBoiteText.setText(String.valueOf(controller.getNbBoites().get(nomRevetementSelectionnee)));
+            this.nbTuilesText.setText(String.valueOf(controller.getNbTuilesTotal().get(nomRevetementSelectionnee)));
 
 
         }

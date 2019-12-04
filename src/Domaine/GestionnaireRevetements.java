@@ -5,6 +5,7 @@ import java.util.*;
 
 public class GestionnaireRevetements {
 
+    private Plan plan;
     public Revetement revetement;
     private String revetementSelectionnee;
 
@@ -80,5 +81,33 @@ public class GestionnaireRevetements {
             i++;
         }
         return i;
+    }
+    public Map<String, Integer> getNbTuilesTotal(ArrayList<Surface> listeSurface) {
+        Map<String, Integer> mapNbTuile = new HashMap<String, Integer>();
+        for (Surface surface : listeSurface){
+            String nomRevetement = surface.getRevetement().getNomDuRevetement();
+            if (surface.getListeTuiles().isEmpty()){
+                int nbreTuiles = 0;
+            }
+            else{
+                int nbreTuiles = surface.getListeTuiles().size();
+            }
+            if (!mapNbTuile.containsKey(nomRevetement)) {
+                    mapNbTuile.put(nomRevetement, surface.getListeTuiles().size());
+                }
+            else
+                mapNbTuile.put(nomRevetement, mapNbTuile.get(nomRevetement) + surface.getListeTuiles().size());
+        }
+        return mapNbTuile;
+    }
+    public Map<String, Integer> getNbBoites(ArrayList<Surface> listeSurfaces){
+        Map<String, Integer> mapNbTuile = getNbTuilesTotal(listeSurfaces);
+        Map<String, Integer> mapNbBoite = new HashMap<String, Integer>();
+        for( Map.Entry<String, Integer> entree : mapNbTuile.entrySet()){
+            float nbTuilesBoite = Float.parseFloat(getInfosRevetement(entree.getKey()).get("nb. tuiles par boite"));
+            int nbBoite = (int) Math.ceil(entree.getValue() / nbTuilesBoite);
+            mapNbBoite.put(entree.getKey(), nbBoite);
+        }
+        return mapNbBoite;
     }
 }

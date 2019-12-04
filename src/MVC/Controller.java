@@ -348,5 +348,11 @@ public class Controller {
         }
         notifyObservers();
     }
+    public Map<String, Integer> getNbBoites(){
+        return this.gestionnaireRevetements.getNbBoites(plan.getListeSurfaces());
+    }
+    public Map<String, Integer> getNbTuilesTotal(){
+        return this.gestionnaireRevetements.getNbTuilesTotal(plan.getListeSurfaces());
+    }
 }
 

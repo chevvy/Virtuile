@@ -384,7 +384,6 @@ public class Plan {
         map.put("Est un trou", Boolean.toString(surface.estUnTrou));
         return map;
     }
-
 }
 
 
