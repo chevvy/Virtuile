@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class MainWindow extends JFrame implements Observer {
 
@@ -22,9 +23,12 @@ public class MainWindow extends JFrame implements Observer {
     private Canvas panelVuePlan;
     private Controller controller;
     public MainWindow mainWindow;
+    private JFileChooser fileChooser;
+    private MainWindow ref;
 
     public MainWindow(Controller controller){
         mainWindow = this;
+        ref = this;
         controller.addObserver(this);
         this.controller = controller;
         this.setSize(500, 500);
@@ -34,12 +38,43 @@ public class MainWindow extends JFrame implements Observer {
         this.setTitle("VirtuTuile");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        fileChooser = new JFileChooser();
+
         menuBar = new JMenuBar();
         menuFichier = new JMenu("Fichier");
         menuEdition = new JMenu("Edition");
         menuVue = new JMenu("Vue");
         menuItemSauvegarder = new JMenuItem("Sauvegarder");
+        menuItemSauvegarder.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                fileChooser.setDialogTitle("Sélectionnez le dossier où sauvegarder");
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+                int returnVal = fileChooser.showSaveDialog(ref);
+
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    String path = fileChooser.getSelectedFile().getPath();
+                    if (!path.contains(".data")){
+                        path += ".data";
+                    }
+                    controller.saveProject(path);
+                }
+            }
+        });
         menuItemCharger = new JMenuItem("Charger");
+        menuItemCharger.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                fileChooser.setDialogTitle("Sélectionnez le fichier à ouvrir");
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                int returnVal = fileChooser.showOpenDialog(ref);
+
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File file = fileChooser.getSelectedFile();
+                    controller.loadProject(file.getPath());
+                }
+            }
+        });
         menuCheckboxMagnetiser = new JCheckBoxMenuItem("Grille Magnétique");
         menuCheckboxMagnetiser.addActionListener(new ActionListener() {
             @Override

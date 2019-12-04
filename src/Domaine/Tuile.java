@@ -1,9 +1,10 @@
 package Domaine;
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Tuile{
+public class Tuile implements Serializable {
     // la classe tuile est un extend de polygon
     // elle contient, sa taille, ses points,
     // elle a un getter et un setter pour sa taille

@@ -4,6 +4,7 @@ package Domaine;
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.nio.file.Path;
 import java.util.*;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.lang.Cloneable;
 
-public class Surface implements Cloneable{
+public class Surface implements Cloneable, Serializable {
 
     public Polygon polygone;
     public boolean estUnTrou;
