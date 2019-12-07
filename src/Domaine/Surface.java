@@ -193,6 +193,7 @@ public class Surface implements Cloneable, Serializable {
 
     private ArrayList<Tuile> newIntersectionTuiles(ArrayList<Tuile> ListeDetuiles){ // TODO refactor le nom
         // sera utilisé pour le calcul des intersections à partir de ligne pour forme irreguliere
+        // pauvre Cathou
         System.out.println("Liste avant inter " + listeTuiles.size());
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
         Area areaSurface = new Area(polygone);
