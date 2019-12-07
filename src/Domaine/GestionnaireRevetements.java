@@ -1,10 +1,9 @@
 package Domaine;
 
 import java.awt.*;
-import java.io.Serializable;
 import java.util.*;
 
-public class GestionnaireRevetements implements Serializable {
+public class GestionnaireRevetements {
 
     private Plan plan;
     public Revetement revetement;

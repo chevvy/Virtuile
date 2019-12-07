@@ -3,15 +3,13 @@ package Domaine;
 import MVC.Etat;
 
 import java.awt.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-import Services.Historique;
 
-public class Plan implements Serializable {
+public class Plan {
 
     private ArrayList<Surface> listeSurfaces = new ArrayList<>();
     public Surface surfaceSelectionnee;

@@ -1,8 +1,6 @@
 package MVC;
 
 import Domaine.*;
-import Services.Historique;
-import Services.SaveBundle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,10 +9,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public class Controller {
     private ArrayList<Observer> observers;
@@ -25,7 +19,6 @@ public class Controller {
     public ArrayList<Point> patronForme;
     private Etat etat = Etat.LECTURE;
     private Point positionSourisActuelle = new Point();
-
 
     public Controller(){
         observers = new ArrayList<>();
@@ -335,8 +328,8 @@ public class Controller {
     public void setEpaisseurCoulis(int epaisseur){
         if (plan.surfaceSelectionnee != null) {
             plan.surfaceSelectionnee.setTailleDuCoulis(epaisseur);
-            notifyObservers();
         }
+        notifyObservers();
     }
 
     public Map<String, String> getInfosSurfaceSelect() {
@@ -360,18 +353,6 @@ public class Controller {
     }
     public Map<String, Integer> getNbTuilesTotal(){
         return this.gestionnaireRevetements.getNbTuilesTotal(plan.getListeSurfaces());
-    }
-
-
-    public void saveProject(String path){
-        Historique.saveProject(this.plan, this.gestionnaireRevetements,  path);
-    }
-
-    public void loadProject(String path){
-        SaveBundle bundle = Historique.loadProject(path);
-        this.plan = bundle.plan;
-        this.gestionnaireRevetements = bundle.gestionnaireRevetements;
-        notifyObservers();
     }
 }
 
