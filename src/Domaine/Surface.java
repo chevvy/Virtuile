@@ -20,8 +20,7 @@ public class Surface implements Cloneable, Serializable {
     private Revetement revetement;
     private ArrayList<Tuile> listeTuiles = new ArrayList<>();
     private int tailleDuCoulis = 4;
-    private Color couleurCoulis = Color.WHITE;;
-    private String couleurCoulisText = "Blanc";
+    private Color couleurCoulis = Color.WHITE;
 
     public Surface(List<Point> listePoints, boolean trou) {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();

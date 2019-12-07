@@ -1,8 +1,9 @@
 package Domaine;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class Revetement {
+public class Revetement implements Serializable {
     private Color couleurTuile;
     private String nomDuRevetement;
     private String typeMateriauTuile;
