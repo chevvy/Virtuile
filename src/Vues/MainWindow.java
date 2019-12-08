@@ -4,6 +4,7 @@ import MVC.Controller;
 import MVC.Etat;
 import MVC.Observer;
 import Vues.Alignement.FrameAlignement;
+import Vues.Espacement.FrameEspacement;
 import Vues.Materiaux.FrameMateriau;
 import Vues.Revetements.FrameRevetements;
 
@@ -142,6 +143,10 @@ public class MainWindow extends JFrame implements Observer {
         if( controller.getEtat() == Etat.OUVRIR_FENETRE_ALIGNER){
             new FrameAlignement(controller).setVisible(true);
             controller.setEtat(Etat.ALIGNER);
+        }
+        if(controller.getEtat() == Etat.OUVRIR_FENETRE_ESPACER){
+            new FrameEspacement(controller).setVisible(true);
+            controller.setEtat(Etat.ESPACER);
         }
     }
 }

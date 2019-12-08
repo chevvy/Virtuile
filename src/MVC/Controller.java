@@ -117,6 +117,15 @@ public class Controller {
         notifyObservers();
     }
 
+    public void selectionnerEspacer(){
+        etat = Etat.SELECTIONNER_ESPACER;
+    }
+
+    public void espacer(int espaceHorizontal, int espaceVerticale){
+        plan.espacer(espaceHorizontal, espaceVerticale);
+        notifyObservers();
+    }
+
     public void clic(Point p){
         switch(etat){
             case AJOUTER_SURFACE:
@@ -135,6 +144,8 @@ public class Controller {
                 break;
             case SELECTIONNER_ALIGNER:
                 etat = plan.selectionnerAligner(p);
+            case SELECTIONNER_ESPACER:
+                etat = plan.selectionnerEspacer(p);
             default:
                 break;
         }

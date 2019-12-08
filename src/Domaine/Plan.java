@@ -247,6 +247,22 @@ public class Plan implements Serializable {
         return Etat.LECTURE;
     }
 
+    public Etat selectionnerEspacer(Point position){
+        if(surfaceSelectionnee == null || surfaceSelectionnee.polygone.contains(position)){
+            return Etat.LECTURE;
+        }
+        for(Surface surface : listeSurfaces){
+            if(surface.polygone.contains(position)){
+                ancre = surface;
+                premierPoint = pointPrecedent = new Point(
+                        surfaceSelectionnee.polygone.getBounds().x,
+                        surfaceSelectionnee.polygone.getBounds().y);
+                return Etat.OUVRIR_FENETRE_ESPACER;
+            }
+        }
+        return Etat.LECTURE;
+    }
+
     public void fusionner(Point p){
         if(surfaceSelectionnee == null){
             return;
@@ -318,6 +334,22 @@ public class Plan implements Serializable {
                 break;
         }
         pointPrecedent = surfaceSelectionnee.polygone.getBounds().getLocation();
+    }
+
+    public void espacer(int espaceHorizontal, int espaceVertical){
+        Rectangle boiteAncre = ancre.polygone.getBounds();
+        Rectangle boiteSelect = surfaceSelectionnee.polygone.getBounds();
+        if (espaceHorizontal == 0){
+            surfaceSelectionnee.deplacerSurface(boiteAncre.x - boiteSelect.width - pointPrecedent.x - espaceVertical,  0);
+        }
+        else if (espaceVertical == 0){
+            surfaceSelectionnee.deplacerSurface(0,
+                    boiteAncre.y - boiteSelect.height - pointPrecedent.y - espaceHorizontal);
+        }
+        else{
+            surfaceSelectionnee.deplacerSurface(boiteAncre.x - boiteSelect.width - pointPrecedent.x - espaceVertical,
+                    boiteAncre.y - boiteSelect.height - pointPrecedent.y - espaceHorizontal);
+        }
     }
 
     public void annulerAligner(){

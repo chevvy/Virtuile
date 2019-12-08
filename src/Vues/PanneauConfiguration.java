@@ -49,6 +49,15 @@ public class PanneauConfiguration extends JPanel implements Observer{
     private void SetUpUi(){
 
         String uniteMesure = "cm";
+
+        JButton boutonEspacer = new JButton("Ajouter un espace");
+        boutonEspacer.setSize(200, 30);
+        boutonEspacer.setLocation(50,0);
+        boutonEspacer.addActionListener(e -> {
+            controller.selectionnerEspacer();
+        });
+        this.add(boutonEspacer);
+
         boutonAjouter = new JButton("Ajouter une surface");
         boutonAjouter.setSize(200, 30);
         boutonAjouter.setLocation(50,20);
