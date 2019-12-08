@@ -5,12 +5,12 @@ import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.lang.Cloneable;
+
+import static Domaine.Outils.genereSommetsPolygon;
 
 public class Surface implements Cloneable, Serializable {
 
@@ -29,7 +29,6 @@ public class Surface implements Cloneable, Serializable {
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
         this.estUnTrou = trou;
         this.trous = new ArrayList<>();
-        // liste de tuiles
         this.revetement = new Revetement();
         setListeTuiles(genererListeDeTuiles());
     }
@@ -87,7 +86,7 @@ public class Surface implements Cloneable, Serializable {
         ArrayList<Point> points = getListePoints();
         Rectangle limites = polygone.getBounds();
         if(hauteur != 0 && largeur != 0){
-            points = points.stream().map(point ->{
+            points = points.stream().map(point ->{ // TODO faire une méthode général dans outils
                 int nouveau_x = (largeur * Math.abs(point.x - limites.x) / limites.width) + limites.x;
                 int nouveau_y = (hauteur * Math.abs(point.y - limites.y) / limites.height) + limites.y;
                 return new Point(nouveau_x, nouveau_y);
@@ -111,15 +110,7 @@ public class Surface implements Cloneable, Serializable {
         PathIterator iterator = aire.getPathIterator(null);
         double[] coords = new double[6];
         Polygon nouveau_polygone = new Polygon();
-        while (!iterator.isDone()) {
-            int type = iterator.currentSegment(coords);
-            int x = (int) coords[0];
-            int y = (int) coords[1];
-            if(type != PathIterator.SEG_CLOSE) {
-                nouveau_polygone.addPoint(x, y);
-            }
-            iterator.next();
-        }
+        calculIntersections(iterator, nouveau_polygone, coords);
         polygone = nouveau_polygone;
         setListeTuiles((genererListeDeTuiles()));
         trous.addAll(s.trous);
@@ -138,10 +129,7 @@ public class Surface implements Cloneable, Serializable {
     public ArrayList<Tuile> genererListeDeTuiles(){
         // "Installation droite", "Installation " "imitation parquet", "Installation en décallé", "Installation en chevron", "Installation en L"
         String motif = this.revetement.getMotifTuiles();
-        // String motif = "Installation en décallé"; // TODO enlever
         int tailleCoulis = this.getTailleDuCoulis();
-        Color couleurCoulis = getCouleurCoulis();
-        String couleurCoulisText = getCouleurCoulisText();
 
         int coordXduBound = polygone.getBounds().x; int coordYduBond = polygone.getBounds().y;
         int boundsWidth = polygone.getBounds().width; int boundsHeight = polygone.getBounds().height;
@@ -156,8 +144,6 @@ public class Surface implements Cloneable, Serializable {
         int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis)); int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis));
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
 
-
-
         if(estUnTrou){return newListeTuiles;}
 
         int j = 0;
@@ -170,7 +156,7 @@ public class Surface implements Cloneable, Serializable {
             }
             while (i <= nbTuilesX ) {
 
-                newListeTuiles.add(new Tuile(genererSommetsTuile(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
                 positionEnX += tuileWidth + tailleCoulis;
                 i++;
             }
@@ -178,23 +164,11 @@ public class Surface implements Cloneable, Serializable {
             positionEnX = coordXduBound;
             j++;
         } ;
-        return newIntersectionTuiles(newListeTuiles);
-        // return  newListeTuiles;
+        return IntersectionTuiles(newListeTuiles);
     }
 
-    private ArrayList<Point> genererSommetsTuile(int x, int y, int width, int height){
-        ArrayList<Point> listeSommets = new ArrayList<Point>();
-        listeSommets.add(new Point(x,y));
-        listeSommets.add(new Point(x, y + height));
-        listeSommets.add(new Point(x + width, y + height));
-        listeSommets.add(new Point(x + width, y));
-        return listeSommets;
-    }
-
-    private ArrayList<Tuile> newIntersectionTuiles(ArrayList<Tuile> ListeDetuiles){ // TODO refactor le nom
+    private ArrayList<Tuile> IntersectionTuiles(ArrayList<Tuile> ListeDetuiles){ // TODO refactor le nom
         // sera utilisé pour le calcul des intersections à partir de ligne pour forme irreguliere
-        // pauvre Cathou
-        System.out.println("Liste avant inter " + listeTuiles.size());
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
         Area areaSurface = new Area(polygone);
         for (Tuile tuile : ListeDetuiles){
@@ -203,27 +177,26 @@ public class Surface implements Cloneable, Serializable {
             PathIterator iterTuile = areaTuile.getPathIterator(null); //TODO isoler dans une méthode tout ça
             Polygon newPolyTuile = new Polygon();
             double[] coordsTuile = new double[6];
-            while (!iterTuile.isDone()){
-                int type = iterTuile.currentSegment(coordsTuile);
-                int x = (int) coordsTuile[0];
-                int y = (int) coordsTuile[1];
-                if(type != PathIterator.SEG_CLOSE) {
-                    newPolyTuile.addPoint(x, y);
-                }
-                iterTuile.next();
-            }
+            calculIntersections(iterTuile, newPolyTuile, coordsTuile);
             Tuile newTuile = new Tuile(newPolyTuile);
             if(newTuile.getHeight() != 0 && newTuile.getLength() != 0){
                 newListeTuiles.add(newTuile);
             }
-
-        }
-        System.out.println("liste de tuiles apres inter " + newListeTuiles.size());
-        for(Tuile tuile : newListeTuiles){
-            System.out.println("Longueur = " + tuile.getLength());
-            System.out.println("Hauteur = " + tuile.getHeight());
         }
         return newListeTuiles;
+    }
+
+    // TODO à placer dans outils ?
+    private void calculIntersections(PathIterator iterTuile, Polygon newPolyTuile, double[] coordsTuile) {
+        while (!iterTuile.isDone()){
+            int type = iterTuile.currentSegment(coordsTuile);
+            int x = (int) coordsTuile[0];
+            int y = (int) coordsTuile[1];
+            if(type != PathIterator.SEG_CLOSE) {
+                newPolyTuile.addPoint(x, y);
+            }
+            iterTuile.next();
+        }
     }
 
     public Tuile getTuileAtPoint(Point point){
