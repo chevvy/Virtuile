@@ -127,7 +127,6 @@ public class MainWindow extends JFrame implements Observer {
 
         panelVuePlan = new Canvas(controller);
         panelVueInfo = new PanneauConfiguration(controller, this);
-        panelVueInfo = new PanneauConfiguration(controller);
         panneauActions = new PanneauActions(controller);
 
         JScrollPane scrollPane = new JScrollPane(panelVueInfo);
