@@ -16,7 +16,7 @@ public class Revetement implements Serializable {
     public Revetement(String nom) {
         this.nomDuRevetement = nom;
         this.typeMateriauTuile = "Céramique";
-        this.couleurTuile = Color.RED;
+        this.couleurTuile = Color.BLUE;
         this.motifTuiles = "Installation droite";
         this.hauteurTuile = 20;
         this.longueurTuile = 50;
@@ -29,7 +29,7 @@ public class Revetement implements Serializable {
         this.hauteurTuile = 20;
         this.nomDuRevetement = "Revêtement par défaut";
         this.typeMateriauTuile = "Céramique";
-        this.couleurTuile = Color.RED;
+        this.couleurTuile = Color.BLUE;
         this.motifTuiles = "Installation droite";
         this.nbTuilesBoite = 20;
         // revetement avec motif / taille par defaut (TBD)

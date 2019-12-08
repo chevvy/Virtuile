@@ -23,7 +23,6 @@ public class Plan implements Serializable {
     private int grid_size = 50;
     private int grab = 0;
     private int base = 0;
-    private ArrayList<String> listeCouleurs = new ArrayList<>( Arrays.asList("Rouge", "Noir", "Gris", "Jaune", "Bleu"));
     private ArrayList<String> listeTypeMateriau = new ArrayList<>( Arrays.asList("Béton", "Terre cuite", "Ardoise", "Céramique",
             "Bois", "Aucun"));
     private ArrayList<String> listeMotifs= new ArrayList<>( Arrays.asList("Installation droite", "Installation " +
@@ -373,15 +372,6 @@ public class Plan implements Serializable {
     public ArrayList<Surface> getListeSurfaces() {
         return listeSurfaces;
     }
-
-
-    // Liste des couleurs de tuiles
-    public void ajouterCouleur(String nom){
-        if (!(listeCouleurs.contains(nom)) && !nom.equals(""))
-            this.listeCouleurs.add(nom);
-    }
-
-    public ArrayList<String> getListeCouleur(){return listeCouleurs;}
 
     //Liste des types de matériaux
     public void ajouterTypeMateriau(String nom){

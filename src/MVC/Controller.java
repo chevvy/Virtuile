@@ -253,7 +253,7 @@ public class Controller {
             g.fillPolygon(surfaceSelectionnee.polygone);
             if(!surfaceSelectionnee.estUnTrou){
                 for (Tuile tuile : surfaceSelectionnee.getListeTuiles()){
-                    g.setColor(modeIspection && tuile.estTropPetite(dimensionInspection)?Color.CYAN:surfaceSelectionnee.getRevetement().getCouleurTuile());
+                    g.setColor(modeIspection && tuile.estTropPetite(dimensionInspection)?Color.RED:surfaceSelectionnee.getRevetement().getCouleurTuile());
                     g.fillPolygon(tuile.getPolygone());
                 }
             }
