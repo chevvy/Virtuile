@@ -8,21 +8,58 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Historique {
+    private static List<Object> historique;
+    private static int index;
 
-    private static Historique single_instance = null;
-
-    private Historique()
+    public static void setSingle_instance()
     {
-        single_instance = new Historique();
+        if (historique == null) {
+            historique = new ArrayList();
+            historique.add(new Plan());
+            index = 0;
+        }
     }
 
-    public static Historique getInstance()
-    {
-        if (single_instance == null)
-            single_instance = new Historique();
-        return single_instance;
+    public static void addState(Plan plan){
+        setSingle_instance();
+        if (index != historique.size()-1){
+            List<Object> temp = new ArrayList();
+            temp.add(new Plan());
+            temp.addAll(historique.subList(0, index));
+            historique = temp;
+        }
+        try{
+            Object copy = ObjectCloner.deepCopy(plan);
+            historique.add(copy);
+            index = historique.size()-1;
+        } catch (Exception e){
+
+        }
+    }
+
+    public static Plan goForward(){
+        setSingle_instance();
+        index++;
+        return (Plan)historique.get(index);
+    }
+
+    public static Plan goBackward(){
+        setSingle_instance();
+        index--;
+        return (Plan)historique.get(index);
+    }
+
+    public static boolean canGoForward(){
+        setSingle_instance();
+        return index != historique.size()-1;
+    }
+
+    public static boolean canGobackward(){
+        setSingle_instance();
+        return index != 0;
     }
 
     public static SaveBundle loadProject(String path) {
@@ -48,4 +85,7 @@ public class Historique {
         } catch (java.io.IOException e) {
         }
     }
+
+
+
 }

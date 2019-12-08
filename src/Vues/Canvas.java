@@ -85,7 +85,7 @@ public class Canvas extends JPanel implements Observer{
     }
 
     private void mouseMovedEvent(MouseEvent e){
-        mouse = relativeToAbsolute(e.getPoint());
+        mouse = e.getPoint();
         controller.bouger(relativeToAbsolute(mouse));
     }
 
@@ -180,7 +180,7 @@ public class Canvas extends JPanel implements Observer{
         g.setColor(Color.DARK_GRAY);
         g.drawLine(0, -absTranslate.y, 0, sizeY - absTranslate.y);
         g.drawLine(-absTranslate.x, 0, sizeX - absTranslate.x, 0);
-        this.controller.paintCanevas(g, mouse);
+        this.controller.paintCanevas(g, relativeToAbsolute(mouse));
         g.setTransform(oldTransform);
         g.setColor(Color.black);
         g.drawString(controller.getStatusString(), 10, 20);
