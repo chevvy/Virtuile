@@ -30,7 +30,7 @@ public class Surface implements Cloneable, Serializable {
         this.estUnTrou = trou;
         this.trous = new ArrayList<>();
         this.revetement = new Revetement();
-        setListeTuiles(genererListeDeTuiles());
+        MajListeTuiles();
     }
 
     public Surface clone(){
@@ -49,7 +49,7 @@ public class Surface implements Cloneable, Serializable {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
-        setListeTuiles(genererListeDeTuiles());
+        MajListeTuiles();
     }
 
     //méthode permettant de déplacer une surface selon le vecteur de déplacement reçu
@@ -57,7 +57,7 @@ public class Surface implements Cloneable, Serializable {
         int[] nouveaux_x = Arrays.stream(polygone.xpoints).map(x -> x + deplacement_x).toArray();
         int[] nouveaux_y = Arrays.stream(polygone.ypoints).map(x -> x + deplacement_y).toArray();
         polygone = new Polygon(nouveaux_x, nouveaux_y, polygone.npoints);
-        setListeTuiles(genererListeDeTuiles());
+        MajListeTuiles();
         trous.forEach(trou -> trou.deplacerSurface(deplacement_x, deplacement_y));
     }
 
@@ -167,14 +167,13 @@ public class Surface implements Cloneable, Serializable {
         return IntersectionTuiles(newListeTuiles);
     }
 
-    private ArrayList<Tuile> IntersectionTuiles(ArrayList<Tuile> ListeDetuiles){ // TODO refactor le nom
-        // sera utilisé pour le calcul des intersections à partir de ligne pour forme irreguliere
+    private ArrayList<Tuile> IntersectionTuiles(ArrayList<Tuile> ListeDetuiles){
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
         Area areaSurface = new Area(polygone);
         for (Tuile tuile : ListeDetuiles){
             Area areaTuile = new Area(tuile.getPolygone());
             areaTuile.intersect(areaSurface);
-            PathIterator iterTuile = areaTuile.getPathIterator(null); //TODO isoler dans une méthode tout ça
+            PathIterator iterTuile = areaTuile.getPathIterator(null);
             Polygon newPolyTuile = new Polygon();
             double[] coordsTuile = new double[6];
             calculIntersections(iterTuile, newPolyTuile, coordsTuile);
@@ -197,6 +196,12 @@ public class Surface implements Cloneable, Serializable {
             }
             iterTuile.next();
         }
+    }
+
+    private void MajListeTuiles(){
+        // ensemble des méthodes utilisées pour la génération et l'ajout de tuiles
+        // TODO si pas plus de code que la ligne finalement, enlever !
+        setListeTuiles(genererListeDeTuiles());
     }
 
     public Tuile getTuileAtPoint(Point point){
@@ -231,7 +236,7 @@ public class Surface implements Cloneable, Serializable {
 
     public void setTailleDuCoulis(int tailleDuCoulis) {
         this.tailleDuCoulis = tailleDuCoulis;
-        setListeTuiles(genererListeDeTuiles());
+        MajListeTuiles();
     }
 
     public Color getCouleurCoulis() {
