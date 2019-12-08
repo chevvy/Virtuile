@@ -7,7 +7,6 @@ import Vues.Alignement.FrameAlignement;
 import Vues.Espacement.FrameEspacement;
 import Vues.Materiaux.FrameMateriau;
 import Vues.Revetements.FrameRevetements;
-import Vues.Revetements.PanneauActions;
 
 import javax.swing.*;
 import java.awt.*;

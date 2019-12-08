@@ -48,6 +48,7 @@ public class Controller {
     public void supprimerSurface(){
         plan.supprimerSurface();
         notifyObservers();
+        Historique.addState(this.plan);
     }
 
     public void setTrou(boolean trou) {
@@ -137,10 +138,12 @@ public class Controller {
                 break;
             case CREER_FORME_LIBRE:
                 etat = plan.ajouterPointSurfaceLibre(p, trou);
+                Historique.addState(this.plan);
                 break;
             case FUSIONNER:
                 plan.fusionner(p);
                 etat = Etat.LECTURE;
+                Historique.addState(this.plan);
                 break;
             case SELECTIONNER_ALIGNER:
                 etat = plan.selectionnerAligner(p);
@@ -179,7 +182,10 @@ public class Controller {
 
     public void relacher(){
         switch (etat){
-            case CREER_FORME_LIBRE:
+            case ETIRER_SURFACE:
+            case DEPLACER_SURFACE:
+                etat = Etat.LECTURE;
+                Historique.addState(this.plan);
                 break;
             default:
                 etat = Etat.LECTURE;
@@ -382,6 +388,16 @@ public class Controller {
         SaveBundle bundle = Historique.loadProject(path);
         this.plan = bundle.plan;
         this.gestionnaireRevetements = bundle.gestionnaireRevetements;
+        notifyObservers();
+    }
+
+    public void goForward(){
+        this.plan = Historique.goForward();
+        notifyObservers();
+    }
+
+    public void goBackward(){
+        this.plan = Historique.goBackward();
         notifyObservers();
     }
 }

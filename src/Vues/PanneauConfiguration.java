@@ -239,7 +239,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
 
         //Epaisseur coulis
         JLabel epaisseurCoulisLabel = new JLabel("Épaisseur du coulis :");
-        epaisseurCoulisLabel.setBounds(15,590,150,30);
+        epaisseurCoulisLabel.setBounds(15,410,150,30);
         this.add(epaisseurCoulisLabel);
 
         epaisseurCoulisText = new JTextField(20);
@@ -304,7 +304,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
         this.add(labelInspectionTuiles);
 
         JSpinner inspectionTuilesMin = new JSpinner(new SpinnerNumberModel(1, 0, 1000, 1));
-        inspectionTuilesMin.setBounds(150,585, 70,25);
+        inspectionTuilesMin.setBounds(150,575, 70,25);
 
         this.add(inspectionTuilesMin);
         this.add(InfoSurface);

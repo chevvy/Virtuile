@@ -191,7 +191,6 @@ public class Surface implements Cloneable, Serializable {
 
     private ArrayList<Tuile> newIntersectionTuiles(ArrayList<Tuile> ListeDetuiles){ // TODO refactor le nom
         // sera utilisé pour le calcul des intersections à partir de ligne pour forme irreguliere
-        System.out.println("Liste avant inter " + listeTuiles.size());
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
         Area areaSurface = new Area(polygone);
         for (Tuile tuile : ListeDetuiles){
@@ -214,11 +213,6 @@ public class Surface implements Cloneable, Serializable {
                 newListeTuiles.add(newTuile);
             }
 
-        }
-        System.out.println("liste de tuiles apres inter " + newListeTuiles.size());
-        for(Tuile tuile : newListeTuiles){
-            System.out.println("Longueur = " + tuile.getLength());
-            System.out.println("Hauteur = " + tuile.getHeight());
         }
         return newListeTuiles;
     }
