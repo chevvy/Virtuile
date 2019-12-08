@@ -138,7 +138,6 @@ public class Controller {
                 break;
             case CREER_FORME_LIBRE:
                 etat = plan.ajouterPointSurfaceLibre(p, trou);
-                Historique.addState(this.plan);
                 break;
             case FUSIONNER:
                 plan.fusionner(p);
@@ -182,6 +181,8 @@ public class Controller {
 
     public void relacher(){
         switch (etat){
+            case CREER_FORME_LIBRE:
+                break;
             case ETIRER_SURFACE:
             case DEPLACER_SURFACE:
                 etat = Etat.LECTURE;
