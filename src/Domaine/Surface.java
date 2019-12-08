@@ -147,14 +147,10 @@ public class Surface implements Cloneable, Serializable {
 
         int coordXduBound = polygone.getBounds().x; int coordYduBond = polygone.getBounds().y;
         int boundsWidth = polygone.getBounds().width; int boundsHeight = polygone.getBounds().height;
-        int tuileWidth = revetement.getLongueurTuile() ; int tuileHeight = revetement.getHauteurTuile() ;
 
-        if (motif.equals("Installation Droite")){
-            // donc ici, pour faire l'installation droite, on va juste inverser hauteur/longueur des tuiles
-            int ancienneWidth = tuileWidth;
-            tuileWidth = tuileHeight;
-            tuileHeight = ancienneWidth;
-        }
+        // Inversion quand le motif est installation droite, je sais pas pourquoi on fait ça mais vincent avait mis ça
+        int tuileWidth = motif.equals("Installation Droite")?revetement.getHauteurTuile():revetement.getLongueurTuile();
+        int tuileHeight = motif.equals("Installation Droite")?revetement.getLongueurTuile():revetement.getHauteurTuile();
 
         // le calcul du nb de tuiles va peut-êre changé avec ce que je fais en ce moment
         int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis)); int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis));
