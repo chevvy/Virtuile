@@ -3,7 +3,6 @@ package Vues.Revetements;
 import Domaine.Revetement;
 import MVC.Controller;
 import MVC.Observer;
-import Vues.Materiaux.FrameCouleur;
 import Vues.Materiaux.FrameMateriau;
 
 import javax.swing.*;
@@ -16,9 +15,11 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
 
     private Controller controller;
     private FrameRevetements frame;
-    private JTextField nomRevetementField, hauteurTuileText, largeurTuileText, nbTuilesBoiteText;
+    private JTextField nomRevetementField, hauteurTuileText, largeurTuileText, nbTuilesBoiteText, couleurMateriauText,
+            nbBoiteText, nbTuilesText;
     public String nomRevetementSelectionnee;
-    private JComboBox typeMateriauxCombo, couleurMateriauCombo, motifRecouvrementCombo;
+    private JComboBox typeMateriauxCombo, motifRecouvrementCombo;
+    private JButton boutonAjouterCouleur;
 
     PanneauInformationsRevetement(Controller controller, FrameRevetements frame) {
         controller.addObserver(this);
@@ -68,25 +69,22 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
 
         //Couleur matériaux
         JLabel couleurMateriauLabel = new JLabel("Couleur du matériau :");
-        couleurMateriauLabel.setBounds(10,90,200,25);
+        couleurMateriauLabel.setBounds(10,90,150,25);
         this.add(couleurMateriauLabel);
 
-        ArrayList<String> listeCouleurs = controller.getCouleurs();
-        this.couleurMateriauCombo = new JComboBox<>(listeCouleurs.toArray());
-        couleurMateriauCombo.setSize(130, 25);
-        couleurMateriauCombo.setLocation(220, 90);
-        this.add(couleurMateriauCombo);
+        couleurMateriauText = new JTextField(20);
+        couleurMateriauText.setBounds(220 ,90,130,25);
+        this.add(couleurMateriauText);
 
-        JButton boutonAjouterCouleur = new JButton("Ajouter");
+        boutonAjouterCouleur = new JButton("Modifier");
         boutonAjouterCouleur.setSize(100, 25);
         boutonAjouterCouleur.setLocation(355, 90);
         this.add(boutonAjouterCouleur);
 
-        boutonAjouterCouleur.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                new FrameCouleur(controller).setVisible(true);
-                frame.dispose();
+        boutonAjouterCouleur.addActionListener(actionEvent -> {
+            Color couleurTuile = JColorChooser.showDialog(null, "Couleur du matériau", Color.RED);
+            if (couleurTuile != null){
+                couleurMateriauText.setBackground(couleurTuile);
             }
         });
 
@@ -145,36 +143,51 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
         tuilesParBoite.setBounds(330,270,100,25);
         this.add(tuilesParBoite);
 
+        //Nombre de tuiles
+        JLabel nbTuilesLabel = new JLabel("Nombre de tuiles :");
+        nbTuilesLabel.setBounds(10,310,200 ,25);
+        this.add(nbTuilesLabel);
 
-        JButton boutonModifier = new JButton("Consulter les propriétés du matériau");
-        boutonModifier.setSize(300, 30);
-        boutonModifier.setLocation(100, 320);
-        this.add(boutonModifier);
-        //boutonModifier.addActionListener(new ActionListener() {
-            //@Override
-            //public void actionPerformed(ActionEvent actionEvent) {
-                //frame.
+        this.nbTuilesText = new JTextField(20);
+        nbTuilesText.setBounds(220,310,100,25);
+        this.add(nbTuilesText);
 
-            //}
-        //});
+        JLabel tuilesLabel = new JLabel("Tuiles");
+        tuilesLabel.setBounds(330,310,100,25);
+        this.add(tuilesLabel);
+
+
+
+        //Nombre de boites necessaires
+        JLabel nbBoiteLabel = new JLabel("Nombre de boites nécessaires:");
+        nbBoiteLabel.setBounds(10,350,200 ,25);
+        this.add(nbBoiteLabel);
+
+        this.nbBoiteText = new JTextField(20);
+        nbBoiteText.setBounds(220,350,100,25);
+        nbBoiteText.setEditable(false);
+        this.add(nbBoiteText);
+
+        JLabel boitesLabel = new JLabel("Boîtes");
+        boitesLabel.setBounds(330,350,100,25);
+        this.add(boitesLabel);
 
 
         JButton boutonAjouter = new JButton("Ajouter un nouveau matériau");
         boutonAjouter.setSize(300, 30);
-        boutonAjouter.setLocation(100, 350);
+        boutonAjouter.setLocation(100, 390);
         this.add(boutonAjouter);
         boutonAjouter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String nomRevetement = nomRevetementField.getText();
                 String typeMateriauTuile = String.valueOf(typeMateriauxCombo.getSelectedItem());
-                String couleurTuileText = String.valueOf(couleurMateriauCombo.getSelectedItem());
-                Color couleurTuile = controller.getCouleur(couleurTuileText);
+                Color couleurTuile = couleurMateriauText.getBackground();
                 String motifTuile = String.valueOf(motifRecouvrementCombo.getSelectedItem());
                 int hauteurTuile = Integer.parseInt(hauteurTuileText.getText());
                 int longueurTuile = Integer.parseInt(largeurTuileText.getText());
                 int nbTuilesBoite = Integer.parseInt(nbTuilesBoiteText.getText());
-                controller.ajouterRevetement(nomRevetement, typeMateriauTuile, couleurTuile, couleurTuileText,
+                controller.ajouterRevetement(nomRevetement, typeMateriauTuile, couleurTuile,
                         motifTuile, hauteurTuile, longueurTuile, nbTuilesBoite);
                 frame.dispose();
                 new FrameRevetements(controller).setVisible(true);
@@ -202,13 +215,8 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
             }
             this.typeMateriauxCombo.setSelectedIndex(selectionComboMateriau);
 
-            String couleurMateriau = revetementSelectionnee.getCouleurTuileText();
-            int selectionComboCouleur = controller.gestionnaireRevetements.getPositionDansArray(controller.getCouleurs(), couleurMateriau);
-            if(controller.getCouleurs().size() != couleurMateriauCombo.getItemCount()){
-                this.couleurMateriauCombo = new JComboBox<>(controller.getCouleurs().toArray());
-                this.add(couleurMateriauCombo);
-            }
-            this.couleurMateriauCombo.setSelectedIndex(selectionComboCouleur);
+            Color couleurMateriau = revetementSelectionnee.getCouleurTuile();
+            this.couleurMateriauText.setBackground(couleurMateriau);
 
             String motifRecouvrement = revetementSelectionnee.getMotifTuiles();
             int selectionComboMotif = controller.gestionnaireRevetements.getPositionDansArray(controller.getMotifs(), motifRecouvrement);
@@ -217,6 +225,8 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
             this.hauteurTuileText.setText(String.valueOf(revetementSelectionnee.getHauteurTuile()));
             this.largeurTuileText.setText(String.valueOf(revetementSelectionnee.getLongueurTuile()));
             this.nbTuilesBoiteText.setText(String.valueOf(revetementSelectionnee.getNbTuilesBoite()));
+            this.nbBoiteText.setText(String.valueOf(controller.getNbBoites().get(nomRevetementSelectionnee)));
+            this.nbTuilesText.setText(String.valueOf(controller.getNbTuilesTotal().get(nomRevetementSelectionnee)));
 
 
         }

@@ -25,9 +25,9 @@ public class Plan implements Serializable {
     private int base = 0;
     private ArrayList<String> listeCouleurs = new ArrayList<>( Arrays.asList("Rouge", "Noir", "Gris", "Jaune", "Bleu"));
     private ArrayList<String> listeTypeMateriau = new ArrayList<>( Arrays.asList("Béton", "Terre cuite", "Ardoise", "Céramique",
-            "Bois", "Aucun Revêtement"));
+            "Bois", "Aucun"));
     private ArrayList<String> listeMotifs= new ArrayList<>( Arrays.asList("Installation droite", "Installation " +
-            "imitation parquet", "Installation en décallé", "Installation en chevron", "Installation en L"));
+            "imitation parquet", "Installation en décallé", "Installation en chevron", "Installation en L", "Aucun Motif"));
 
 
     public Plan(){
@@ -242,6 +242,22 @@ public class Plan implements Serializable {
         return Etat.LECTURE;
     }
 
+    public Etat selectionnerEspacer(Point position){
+        if(surfaceSelectionnee == null || surfaceSelectionnee.polygone.contains(position)){
+            return Etat.LECTURE;
+        }
+        for(Surface surface : listeSurfaces){
+            if(surface.polygone.contains(position)){
+                ancre = surface;
+                premierPoint = pointPrecedent = new Point(
+                        surfaceSelectionnee.polygone.getBounds().x,
+                        surfaceSelectionnee.polygone.getBounds().y);
+                return Etat.OUVRIR_FENETRE_ESPACER;
+            }
+        }
+        return Etat.LECTURE;
+    }
+
     public void fusionner(Point p){
         if(surfaceSelectionnee == null){
             return;
@@ -315,6 +331,22 @@ public class Plan implements Serializable {
         pointPrecedent = surfaceSelectionnee.polygone.getBounds().getLocation();
     }
 
+    public void espacer(int espaceHorizontal, int espaceVertical){
+        Rectangle boiteAncre = ancre.polygone.getBounds();
+        Rectangle boiteSelect = surfaceSelectionnee.polygone.getBounds();
+        if (espaceHorizontal == 0){
+            surfaceSelectionnee.deplacerSurface(boiteAncre.x - boiteSelect.width - pointPrecedent.x - espaceVertical,  0);
+        }
+        else if (espaceVertical == 0){
+            surfaceSelectionnee.deplacerSurface(0,
+                    boiteAncre.y - boiteSelect.height - pointPrecedent.y - espaceHorizontal);
+        }
+        else{
+            surfaceSelectionnee.deplacerSurface(boiteAncre.x - boiteSelect.width - pointPrecedent.x - espaceVertical,
+                    boiteAncre.y - boiteSelect.height - pointPrecedent.y - espaceHorizontal);
+        }
+    }
+
     public void annulerAligner(){
         deplacerSurface(premierPoint);
     }
@@ -376,12 +408,11 @@ public class Plan implements Serializable {
         Map<String, String> map = new HashMap<String, String>();
         map.put("Hauteur surface", Integer.toString(surfaceSelectionnee.polygone.getBounds().height));
         map.put("Longueur surface", Integer.toString(surfaceSelectionnee.polygone.getBounds().width));
-        map.put("Couleur coulis", surface.getCouleurCoulisText());
+        map.put("Couleur coulis", String.valueOf(surface.getCouleurCoulis().getRGB()));
         map.put("Épaisseur coulis", Integer.toString(surface.getTailleDuCoulis()));
         map.put("Est un trou", Boolean.toString(surface.estUnTrou));
         return map;
     }
-
 }
 
 
