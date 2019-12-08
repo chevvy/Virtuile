@@ -15,6 +15,7 @@ import static Domaine.Outils.genereSommetsPolygon;
 public class Surface implements Cloneable, Serializable {
 
     public Polygon polygone;
+    private Polygon surfaceTuilee;
     public boolean estUnTrou;
     public ArrayList<Surface> trous;
     private Revetement revetement;
@@ -45,7 +46,14 @@ public class Surface implements Cloneable, Serializable {
         return nouvelleSurface;
     }
 
-    public void changerPoints(List<Point> listePoints){
+    public void changerPointsSurface(List<Point> listePoints){
+        int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
+        int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
+        polygone = new Polygon(coords_x, coords_y, listePoints.size());
+        MajListeTuiles();
+    }
+
+    public void changerPointsSurfaceTuile(List<Point> listePoints){
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
@@ -87,11 +95,11 @@ public class Surface implements Cloneable, Serializable {
         Rectangle limites = polygone.getBounds();
         if(hauteur != 0 && largeur != 0){
             points = generePoints(hauteur, largeur, points, limites, limites.x, limites.y);
-            changerPoints(points);
+            changerPointsSurface(points);
             for(Surface trou : trous){
                 Rectangle limitesTuile = trou.polygone.getBounds();
                 points = generePoints(hauteur,largeur, trou.getListePoints(), limitesTuile, limitesTuile.x, limitesTuile.y);
-                trou.changerPoints(points);
+                trou.changerPointsSurface(points);
             }
         }
     }

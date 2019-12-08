@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-import Services.Historique;
 
 public class Plan implements Serializable {
 
@@ -211,14 +210,14 @@ public class Plan implements Serializable {
         Rectangle limites = surfaceOriginale.polygone.getBounds();
         if(x != 0 && y!= 0){
             points = Surface.generePoints(y, x, points, limites, premierPoint.x, premierPoint.y);
-            surfaceSelectionnee.changerPoints(points);
+            surfaceSelectionnee.changerPointsSurface(points);
             for(int trou = 0; trou < surfaceOriginale.trous.size(); trou++){
                 points = surfaceOriginale.trous.get(trou).getListePoints().stream().map(point ->{
                     int nouveau_x = (x * Math.abs(point.x - limites.x) / limites.width) + premierPoint.x;
                     int nouveau_y = (y * Math.abs(point.y - limites.y) / limites.height) + premierPoint.y;
                     return new Point(nouveau_x, nouveau_y);
                 }).collect(Collectors.toCollection(ArrayList::new));
-                surfaceSelectionnee.trous.get(trou).changerPoints(points);
+                surfaceSelectionnee.trous.get(trou).changerPointsSurface(points);
             }
         }
         //Surface nouvelleSurface = new Surface(points, surfaceOriginale.estUnTrou, surfaceOriginale.getRevetement());
