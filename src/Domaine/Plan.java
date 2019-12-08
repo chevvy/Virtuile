@@ -337,19 +337,10 @@ public class Plan implements Serializable {
     }
 
     public void espacer(int espaceHorizontal, int espaceVertical){
-        Rectangle boiteAncre = ancre.polygone.getBounds();
-        Rectangle boiteSelect = surfaceSelectionnee.polygone.getBounds();
-        if (espaceHorizontal == 0){
-            surfaceSelectionnee.deplacerSurface(boiteAncre.x - boiteSelect.width - pointPrecedent.x - espaceVertical,  0);
-        }
-        else if (espaceVertical == 0){
-            surfaceSelectionnee.deplacerSurface(0,
-                    boiteAncre.y - boiteSelect.height - pointPrecedent.y - espaceHorizontal);
-        }
-        else{
-            surfaceSelectionnee.deplacerSurface(boiteAncre.x - boiteSelect.width - pointPrecedent.x - espaceVertical,
-                    boiteAncre.y - boiteSelect.height - pointPrecedent.y - espaceHorizontal);
-        }
+        Point pointAncre = ancre.polygone.getBounds().getLocation();
+        Point pointSelection = surfaceSelectionnee.polygone.getBounds().getLocation();
+        surfaceSelectionnee.deplacerSurface(pointAncre.x - pointSelection.x + espaceHorizontal,
+                    pointAncre.y - pointSelection.y - espaceVertical);
     }
 
     public void annulerAligner(){

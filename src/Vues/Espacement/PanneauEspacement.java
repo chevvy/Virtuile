@@ -19,21 +19,21 @@ public class PanneauEspacement extends JPanel {
     }
     private void SetUpUi() {
 
-        JLabel espacementHorizontal = new JLabel("Ajoutez une distance verticale");
+        JLabel espacementHorizontal = new JLabel("Ajoutez une distance horizontale");
         espacementHorizontal.setSize(80, 30);
         espacementHorizontal.setLocation(20, 20);
         this.add(espacementHorizontal);
 
-        JSpinner espacementHorizontalSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
+        JSpinner espacementHorizontalSpinner = new JSpinner(new SpinnerNumberModel(0, -1000, 1000, 1));
         espacementHorizontalSpinner.setBounds(150,20, 70,25);
         this.add(espacementHorizontalSpinner);
 
-        JLabel espacementVertical = new JLabel("Ajoutez une distance horizontale");
+        JLabel espacementVertical = new JLabel("Ajoutez une distance verticale");
         espacementVertical.setSize(80, 30);
         espacementVertical.setLocation(20, 50);
         this.add(espacementVertical);
 
-        JSpinner espacementVerticalSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
+        JSpinner espacementVerticalSpinner = new JSpinner(new SpinnerNumberModel(0, -1000, 1000, 1));
         espacementVerticalSpinner.setBounds(150,50, 70,25);
         this.add(espacementVerticalSpinner);
 
@@ -44,8 +44,8 @@ public class PanneauEspacement extends JPanel {
         boutonOk.setLocation(20, 80);
         this.add(boutonOk);
         boutonOk.addActionListener(e -> {
-            controller.espacer((Integer) espacementHorizontalSpinner.getValue(),
-                    (Integer) espacementVerticalSpinner.getValue());
+            controller.espacer((int) espacementHorizontalSpinner.getValue(),
+                    (int) espacementVerticalSpinner.getValue());
             controller.relacher();
             frame.dispose();
         });
