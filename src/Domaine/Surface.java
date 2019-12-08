@@ -28,6 +28,7 @@ public class Surface implements Cloneable, Serializable {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
+        surfaceTuilee = new Polygon(coords_x, coords_y, listePoints.size());
         this.estUnTrou = trou;
         this.trous = new ArrayList<>();
         this.revetement = new Revetement();
@@ -56,7 +57,7 @@ public class Surface implements Cloneable, Serializable {
     public void changerPointsSurfaceTuile(List<Point> listePoints){
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
-        polygone = new Polygon(coords_x, coords_y, listePoints.size());
+        surfaceTuilee = new Polygon(coords_x, coords_y, listePoints.size());
         MajListeTuiles();
     }
 
@@ -105,11 +106,13 @@ public class Surface implements Cloneable, Serializable {
     }
 
     static ArrayList<Point> generePoints(int hauteur, int largeur, ArrayList<Point> points, Rectangle limites, int x, int y) {
-        points = points.stream().map(point ->{ // TODO faire une méthode général dans outils
-            int nouveau_x = (largeur * Math.abs(point.x - limites.x) / limites.width) + x;
-            int nouveau_y = (hauteur * Math.abs(point.y - limites.y) / limites.height) + y;
-            return new Point(nouveau_x, nouveau_y);
-        }).collect(Collectors.toCollection(ArrayList::new));
+        if(hauteur != 0 && largeur != 0){
+            points = points.stream().map(point ->{ // TODO déplacer méthode général dans outils
+                int nouveau_x = (largeur * Math.abs(point.x - limites.x) / limites.width) + x;
+                int nouveau_y = (hauteur * Math.abs(point.y - limites.y) / limites.height) + y;
+                return new Point(nouveau_x, nouveau_y);
+            }).collect(Collectors.toCollection(ArrayList::new));
+        }
         return points;
     }
 
@@ -138,6 +141,8 @@ public class Surface implements Cloneable, Serializable {
 
     public ArrayList<Tuile> genererListeDeTuiles(){
         // "Installation droite", "Installation " "imitation parquet", "Installation en décallé", "Installation en chevron", "Installation en L"
+        // En ce moment, si le motif est autre que Installation droite ou installation décallé, il fait "installation"
+            // CAD : installation equivalent en x et y
         String motif = this.revetement.getMotifTuiles();
         int tailleCoulis = this.getTailleDuCoulis();
 
@@ -146,38 +151,39 @@ public class Surface implements Cloneable, Serializable {
         int tuileWidth = revetement.getLongueurTuile() ; int tuileHeight = revetement.getHauteurTuile() ;
 
         if (motif.equals("Installation Droite")){
+            // donc ici, pour faire l'installation droite, on va juste inverser hauteur/longueur des tuiles
             int ancienneWidth = tuileWidth;
             tuileWidth = tuileHeight;
             tuileHeight = ancienneWidth;
         }
 
+        // le calcul du nb de tuiles va peut-êre changé avec ce que je fais en ce moment
         int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis)); int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis));
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
 
-        if(estUnTrou){return newListeTuiles;}
+        if(estUnTrou){return newListeTuiles;} // donc, aucune tuile
 
         int j = 0;
         while (j <= nbTuilesY){
             int i = 0;
             int positionEnX = coordXduBound;
+            // si motifs décallé et que la rangée actuelle est pair
             if (motif.equals("Installation en décallé") && (j % 2 == 0) ){
                 int offset = tuileWidth / 2;
                 positionEnX = positionEnX -offset;
             }
             while (i <= nbTuilesX ) {
-
                 newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
                 positionEnX += tuileWidth + tailleCoulis;
                 i++;
             }
             coordYduBond += tuileHeight + tailleCoulis;
-            positionEnX = coordXduBound;
             j++;
         } ;
         return IntersectionTuiles(newListeTuiles);
     }
 
-    private ArrayList<Tuile> IntersectionTuiles(ArrayList<Tuile> ListeDetuiles){
+    private ArrayList<Tuile> IntersectionTuiles(ArrayList<Tuile> ListeDetuiles){ // TODO ne pas toucher plz
         // pour taille du coulis, on va générer un nouveau polygone plus petit qui va contenir seulement les tuiles
         // On peut utiliser la méthode "setDimension" pour changer la taille de la surface
         // On va extraire une méthode plus générale de set dimension pour ne pas changer la taille du polygone
@@ -215,9 +221,21 @@ public class Surface implements Cloneable, Serializable {
 
     private void MajListeTuiles(){
         // ensemble des méthodes utilisées pour la génération et l'ajout de tuiles
-        // TODO si pas plus de code que la ligne finalement, enlever !
+        // utilie genere pointsSurface tuile pour creer nouvelle surface plus petite
+        // changeLespoints de la surfaceTuile
+        // sera utilisé aussi pour changer la taille de la surface tuillée
         setListeTuiles(genererListeDeTuiles());
     }
+
+    private void genererSurfaceTuilee(){ // TODO ne pas toucher plz
+        int largeur = surfaceTuilee.getBounds().width - (2*tailleDuCoulis);
+        int hauteur = surfaceTuilee.getBounds().height - (2*tailleDuCoulis);
+        Rectangle limites = surfaceTuilee.getBounds();
+        ArrayList<Point> points = getListePoints();
+        points = generePoints(hauteur, largeur, points, limites, limites.x, limites.y);
+        changerPointsSurfaceTuile(points);
+    }
+
 
     public Tuile getTuileAtPoint(Point point){
         for (Tuile tuile : listeTuiles){
