@@ -4,7 +4,7 @@ import MVC.Controller;
 import MVC.Etat;
 import MVC.Observer;
 import Vues.Alignement.FrameAlignement;
-import Vues.Materiaux.FrameCouleur;
+import Vues.Espacement.FrameEspacement;
 import Vues.Materiaux.FrameMateriau;
 import Vues.Revetements.FrameRevetements;
 import Vues.Revetements.PanneauActions;
@@ -25,10 +25,12 @@ public class MainWindow extends JFrame implements Observer {
     private Canvas panelVuePlan;
     private PanneauActions panneauActions;
     private Controller controller;
+    public MainWindow mainWindow;
     private JFileChooser fileChooser;
     private MainWindow ref;
 
     public MainWindow(Controller controller){
+        mainWindow = this;
         ref = this;
         controller.addObserver(this);
         this.controller = controller;
@@ -112,13 +114,7 @@ public class MainWindow extends JFrame implements Observer {
                 new FrameMateriau(controller).setVisible(true);
             }
         });
-        JMenuItem menuCouleur = new JMenuItem("Ajouter une nouvelle couleur");
-        menuEdition.add(menuCouleur);
-        menuCouleur.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                new FrameCouleur(controller).setVisible(true);
-            }
-        });
+
         menuEdition.add(new JMenuItem("Ajouter une surface"));
         menuEdition.add(new JMenuItem("Modifier les sommets"));
         menuEdition.addSeparator();
@@ -130,6 +126,7 @@ public class MainWindow extends JFrame implements Observer {
         this.setJMenuBar(menuBar);
 
         panelVuePlan = new Canvas(controller);
+        panelVueInfo = new PanneauConfiguration(controller, this);
         panelVueInfo = new PanneauConfiguration(controller);
         panneauActions = new PanneauActions(controller);
 
@@ -151,6 +148,10 @@ public class MainWindow extends JFrame implements Observer {
         if( controller.getEtat() == Etat.OUVRIR_FENETRE_ALIGNER){
             new FrameAlignement(controller).setVisible(true);
             controller.setEtat(Etat.ALIGNER);
+        }
+        if(controller.getEtat() == Etat.OUVRIR_FENETRE_ESPACER){
+            new FrameEspacement(controller).setVisible(true);
+            controller.setEtat(Etat.ESPACER);
         }
     }
 }

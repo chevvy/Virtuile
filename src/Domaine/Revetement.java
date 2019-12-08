@@ -5,7 +5,6 @@ import java.io.Serializable;
 
 public class Revetement implements Serializable {
     private Color couleurTuile;
-    private String couleurTuileText;
     private String nomDuRevetement;
     private String typeMateriauTuile;
     private String motifTuiles;
@@ -14,14 +13,10 @@ public class Revetement implements Serializable {
     private int longueurTuile;
     private int hauteurTuile;
 
-    private int tailleDuCoulis = 2;
-    private Color couleurCoulis = Color.WHITE;
-
     public Revetement(String nom) {
         this.nomDuRevetement = nom;
         this.typeMateriauTuile = "Céramique";
         this.couleurTuile = Color.RED;
-        this.couleurTuileText = "Rouge";
         this.motifTuiles = "Installation droite";
         this.hauteurTuile = 20;
         this.longueurTuile = 50;
@@ -35,20 +30,18 @@ public class Revetement implements Serializable {
         this.nomDuRevetement = "Revêtement par défaut";
         this.typeMateriauTuile = "Céramique";
         this.couleurTuile = Color.RED;
-        this.couleurTuileText = "Rouge";
         this.motifTuiles = "Installation droite";
         this.nbTuilesBoite = 20;
         // revetement avec motif / taille par defaut (TBD)
     }
 
     //
-    public Revetement(String nomDuRevetement, String typeMateriauTuile, Color couleurTuile, String couleurTuileText, String motifTuile,
+    public Revetement(String nomDuRevetement, String typeMateriauTuile, Color couleurTuile, String motifTuile,
                       int hauteurTuile, int longueurTuile, int nbTuilesBoite) {
 
         this.nomDuRevetement = nomDuRevetement;
         this.typeMateriauTuile = typeMateriauTuile;
         this.couleurTuile = couleurTuile;
-        this.couleurTuileText = couleurTuileText;
         this.motifTuiles = motifTuile;
         this.hauteurTuile = hauteurTuile;
         this.longueurTuile = longueurTuile;
@@ -92,10 +85,6 @@ public class Revetement implements Serializable {
         return typeMateriauTuile;
     }
 
-    public String getCouleurTuileText() {
-        return couleurTuileText;
-    }
-
     public String getMotifTuiles() {
         return motifTuiles;
     }
@@ -103,6 +92,5 @@ public class Revetement implements Serializable {
     public int getNbTuilesBoite(){return nbTuilesBoite;}
 
     public void setNbTuilesBoite(int nbTuilesBoite){ this.nbTuilesBoite = nbTuilesBoite;}
-
 }
 

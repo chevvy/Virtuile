@@ -20,8 +20,7 @@ public class Surface implements Cloneable, Serializable {
     private Revetement revetement;
     private ArrayList<Tuile> listeTuiles = new ArrayList<>();
     private int tailleDuCoulis = 4;
-    private Color couleurCoulis = Color.WHITE;;
-    private String couleurCoulisText = "Blanc";
+    private Color couleurCoulis = Color.WHITE;
 
     public Surface(List<Point> listePoints, boolean trou) {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
@@ -141,7 +140,6 @@ public class Surface implements Cloneable, Serializable {
         // String motif = "Installation en décallé"; // TODO enlever
         int tailleCoulis = this.getTailleDuCoulis();
         Color couleurCoulis = getCouleurCoulis();
-        String couleurCoulisText = getCouleurCoulisText();
 
         int coordXduBound = polygone.getBounds().x; int coordYduBond = polygone.getBounds().y;
         int boundsWidth = polygone.getBounds().width; int boundsHeight = polygone.getBounds().height;
@@ -193,6 +191,7 @@ public class Surface implements Cloneable, Serializable {
 
     private ArrayList<Tuile> newIntersectionTuiles(ArrayList<Tuile> ListeDetuiles){ // TODO refactor le nom
         // sera utilisé pour le calcul des intersections à partir de ligne pour forme irreguliere
+        System.out.println("Liste avant inter " + listeTuiles.size());
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
         Area areaSurface = new Area(polygone);
         for (Tuile tuile : ListeDetuiles){
@@ -211,9 +210,16 @@ public class Surface implements Cloneable, Serializable {
                 iterTuile.next();
             }
             Tuile newTuile = new Tuile(newPolyTuile);
-            newListeTuiles.add(newTuile);
-        }
+            if(newTuile.getHeight() != 0 && newTuile.getLength() != 0){
+                newListeTuiles.add(newTuile);
+            }
 
+        }
+        System.out.println("liste de tuiles apres inter " + newListeTuiles.size());
+        for(Tuile tuile : newListeTuiles){
+            System.out.println("Longueur = " + tuile.getLength());
+            System.out.println("Hauteur = " + tuile.getHeight());
+        }
         return newListeTuiles;
     }
 
@@ -260,33 +266,8 @@ public class Surface implements Cloneable, Serializable {
         return estUnTrou;
     }
 
-    public void setCouleurCoulis(String couleurCoulis) {
-        switch (couleurCoulis){
-            case "Rouge":
-                this.couleurCoulis = Color.red;
-                this.couleurCoulisText = couleurCoulis;
-                break;
-            case "Blanc":
-                this.couleurCoulis = Color.white;
-                this.couleurCoulisText = couleurCoulis;
-                break;
-            case "Gris":
-                this.couleurCoulis = Color.lightGray;
-                this.couleurCoulisText = couleurCoulis;
-                break;
-            case "Bleu":
-                this.couleurCoulis = Color.blue;
-                this.couleurCoulisText = couleurCoulis;
-                break;
-            case "Vert":
-                this.couleurCoulis = Color.green;
-                this.couleurCoulisText = couleurCoulis;
-                break;
-        }
-    }
-
-    public String getCouleurCoulisText() {
-        return couleurCoulisText;
+    public void setCouleurCoulis(Color couleurCoulis) {
+        this.couleurCoulis = couleurCoulis;
     }
 
     public void flipHorizontal(){flipHorizontal(polygone.getBounds().width);}
