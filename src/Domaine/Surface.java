@@ -86,21 +86,23 @@ public class Surface implements Cloneable, Serializable {
         ArrayList<Point> points = getListePoints();
         Rectangle limites = polygone.getBounds();
         if(hauteur != 0 && largeur != 0){
-            points = points.stream().map(point ->{ // TODO faire une méthode général dans outils
-                int nouveau_x = (largeur * Math.abs(point.x - limites.x) / limites.width) + limites.x;
-                int nouveau_y = (hauteur * Math.abs(point.y - limites.y) / limites.height) + limites.y;
-                return new Point(nouveau_x, nouveau_y);
-            }).collect(Collectors.toCollection(ArrayList::new));
+            points = generePoints(hauteur, largeur, points, limites, limites.x, limites.y);
             changerPoints(points);
             for(Surface trou : trous){
-                points = trou.getListePoints().stream().map(point ->{
-                    int nouveau_x = (largeur * Math.abs(point.x - limites.x) / limites.width) + limites.x;
-                    int nouveau_y = (hauteur * Math.abs(point.y - limites.y) / limites.height) + limites.y;
-                    return new Point(nouveau_x, nouveau_y);
-                }).collect(Collectors.toCollection(ArrayList::new));
+                Rectangle limitesTuile = trou.polygone.getBounds();
+                points = generePoints(hauteur,largeur, trou.getListePoints(), limitesTuile, limitesTuile.x, limitesTuile.y);
                 trou.changerPoints(points);
             }
         }
+    }
+
+    static ArrayList<Point> generePoints(int hauteur, int largeur, ArrayList<Point> points, Rectangle limites, int x, int y) {
+        points = points.stream().map(point ->{ // TODO faire une méthode général dans outils
+            int nouveau_x = (largeur * Math.abs(point.x - limites.x) / limites.width) + x;
+            int nouveau_y = (hauteur * Math.abs(point.y - limites.y) / limites.height) + y;
+            return new Point(nouveau_x, nouveau_y);
+        }).collect(Collectors.toCollection(ArrayList::new));
+        return points;
     }
 
     public boolean fusionner(Surface s){
@@ -168,6 +170,11 @@ public class Surface implements Cloneable, Serializable {
     }
 
     private ArrayList<Tuile> IntersectionTuiles(ArrayList<Tuile> ListeDetuiles){
+        // pour taille du coulis, on va générer un nouveau polygone plus petit qui va contenir seulement les tuiles
+        // On peut utiliser la méthode "setDimension" pour changer la taille de la surface
+        // On va extraire une méthode plus générale de set dimension pour ne pas changer la taille du polygone
+        // On va alors calculer l'intersections avec le polygone SurfaceTuile plutôt que le polygone lui même
+        // pour les trous, on pourrait ajouter la taille du coulis à sa taille pour l'intersection, mais pas au trou lui-même
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
         Area areaSurface = new Area(polygone);
         for (Tuile tuile : ListeDetuiles){
