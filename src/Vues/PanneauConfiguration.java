@@ -6,6 +6,8 @@ import MVC.Etat;
 import Vues.Revetements.FrameRevetements;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -243,7 +245,12 @@ public class PanneauConfiguration extends JPanel implements Observer{
 
         epaisseurCoulisText = new JTextField(20);
         epaisseurCoulisText.setBounds(150,410,50,30);
-        epaisseurCoulisText.addActionListener(selectTailleCoulis);
+        epaisseurCoulisText.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                controller.setEpaisseurCoulis(Integer.parseInt(epaisseurCoulisText.getText()));
+            }
+        });
         this.add(epaisseurCoulisText);
 
         JLabel labelUniteMesureLCoulis = new JLabel(uniteMesure);
@@ -295,6 +302,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
         //Mode inspection tuiles
         JCheckBox inspectionTuiles = new JCheckBox("Mode inspection des tuiles");
         inspectionTuiles.setBounds(25,550, 250,25);
+        inspectionTuiles.addActionListener(actionEvent -> controller.setModeInspection(inspectionTuiles.isSelected()));
         this.add(inspectionTuiles);
 
         JLabel labelInspectionTuiles = new JLabel("Dimension minimale");
@@ -304,8 +312,14 @@ public class PanneauConfiguration extends JPanel implements Observer{
 
         JSpinner inspectionTuilesMin = new JSpinner(new SpinnerNumberModel(1, 0, 1000, 1));
         inspectionTuilesMin.setBounds(150,585, 70,25);
-
+        inspectionTuilesMin.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                controller.setDimensionInspection((int) inspectionTuilesMin.getValue());
+            }
+        });
         this.add(inspectionTuilesMin);
+
         this.add(InfoSurface);
         this.add(radioSurface);
         this.add(radioVide);

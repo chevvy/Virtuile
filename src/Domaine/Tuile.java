@@ -12,7 +12,6 @@ public class Tuile implements Serializable {
     private Polygon polygone;
     private int length;
     private int height;
-    private Color couleur;
     private int dimensionMin = 10;
     private Surface surface;
     private GestionnaireRevetements gestionnaireRevetement;
@@ -24,7 +23,6 @@ public class Tuile implements Serializable {
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
         length = (int) polygone.getBounds().getMaxX() - (int) polygone.getBounds().getMinX();
         height = (int) polygone.getBounds().getMaxY() - (int) polygone.getBounds().getMinY();
-        couleur = Color.white;
     }
 
     Tuile(Polygon polygon){
@@ -45,10 +43,6 @@ public class Tuile implements Serializable {
         return height;
     }
 
-    public boolean estTropPetite(){
-        return false;
-    }
-
     public void setPolygone(Polygon polygone) {
         this.polygone = polygone;
         length = (int)polygone.getBounds().getMaxX() - (int)polygone.getBounds().getMinX();
@@ -63,21 +57,7 @@ public class Tuile implements Serializable {
         this.height = height;
     }
 
-    public Color getCouleur(){
-        return couleur;
+    public boolean estTropPetite(int DimensionMin){
+        return this.getHeight() <= DimensionMin || this.getLength() <= DimensionMin;
     }
-
-    public void setCouleur(Color couleur){
-        this.couleur = couleur;
-    }
-
-    public Color getCouleurInspection() {
-        //if (length <= dimensionMin || height <= dimensionMin) {
-            return Color.RED;
-        //}
-        //else{
-        //return getCouleur();
-        //}
-    }
-
 }

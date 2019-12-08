@@ -25,6 +25,8 @@ public class Controller {
     public ArrayList<Point> patronForme;
     private Etat etat = Etat.LECTURE;
     private Point positionSourisActuelle = new Point();
+    private boolean modeIspection = false;
+    private int dimensionInspection = 1;
 
 
     public Controller(){
@@ -244,7 +246,7 @@ public class Controller {
             g.fillPolygon(surfaceSelectionnee.polygone);
             if(!surfaceSelectionnee.estUnTrou){
                 for (Tuile tuile : surfaceSelectionnee.getListeTuiles()){
-                    g.setColor(tuile.estTropPetite()?Color.CYAN:surfaceSelectionnee.getRevetement().getCouleurTuile());
+                    g.setColor(modeIspection && tuile.estTropPetite(dimensionInspection)?Color.CYAN:surfaceSelectionnee.getRevetement().getCouleurTuile());
                     g.fillPolygon(tuile.getPolygone());
                 }
             }
@@ -382,6 +384,16 @@ public class Controller {
         SaveBundle bundle = Historique.loadProject(path);
         this.plan = bundle.plan;
         this.gestionnaireRevetements = bundle.gestionnaireRevetements;
+        notifyObservers();
+    }
+
+    public void setModeInspection(boolean modeInspection){
+        this.modeIspection = modeInspection;
+        notifyObservers();
+    }
+
+    public void setDimensionInspection(int dimensionInspection){
+        this.dimensionInspection = dimensionInspection;
         notifyObservers();
     }
 }
