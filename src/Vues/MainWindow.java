@@ -7,6 +7,7 @@ import Vues.Alignement.FrameAlignement;
 import Vues.Materiaux.FrameCouleur;
 import Vues.Materiaux.FrameMateriau;
 import Vues.Revetements.FrameRevetements;
+import Vues.Revetements.PanneauActions;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,7 @@ public class MainWindow extends JFrame implements Observer {
     private JCheckBoxMenuItem menuCheckboxMagnetiser;
     private PanneauConfiguration panelVueInfo;
     private Canvas panelVuePlan;
+    private PanneauActions panneauActions;
     private Controller controller;
     private JFileChooser fileChooser;
     private MainWindow ref;
@@ -129,6 +131,7 @@ public class MainWindow extends JFrame implements Observer {
 
         panelVuePlan = new Canvas(controller);
         panelVueInfo = new PanneauConfiguration(controller);
+        panneauActions = new PanneauActions(controller);
 
         JScrollPane scrollPane = new JScrollPane(panelVueInfo);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -138,6 +141,7 @@ public class MainWindow extends JFrame implements Observer {
 
         this.add(panelVuePlan, BorderLayout.CENTER);
         this.add(scrollPane, BorderLayout.EAST);
+        this.add(panneauActions, BorderLayout.NORTH);
 
         this.setVisible(true);
     }
