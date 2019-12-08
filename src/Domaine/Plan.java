@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-import Services.Historique;
 
 public class Plan implements Serializable {
 
@@ -210,19 +209,15 @@ public class Plan implements Serializable {
         ArrayList<Point> points = surfaceOriginale.getListePoints();
         Rectangle limites = surfaceOriginale.polygone.getBounds();
         if(x != 0 && y!= 0){
-            points = points.stream().map(point ->{
-                int nouveau_x = (x * Math.abs(point.x - limites.x) / limites.width) + premierPoint.x;
-                int nouveau_y = (y * Math.abs(point.y - limites.y) / limites.height) + premierPoint.y;
-                return new Point(nouveau_x, nouveau_y);
-            }).collect(Collectors.toCollection(ArrayList::new));
-            surfaceSelectionnee.changerPoints(points);
+            points = Surface.generePoints(y, x, points, limites, premierPoint.x, premierPoint.y);
+            surfaceSelectionnee.changerPointsSurface(points);
             for(int trou = 0; trou < surfaceOriginale.trous.size(); trou++){
                 points = surfaceOriginale.trous.get(trou).getListePoints().stream().map(point ->{
                     int nouveau_x = (x * Math.abs(point.x - limites.x) / limites.width) + premierPoint.x;
                     int nouveau_y = (y * Math.abs(point.y - limites.y) / limites.height) + premierPoint.y;
                     return new Point(nouveau_x, nouveau_y);
                 }).collect(Collectors.toCollection(ArrayList::new));
-                surfaceSelectionnee.trous.get(trou).changerPoints(points);
+                surfaceSelectionnee.trous.get(trou).changerPointsSurface(points);
             }
         }
         //Surface nouvelleSurface = new Surface(points, surfaceOriginale.estUnTrou, surfaceOriginale.getRevetement());
@@ -337,19 +332,10 @@ public class Plan implements Serializable {
     }
 
     public void espacer(int espaceHorizontal, int espaceVertical){
-        Rectangle boiteAncre = ancre.polygone.getBounds();
-        Rectangle boiteSelect = surfaceSelectionnee.polygone.getBounds();
-        if (espaceHorizontal == 0){
-            surfaceSelectionnee.deplacerSurface(boiteAncre.x - boiteSelect.width - pointPrecedent.x - espaceVertical,  0);
-        }
-        else if (espaceVertical == 0){
-            surfaceSelectionnee.deplacerSurface(0,
-                    boiteAncre.y - boiteSelect.height - pointPrecedent.y - espaceHorizontal);
-        }
-        else{
-            surfaceSelectionnee.deplacerSurface(boiteAncre.x - boiteSelect.width - pointPrecedent.x - espaceVertical,
-                    boiteAncre.y - boiteSelect.height - pointPrecedent.y - espaceHorizontal);
-        }
+        Point pointAncre = ancre.polygone.getBounds().getLocation();
+        Point pointSelection = surfaceSelectionnee.polygone.getBounds().getLocation();
+        surfaceSelectionnee.deplacerSurface(pointAncre.x - pointSelection.x + espaceHorizontal,
+                    pointAncre.y - pointSelection.y - espaceVertical);
     }
 
     public void annulerAligner(){

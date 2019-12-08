@@ -12,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import MVC.Observer;
-import com.sun.tools.javac.Main;
 
 
 public class PanneauConfiguration extends JPanel implements Observer{

@@ -45,6 +45,10 @@ public class Tuile implements Serializable {
         return height;
     }
 
+    public boolean estTropPetite(){
+        return false;
+    }
+
     public void setPolygone(Polygon polygone) {
         this.polygone = polygone;
         length = (int)polygone.getBounds().getMaxX() - (int)polygone.getBounds().getMinX();

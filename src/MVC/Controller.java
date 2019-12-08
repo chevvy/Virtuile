@@ -237,8 +237,8 @@ public class Controller {
             g.setColor(surface.estUnTrou?Color.white:surface.getCouleurCoulis().darker());
             g.fillPolygon(surface.polygone);
             if(!surface.estUnTrou){
+                g.setColor(surface.getRevetement().getCouleurTuile().darker());
                 for (Tuile tuile : surface.getListeTuiles()){
-                    g.setColor(surface.getRevetement().getCouleurTuile().darker());
                     g.fillPolygon(tuile.getPolygone());
                 }
             }
@@ -249,8 +249,8 @@ public class Controller {
             g.setColor(surfaceSelectionnee.estUnTrou?Color.green:surfaceSelectionnee.getCouleurCoulis());
             g.fillPolygon(surfaceSelectionnee.polygone);
             if(!surfaceSelectionnee.estUnTrou){
-                g.setColor(surfaceSelectionnee.getRevetement().getCouleurTuile());
                 for (Tuile tuile : surfaceSelectionnee.getListeTuiles()){
+                    g.setColor(tuile.estTropPetite()?Color.CYAN:surfaceSelectionnee.getRevetement().getCouleurTuile());
                     g.fillPolygon(tuile.getPolygone());
                 }
             }
