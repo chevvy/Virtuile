@@ -26,6 +26,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
             hauteurTuileText, largeurTuileText, nbTuilesBoiteText, epaisseurCoulisText, hauteurTuileSelectText,
             largeurTuileSelectText, couleurCoulisText;
     private ButtonGroup groupeRadioSurface;
+    private JSpinner decallageSpinner;
     Surface surfaceSelectionnee;
 
     private Controller controller;
@@ -258,60 +259,78 @@ public class PanneauConfiguration extends JPanel implements Observer{
         labelUniteMesureLCoulis.setLocation(205, 410);
         this.add(labelUniteMesureLCoulis);
 
+        JLabel labelDecallage = new JLabel("Décallage : ");
+        labelDecallage.setSize(60, 30);
+        labelDecallage.setLocation(15, 440);
+        this.add(labelDecallage);
+
+        decallageSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
+        decallageSpinner.setBounds(150,440, 70,25);
+        decallageSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if((int)decallageSpinner.getValue()!=0){
+                    controller.setOffset((int) decallageSpinner.getValue());
+                }
+            }
+        });
+        this.add(decallageSpinner);
+
+
 
         JLabel line02 = new JLabel("_______________________________________");
-        line02.setBounds(15,430,300,20);
+        line02.setBounds(15,470,300,20);
         this.add(line02);
 
         JLabel infosTuiles = new JLabel("Informations sur la tuile");
-        infosTuiles.setBounds(15,460,300,20);
+        infosTuiles.setBounds(15,500,300,20);
         this.add(infosTuiles);
 
         // Hauteur des tuiles
         JLabel labelHauteurTuileSelect = new JLabel("Hauteur : ");
         labelHauteurTuileSelect.setSize(70, 30);
-        labelHauteurTuileSelect.setLocation(25, 490);
+        labelHauteurTuileSelect.setLocation(25, 530);
         this.add(labelHauteurTuileSelect);
 
         this.hauteurTuileSelectText = new JTextField(10);
-        hauteurTuileSelectText.setBounds(100,490,90,30);
+        hauteurTuileSelectText.setBounds(100,530,90,30);
         hauteurTuileSelectText.setEditable(false);
         this.add(hauteurTuileSelectText);
 
         JLabel labelUniteMesureHauteurTuileSelect = new JLabel(uniteMesure);
         labelUniteMesureHauteurTuileSelect.setSize(70, 30);
-        labelUniteMesureHauteurTuileSelect.setLocation(200, 490);
+        labelUniteMesureHauteurTuileSelect.setLocation(200, 530);
         this.add(labelUniteMesureHauteurTuileSelect);
 
         //Largeur des tuiles
         JLabel labelLargeurTuileSelect = new JLabel("Largeur : ");
         labelLargeurTuileSelect.setSize(70, 30);
-        labelLargeurTuileSelect.setLocation(25, 520);
+        labelLargeurTuileSelect.setLocation(25, 560);
         this.add(labelLargeurTuileSelect);
 
         this.largeurTuileSelectText = new JTextField(10);
-        largeurTuileSelectText.setBounds(100,520,90,30);
+        largeurTuileSelectText.setBounds(100,560,90,30);
         largeurTuileSelectText.setEditable(false);
         this.add(largeurTuileSelectText);
 
         JLabel labelUniteMesureLargeurTuileSelect = new JLabel(uniteMesure);
         labelUniteMesureLargeurTuileSelect.setSize(70, 30);
-        labelUniteMesureLargeurTuileSelect.setLocation(200, 520);
+        labelUniteMesureLargeurTuileSelect.setLocation(200, 560);
         this.add(labelUniteMesureLargeurTuileSelect);
 
         //Mode inspection tuiles
         JCheckBox inspectionTuiles = new JCheckBox("Mode inspection des tuiles");
-        inspectionTuiles.setBounds(25,550, 250,25);
+        inspectionTuiles.setBounds(25,590, 250,25);
         inspectionTuiles.addActionListener(actionEvent -> controller.setModeInspection(inspectionTuiles.isSelected()));
         this.add(inspectionTuiles);
 
         JLabel labelInspectionTuiles = new JLabel("Dimension minimale");
         labelInspectionTuiles.setSize(150, 30);
-        labelInspectionTuiles.setLocation(15, 575);
+        labelInspectionTuiles.setLocation(15, 610);
         this.add(labelInspectionTuiles);
 
         JSpinner inspectionTuilesMin = new JSpinner(new SpinnerNumberModel(1, 0, 1000, 1));
-        inspectionTuilesMin.setBounds(150,575, 70,25);
+        inspectionTuilesMin.setBounds(150,610, 70,25);
         inspectionTuilesMin.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -386,6 +405,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
             epaisseurCoulisText.removeActionListener(selectTailleCoulis);
             epaisseurCoulisText.setText(controller.getInfosSurfaceSelect().get("Épaisseur coulis")+"");
             epaisseurCoulisText.addActionListener(selectTailleCoulis);
+            decallageSpinner.setValue(motifTuileText.getText().equals("Installation en décallé")?controller.getOffset():0);
             hauteurTuileSelectText.setText(Integer.toString(controller.getHauteurTuile()));
             largeurTuileSelectText.setText(Integer.toString(controller.getLargeurTuile()));
         }
@@ -403,6 +423,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
             nbTuilesBoiteText.setText("");
             couleurCoulisText.setBackground(Color.WHITE);
             epaisseurCoulisText.setText("");
+            decallageSpinner.setValue(0);
             hauteurTuileSelectText.setText("");
             largeurTuileSelectText.setText("");
         }

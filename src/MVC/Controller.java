@@ -413,5 +413,13 @@ public class Controller {
         this.plan = Historique.goBackward();
         notifyObservers();
     }
+
+    public void setOffset(int offset){
+        plan.surfaceSelectionnee.setOffset(offset);
+        notifyObservers();
+    }
+    public int getOffset(){
+        return plan.surfaceSelectionnee.getOffset();
+    }
 }
 

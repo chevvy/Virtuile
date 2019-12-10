@@ -22,6 +22,7 @@ public class Surface implements Cloneable, Serializable {
     private ArrayList<Tuile> listeTuiles = new ArrayList<>();
     private int tailleDuCoulis = 4;
     private Color couleurCoulis = Color.WHITE;
+    private int offset = 50;
 
     public Surface(List<Point> listePoints, boolean trou) {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
@@ -138,43 +139,64 @@ public class Surface implements Cloneable, Serializable {
     }
 
 
-    public ArrayList<Tuile> genererListeDeTuiles(){
-        // "Installation droite", "Installation " "imitation parquet", "Installation en décallé", "Installation en chevron", "Installation en L"
+    public ArrayList<Tuile> genererListeDeTuiles() {
+        // "Installation droite", "Installation " "imitation parquet", "Installation en décallé", "Installation en chevron",
+        // "Installation en L"
         // En ce moment, si le motif est autre que Installation droite ou installation décallé, il fait "installation"
-            // CAD : installation equivalent en x et y
+        // CAD : installation equivalent en x et y
         String motif = this.revetement.getMotifTuiles();
         int tailleCoulis = this.getTailleDuCoulis();
-
-        int coordXduBound = polygone.getBounds().x; int coordYduBond = polygone.getBounds().y;
-        int boundsWidth = polygone.getBounds().width; int boundsHeight = polygone.getBounds().height;
-
-        // Inversion quand le motif est installation droite, je sais pas pourquoi on fait ça mais vincent avait mis ça
-        int tuileWidth = motif.equals("Installation Droite")?revetement.getHauteurTuile():revetement.getLongueurTuile();
-        int tuileHeight = motif.equals("Installation Droite")?revetement.getLongueurTuile():revetement.getHauteurTuile();
-
-        // le calcul du nb de tuiles va peut-êre changé avec ce que je fais en ce moment
-        int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis)); int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis));
+        int coordXduBound = polygone.getBounds().x;
+        int coordYduBond = polygone.getBounds().y;
+        int boundsWidth = polygone.getBounds().width;
+        int boundsHeight = polygone.getBounds().height;
+        int tuileWidth = revetement.getLongueurTuile();
+        int tuileHeight = revetement.getHauteurTuile();
+        int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis));
+        int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis));
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
 
-        if(estUnTrou){return newListeTuiles;} // donc, aucune tuile
-
+        if (estUnTrou) {
+            return newListeTuiles;
+        } // donc, aucune tuile
         int j = 0;
-        while (j <= nbTuilesY){
-            int i = 0;
-            int positionEnX = coordXduBound;
-            // si motifs décallé et que la rangée actuelle est pair
-            if (motif.equals("Installation en décallé") && (j % 2 == 0) ){
-                int offset = tuileWidth / 2;
-                positionEnX = positionEnX -offset;
+        if (motif.equals("Installation en décallé") || motif.equals("Installation droite")) {
+            while (j <= nbTuilesY) {
+                int i = 0;
+                int positionEnX = coordXduBound;
+                // si motifs décallé et que la rangée actuelle est pair
+                if (motif.equals("Installation en décallé") && (j % 2 == 0)) {
+                    int decallage = tuileWidth / (100 / offset);
+                    positionEnX = positionEnX - decallage;
+                }
+                while (i <= nbTuilesX) {
+                    newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                    positionEnX += tuileWidth + tailleCoulis;
+                    i++;
+                }
+                if (positionEnX < coordXduBound + boundsWidth){
+                    newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                }
+                coordYduBond += tuileHeight + tailleCoulis;
+                j++;
             }
-            while (i <= nbTuilesX ) {
-                newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
-                positionEnX += tuileWidth + tailleCoulis;
-                i++;
+        }
+        if (motif.equals("Installation imitation parquet ")){
+            while (j <= nbTuilesY) {
+                int i = 0;
+                while (i <= nbTuilesX) {
+                    tuileWidth = ( i%2 == 0)?revetement.getHauteurTuile():revetement.getLongueurTuile();
+                    tuileHeight = ( i%2 == 0)?revetement.getLongueurTuile():revetement.getHauteurTuile();
+                    newListeTuiles.add(new Tuile(genereSommetsPolygon(coordXduBound, coordYduBond, tuileWidth, tuileHeight)));
+                    coordXduBound += tuileWidth + tailleCoulis;
+                    newListeTuiles.add(new Tuile(genereSommetsPolygon(coordXduBound, coordYduBond, tuileWidth, tuileHeight)));
+                    coordXduBound += tuileWidth + tailleCoulis;
+                    i++;
+                }
+                coordYduBond += tuileHeight + tailleCoulis;
+                j++;
             }
-            coordYduBond += tuileHeight + tailleCoulis;
-            j++;
-        } ;
+        }
         return IntersectionTuiles(newListeTuiles);
     }
 
@@ -299,6 +321,13 @@ public class Surface implements Cloneable, Serializable {
         }
         this.setListePoints(points);
         trous.forEach(trou -> trou.flipVertical(axe));
+    }
+    public void setOffset(int offset){
+        this.offset = offset;
+        MajListeTuiles();
+    }
+    public int getOffset(){
+        return this.offset;
     }
 }
 
