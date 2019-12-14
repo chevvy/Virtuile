@@ -406,6 +406,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
             epaisseurCoulisText.setText(controller.getInfosSurfaceSelect().get("Épaisseur coulis")+"");
             epaisseurCoulisText.addActionListener(selectTailleCoulis);
             decallageSpinner.setValue(motifTuileText.getText().equals("Installation en décallé")?controller.getOffset():0);
+            decallageSpinner.setEnabled(motifTuileText.getText().equals("Installation en décallé"));
             hauteurTuileSelectText.setText(Integer.toString(controller.getHauteurTuile()));
             largeurTuileSelectText.setText(Integer.toString(controller.getLargeurTuile()));
         }

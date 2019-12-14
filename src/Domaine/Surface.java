@@ -181,19 +181,22 @@ public class Surface implements Cloneable, Serializable {
                 j++;
             }
         }
-        if (motif.equals("Installation imitation parquet ")){
+        if (motif.equals("Installation imitation parquet")){
             while (j <= nbTuilesY) {
-                int i = 0;
+                int i = ( j%2 == 0)?0:-1;
+                int positionEnX = coordXduBound;
                 while (i <= nbTuilesX) {
                     tuileWidth = ( i%2 == 0)?revetement.getHauteurTuile():revetement.getLongueurTuile();
                     tuileHeight = ( i%2 == 0)?revetement.getLongueurTuile():revetement.getHauteurTuile();
-                    newListeTuiles.add(new Tuile(genereSommetsPolygon(coordXduBound, coordYduBond, tuileWidth, tuileHeight)));
-                    coordXduBound += tuileWidth + tailleCoulis;
-                    newListeTuiles.add(new Tuile(genereSommetsPolygon(coordXduBound, coordYduBond, tuileWidth, tuileHeight)));
-                    coordXduBound += tuileWidth + tailleCoulis;
+                    newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                    positionEnX = ( i%2 == 0)?positionEnX+ tuileWidth + tailleCoulis: positionEnX;
+                    coordYduBond = ( i%2 == 0)?coordYduBond: coordYduBond + tuileHeight +tailleCoulis;
+                    newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                    coordYduBond = ( i%2 == 0)?coordYduBond: coordYduBond - tuileHeight -tailleCoulis;
+                    positionEnX += tuileWidth + tailleCoulis;
                     i++;
                 }
-                coordYduBond += tuileHeight + tailleCoulis;
+                coordYduBond += tuileWidth + tailleCoulis;
                 j++;
             }
         }
