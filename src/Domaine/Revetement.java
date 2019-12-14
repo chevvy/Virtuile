@@ -12,16 +12,8 @@ public class Revetement implements Serializable {
     // taille des tuiles par défaut
     private int longueurTuile;
     private int hauteurTuile;
+    private boolean motifVertical;
 
-    public Revetement(String nom) {
-        this.nomDuRevetement = nom;
-        this.typeMateriauTuile = "Céramique";
-        this.couleurTuile = Color.BLUE;
-        this.motifTuiles = "Installation droite";
-        this.hauteurTuile = 20;
-        this.longueurTuile = 50;
-        this.nbTuilesBoite = 20;
-    }
 
     public Revetement() {
         // revetement avec motif / taille par defaut (TBD)
@@ -32,6 +24,7 @@ public class Revetement implements Serializable {
         this.couleurTuile = Color.BLUE;
         this.motifTuiles = "Installation droite";
         this.nbTuilesBoite = 20;
+        this.motifVertical = false;
         // revetement avec motif / taille par defaut (TBD)
     }
 
@@ -46,6 +39,7 @@ public class Revetement implements Serializable {
         this.hauteurTuile = hauteurTuile;
         this.longueurTuile = longueurTuile;
         this.nbTuilesBoite = nbTuilesBoite;
+        this.motifVertical = false;
     }
 
 
@@ -92,5 +86,13 @@ public class Revetement implements Serializable {
     public int getNbTuilesBoite(){return nbTuilesBoite;}
 
     public void setNbTuilesBoite(int nbTuilesBoite){ this.nbTuilesBoite = nbTuilesBoite;}
+
+    public boolean isMotifVertical() {
+        return motifVertical;
+    }
+
+    public void setMotifVertical(boolean motifVertical) {
+        this.motifVertical = motifVertical;
+    }
 }
 

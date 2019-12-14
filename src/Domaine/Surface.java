@@ -150,8 +150,10 @@ public class Surface implements Cloneable, Serializable {
         int coordYduBond = polygone.getBounds().y;
         int boundsWidth = polygone.getBounds().width;
         int boundsHeight = polygone.getBounds().height;
-        int tuileWidth = revetement.getLongueurTuile();
-        int tuileHeight = revetement.getHauteurTuile();
+        // int tuileWidth = revetement.getLongueurTuile();
+        // int tuileHeight = revetement.getHauteurTuile();
+        int tuileWidth = this.revetement.isMotifVertical()?revetement.getHauteurTuile():revetement.getLongueurTuile();
+        int tuileHeight = this.revetement.isMotifVertical()?revetement.getLongueurTuile():revetement.getHauteurTuile();
         int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis));
         int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis));
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
@@ -159,6 +161,10 @@ public class Surface implements Cloneable, Serializable {
         if (estUnTrou) {
             return newListeTuiles;
         } // donc, aucune tuile
+
+
+
+
         int j = 0;
         if (motif.equals("Installation en décallé") || motif.equals("Installation droite")) {
             while (j <= nbTuilesY) {
