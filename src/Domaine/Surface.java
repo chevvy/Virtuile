@@ -32,7 +32,7 @@ public class Surface implements Cloneable, Serializable {
         this.estUnTrou = trou;
         this.trous = new ArrayList<>();
         this.revetement = new Revetement();
-        MajListeTuiles();
+        majListeTuiles();
     }
 
     public Surface clone(){
@@ -51,14 +51,14 @@ public class Surface implements Cloneable, Serializable {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
-        MajListeTuiles();
+        majListeTuiles();
     }
 
     public void changerPointsSurfaceTuile(List<Point> listePoints){
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         surfaceTuilee = new Polygon(coords_x, coords_y, listePoints.size());
-        MajListeTuiles();
+        majListeTuiles();
     }
 
     //méthode permettant de déplacer une surface selon le vecteur de déplacement reçu
@@ -66,7 +66,7 @@ public class Surface implements Cloneable, Serializable {
         int[] nouveaux_x = Arrays.stream(polygone.xpoints).map(x -> x + deplacement_x).toArray();
         int[] nouveaux_y = Arrays.stream(polygone.ypoints).map(x -> x + deplacement_y).toArray();
         polygone = new Polygon(nouveaux_x, nouveaux_y, polygone.npoints);
-        MajListeTuiles();
+        majListeTuiles();
         trous.forEach(trou -> trou.deplacerSurface(deplacement_x, deplacement_y));
     }
 
@@ -262,13 +262,13 @@ public class Surface implements Cloneable, Serializable {
         }
     }
 
-    private void MajListeTuiles(){
+    private void majListeTuiles(){
         // ensemble des méthodes utilisées pour la génération et l'ajout de tuiles
         // utilie genere pointsSurface tuile pour creer nouvelle surface plus petite
         // changeLespoints de la surfaceTuile
         // sera utilisé aussi pour changer la taille de la surface tuillée
         setListeTuiles(genererListeDeTuiles());
-        System.out.println(listeTuiles.size());
+        System.out.println("nb de tuile de la surface = " + listeTuiles.size());
     }
 
     private void genererSurfaceTuilee(){ // TODO ne pas toucher plz
@@ -292,7 +292,7 @@ public class Surface implements Cloneable, Serializable {
 
     public void setRevetement(Revetement revetement) {
         this.revetement = revetement;
-        setListeTuiles((genererListeDeTuiles()));
+        majListeTuiles();
     }
 
     public Revetement getRevetement() {
@@ -313,7 +313,7 @@ public class Surface implements Cloneable, Serializable {
 
     public void setTailleDuCoulis(int tailleDuCoulis) {
         this.tailleDuCoulis = tailleDuCoulis;
-        MajListeTuiles();
+        majListeTuiles();
     }
 
     public Color getCouleurCoulis() {
@@ -351,7 +351,7 @@ public class Surface implements Cloneable, Serializable {
     }
     public void setOffset(int offset){
         this.offset = offset;
-        MajListeTuiles();
+        majListeTuiles();
     }
     public int getOffset(){
         return this.offset;
