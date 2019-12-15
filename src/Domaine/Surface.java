@@ -158,7 +158,7 @@ public class Surface implements Cloneable, Serializable {
 
         if (estUnTrou) {
             return newListeTuiles;
-        } // donc, aucune tuile
+        }
         int j = 0;
         if (motif.equals("Installation en décallé") || motif.equals("Installation droite")) {
             while (j <= nbTuilesY) {
@@ -182,21 +182,65 @@ public class Surface implements Cloneable, Serializable {
             }
         }
         if (motif.equals("Installation imitation parquet")){
-            while (j <= nbTuilesY) {
-                int i = ( j%2 == 0)?0:-1;
-                int positionEnX = coordXduBound;
+            while (j <= nbTuilesY/2) {
+                int positionEnX = coordXduBound ;
+                int i =  (j % 2 == 0)?0:-1;
                 while (i <= nbTuilesX) {
-                    tuileWidth = ( i%2 == 0)?revetement.getHauteurTuile():revetement.getLongueurTuile();
-                    tuileHeight = ( i%2 == 0)?revetement.getLongueurTuile():revetement.getHauteurTuile();
-                    newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
-                    positionEnX = ( i%2 == 0)?positionEnX+ tuileWidth + tailleCoulis: positionEnX;
-                    coordYduBond = ( i%2 == 0)?coordYduBond: coordYduBond + tuileHeight +tailleCoulis;
+                    if(i%2 ==0){
+                        tuileWidth = revetement.getHauteurTuile();
+                        tuileHeight = revetement.getLongueurTuile();
+                        newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                        positionEnX = positionEnX+ tuileWidth + tailleCoulis;
+                    }
+                    else{
+                        tuileWidth = revetement.getLongueurTuile();
+                        tuileHeight = revetement.getHauteurTuile();
+                        newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                        coordYduBond = coordYduBond + tuileHeight +tailleCoulis;
+                    }
                     newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
                     coordYduBond = ( i%2 == 0)?coordYduBond: coordYduBond - tuileHeight -tailleCoulis;
                     positionEnX += tuileWidth + tailleCoulis;
                     i++;
                 }
-                coordYduBond += tuileWidth + tailleCoulis;
+                coordYduBond += revetement.getLongueurTuile() + tailleCoulis;
+                j++;
+            }
+        }
+        if (motif.equals("Installation en chevron")){
+            while (j <= nbTuilesY) {
+                int positionEnX = coordXduBound;
+                int i = 0;
+                if(j%4==0) {
+                    i = 0;
+                }
+                if(j%4==1) {
+                    i = 0;
+                    positionEnX -=revetement.getHauteurTuile() - tailleCoulis;
+                }
+                if(j%4==2) {
+                    i=1;
+                }
+                if(j%4==3) {
+                    i = 1;
+                    positionEnX -= - revetement.getHauteurTuile() - tailleCoulis;
+                }
+                while (i <= nbTuilesX) {
+                    if(i%2 ==0){
+                        tuileWidth = revetement.getLongueurTuile();
+                        tuileHeight = revetement.getHauteurTuile();
+                        //positionEnX += tailleCoulis;
+                        newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                    }
+                    else{
+                        tuileWidth = revetement.getHauteurTuile();
+                        tuileHeight = revetement.getLongueurTuile();
+                        newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                    }
+                    positionEnX += revetement.getLongueurTuile() + tailleCoulis;
+                    i++;
+                }
+                coordYduBond += revetement.getHauteurTuile() + tailleCoulis;
                 j++;
             }
         }

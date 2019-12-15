@@ -20,6 +20,8 @@ public class GestionnaireRevetements implements Serializable {
                         Color.WHITE, "Aucun Motif", 0,0,0 ));
                 put("Revêtement 3", new Revetement("Revêtement 3", "Terre cuite", Color.PINK,
                 "Installation imitation parquet", 13 , 30, 18));
+        put("Revêtement 4", new Revetement("Revêtement 4", "Terre cuite", Color.PINK,
+                "Installation en chevron", 30 , 60, 18));
     }};
 
     public GestionnaireRevetements(){
