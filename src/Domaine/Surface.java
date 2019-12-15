@@ -150,8 +150,6 @@ public class Surface implements Cloneable, Serializable {
         int coordYduBond = polygone.getBounds().y;
         int boundsWidth = polygone.getBounds().width;
         int boundsHeight = polygone.getBounds().height;
-        // int tuileWidth = revetement.getLongueurTuile();
-        // int tuileHeight = revetement.getHauteurTuile();
         int tuileWidth = this.revetement.isMotifVertical()?revetement.getHauteurTuile():revetement.getLongueurTuile();
         int tuileHeight = this.revetement.isMotifVertical()?revetement.getLongueurTuile():revetement.getHauteurTuile();
         int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis));
@@ -161,10 +159,6 @@ public class Surface implements Cloneable, Serializable {
         if (estUnTrou) {
             return newListeTuiles;
         } // donc, aucune tuile
-
-
-
-
         int j = 0;
         if (motif.equals("Installation en décallé") || motif.equals("Installation droite")) {
             while (j <= nbTuilesY) {
@@ -217,6 +211,7 @@ public class Surface implements Cloneable, Serializable {
         // pour les trous, on pourrait ajouter la taille du coulis à sa taille pour l'intersection, mais pas au trou lui-même
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
         Area areaSurface = new Area(polygone);
+        // pour la liste de trous, substrac a l'area du polygone
         for (Tuile tuile : ListeDetuiles){
             Area areaTuile = new Area(tuile.getPolygone());
             areaTuile.intersect(areaSurface);
@@ -227,6 +222,28 @@ public class Surface implements Cloneable, Serializable {
             Tuile newTuile = new Tuile(newPolyTuile);
             if(newTuile.getHeight() != 0 && newTuile.getLength() != 0){
                 newListeTuiles.add(newTuile);
+            }
+        }
+        //return intersectionTuilesTrous(newListeTuiles);
+        return newListeTuiles;
+    }
+
+    private ArrayList<Tuile> intersectionTuilesTrous(ArrayList<Tuile> ListeDeTuiles){
+        if(trous.isEmpty()){return ListeDeTuiles;}
+        ArrayList<Tuile> newListeTuiles = new ArrayList<>();
+        for(Surface trou : trous){
+            Area areaTrou = new Area(trou.polygone);
+            for(Tuile tuile: ListeDeTuiles){
+                Area areaTuile = new Area(tuile.getPolygone());
+                areaTuile.intersect(areaTrou);
+                PathIterator iterTuile = areaTuile.getPathIterator(null);
+                Polygon newPolyTuile = new Polygon();
+                double[] coordsTuile = new double[6];
+                calculIntersections(iterTuile, newPolyTuile, coordsTuile);
+                Tuile newTuile = new Tuile(newPolyTuile);
+                if(newTuile.getHeight() != 0 && newTuile.getLength() != 0){
+                    newListeTuiles.add(newTuile);
+                }
             }
         }
         return newListeTuiles;
@@ -251,6 +268,7 @@ public class Surface implements Cloneable, Serializable {
         // changeLespoints de la surfaceTuile
         // sera utilisé aussi pour changer la taille de la surface tuillée
         setListeTuiles(genererListeDeTuiles());
+        System.out.println(listeTuiles.size());
     }
 
     private void genererSurfaceTuilee(){ // TODO ne pas toucher plz

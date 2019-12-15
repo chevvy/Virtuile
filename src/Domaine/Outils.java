@@ -60,6 +60,12 @@ public class Outils {
         return listeSommets;
     }
 
+    public Point getPointMilieu(int hauteur, int largeur, int positionX, int positionY){
+        int coordMilieuX = positionX + (largeur/2);
+        int coordMilieuY = positionY + (hauteur/2);
+        return new Point(coordMilieuX, coordMilieuY);
+    }
+
 
 
 }
