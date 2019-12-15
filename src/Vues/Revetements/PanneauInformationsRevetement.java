@@ -97,6 +97,21 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
         this.motifRecouvrementCombo = new JComboBox<>(listeMotif.toArray());
         motifRecouvrementCombo.setSize(200, 25);
         motifRecouvrementCombo.setLocation(220, 130);
+        motifRecouvrementCombo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Object motifRevetement = motifRecouvrementCombo.getSelectedItem();
+                if(motifRevetement != null &&
+                        (motifRevetement.equals("Installation imitation parquet") ||
+                                motifRevetement.equals("Installation en chevron")||
+                                motifRevetement.equals("Installation en L"))){
+                    largeurTuileText.setEditable(false);
+                }
+                else{
+                    largeurTuileText.setEditable(true);
+                }
+            }
+        });
         this.add(motifRecouvrementCombo);
 
         //Taille tuiles
@@ -111,6 +126,22 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
 
         this.hauteurTuileText = new JTextField(20);
         hauteurTuileText.setBounds(220,200,100,25);
+        hauteurTuileText.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Object motifRevetement = motifRecouvrementCombo.getSelectedItem();
+                if(motifRevetement != null &&
+                        (motifRevetement.equals("Installation imitation parquet") ||
+                                motifRevetement.equals("Installation en chevron")||
+                                motifRevetement.equals("Installation en L"))){
+                    int hauteurTuile = Integer.parseInt(hauteurTuileText.getText());
+                    largeurTuileText.setText(String.valueOf(controller.calculerLargeurTuile(hauteurTuile, motifRevetement, 0)));
+                }
+                else{
+                    largeurTuileText.setEditable(true);
+                }
+            }
+        });
         this.add(hauteurTuileText);
 
         JLabel hauteurTuileUniteMesure = new JLabel(uniteMesure);
@@ -150,6 +181,7 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
 
         this.nbTuilesText = new JTextField(20);
         nbTuilesText.setBounds(220,310,100,25);
+        this.setEnabled(false);
         this.add(nbTuilesText);
 
         JLabel tuilesLabel = new JLabel("Tuiles");
@@ -225,23 +257,11 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
             this.hauteurTuileText.setText(String.valueOf(revetementSelectionnee.getHauteurTuile()));
             this.largeurTuileText.setText(String.valueOf(revetementSelectionnee.getLongueurTuile()));
             this.nbTuilesBoiteText.setText(String.valueOf(revetementSelectionnee.getNbTuilesBoite()));
-            this.nbBoiteText.setText(String.valueOf(controller.getNbBoites().get(nomRevetementSelectionnee)));
-            this.nbTuilesText.setText(String.valueOf(controller.getNbTuilesTotal().get(nomRevetementSelectionnee)));
-
-
+            int nbBoites = (controller.getNbBoites().get(nomRevetementSelectionnee) != null)?controller.getNbBoites().get(nomRevetementSelectionnee):0;
+            this.nbBoiteText.setText(String.valueOf(nbBoites));
+            int nbTuiles = (controller.getNbTuilesTotal().get(nomRevetementSelectionnee) != null)?controller.getNbTuilesTotal().get(nomRevetementSelectionnee):0;
+            this.nbTuilesText.setText(String.valueOf(nbTuiles));
         }
-
-
-
-
-
 
     }
 }
-
-
-
-/*
-(String nomDuRevetement, String typeMateriauTuile, Color couleurTuile, String couleurTuileText, String motifTuile,
-                      int hauteurTuile, int longueurTuile, int nbTuilesBoite)
-*/

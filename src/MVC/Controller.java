@@ -354,9 +354,16 @@ public class Controller {
 
     public void setEpaisseurCoulis(int epaisseur){
         if (plan.surfaceSelectionnee != null) {
+            Revetement revetement = plan.surfaceSelectionnee.getRevetement();
+            String motif = revetement.getMotifTuiles();
+            if (motif.equals("Installation imitation parquet") ||
+                    motif.equals("Installation en chevron")||
+                    motif.equals("Installation en L")) {
+                revetement.setLongueurTuile(calculerLargeurTuile(revetement.getHauteurTuile(), motif, epaisseur));
+            }
             plan.surfaceSelectionnee.setTailleDuCoulis(epaisseur);
-            notifyObservers();
         }
+        notifyObservers();
     }
 
     public Map<String, String> getInfosSurfaceSelect() {
@@ -364,6 +371,12 @@ public class Controller {
 
     public void setRevetement(Revetement revetement) {
         if(this.plan.surfaceSelectionnee != null) {
+            String motif = revetement.getMotifTuiles();
+            if (motif.equals("Installation imitation parquet") ||
+                    motif.equals("Installation en chevron")||
+                    motif.equals("Installation en L")) {
+                revetement.setLongueurTuile(calculerLargeurTuile(revetement.getHauteurTuile(), motif, this.plan.surfaceSelectionnee.getTailleDuCoulis()));
+            }
             this.plan.surfaceSelectionnee.setRevetement(revetement);
         }
         notifyObservers();
@@ -420,6 +433,9 @@ public class Controller {
     }
     public int getOffset(){
         return plan.surfaceSelectionnee.getOffset();
+    }
+    public int calculerLargeurTuile(int hauteur, Object motifRevetement, int tailleCoulis){
+        return gestionnaireRevetements.calculerLargeurTuile(hauteur, motifRevetement, tailleCoulis);
     }
 }
 
