@@ -66,8 +66,8 @@ public class Surface implements Cloneable, Serializable {
         int[] nouveaux_x = Arrays.stream(polygone.xpoints).map(x -> x + deplacement_x).toArray();
         int[] nouveaux_y = Arrays.stream(polygone.ypoints).map(x -> x + deplacement_y).toArray();
         polygone = new Polygon(nouveaux_x, nouveaux_y, polygone.npoints);
-        majListeTuiles();
         trous.forEach(trou -> trou.deplacerSurface(deplacement_x, deplacement_y));
+        majListeTuiles();
     }
 
 
@@ -83,6 +83,7 @@ public class Surface implements Cloneable, Serializable {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         this.polygone = new Polygon(coords_x, coords_y, listePoints.size());
+        majListeTuiles();
     }
 
     public Area getAireSansTrou(){
@@ -103,6 +104,7 @@ public class Surface implements Cloneable, Serializable {
                 trou.changerPointsSurface(points);
             }
         }
+        majListeTuiles();
     }
 
     static ArrayList<Point> generePoints(int hauteur, int largeur, ArrayList<Point> points, Rectangle limites, int x, int y) {
@@ -212,6 +214,10 @@ public class Surface implements Cloneable, Serializable {
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
         Area areaSurface = new Area(polygone);
         // pour la liste de trous, substrac a l'area du polygone
+        for(Surface trou : trous){
+            Area areaTrou = new Area(trou.polygone);
+            areaSurface.subtract(areaTrou);
+        }
         for (Tuile tuile : ListeDetuiles){
             Area areaTuile = new Area(tuile.getPolygone());
             areaTuile.intersect(areaSurface);
@@ -268,7 +274,6 @@ public class Surface implements Cloneable, Serializable {
         // changeLespoints de la surfaceTuile
         // sera utilisé aussi pour changer la taille de la surface tuillée
         setListeTuiles(genererListeDeTuiles());
-        System.out.println("nb de tuile de la surface = " + listeTuiles.size());
     }
 
     private void genererSurfaceTuilee(){ // TODO ne pas toucher plz

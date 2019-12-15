@@ -252,7 +252,6 @@ public class Controller {
             g.setColor(surfaceSelectionnee.estUnTrou?Color.green:surfaceSelectionnee.getCouleurCoulis());
             g.fillPolygon(surfaceSelectionnee.polygone);
             if(!surfaceSelectionnee.estUnTrou){
-                System.out.println("Nb de tuile au render = " + surfaceSelectionnee.getListeTuiles().size());
                 for (Tuile tuile : surfaceSelectionnee.getListeTuiles()){
                     g.setColor(modeIspection && tuile.estTropPetite(dimensionInspection)?Color.RED:surfaceSelectionnee.getRevetement().getCouleurTuile());
                     g.fillPolygon(tuile.getPolygone());
