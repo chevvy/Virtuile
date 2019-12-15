@@ -2,6 +2,7 @@ package Domaine;
 
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
 import java.io.Serializable;
@@ -23,6 +24,7 @@ public class Surface implements Cloneable, Serializable {
     private int tailleDuCoulis = 4;
     private Color couleurCoulis = Color.WHITE;
     private int offset = 50;
+    private int tuileCentre = 1;
 
     public Surface(List<Point> listePoints, boolean trou) {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
@@ -142,7 +144,7 @@ public class Surface implements Cloneable, Serializable {
 
 
     public ArrayList<Tuile> genererListeDeTuiles() {
-        // "Installation droite", "Installation " "imitation parquet", "Installation en décallé", "Installation en chevron",
+        // "Installation droite", "Installation imitation parquet", "Installation en décallé", "Installation en chevron",
         // "Installation en L"
         // En ce moment, si le motif est autre que Installation droite ou installation décallé, il fait "installation"
         // CAD : installation equivalent en x et y
@@ -160,9 +162,10 @@ public class Surface implements Cloneable, Serializable {
 
         if (estUnTrou) {
             return newListeTuiles;
-        } // donc, aucune tuile
+        }
         int j = 0;
-        if (motif.equals("Installation en décallé") || motif.equals("Installation droite")) {
+        //TODO ajouter angle dans Installation en L ou on fait comme si c'était une installation droite et on va modifier l'angle?
+        if (motif.equals("Installation en décallé") || motif.equals("Installation droite") || motif.equals("Installation en L")) {
             while (j <= nbTuilesY) {
                 int i = 0;
                 int positionEnX = coordXduBound;
@@ -184,25 +187,80 @@ public class Surface implements Cloneable, Serializable {
             }
         }
         if (motif.equals("Installation imitation parquet")){
-            while (j <= nbTuilesY) {
-                int i = ( j%2 == 0)?0:-1;
-                int positionEnX = coordXduBound;
-                while (i <= nbTuilesX) {
-                    tuileWidth = ( i%2 == 0)?revetement.getHauteurTuile():revetement.getLongueurTuile();
-                    tuileHeight = ( i%2 == 0)?revetement.getLongueurTuile():revetement.getHauteurTuile();
-                    newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
-                    positionEnX = ( i%2 == 0)?positionEnX+ tuileWidth + tailleCoulis: positionEnX;
-                    coordYduBond = ( i%2 == 0)?coordYduBond: coordYduBond + tuileHeight +tailleCoulis;
-                    newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
-                    coordYduBond = ( i%2 == 0)?coordYduBond: coordYduBond - tuileHeight -tailleCoulis;
-                    positionEnX += tuileWidth + tailleCoulis;
-                    i++;
-                }
-                coordYduBond += tuileWidth + tailleCoulis;
-                j++;
-            }
+            genererImitationParquet(nbTuilesY, coordXduBound, nbTuilesX, tailleCoulis, tuileWidth, tuileHeight, coordYduBond, newListeTuiles);
+        }
+        if (motif.equals("Installation en chevron")){
+            genererChevron(nbTuilesY, coordXduBound, nbTuilesX, tailleCoulis, tuileWidth, tuileHeight, coordYduBond, newListeTuiles);
         }
         return IntersectionTuiles(newListeTuiles);
+    }
+
+    private void genererImitationParquet(int nbTuilesY, int coordXduBound, int nbTuilesX, int tailleCoulis, int tuileWidth,
+                                         int tuileHeight, int coordYduBond, ArrayList<Tuile> newListeTuiles ) {
+        int j = 0;
+        while (j <= nbTuilesY / 2) {
+            int positionEnX = coordXduBound;
+            int i = (j % 2 == 0) ? 0 : -1;
+            while (i <= nbTuilesX) {
+                if (i % 2 == 0) {
+                    tuileWidth = revetement.getHauteurTuile();
+                    tuileHeight = revetement.getLongueurTuile();
+                    newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                    positionEnX = positionEnX + tuileWidth + tailleCoulis;
+                } else {
+                    tuileWidth = revetement.getLongueurTuile();
+                    tuileHeight = revetement.getHauteurTuile();
+                    newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                    coordYduBond = coordYduBond + tuileHeight + tailleCoulis;
+                }
+                newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                coordYduBond = (i % 2 == 0) ? coordYduBond : coordYduBond - tuileHeight - tailleCoulis;
+                positionEnX += tuileWidth + tailleCoulis;
+                i++;
+            }
+            coordYduBond += revetement.getLongueurTuile() + tailleCoulis;
+            j++;
+        }
+    }
+
+    private void genererChevron(int nbTuilesY, int coordXduBound, int nbTuilesX, int tailleCoulis, int tuileWidth,
+                                int tuileHeight, int coordYduBond, ArrayList<Tuile> newListeTuiles ){
+        int j = 0;
+        while (j <= nbTuilesY) {
+            int positionEnX = coordXduBound;
+            int i = 0;
+            if(j%4==1) {
+                positionEnX -=revetement.getHauteurTuile() + tailleCoulis ;
+            }
+            if(j%4==2) {
+                i=1;
+            }
+            else if(j%4==3) {
+                i = 1;
+                positionEnX -=  revetement.getHauteurTuile() + tailleCoulis ;
+            }
+            while (i <= nbTuilesX +2) {
+                if (j == 0 && i%2 == 1){
+                    tuileWidth = revetement.getHauteurTuile();
+                    tuileHeight = revetement.getHauteurTuile();
+                    newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX + tuileWidth + tailleCoulis, coordYduBond, tuileWidth, tuileHeight)));
+                }
+                if(i%2 ==0){
+                    tuileWidth = revetement.getLongueurTuile();
+                    tuileHeight = revetement.getHauteurTuile();
+                    newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                }
+                else{
+                    tuileWidth = revetement.getHauteurTuile();
+                    tuileHeight = revetement.getLongueurTuile();
+                    newListeTuiles.add(new Tuile(genereSommetsPolygon(positionEnX, coordYduBond, tuileWidth, tuileHeight)));
+                }
+                positionEnX += revetement.getLongueurTuile() + tailleCoulis;
+                i++;
+            }
+            coordYduBond += revetement.getHauteurTuile() + tailleCoulis;
+            j++;
+        }
     }
 
     private ArrayList<Tuile> IntersectionTuiles(ArrayList<Tuile> ListeDetuiles){ // TODO ne pas toucher plz
