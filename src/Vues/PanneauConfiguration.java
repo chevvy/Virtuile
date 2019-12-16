@@ -337,6 +337,34 @@ public class PanneauConfiguration extends JPanel implements Observer{
                 controller.setDimensionInspection((int) inspectionTuilesMin.getValue());
             }
         });
+
+        JLabel labelOrientationMotif = new JLabel("Orientation motif");
+        labelOrientationMotif.setSize(150, 30);
+        labelOrientationMotif.setLocation(15, 645);
+        this.add(labelOrientationMotif);
+
+        JSlider angleDuMotif = new JSlider(JSlider.HORIZONTAL, 0, 180, 0);
+        angleDuMotif.setSize(220, 45);
+        angleDuMotif.setLocation(15, 670);
+        angleDuMotif.setMajorTickSpacing(45);
+        angleDuMotif.setMinorTickSpacing(5);
+        angleDuMotif.setPaintTicks(true);
+        angleDuMotif.setPaintLabels(true);
+        angleDuMotif.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                JSlider source = (JSlider) changeEvent.getSource();
+                {
+                    if (!source.getValueIsAdjusting()){
+                        double angleModifie = (double)source.getValue();
+                        controller.setAngleMotifSurfaceSelectionnee(angleModifie);
+                    }
+
+                }
+
+            }
+        });
+
         this.add(inspectionTuilesMin);
         this.add(InfoSurface);
         this.add(radioSurface);
@@ -355,6 +383,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
         this.add(labelNbTuilesBoite);
         this.add(revetementSurfaceSelectionnee);
         this.add(boutonMenuRevetement);
+        this.add(angleDuMotif);
         this.setVisible(true);
 
     }

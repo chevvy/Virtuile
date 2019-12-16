@@ -105,6 +105,14 @@ public class Controller {
         notifyObservers();
     }
 
+    public void setAngleMotifSurfaceSelectionnee(double angle){
+        if(plan.surfaceSelectionnee != null){
+            plan.surfaceSelectionnee.getRevetement().setAngleMotif(angle);
+            plan.surfaceSelectionnee.majListeTuiles();
+            notifyObservers();
+        }
+    }
+
     public void selectionnerAligner(){
         etat = Etat.SELECTIONNER_ALIGNER;
     }

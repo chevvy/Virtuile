@@ -313,7 +313,7 @@ public class Surface implements Cloneable, Serializable {
         }
     }
 
-    private void majListeTuiles(){
+    public void majListeTuiles(){
         // ensemble des méthodes utilisées pour la génération et l'ajout de tuiles
         // utilie genere pointsSurface tuile pour creer nouvelle surface plus petite
         // changeLespoints de la surfaceTuile
