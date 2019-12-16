@@ -113,6 +113,13 @@ public class Controller {
         }
     }
 
+    public double getAngleMotifSurfaceSelectionne(){
+        if(plan.surfaceSelectionnee != null){
+            return plan.surfaceSelectionnee.getRevetement().getAngleMotif();
+        }
+        return 0;
+    }
+
     public void selectionnerAligner(){
         etat = Etat.SELECTIONNER_ALIGNER;
     }

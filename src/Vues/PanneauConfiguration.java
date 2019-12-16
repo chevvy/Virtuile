@@ -27,6 +27,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
             largeurTuileSelectText, couleurCoulisText;
     private ButtonGroup groupeRadioSurface;
     private JSpinner decallageSpinner;
+    private JSlider angleDuMotif;
     Surface surfaceSelectionnee;
 
     private Controller controller;
@@ -343,7 +344,8 @@ public class PanneauConfiguration extends JPanel implements Observer{
         labelOrientationMotif.setLocation(15, 645);
         this.add(labelOrientationMotif);
 
-        JSlider angleDuMotif = new JSlider(JSlider.HORIZONTAL, 0, 180, 0);
+
+        this.angleDuMotif = new JSlider(JSlider.HORIZONTAL, 0, 180, 0);
         angleDuMotif.setSize(220, 45);
         angleDuMotif.setLocation(15, 670);
         angleDuMotif.setMajorTickSpacing(45);
@@ -438,6 +440,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
             decallageSpinner.setEnabled(motifTuileText.getText().equals("Installation en décallé"));
             hauteurTuileSelectText.setText(Integer.toString(controller.getHauteurTuile()));
             largeurTuileSelectText.setText(Integer.toString(controller.getLargeurTuile()));
+            angleDuMotif.setValue((int)controller.getAngleMotifSurfaceSelectionne());
         }
         else{
             hauteurSurfaceText.setText("");
@@ -456,6 +459,8 @@ public class PanneauConfiguration extends JPanel implements Observer{
             decallageSpinner.setValue(0);
             hauteurTuileSelectText.setText("");
             largeurTuileSelectText.setText("");
+            this.angleDuMotif.setValue(0);
+
         }
 
     }
