@@ -5,6 +5,8 @@ import MVC.Controller;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +14,9 @@ import java.io.IOException;
 
 public class PanneauAlignementHorizontalImage extends JPanel {
 
-
-    public PanneauAlignementHorizontalImage() {
+    private Controller controller;
+    public PanneauAlignementHorizontalImage(Controller controller) {
+        this.controller = controller;
         SetUpUi();
     }
 
@@ -23,7 +26,13 @@ public class PanneauAlignementHorizontalImage extends JPanel {
         //gaucheExt
         try {
             BufferedImage imageGauche01 = ImageIO.read(new File("src/Ressources/gaucheExt.png"));
-            JLabel image = new JLabel(new ImageIcon(imageGauche01));
+            JButton image = new JButton(new ImageIcon(imageGauche01));
+            image.setMargin(new Insets(0, 0, 0, 0));
+            image.setLayout(null);
+            image.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e1) { controller.aligner("gaucheExt"); }
+            });
             this.add(image);
 
 
@@ -34,7 +43,13 @@ public class PanneauAlignementHorizontalImage extends JPanel {
         //gaucheInt
         try {
             BufferedImage imageGauche02 = ImageIO.read(new File("src/Ressources/gaucheInt.png"));
-            JLabel image = new JLabel(new ImageIcon(imageGauche02));
+            JButton image = new JButton(new ImageIcon(imageGauche02));
+            image.setMargin(new Insets(0, 0, 0, 0));
+            image.setLayout(null);
+            image.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e1) { controller.aligner("gaucheInt"); }
+            });
             this.add(image);
 
         } catch (IOException ex) {
@@ -43,8 +58,14 @@ public class PanneauAlignementHorizontalImage extends JPanel {
 
         //centreHorizontal
         try {
-            BufferedImage imageCentre = ImageIO.read(new File("src/Ressources/gaucheExt.png"));
-            JLabel image = new JLabel(new ImageIcon(imageCentre));
+            BufferedImage imageCentre = ImageIO.read(new File("src/Ressources/centreHorizontal.png"));
+            JButton image = new JButton(new ImageIcon(imageCentre));
+            image.setMargin(new Insets(0, 0, 0, 0));
+            image.setLayout(null);
+            image.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e1) { controller.aligner("centreHorizontal"); }
+            });
             this.add(image);
 
         } catch (IOException ex) {
@@ -54,7 +75,13 @@ public class PanneauAlignementHorizontalImage extends JPanel {
         //droiteInt
         try {
             BufferedImage imageDroite01 = ImageIO.read(new File("src/Ressources/droiteInt.png"));
-            JLabel image = new JLabel(new ImageIcon(imageDroite01));
+            JButton image = new JButton(new ImageIcon(imageDroite01));
+            image.setMargin(new Insets(0, 0, 0, 0));
+            image.setLayout(null);
+            image.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e1) { controller.aligner("droiteInt"); }
+            });
             this.add(image);
 
         } catch (IOException ex) {
@@ -64,7 +91,13 @@ public class PanneauAlignementHorizontalImage extends JPanel {
         //droiteExt
         try {
             BufferedImage imagDroite02 = ImageIO.read(new File("src/Ressources/droiteExt.png"));
-            JLabel image = new JLabel(new ImageIcon(imagDroite02));
+            JButton image = new JButton(new ImageIcon(imagDroite02));
+            image.setMargin(new Insets(0, 0, 0, 0));
+            image.setLayout(null);
+            image.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e1) { controller.aligner("droiteExt"); }
+            });
             this.add(image);
 
         } catch (IOException ex) {
@@ -74,7 +107,13 @@ public class PanneauAlignementHorizontalImage extends JPanel {
         //vide
         try {
             BufferedImage imageNoAlignement = ImageIO.read(new File("src/Ressources/non.png"));
-            JLabel image = new JLabel(new ImageIcon(imageNoAlignement));
+            JButton image = new JButton(new ImageIcon(imageNoAlignement));
+            image.setMargin(new Insets(0, 0, 0, 0));
+            image.setLayout(null);
+            image.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e1) { controller.aligner("rienHorizontal"); }
+            });
             this.add(image);
 
         } catch (IOException ex) {
