@@ -265,14 +265,6 @@ public class Surface implements Cloneable, Serializable {
         }
     }
 
-    private ArrayList<Tuile> modifierAngleMotif(ArrayList<Tuile> ListeDetuiles) {
-        ArrayList<Tuile> newListeTuiles = new ArrayList<>();
-        double angle = this.revetement.getAngleMotif();
-
-
-        return newListeTuiles;
-
-    }
 
 
     private ArrayList<Tuile> IntersectionTuiles(ArrayList<Tuile> ListeDetuiles){ // TODO ne pas toucher plz
