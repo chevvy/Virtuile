@@ -345,17 +345,19 @@ public class Surface implements Cloneable, Serializable {
     // TODO ramener dans Outils
     public ArrayList<Point> rotationListeDePoints(ArrayList<Point> points, Point pointMilieu, double angle){
         System.out.println("Nb de points sources" + points.size() + "" + points.toString());
-        Point2D[] pointsOriginal = new Point2D[points.size()];
+        Point2D[] pointsOriginal = new Point2D[points.size()]; //transform a besoin de Point2D[]
         for (int i = 0; i < points.size(); i++){
             pointsOriginal[i] = points.get(i);
-            System.out.println(" point : " + pointsOriginal[i]);
         }
 
-        Point2D[] pointRotate = new Point2D[points.size()];
+        Point2D[] pointRotate = new Point2D[points.size()];//transform a besoin de Point2D[]
 
+        // rotation de la liste des points de la tuile en fonction de leur point milieu
         AffineTransform.getRotateInstance
                 (Math.toRadians(angle), pointMilieu.x, pointMilieu.y)
                 .transform(pointsOriginal,0,pointRotate,0,points.size());
+
+        // On retourne ça en Arraylist pour être compatible avec le reste du programme
         ArrayList<Point> nouveauxPoints = new ArrayList<>();
         for(Point2D point : pointRotate){
             nouveauxPoints.add(new Point((int)point.getX(), (int)point.getY()));

@@ -24,7 +24,7 @@ public class Revetement implements Serializable {
         this.couleurTuile = Color.BLUE;
         this.motifTuiles = "Installation droite";
         this.nbTuilesBoite = 20;
-        this.angleMotif = 45;
+        this.angleMotif = 0;
         // revetement avec motif / taille par defaut (TBD)
     }
 
