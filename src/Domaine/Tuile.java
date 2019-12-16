@@ -13,7 +13,7 @@ public class Tuile implements Serializable {
     private int length;
     private int height;
     private int dimensionMin = 10;
-    private Point pointMilieu;
+
     private Surface surface;
     private GestionnaireRevetements gestionnaireRevetement;
 
@@ -24,14 +24,13 @@ public class Tuile implements Serializable {
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
         length = (int) polygone.getBounds().getMaxX() - (int) polygone.getBounds().getMinX();
         height = (int) polygone.getBounds().getMaxY() - (int) polygone.getBounds().getMinY();
-        this.pointMilieu = new Point((int) polygone.getBounds().getMinX(),(int) polygone.getBounds().getMinY());
+
     }
 
     Tuile(Polygon polygon){
         this.polygone = polygon;
         length = (int)polygone.getBounds().getMaxX() - (int)polygone.getBounds().getMinX();
         height = (int)polygone.getBounds().getMaxY() - (int)polygone.getBounds().getMinY();
-        this.pointMilieu = new Point((int) polygone.getBounds().getMinX(),(int) polygone.getBounds().getMinY());
     }
 
     public Polygon getPolygone() {

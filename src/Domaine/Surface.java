@@ -26,6 +26,7 @@ public class Surface implements Cloneable, Serializable {
     private Color couleurCoulis = Color.WHITE;
     private int offset = 50;
     private int tuileCentre = 1;
+    private Point pointMilieu;
 
     public Surface(List<Point> listePoints, boolean trou) {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
@@ -35,6 +36,7 @@ public class Surface implements Cloneable, Serializable {
         this.estUnTrou = trou;
         this.trous = new ArrayList<>();
         this.revetement = new Revetement();
+        this.pointMilieu = new Point((int) polygone.getBounds().getMinX(),(int) polygone.getBounds().getMinY());
         majListeTuiles();
     }
 
@@ -54,6 +56,7 @@ public class Surface implements Cloneable, Serializable {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
+        this.pointMilieu = new Point((int) polygone.getBounds().getMinX(),(int) polygone.getBounds().getMinY());
         majListeTuiles();
     }
 
@@ -70,6 +73,7 @@ public class Surface implements Cloneable, Serializable {
         int[] nouveaux_y = Arrays.stream(polygone.ypoints).map(x -> x + deplacement_y).toArray();
         polygone = new Polygon(nouveaux_x, nouveaux_y, polygone.npoints);
         trous.forEach(trou -> trou.deplacerSurface(deplacement_x, deplacement_y));
+        this.pointMilieu = new Point((int) polygone.getBounds().getMinX(),(int) polygone.getBounds().getMinY());
         majListeTuiles();
     }
 
@@ -151,14 +155,15 @@ public class Surface implements Cloneable, Serializable {
         // CAD : installation equivalent en x et y
         String motif = this.revetement.getMotifTuiles();
         int tailleCoulis = this.getTailleDuCoulis();
-        int coordXduBound = polygone.getBounds().x;
-        int coordYduBond = polygone.getBounds().y;
-        int boundsWidth = polygone.getBounds().width;
-        int boundsHeight = polygone.getBounds().height;
+        // on fait start le motif à 1 fois la taille du polygone, en dehors de celui-ci
+        int coordXduBound = polygone.getBounds().x - 2*polygone.getBounds().width;
+        int coordYduBond = polygone.getBounds().y - 2*polygone.getBounds().height;
+        int boundsWidth = 3*polygone.getBounds().width;
+        int boundsHeight = 3*polygone.getBounds().height;
         int tuileWidth = revetement.getLongueurTuile();
         int tuileHeight = revetement.getHauteurTuile();
-        int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis));
-        int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis));
+        int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis))*2;
+        int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis)) *2;
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
 
         if (estUnTrou) {
@@ -167,7 +172,7 @@ public class Surface implements Cloneable, Serializable {
         int j = 0;
         //TODO ajouter angle dans Installation en L ou on fait comme si c'était une installation droite et on va modifier l'angle?
         if (motif.equals("Installation en décallé") || motif.equals("Installation droite") || motif.equals("Installation en L")) {
-            while (j <= nbTuilesY) {
+            while (j <= nbTuilesY + 1) {
                 int i = 0;
                 int positionEnX = coordXduBound;
                 // si motifs décallé et que la rangée actuelle est pair
@@ -344,7 +349,6 @@ public class Surface implements Cloneable, Serializable {
 
     // TODO ramener dans Outils
     public ArrayList<Point> rotationListeDePoints(ArrayList<Point> points, Point pointMilieu, double angle){
-        System.out.println("Nb de points sources" + points.size() + "" + points.toString());
         Point2D[] pointsOriginal = new Point2D[points.size()]; //transform a besoin de Point2D[]
         for (int i = 0; i < points.size(); i++){
             pointsOriginal[i] = points.get(i);
@@ -374,7 +378,7 @@ public class Surface implements Cloneable, Serializable {
         listeSommets.add(new Point(x, y + height));
         listeSommets.add(new Point(x + width, y + height));
         listeSommets.add(new Point(x + width, y));
-        listeSommets = rotationListeDePoints(listeSommets, getPointMilieu(height, width, x, y), this.revetement.getAngleMotif());
+        listeSommets = rotationListeDePoints(listeSommets, pointMilieu, this.revetement.getAngleMotif());
         return listeSommets;
     }
 
