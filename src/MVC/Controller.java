@@ -255,6 +255,8 @@ public class Controller {
                 for (Tuile tuile : surfaceSelectionnee.getListeTuiles()){
                     g.setColor(modeIspection && tuile.estTropPetite(dimensionInspection)?Color.RED:surfaceSelectionnee.getRevetement().getCouleurTuile());
                     g.fillPolygon(tuile.getPolygone());
+                    g.setColor(Color.BLACK);
+                    g.drawPolygon(tuile.getPolygone());
                 }
             }
             g.setColor(Color.green);

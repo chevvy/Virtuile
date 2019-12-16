@@ -1,7 +1,9 @@
 package Domaine;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 public class Outils {
@@ -51,20 +53,6 @@ public class Outils {
         return Optional.of(point);
     }
 
-    static ArrayList<Point> genereSommetsPolygon(int x, int y, int width, int height){
-        ArrayList<Point> listeSommets = new ArrayList<Point>();
-        listeSommets.add(new Point(x,y));
-        listeSommets.add(new Point(x, y + height));
-        listeSommets.add(new Point(x + width, y + height));
-        listeSommets.add(new Point(x + width, y));
-        return listeSommets;
-    }
-
-    public Point getPointMilieu(int hauteur, int largeur, int positionX, int positionY){
-        int coordMilieuX = positionX + (largeur/2);
-        int coordMilieuY = positionY + (hauteur/2);
-        return new Point(coordMilieuX, coordMilieuY);
-    }
 
 
 

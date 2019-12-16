@@ -5,13 +5,14 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
+import java.awt.geom.Point2D;
 import java.io.Serializable;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.lang.Cloneable;
 
-import static Domaine.Outils.genereSommetsPolygon;
+import Domaine.Outils.*;
 
 public class Surface implements Cloneable, Serializable {
 
@@ -154,8 +155,8 @@ public class Surface implements Cloneable, Serializable {
         int coordYduBond = polygone.getBounds().y;
         int boundsWidth = polygone.getBounds().width;
         int boundsHeight = polygone.getBounds().height;
-        int tuileWidth = this.revetement.isMotifVertical()?revetement.getHauteurTuile():revetement.getLongueurTuile();
-        int tuileHeight = this.revetement.isMotifVertical()?revetement.getLongueurTuile():revetement.getHauteurTuile();
+        int tuileWidth = revetement.getLongueurTuile();
+        int tuileHeight = revetement.getHauteurTuile();
         int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis));
         int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis));
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
@@ -192,6 +193,7 @@ public class Surface implements Cloneable, Serializable {
         if (motif.equals("Installation en chevron")){
             genererChevron(nbTuilesY, coordXduBound, nbTuilesX, tailleCoulis, tuileWidth, tuileHeight, coordYduBond, newListeTuiles);
         }
+
         return IntersectionTuiles(newListeTuiles);
     }
 
@@ -263,6 +265,16 @@ public class Surface implements Cloneable, Serializable {
         }
     }
 
+    private ArrayList<Tuile> modifierAngleMotif(ArrayList<Tuile> ListeDetuiles) {
+        ArrayList<Tuile> newListeTuiles = new ArrayList<>();
+        double angle = this.revetement.getAngleMotif();
+
+
+        return newListeTuiles;
+
+    }
+
+
     private ArrayList<Tuile> IntersectionTuiles(ArrayList<Tuile> ListeDetuiles){ // TODO ne pas toucher plz
         // pour taille du coulis, on va générer un nouveau polygone plus petit qui va contenir seulement les tuiles
         // On peut utiliser la méthode "setDimension" pour changer la taille de la surface
@@ -286,28 +298,6 @@ public class Surface implements Cloneable, Serializable {
             Tuile newTuile = new Tuile(newPolyTuile);
             if(newTuile.getHeight() != 0 && newTuile.getLength() != 0){
                 newListeTuiles.add(newTuile);
-            }
-        }
-        //return intersectionTuilesTrous(newListeTuiles);
-        return newListeTuiles;
-    }
-
-    private ArrayList<Tuile> intersectionTuilesTrous(ArrayList<Tuile> ListeDeTuiles){
-        if(trous.isEmpty()){return ListeDeTuiles;}
-        ArrayList<Tuile> newListeTuiles = new ArrayList<>();
-        for(Surface trou : trous){
-            Area areaTrou = new Area(trou.polygone);
-            for(Tuile tuile: ListeDeTuiles){
-                Area areaTuile = new Area(tuile.getPolygone());
-                areaTuile.intersect(areaTrou);
-                PathIterator iterTuile = areaTuile.getPathIterator(null);
-                Polygon newPolyTuile = new Polygon();
-                double[] coordsTuile = new double[6];
-                calculIntersections(iterTuile, newPolyTuile, coordsTuile);
-                Tuile newTuile = new Tuile(newPolyTuile);
-                if(newTuile.getHeight() != 0 && newTuile.getLength() != 0){
-                    newListeTuiles.add(newTuile);
-                }
             }
         }
         return newListeTuiles;
@@ -351,6 +341,47 @@ public class Surface implements Cloneable, Serializable {
             }
         }
         return new Tuile(new Polygon());
+    }
+
+    // TODO ramener dans Outils
+    public Point getPointMilieu(int hauteur, int largeur, int positionX, int positionY){
+        int coordMilieuX = positionX + (largeur/2);
+        int coordMilieuY = positionY + (hauteur/2);
+        return new Point(coordMilieuX, coordMilieuY);
+    }
+
+    // TODO ramener dans Outils
+    public ArrayList<Point> rotationListeDePoints(ArrayList<Point> points, Point pointMilieu, double angle){
+        System.out.println("Nb de points sources" + points.size() + "" + points.toString());
+        Point2D[] pointsOriginal = new Point2D[points.size()];
+        for (int i = 0; i < points.size(); i++){
+            pointsOriginal[i] = points.get(i);
+            System.out.println(" point : " + pointsOriginal[i]);
+        }
+
+        Point2D[] pointRotate = new Point2D[points.size()];
+
+        AffineTransform.getRotateInstance
+                (Math.toRadians(angle), pointMilieu.x, pointMilieu.y)
+                .transform(pointsOriginal,0,pointRotate,0,points.size());
+        ArrayList<Point> nouveauxPoints = new ArrayList<>();
+        for(Point2D point : pointRotate){
+            nouveauxPoints.add(new Point((int)point.getX(), (int)point.getY()));
+        }
+        return nouveauxPoints;
+    }
+
+
+
+    // TODO ramener dans Outils
+    public ArrayList<Point> genereSommetsPolygon(int x, int y, int width, int height){
+        ArrayList<Point> listeSommets = new ArrayList<Point>();
+        listeSommets.add(new Point(x,y));
+        listeSommets.add(new Point(x, y + height));
+        listeSommets.add(new Point(x + width, y + height));
+        listeSommets.add(new Point(x + width, y));
+        listeSommets = rotationListeDePoints(listeSommets, getPointMilieu(height, width, x, y), this.revetement.getAngleMotif());
+        return listeSommets;
     }
 
     public void setRevetement(Revetement revetement) {

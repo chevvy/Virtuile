@@ -156,6 +156,9 @@ public class Canvas extends JPanel implements Observer{
     public void paint(Graphics gb) {
         super.paintComponent(gb);
         Graphics2D g = (Graphics2D) gb;
+        g.setRenderingHint(
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
 
         int grid = controller.getGridSize();
 
