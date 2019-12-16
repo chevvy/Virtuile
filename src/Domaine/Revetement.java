@@ -39,7 +39,7 @@ public class Revetement implements Serializable {
         this.hauteurTuile = hauteurTuile;
         this.longueurTuile = longueurTuile;
         this.nbTuilesBoite = nbTuilesBoite;
-        this.angleMotif = 45;
+        this.angleMotif = 0;
     }
 
 
