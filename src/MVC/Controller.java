@@ -460,11 +460,32 @@ public class Controller {
         plan.surfaceSelectionnee.setOffset(offset);
         notifyObservers();
     }
+
     public int getOffset(){
         return plan.surfaceSelectionnee.getOffset();
     }
     public int calculerLargeurTuile(int hauteur, Object motifRevetement, int tailleCoulis){
         return gestionnaireRevetements.calculerLargeurTuile(hauteur, motifRevetement, tailleCoulis);
+    }
+
+    public void setOffsetMotifx(int offset){
+        plan.surfaceSelectionnee.getRevetement().setOffsetMotifx(offset);
+        plan.surfaceSelectionnee.majListeTuiles();
+        notifyObservers();
+    }
+
+    public int getOffsetMotifx(){
+        return plan.surfaceSelectionnee.getRevetement().getOffsetMotifx();
+    }
+
+    public void setOffsetMotify(int offset){
+        plan.surfaceSelectionnee.getRevetement().setOffsetMotify(offset);
+        plan.surfaceSelectionnee.majListeTuiles();
+        notifyObservers();
+    }
+
+    public int getOffsetMotify(){
+        return plan.surfaceSelectionnee.getRevetement().getOffsetMotify();
     }
 }
 
