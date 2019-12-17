@@ -113,6 +113,7 @@ public class MainWindow extends JFrame implements Observer {
         menuEdition.add(menuMateriaux);
         menuMateriaux.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
+                mainWindow.setEnabled(false);
                 new FrameRevetements(controller, mainWindow).setVisible(true);
             }
         });
