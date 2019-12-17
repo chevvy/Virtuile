@@ -26,7 +26,7 @@ public class PanneauActions extends JPanel implements Observer {
 
     private void setUpUI(){
         // Ajouter une surface
-        URL url = getClass().getResource("ajouterSurface.png");
+        URL url = getClass().getResource("src/Ressources/ajouterSurface.png");
         ImageIcon imageAjouter = new ImageIcon(url);
         boutonAjouter = new JButton(imageAjouter);
         boutonAjouter.setMargin(new Insets(0, 0, 0, 0));
