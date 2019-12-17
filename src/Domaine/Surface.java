@@ -290,8 +290,6 @@ public class Surface implements Cloneable, Serializable {
         }
     }
 
-
-
     private ArrayList<Tuile> IntersectionTuiles(ArrayList<Tuile> ListeDetuiles){ // TODO ne pas toucher plz
         // pour taille du coulis, on va générer un nouveau polygone plus petit qui va contenir seulement les tuiles
         // On peut utiliser la méthode "setDimension" pour changer la taille de la surface

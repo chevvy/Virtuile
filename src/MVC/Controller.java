@@ -20,7 +20,7 @@ public class Controller {
     private Point positionSourisActuelle = new Point();
     private boolean modeInspection = false;
     private boolean modeImperial = false;
-    private int dimensionInspection = 1;
+    private int dimensionInspection = 10;
 
 
     public Controller(){
@@ -78,7 +78,7 @@ public class Controller {
                 etat = Etat.CREER_FORME_LIBRE;
                 plan.initialiserSurfaceLibre();
                 break;
-            case 3: // Pentagramme
+            case 3: // Pentagone
                 patronForme = new ArrayList<Point>() {
                     {
                         add(new Point(5, 0));
