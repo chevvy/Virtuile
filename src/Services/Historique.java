@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Historique {
-    private static List<Object> historique;
+    private static List<Plan> historique;
     private static int index;
 
     public static void setSingle_instance()
     {
         if (historique == null) {
-            historique = new ArrayList();
+            historique = new ArrayList<>();
             historique.add(new Plan());
             index = 0;
         }
@@ -26,30 +26,39 @@ public class Historique {
     public static void addState(Plan plan){
         setSingle_instance();
         if (index != historique.size()-1){
-            List<Object> temp = new ArrayList();
-            temp.add(new Plan());
-            temp.addAll(historique.subList(0, index));
+            List<Plan> temp = new ArrayList<>();
+            temp.addAll(historique.subList(0, index + 1));
             historique = temp;
         }
         try{
-            Object copy = ObjectCloner.deepCopy(plan);
+            Plan copy = (Plan)ObjectCloner.deepCopy(plan);
             historique.add(copy);
             index = historique.size()-1;
         } catch (Exception e){
-
+            System.out.println(e.toString());
         }
     }
 
     public static Plan goForward(){
         setSingle_instance();
         index++;
-        return (Plan)historique.get(index);
+        try{
+            return (Plan)ObjectCloner.deepCopy(historique.get(index));
+        } catch (Exception e){
+            System.out.println(e.toString());
+            return null;
+        }
     }
 
     public static Plan goBackward(){
         setSingle_instance();
         index--;
-        return (Plan)historique.get(index);
+        try{
+            return (Plan)ObjectCloner.deepCopy(historique.get(index));
+        } catch (Exception e){
+            System.out.println(e.toString());
+            return null;
+        }
     }
 
     public static boolean canGoForward(){

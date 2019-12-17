@@ -1,8 +1,13 @@
 package Vues.Alignement;
 
 
+import MVC.Controller;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +15,10 @@ import java.io.IOException;
 
 public class PanneauAlignementVerticalImage extends JPanel {
 
-    public PanneauAlignementVerticalImage() {
+    private Controller controller;
+
+    public PanneauAlignementVerticalImage(Controller controller) {
+        this.controller = controller;
         SetUpUi();
     }
 
@@ -19,7 +27,13 @@ public class PanneauAlignementVerticalImage extends JPanel {
         //hautExt
         try {
             BufferedImage imageHaut01 = ImageIO.read(new File("src/Ressources/hautExt.png"));
-            JLabel image = new JLabel(new ImageIcon(imageHaut01));
+            JButton image = new JButton(new ImageIcon(imageHaut01));
+            image.setMargin(new Insets(0, 0, 0, 0));
+            image.setLayout(null);
+            image.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e1) { controller.aligner("hautExt"); }
+            });
             this.add(image);
 
         } catch (IOException ex) {
@@ -29,7 +43,13 @@ public class PanneauAlignementVerticalImage extends JPanel {
         //hautInt
         try {
             BufferedImage imageHaut02 = ImageIO.read(new File("src/Ressources/hautInt.png"));
-            JLabel image = new JLabel(new ImageIcon(imageHaut02));
+            JButton image = new JButton(new ImageIcon(imageHaut02));
+            image.setMargin(new Insets(0, 0, 0, 0));
+            image.setLayout(null);
+            image.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e1) { controller.aligner("hautInt"); }
+            });
             this.add(image);
 
         } catch (IOException ex) {
@@ -39,7 +59,13 @@ public class PanneauAlignementVerticalImage extends JPanel {
         //centre vertical
         try {
             BufferedImage imageCentre = ImageIO.read(new File("src/Ressources/centreVertical.png"));
-            JLabel image = new JLabel(new ImageIcon(imageCentre));
+            JButton image = new JButton(new ImageIcon(imageCentre));
+            image.setMargin(new Insets(0, 0, 0, 0));
+            image.setLayout(null);
+            image.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e1) { controller.aligner("centreVertical"); }
+            });
             this.add(image);
 
         } catch (IOException ex) {
@@ -49,7 +75,13 @@ public class PanneauAlignementVerticalImage extends JPanel {
         //bas int
         try {
             BufferedImage imageBas01 = ImageIO.read(new File("src/Ressources/basInt.png"));
-            JLabel image = new JLabel(new ImageIcon(imageBas01));
+            JButton image = new JButton(new ImageIcon(imageBas01));
+            image.setMargin(new Insets(0, 0, 0, 0));
+            image.setLayout(null);
+            image.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e1) { controller.aligner("basInt"); }
+            });
             this.add(image);
 
         } catch (IOException ex) {
@@ -59,7 +91,13 @@ public class PanneauAlignementVerticalImage extends JPanel {
         //bas ext
         try {
             BufferedImage imageBas02 = ImageIO.read(new File("src/Ressources/basExt.png"));
-            JLabel image = new JLabel(new ImageIcon(imageBas02));
+            JButton image = new JButton(new ImageIcon(imageBas02));
+            image.setMargin(new Insets(0, 0, 0, 0));
+            image.setLayout(null);
+            image.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e1) { controller.aligner("basExt"); }
+            });
             this.add(image);
 
         } catch (IOException ex) {
@@ -70,7 +108,13 @@ public class PanneauAlignementVerticalImage extends JPanel {
         //vide
         try {
             BufferedImage imageNoAlignement = ImageIO.read(new File("src/Ressources/non.png"));
-            JLabel image = new JLabel(new ImageIcon(imageNoAlignement));
+            JButton image = new JButton(new ImageIcon(imageNoAlignement));
+            image.setMargin(new Insets(0, 0, 0, 0));
+            image.setLayout(null);
+            image.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e1) { controller.aligner("rienVertical"); }
+            });
             this.add(image);
 
         } catch (IOException ex) {

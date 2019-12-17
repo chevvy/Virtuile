@@ -163,8 +163,10 @@ public class Controller {
                 break;
             case SELECTIONNER_ALIGNER:
                 etat = plan.selectionnerAligner(p);
+                break;
             case SELECTIONNER_ESPACER:
                 etat = plan.selectionnerEspacer(p);
+                break;
             default:
                 break;
         }

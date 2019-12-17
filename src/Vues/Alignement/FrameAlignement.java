@@ -12,7 +12,7 @@ public class FrameAlignement extends JFrame{
 
     public FrameAlignement(Controller controller) {
         frame = this;
-        frame.setSize(680, 350);
+        frame.setSize(750, 350);
         frame.setLocation(100,100);
         frame.setTitle("Alignement des surfaces");
         frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);

@@ -24,6 +24,7 @@ public class PanneauActions extends JPanel implements Observer {
     }
 
     private void setUpUI(){
+        // Ajouter une surface
         ImageIcon imageAjouter = new ImageIcon("src/Ressources/ajouterSurface.png");
         boutonAjouter = new JButton(imageAjouter);
         boutonAjouter.setMargin(new Insets(0, 0, 0, 0));
@@ -37,6 +38,7 @@ public class PanneauActions extends JPanel implements Observer {
         });
         this.add(boutonAjouter);
 
+        // Ajouter une surface vide
         ImageIcon imageAjouterVide = new ImageIcon("src/Ressources/ajouterSurfaceVide.png");
         boutonAjouterSurfaceVide = new JButton(imageAjouterVide);
         boutonAjouterSurfaceVide.setMargin(new Insets(0, 0, 0, 0));
@@ -50,6 +52,7 @@ public class PanneauActions extends JPanel implements Observer {
         });
         this.add(boutonAjouterSurfaceVide);
 
+        // Supprimer une surface
         ImageIcon imageSupprimer = new ImageIcon("src/Ressources/suprimerSurface.png");
         boutonSupprimer = new JButton(imageSupprimer);
         boutonSupprimer.setMargin(new Insets(0, 0, 0, 0));
@@ -60,6 +63,7 @@ public class PanneauActions extends JPanel implements Observer {
         boutonSupprimer.addActionListener(e -> controller.supprimerSurface());
         this.add(boutonSupprimer);
 
+        // Alligner une surface
         ImageIcon imageAlligner = new ImageIcon("src/Ressources/allignerSurface.png");
         boutonAlligment = new JButton(imageAlligner);
         boutonAlligment.setMargin(new Insets(0, 0, 0, 0));
@@ -70,6 +74,7 @@ public class PanneauActions extends JPanel implements Observer {
         boutonAlligment.addActionListener(e -> controller.selectionnerAligner());
         this.add(boutonAlligment);
 
+        // Fusionner une surface
         ImageIcon imageFusionner = new ImageIcon("src/Ressources/fusionnerSurface.png");
         boutonFusionner = new JButton(imageFusionner);
         boutonFusionner.setMargin(new Insets(0, 0, 0, 0));
@@ -80,6 +85,7 @@ public class PanneauActions extends JPanel implements Observer {
         boutonFusionner.addActionListener(e -> controller.setEtat(Etat.FUSIONNER));
         this.add(boutonFusionner);
 
+        // Espacer surface
         ImageIcon imageAjouterEspace = new ImageIcon("src/Ressources/ajouterEspace.png");
         boutonAjouterEspace = new JButton(imageAjouterEspace);
         boutonAjouterEspace.setMargin(new Insets(0, 0, 0, 0));
@@ -92,6 +98,7 @@ public class PanneauActions extends JPanel implements Observer {
         });
         this.add(boutonAjouterEspace);
 
+        // Undo
         ImageIcon imageBackward = new ImageIcon("src/Ressources/backward.png");
         boutonBackward = new JButton(imageBackward);
         boutonBackward.setMargin(new Insets(0, 0, 0, 0));
@@ -104,6 +111,7 @@ public class PanneauActions extends JPanel implements Observer {
         });
         this.add(boutonBackward);
 
+        // Redo
         ImageIcon imageForward = new ImageIcon("src/Ressources/forward.png");
         boutonForward = new JButton(imageForward);
         boutonForward.setMargin(new Insets(0, 0, 0, 0));
