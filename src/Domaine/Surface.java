@@ -159,9 +159,11 @@ public class Surface implements Cloneable, Serializable {
         int tailleCoulis = this.getTailleDuCoulis();
         int tuileWidth = revetement.getLongueurTuile();
         int tuileHeight = revetement.getHauteurTuile();
+        int nbTuilesXVirtuelle = (polygone.getBounds().width /(8*tailleCoulis));
+        int nbTuilesYVirtuelle = (polygone.getBounds().height / (8*tailleCoulis));
 
-        int coordXduBound = (ratioWidthHeigth >= 1)? polygone.getBounds().x - 10*(tuileWidth+tailleCoulis) : polygone.getBounds().x - 10*(tuileWidth+tailleCoulis)*ratioHeigthWidth;
-        int coordYduBond = (ratioHeigthWidth >= 1)? polygone.getBounds().y - 10*(tuileHeight+tailleCoulis) : polygone.getBounds().y - 10*(tuileHeight+tailleCoulis)*ratioWidthHeigth;
+        int coordXduBound = (ratioWidthHeigth >= 1)? polygone.getBounds().x - nbTuilesXVirtuelle*(tuileWidth+tailleCoulis) : polygone.getBounds().x - nbTuilesXVirtuelle*(tuileWidth+tailleCoulis)*ratioHeigthWidth;
+        int coordYduBond = (ratioHeigthWidth >= 1)? polygone.getBounds().y - nbTuilesYVirtuelle*(tuileHeight+tailleCoulis) : polygone.getBounds().y - nbTuilesYVirtuelle*(tuileHeight+tailleCoulis)*ratioWidthHeigth;
         int boundsWidth = (ratioWidthHeigth >= 1)? ((int)polygone.getBounds().getMaxX() - coordXduBound)*2 : ((int)polygone.getBounds().getMaxX() - coordXduBound) * ratioHeigthWidth*2;
         int boundsHeight = (ratioHeigthWidth >= 1)? ((int)polygone.getBounds().getMaxY() - coordYduBond)*2 : ((int)polygone.getBounds().getMaxY() - coordYduBond) * ratioWidthHeigth*2;
 
@@ -204,8 +206,7 @@ public class Surface implements Cloneable, Serializable {
         }
 
         return IntersectionTuiles(newListeTuiles);
-        //return  newListeTuiles;
-
+        //return newListeTuiles;
     }
 
     private void genererImitationParquet(int nbTuilesY, int coordXduBound, int nbTuilesX, int tailleCoulis, int tuileWidth,

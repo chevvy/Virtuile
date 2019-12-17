@@ -349,7 +349,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
         angleDuMotif.setSize(220, 45);
         angleDuMotif.setLocation(15, 670);
         angleDuMotif.setMajorTickSpacing(45);
-        angleDuMotif.setMinorTickSpacing(5);
+        angleDuMotif.setMinorTickSpacing(15);
         angleDuMotif.setPaintTicks(true);
         angleDuMotif.setPaintLabels(true);
         angleDuMotif.setSnapToTicks(true);
