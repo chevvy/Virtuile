@@ -3,6 +3,8 @@ package Vues;
 import Domaine.Surface;
 import MVC.Controller;
 import MVC.Etat;
+import Services.MesureImperiale;
+import Services.Outils;
 import Vues.Revetements.FrameRevetements;
 
 import javax.swing.*;
@@ -102,6 +104,17 @@ public class PanneauConfiguration extends JPanel implements Observer{
         labelImperialHauteurSurface = new ImperialLabel(true);
         labelImperialHauteurSurface.setLocation(80, 60);
         labelImperialHauteurSurface.setVisible(false);
+        labelImperialHauteurSurface.addActionListenner(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try{
+                    int hauteur = (int)labelImperialHauteurSurface.getValue();
+                    int vieilleLongueur = Integer.parseInt(controller.getInfosSurfaceSelect().get("Longueur surface"));
+                    controller.setDimensionsSurface(hauteur, vieilleLongueur);
+                }
+                catch (Exception e) {}
+            }
+        });
 
         labelUniteMesureHauteurSurface = new JLabel(uniteMesure);
         labelUniteMesureHauteurSurface.setSize(70, 30);
@@ -130,6 +143,18 @@ public class PanneauConfiguration extends JPanel implements Observer{
         labelImperialLargeurSurface = new ImperialLabel(true);
         labelImperialLargeurSurface.setLocation(80, 90);
         labelImperialLargeurSurface.setVisible(false);
+
+        labelImperialLargeurSurface.addActionListenner(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try{
+                    int longueur = (int)labelImperialLargeurSurface.getValue();
+                    int vieilleLargeur = Integer.parseInt(controller.getInfosSurfaceSelect().get("Hauteur surface"));
+                    controller.setDimensionsSurface(vieilleLargeur, longueur);
+                }
+                catch (Exception e) {}
+            }
+        });
 
         labelUniteMesureLargeurSurface = new JLabel(uniteMesure);
         labelUniteMesureLargeurSurface.setSize(70, 30);
@@ -290,13 +315,23 @@ public class PanneauConfiguration extends JPanel implements Observer{
 
         labelImperialEpaisseurCoulis = new ImperialLabel(false);
         labelImperialEpaisseurCoulis.setLocation(80, 410);
-        labelImperialEpaisseurCoulis.setEditable(false);
         labelImperialEpaisseurCoulis.setVisible(false);
+        labelImperialEpaisseurCoulis.addActionListenner(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try{
+                    int epaisseur = (int)labelImperialEpaisseurCoulis.getValue();
+                    controller.setEpaisseurCoulis(epaisseur);
+                }
+                catch (Exception e) {}
+            }
+        });
         this.add(labelImperialEpaisseurCoulis);
 
         labelUniteMesureLCoulis = new JLabel(uniteMesure);
         labelUniteMesureLCoulis.setSize(60, 30);
         labelUniteMesureLCoulis.setLocation(205, 410);
+
         this.add(labelUniteMesureLCoulis);
 
         JLabel labelDecallage = new JLabel("Décallage : ");

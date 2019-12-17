@@ -4,9 +4,10 @@ import Services.MesureImperiale;
 import Services.Outils;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 public class ImperialLabel extends JLabel {
-    private JTextField pieds, pouce, fraction;
+    public JTextField pieds, pouce, fraction;
     public ImperialLabel(boolean full){
         this.setSize(200, 30);
         pieds = new JTextField();
@@ -54,5 +55,21 @@ public class ImperialLabel extends JLabel {
         pieds.setEditable(editable);
         pouce.setEditable(editable);
         fraction.setEditable(editable);
+    }
+
+    public void addActionListenner(ActionListener listener){
+        pieds.addActionListener(listener);
+        pouce.addActionListener(listener);
+        fraction.addActionListener(listener);
+    }
+
+    public double getValue(){
+        int pieds = Integer.parseInt(this.pieds.getText());
+        int pouce = Integer.parseInt(this.pouce.getText());
+        String [] frac = this.fraction.getText().split("/");
+        int num = Integer.parseInt(frac[0]);
+        int denum = Integer.parseInt(frac[1]);
+        int value = (int)Outils.impToMet(new MesureImperiale(pieds, pouce, num, denum));
+        return value;
     }
 }

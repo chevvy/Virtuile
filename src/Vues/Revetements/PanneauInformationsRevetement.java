@@ -231,6 +231,10 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
                 String motifTuile = String.valueOf(motifRecouvrementCombo.getSelectedItem());
                 int hauteurTuile = Integer.parseInt(hauteurTuileText.getText());
                 int longueurTuile = Integer.parseInt(largeurTuileText.getText());
+                if(controller.getModeImperial()){
+                    hauteurTuile = (int)labelImperialhauteurTuile.getValue();
+                    longueurTuile = (int)labelImperiallargeurTuile.getValue();
+                }
                 int nbTuilesBoite = Integer.parseInt(nbTuilesBoiteText.getText());
                 controller.ajouterRevetement(nomRevetement, typeMateriauTuile, couleurTuile,
                         motifTuile, hauteurTuile, longueurTuile, nbTuilesBoite);

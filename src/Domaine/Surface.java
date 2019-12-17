@@ -19,7 +19,7 @@ public class Surface implements Cloneable, Serializable {
     public ArrayList<Surface> trous;
     private Revetement revetement;
     private ArrayList<Tuile> listeTuiles = new ArrayList<>();
-    private int tailleDuCoulis = 4;
+    private int tailleDuCoulis = 1;
     private Color couleurCoulis = Color.WHITE;
     private int offset = 50;
     private int tuileCentre = 1;
