@@ -164,16 +164,16 @@ public class Surface implements Cloneable, Serializable {
         // IMPORTANT -> le changement du offset du motif est fait par -revetement.getOffsetMotifx()
         int coordXduBound = (ratioWidthHeigth >= 1)?
                 (polygone.getBounds().x - nbTuilesXVirtuelle*(tuileWidth+tailleCoulis))-revetement.getOffsetMotifx() :
-                (polygone.getBounds().x - nbTuilesXVirtuelle*(tuileWidth+tailleCoulis)*ratioHeigthWidth*2)-revetement.getOffsetMotifx();
+                (polygone.getBounds().x - nbTuilesXVirtuelle*(tuileWidth+tailleCoulis)*2)-revetement.getOffsetMotifx();
         int coordYduBond = (ratioHeigthWidth >= 1)?
                 (polygone.getBounds().y - nbTuilesYVirtuelle*(tuileHeight+tailleCoulis))-revetement.getOffsetMotify() :
-                (polygone.getBounds().y - nbTuilesYVirtuelle*(tuileHeight+tailleCoulis)*ratioWidthHeigth*2) -revetement.getOffsetMotify();
+                (polygone.getBounds().y - nbTuilesYVirtuelle*(tuileHeight+tailleCoulis)*2) -revetement.getOffsetMotify();
         int boundsWidth = (ratioWidthHeigth >= 1)?
                 ((int)polygone.getBounds().getMaxX() - coordXduBound)*2 :
-                ((int)polygone.getBounds().getMaxX() - coordXduBound) * ratioHeigthWidth*2;
+                ((int)polygone.getBounds().getMaxX() - coordXduBound) *2;
         int boundsHeight = (ratioHeigthWidth >= 1)?
                 ((int)polygone.getBounds().getMaxY() - coordYduBond)*2 :
-                ((int)polygone.getBounds().getMaxY() - coordYduBond) * ratioWidthHeigth*2;
+                ((int)polygone.getBounds().getMaxY() - coordYduBond) *2;
 
 
         int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis));
