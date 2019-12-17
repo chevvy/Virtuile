@@ -12,7 +12,10 @@ public class FrameEspacement extends JFrame{
 
     public FrameEspacement(Controller controller) {
         frame = this;
-        frame.setSize(340, 130);
+        frame.setSize(300, 160);
+        if(controller.getModeImperial()){
+            frame.setSize(450, 160);
+        }
         frame.setLocation(100,100);
         frame.setTitle("Espacement entre deux surfaces");
         frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);

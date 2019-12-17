@@ -64,11 +64,19 @@ public class ImperialLabel extends JLabel {
     }
 
     public double getValue(){
-        int pieds = Integer.parseInt(this.pieds.getText());
-        int pouce = Integer.parseInt(this.pouce.getText());
-        String [] frac = this.fraction.getText().split("/");
-        int num = Integer.parseInt(frac[0]);
-        int denum = Integer.parseInt(frac[1]);
+        int pieds = this.pieds.getText() != ""? Integer.parseInt(this.pieds.getText()) : 0;
+        int pouce = this.pouce.getText() != ""?Integer.parseInt(this.pouce.getText()): 0;
+        int num;
+        int denum;
+        if(this.fraction.getText() != ""){
+            String [] frac = this.fraction.getText().split("/");
+            num = Integer.parseInt(frac[0]);
+            denum = Integer.parseInt(frac[1]);
+        }else{
+            num=0;
+            denum=8;
+        }
+
         int value = (int)Outils.impToMet(new MesureImperiale(pieds, pouce, num, denum));
         return value;
     }
