@@ -13,6 +13,8 @@ public class Revetement implements Serializable {
     private int longueurTuile;
     private int hauteurTuile;
     private double angleMotif;
+    private int offsetMotifx = 0;
+    private int offsetMotify = 0 ;
 
 
     public Revetement() {
@@ -93,6 +95,22 @@ public class Revetement implements Serializable {
 
     public void setAngleMotif(double angleMotif) {
         this.angleMotif = angleMotif;
+    }
+
+    public int getOffsetMotifx() {
+        return offsetMotifx;
+    }
+
+    public void setOffsetMotifx(int offsetMotifx) {
+        this.offsetMotifx = offsetMotifx;
+    }
+
+    public int getOffsetMotify() {
+        return offsetMotify;
+    }
+
+    public void setOffsetMotify(int offsetMotify) {
+        this.offsetMotify = offsetMotify;
     }
 }
 

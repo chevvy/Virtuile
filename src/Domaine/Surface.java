@@ -162,8 +162,10 @@ public class Surface implements Cloneable, Serializable {
         int nbTuilesXVirtuelle = (polygone.getBounds().width /(8*tailleCoulis));
         int nbTuilesYVirtuelle = (polygone.getBounds().height / (8*tailleCoulis));
 
-        int coordXduBound = (ratioWidthHeigth >= 1)? polygone.getBounds().x - nbTuilesXVirtuelle*(tuileWidth+tailleCoulis) : polygone.getBounds().x - nbTuilesXVirtuelle*(tuileWidth+tailleCoulis)*ratioHeigthWidth;
-        int coordYduBond = (ratioHeigthWidth >= 1)? polygone.getBounds().y - nbTuilesYVirtuelle*(tuileHeight+tailleCoulis) : polygone.getBounds().y - nbTuilesYVirtuelle*(tuileHeight+tailleCoulis)*ratioWidthHeigth;
+        int coordXduBound = (ratioWidthHeigth >= 1)? (polygone.getBounds().x - nbTuilesXVirtuelle*(tuileWidth+tailleCoulis))-revetement.getOffsetMotifx() : (polygone.getBounds().x - nbTuilesXVirtuelle*(tuileWidth+tailleCoulis)*ratioHeigthWidth)-revetement.getOffsetMotifx();
+        int coordYduBond = (ratioHeigthWidth >= 1)? (polygone.getBounds().y - nbTuilesYVirtuelle*(tuileHeight+tailleCoulis))-revetement.getOffsetMotify() : (polygone.getBounds().y - nbTuilesYVirtuelle*(tuileHeight+tailleCoulis)*ratioWidthHeigth) -revetement.getOffsetMotify();
+
+
         int boundsWidth = (ratioWidthHeigth >= 1)? ((int)polygone.getBounds().getMaxX() - coordXduBound)*2 : ((int)polygone.getBounds().getMaxX() - coordXduBound) * ratioHeigthWidth*2;
         int boundsHeight = (ratioHeigthWidth >= 1)? ((int)polygone.getBounds().getMaxY() - coordYduBond)*2 : ((int)polygone.getBounds().getMaxY() - coordYduBond) * ratioWidthHeigth*2;
 
@@ -176,7 +178,6 @@ public class Surface implements Cloneable, Serializable {
             return newListeTuiles;
         }
         int j = 0;
-        //TODO ajouter angle dans Installation en L ou on fait comme si c'était une installation droite et on va modifier l'angle?
         if (motif.equals("Installation en décallé") || motif.equals("Installation droite") || motif.equals("Installation en L")) {
             while (j <= nbTuilesY + 1) {
                 int i = 0;
@@ -206,7 +207,6 @@ public class Surface implements Cloneable, Serializable {
         }
 
         return IntersectionTuiles(newListeTuiles);
-        //return newListeTuiles;
     }
 
     private void genererImitationParquet(int nbTuilesY, int coordXduBound, int nbTuilesX, int tailleCoulis, int tuileWidth,

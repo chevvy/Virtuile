@@ -27,7 +27,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
             largeurTuileSelectText, couleurCoulisText;
     private ButtonGroup groupeRadioSurface;
     private JSpinner decallageSpinner;
-    private JSlider angleDuMotif;
+    private JSlider angleDuMotif, positionMotifX, positionMotifY;
     Surface surfaceSelectionnee;
 
     private Controller controller;
@@ -362,9 +362,59 @@ public class PanneauConfiguration extends JPanel implements Observer{
                         double angleModifie = (double)source.getValue();
                         controller.setAngleMotifSurfaceSelectionnee(angleModifie);
                     }
-
                 }
+            }
+        });
 
+        JLabel labelPositionX = new JLabel("Décalage sur X");
+        labelPositionX.setSize(150, 30);
+        labelPositionX.setLocation(15, 720);
+        this.add(labelPositionX);
+
+        this.positionMotifX = new JSlider(JSlider.HORIZONTAL, -100, 100, 0);
+        positionMotifX.setSize(220, 45);
+        positionMotifX.setLocation(15, 755);
+        positionMotifX.setMajorTickSpacing(25);
+        positionMotifX.setMinorTickSpacing(10);
+        positionMotifX.setPaintTicks(true);
+        positionMotifX.setPaintLabels(true);
+        positionMotifX.setSnapToTicks(true);
+        positionMotifX.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                JSlider source = (JSlider) changeEvent.getSource();
+                {
+                    if (!source.getValueIsAdjusting()){
+                        int changementMotifX = source.getValue();
+                        controller.setOffsetMotifx(changementMotifX);
+                    }
+                }
+            }
+        });
+
+        JLabel labelPositionY = new JLabel("Décalage sur Y");
+        labelPositionY.setSize(150, 30);
+        labelPositionY.setLocation(15, 800);
+        this.add(labelPositionY);
+
+        this.positionMotifY = new JSlider(JSlider.HORIZONTAL, -100, 100, 0);
+        positionMotifY.setSize(220, 45);
+        positionMotifY.setLocation(15, 825);
+        positionMotifY.setMajorTickSpacing(25);
+        positionMotifY.setMinorTickSpacing(10);
+        positionMotifY.setPaintTicks(true);
+        positionMotifY.setPaintLabels(true);
+        positionMotifY.setSnapToTicks(true);
+        positionMotifY.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                JSlider source = (JSlider) changeEvent.getSource();
+                {
+                    if (!source.getValueIsAdjusting()){
+                        int changementMotify = source.getValue();
+                        controller.setOffsetMotify(changementMotify);
+                    }
+                }
             }
         });
 
@@ -387,6 +437,8 @@ public class PanneauConfiguration extends JPanel implements Observer{
         this.add(revetementSurfaceSelectionnee);
         this.add(boutonMenuRevetement);
         this.add(angleDuMotif);
+        this.add(positionMotifX);
+        this.add(positionMotifY);
         this.setVisible(true);
 
     }
@@ -442,6 +494,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
             hauteurTuileSelectText.setText(Integer.toString(controller.getHauteurTuile()));
             largeurTuileSelectText.setText(Integer.toString(controller.getLargeurTuile()));
             angleDuMotif.setValue((int)controller.getAngleMotifSurfaceSelectionne());
+
         }
         else{
             hauteurSurfaceText.setText("");
@@ -461,6 +514,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
             hauteurTuileSelectText.setText("");
             largeurTuileSelectText.setText("");
             this.angleDuMotif.setValue(0);
+
 
         }
 
