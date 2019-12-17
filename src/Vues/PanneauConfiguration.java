@@ -279,6 +279,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
 
         couleurCoulisText = new JTextField(20);
         couleurCoulisText.setBounds(150,380,50,30);
+        couleurCoulisText.setEditable(false);
         this.add(couleurCoulisText);
 
         boutonAjouterCouleurCoulis = new JButton("Modifier");
@@ -335,7 +336,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
         this.add(labelUniteMesureLCoulis);
 
         JLabel labelDecallage = new JLabel("Décallage : ");
-        labelDecallage.setSize(60, 30);
+        labelDecallage.setSize(100, 30);
         labelDecallage.setLocation(15, 440);
         this.add(labelDecallage);
 
