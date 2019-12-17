@@ -36,7 +36,7 @@ public class Surface implements Cloneable, Serializable {
         this.estUnTrou = trou;
         this.trous = new ArrayList<>();
         this.revetement = new Revetement();
-        this.pointMilieu = new Point((int) polygone.getBounds().getMinX(),(int) polygone.getBounds().getMinY());
+        this.pointMilieu = new Point((int) polygone.getBounds().getMaxX(),(int) polygone.getBounds().getMaxY());
         majListeTuiles();
     }
 
@@ -153,17 +153,21 @@ public class Surface implements Cloneable, Serializable {
         // "Installation en L"
         // En ce moment, si le motif est autre que Installation droite ou installation décallé, il fait "installation"
         // CAD : installation equivalent en x et y
+        int ratioHeigthWidth = polygone.getBounds().height/polygone.getBounds().width;
+        int ratioWidthHeigth = polygone.getBounds().width/polygone.getBounds().height;
         String motif = this.revetement.getMotifTuiles();
         int tailleCoulis = this.getTailleDuCoulis();
-        // on fait start le motif à 1 fois la taille du polygone, en dehors de celui-ci
-        int coordXduBound = polygone.getBounds().x - 2*polygone.getBounds().width;
-        int coordYduBond = polygone.getBounds().y - 2*polygone.getBounds().height;
-        int boundsWidth = 3*polygone.getBounds().width;
-        int boundsHeight = 3*polygone.getBounds().height;
         int tuileWidth = revetement.getLongueurTuile();
         int tuileHeight = revetement.getHauteurTuile();
-        int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis))*2;
-        int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis)) *2;
+
+        int coordXduBound = (ratioWidthHeigth >= 1)? polygone.getBounds().x - 2*polygone.getBounds().width : polygone.getBounds().x - 2*polygone.getBounds().width*ratioHeigthWidth;
+        int coordYduBond = (ratioHeigthWidth >= 1)? polygone.getBounds().y - 2*polygone.getBounds().height : polygone.getBounds().y - 2*polygone.getBounds().height*ratioWidthHeigth;
+        int boundsWidth = (ratioWidthHeigth >= 1)? ((int)polygone.getBounds().getMaxX() - coordXduBound)*2 : ((int)polygone.getBounds().getMaxX() - coordXduBound) * ratioHeigthWidth;
+        int boundsHeight = (ratioHeigthWidth >= 1)? ((int)polygone.getBounds().getMaxY() - coordYduBond)*2 : ((int)polygone.getBounds().getMaxY() - coordYduBond) * ratioWidthHeigth;
+
+
+        int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis));
+        int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis));
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
 
         if (estUnTrou) {
@@ -200,6 +204,8 @@ public class Surface implements Cloneable, Serializable {
         }
 
         return IntersectionTuiles(newListeTuiles);
+        //return  newListeTuiles;
+
     }
 
     private void genererImitationParquet(int nbTuilesY, int coordXduBound, int nbTuilesX, int tailleCoulis, int tuileWidth,
