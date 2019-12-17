@@ -17,7 +17,6 @@ import Domaine.Outils.*;
 public class Surface implements Cloneable, Serializable {
 
     public Polygon polygone;
-    private Polygon surfaceTuilee;
     public boolean estUnTrou;
     public ArrayList<Surface> trous;
     private Revetement revetement;
@@ -32,7 +31,6 @@ public class Surface implements Cloneable, Serializable {
         int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
-        surfaceTuilee = new Polygon(coords_x, coords_y, listePoints.size());
         this.estUnTrou = trou;
         this.trous = new ArrayList<>();
         this.revetement = new Revetement();
@@ -57,13 +55,6 @@ public class Surface implements Cloneable, Serializable {
         int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
         polygone = new Polygon(coords_x, coords_y, listePoints.size());
         this.pointMilieu = new Point((int) polygone.getBounds().getMinX(),(int) polygone.getBounds().getMinY());
-        majListeTuiles();
-    }
-
-    public void changerPointsSurfaceTuile(List<Point> listePoints){
-        int[] coords_x = listePoints.stream().mapToInt(point -> point.x).toArray();
-        int[] coords_y = listePoints.stream().mapToInt(point -> point.y).toArray();
-        surfaceTuilee = new Polygon(coords_x, coords_y, listePoints.size());
         majListeTuiles();
     }
 
@@ -162,18 +153,23 @@ public class Surface implements Cloneable, Serializable {
         int tuileHeight = revetement.getHauteurTuile();
 
         // ici l'idée était d'avoir un facteur qui s'ajuste en fonction de la taille de width et height
-        int nbTuilesXVirtuelle = (polygone.getBounds().width /(8*tailleCoulis))*2;
-        int nbTuilesYVirtuelle = (polygone.getBounds().height / (8*tailleCoulis))*2;
+        int nbTuilesXVirtuelle = (polygone.getBounds().width /(8*tailleCoulis));
+        int nbTuilesYVirtuelle = (polygone.getBounds().height / (8*tailleCoulis));
+        if (motif.equals("Installation en chevron") || motif.equals("Installation imitation parquet") || motif.equals("Installation en décallé")){
+            nbTuilesXVirtuelle *= 2;
+            nbTuilesYVirtuelle *= 2;
+        }
+
 
         // ici, l'idée de changer la taille de chq bounds en fonction du facteur, mais après plusieurs tests, c'est pas
         // vraiment le résultat escompté.
         // IMPORTANT -> le changement du offset du motif est fait par -revetement.getOffsetMotifx()
         int coordXduBound = (ratioWidthHeigth >= 1)?
                 (polygone.getBounds().x - nbTuilesXVirtuelle*(tuileWidth+tailleCoulis))-revetement.getOffsetMotifx() :
-                (polygone.getBounds().x - nbTuilesXVirtuelle*(tuileWidth+tailleCoulis)*ratioHeigthWidth)-revetement.getOffsetMotifx();
+                (polygone.getBounds().x - nbTuilesXVirtuelle*(tuileWidth+tailleCoulis)*ratioHeigthWidth*2)-revetement.getOffsetMotifx();
         int coordYduBond = (ratioHeigthWidth >= 1)?
                 (polygone.getBounds().y - nbTuilesYVirtuelle*(tuileHeight+tailleCoulis))-revetement.getOffsetMotify() :
-                (polygone.getBounds().y - nbTuilesYVirtuelle*(tuileHeight+tailleCoulis)*ratioWidthHeigth) -revetement.getOffsetMotify();
+                (polygone.getBounds().y - nbTuilesYVirtuelle*(tuileHeight+tailleCoulis)*ratioWidthHeigth*2) -revetement.getOffsetMotify();
         int boundsWidth = (ratioWidthHeigth >= 1)?
                 ((int)polygone.getBounds().getMaxX() - coordXduBound)*2 :
                 ((int)polygone.getBounds().getMaxX() - coordXduBound) * ratioHeigthWidth*2;
@@ -184,6 +180,7 @@ public class Surface implements Cloneable, Serializable {
 
         int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis));
         int nbTuilesY = (boundsHeight / (tuileHeight + tailleCoulis));
+
         ArrayList<Tuile> newListeTuiles = new ArrayList<>();
 
         if (estUnTrou) {
@@ -219,8 +216,12 @@ public class Surface implements Cloneable, Serializable {
         }
 
         // Pour debug, simplement retourner la liste newListeTuiles
+        //return IntersectionTuiles(newListeTuiles);
+/*        ArrayList<Tuile> tuilesApresINtersection = IntersectionTuiles(newListeTuiles);
+        if(tuilesApresINtersection.size() != 0){
+            System.out.println("Ratio tuiles " + newListeTuiles.size()/tuilesApresINtersection.size());
+        }*/
         return IntersectionTuiles(newListeTuiles);
-        //return newListeTuiles;
     }
 
     private void genererImitationParquet(int nbTuilesY, int coordXduBound, int nbTuilesX, int tailleCoulis, int tuileWidth,
@@ -342,14 +343,7 @@ public class Surface implements Cloneable, Serializable {
         setListeTuiles(genererListeDeTuiles());
     }
 
-    private void genererSurfaceTuilee(){ // TODO ne pas toucher plz
-        int largeur = surfaceTuilee.getBounds().width - (2*tailleDuCoulis);
-        int hauteur = surfaceTuilee.getBounds().height - (2*tailleDuCoulis);
-        Rectangle limites = surfaceTuilee.getBounds();
-        ArrayList<Point> points = getListePoints();
-        points = generePoints(hauteur, largeur, points, limites, limites.x, limites.y);
-        changerPointsSurfaceTuile(points);
-    }
+
 
 
     public Tuile getTuileAtPoint(Point point){
@@ -361,12 +355,7 @@ public class Surface implements Cloneable, Serializable {
         return new Tuile(new Polygon());
     }
 
-    // TODO ramener dans Outils
-    public Point getPointMilieu(int hauteur, int largeur, int positionX, int positionY){
-        int coordMilieuX = positionX + (largeur/2);
-        int coordMilieuY = positionY + (hauteur/2);
-        return new Point(coordMilieuX, coordMilieuY);
-    }
+
 
     // TODO ramener dans Outils
     public ArrayList<Point> rotationListeDePoints(ArrayList<Point> points, Point pointMilieu, double angle){
