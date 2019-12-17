@@ -68,6 +68,7 @@ public class PanneauEspacement extends JPanel {
                 }
                 controller.relacher();
                 frame.original.setEnabled(true);
+                controller.addCurrentStep();
                 frame.dispose();
             } catch (Exception ex){}
         });

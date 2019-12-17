@@ -96,6 +96,7 @@ public class Controller {
 
     public void setDimensionsSurface(int hauteur, int largeur){
         plan.setDimensionsSurface(hauteur, largeur);
+        addCurrentStep();
         notifyObservers();
     }
 
@@ -400,6 +401,7 @@ public class Controller {
                 revetement.setLongueurTuile(calculerLargeurTuile(revetement.getHauteurTuile(), motif, this.plan.surfaceSelectionnee.getTailleDuCoulis()));
             }
             this.plan.surfaceSelectionnee.setRevetement(revetement);
+            addCurrentStep();
         }
         notifyObservers();
     }
@@ -479,6 +481,10 @@ public class Controller {
 
     public int getOffsetMotify(){
         return plan.surfaceSelectionnee.getRevetement().getOffsetMotify();
+    }
+
+    public void addCurrentStep(){
+        Historique.addState(this.plan);
     }
 }
 
