@@ -113,14 +113,15 @@ public class MainWindow extends JFrame implements Observer {
         menuEdition.add(menuMateriaux);
         menuMateriaux.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                new FrameRevetements(controller).setVisible(true);
+                new FrameRevetements(controller, mainWindow).setVisible(true);
             }
         });
         JMenuItem menuTypeMateriau = new JMenuItem("Ajouter un type de matériau");
         menuEdition.add(menuTypeMateriau);
         menuTypeMateriau.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                new FrameMateriau(controller).setVisible(true);
+                mainWindow.setEnabled(false);
+                new FrameMateriau(controller, mainWindow).setVisible(true);
             }
         });
 
@@ -153,12 +154,14 @@ public class MainWindow extends JFrame implements Observer {
     @Override
     public void update() {
         if( controller.getEtat() == Etat.OUVRIR_FENETRE_ALIGNER){
-            new FrameAlignement(controller).setVisible(true);
+            new FrameAlignement(controller, this).setVisible(true);
             controller.setEtat(Etat.ALIGNER);
+            this.setEnabled(false);
         }
         if(controller.getEtat() == Etat.OUVRIR_FENETRE_ESPACER){
-            new FrameEspacement(controller).setVisible(true);
+            new FrameEspacement(controller, this).setVisible(true);
             controller.setEtat(Etat.ESPACER);
+            this.setEnabled(false);
         }
     }
 }

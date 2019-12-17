@@ -13,13 +13,13 @@ public class PanneauMateriau extends JPanel{
     private Controller controller;
     public FrameMateriau frame;
 
-    public PanneauMateriau(Controller controller, FrameMateriau frame) {
 
-        SetUpUi();
+    public PanneauMateriau(Controller controller, FrameMateriau frame) {
         this.controller = controller;
         this.frame = frame;
 
-    }
+        SetUpUi();
+        }
     private void SetUpUi() {
         //Nouvelle couleur
         JLabel nomMateriauLabel = new JLabel("Nouveau type de matériaux :");
@@ -38,8 +38,9 @@ public class PanneauMateriau extends JPanel{
         boutonOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controller.ajouterTypeMateriau(nomMateriauField.getText());
+                frame.original.setEnabled(true);
                 frame.dispose();
-                new FrameRevetements(controller).setVisible(true);
+                new FrameRevetements(controller, frame.original).setVisible(true);
             }
         });
     }

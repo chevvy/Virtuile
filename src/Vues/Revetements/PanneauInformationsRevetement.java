@@ -65,7 +65,7 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
         boutonAjouterMateriau.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                new FrameMateriau(controller).setVisible(true);
+                new FrameMateriau(controller, frame.original).setVisible(true);
                 frame.dispose();
             }
         });
@@ -239,7 +239,7 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
                 controller.ajouterRevetement(nomRevetement, typeMateriauTuile, couleurTuile,
                         motifTuile, hauteurTuile, longueurTuile, nbTuilesBoite);
                 frame.dispose();
-                new FrameRevetements(controller).setVisible(true);
+                new FrameRevetements(controller, frame.original).setVisible(true);
             }
         });
 

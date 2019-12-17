@@ -67,6 +67,7 @@ public class PanneauEspacement extends JPanel {
 
                 }
                 controller.relacher();
+                frame.original.setEnabled(true);
                 frame.dispose();
             } catch (Exception ex){}
         });
@@ -76,6 +77,7 @@ public class PanneauEspacement extends JPanel {
         this.add(boutonAnnuler);
         boutonAnnuler.addActionListener(e -> {
             controller.annulerAligner();
+            frame.original.setEnabled(true);
             frame.dispose();
         });
         this.setVisible(true);

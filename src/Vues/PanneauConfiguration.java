@@ -267,8 +267,8 @@ public class PanneauConfiguration extends JPanel implements Observer{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 mainWindow.setEnabled(false);
-                new FrameRevetements(controller).setVisible(true);
-                mainWindow.setEnabled(true);}
+                new FrameRevetements(controller,mainWindow).setVisible(true);
+                }
         });
 
 

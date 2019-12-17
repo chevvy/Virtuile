@@ -9,9 +9,11 @@ public class FrameEspacement extends JFrame{
     public FrameEspacement frame;
 
     private Controller controller;
+    public JFrame original;
 
-    public FrameEspacement(Controller controller) {
+    public FrameEspacement(Controller controller, JFrame original) {
         frame = this;
+        this.original = original;
         frame.setSize(300, 160);
         if(controller.getModeImperial()){
             frame.setSize(450, 160);
@@ -23,6 +25,11 @@ public class FrameEspacement extends JFrame{
 
         PanneauEspacement panelEspacement = new PanneauEspacement(controller, this);
         frame.add(panelEspacement);
-
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                original.setEnabled(true);
+            }
+        });
     }
 }
