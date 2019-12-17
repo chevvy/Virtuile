@@ -26,6 +26,7 @@ public class Controller {
     private Etat etat = Etat.LECTURE;
     private Point positionSourisActuelle = new Point();
     private boolean modeIspection = false;
+    private boolean modeImperial = false;
     private int dimensionInspection = 1;
 
 
@@ -238,7 +239,7 @@ public class Controller {
                 value = "Cliquez pour débuter la surface";
                 break;
             case ETIRER_SURFACE:
-                value = "Relachez pour créer la forme";
+                value = "Relachez pour définir la forme";
                 break;
             case DEPLACER_SURFACE:
                 value = "Déplacez la forme avec la souris";
@@ -323,6 +324,15 @@ public class Controller {
 
     public void setGrilleMagnetiqueActive(boolean active){
         this.plan.setGrilleMagnetiqueActive(active);
+    }
+
+    public void setModeImperial(boolean active){
+        this.modeImperial = active;
+        notifyObservers();
+    }
+
+    public boolean getModeImperial(){
+        return this.modeImperial;
     }
 
     public Plan getPlan() {

@@ -19,7 +19,7 @@ public class MainWindow extends JFrame implements Observer {
     private JMenuBar menuBar;
     private JMenu menuFichier, menuEdition, menuVue;
     private JMenuItem menuItemSauvegarder, menuItemCharger, menuItemTailleGrilleMagnetique;
-    private JCheckBoxMenuItem menuCheckboxMagnetiser;
+    private JCheckBoxMenuItem menuCheckboxMagnetiser, menuCheckboxImperial;
     private PanneauConfiguration panelVueInfo;
     private Canvas panelVuePlan;
     private PanneauActions panneauActions;
@@ -84,6 +84,7 @@ public class MainWindow extends JFrame implements Observer {
                 controller.setGrilleMagnetiqueActive(menuCheckboxMagnetiser.getState());
             }
         });
+
         menuItemTailleGrilleMagnetique = new JMenuItem("Modifier la taille de la grille magnétique");
         menuItemTailleGrilleMagnetique.addActionListener(new ActionListener() {
             @Override
@@ -95,6 +96,15 @@ public class MainWindow extends JFrame implements Observer {
                 }catch(Exception ex){}
             }
         });
+
+        menuCheckboxImperial = new JCheckBoxMenuItem("Mesures Impériales");
+        menuCheckboxImperial.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.setModeImperial(menuCheckboxImperial.getState());
+            }
+        });
+
 
         menuFichier.add(menuItemSauvegarder);
         menuFichier.add(menuItemCharger);
@@ -114,11 +124,10 @@ public class MainWindow extends JFrame implements Observer {
             }
         });
 
-        menuEdition.add(new JMenuItem("Ajouter une surface"));
-        menuEdition.add(new JMenuItem("Modifier les sommets"));
         menuEdition.addSeparator();
         menuEdition.add(menuCheckboxMagnetiser);
         menuEdition.add(menuItemTailleGrilleMagnetique);
+        menuEdition.add(menuCheckboxImperial);
         menuBar.add(menuFichier);
         menuBar.add(menuEdition);
         menuBar.add(menuVue);

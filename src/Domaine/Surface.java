@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.lang.Cloneable;
 
-import Domaine.Outils.*;
-
 public class Surface implements Cloneable, Serializable {
 
     public Polygon polygone;

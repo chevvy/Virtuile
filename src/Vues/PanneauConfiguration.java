@@ -29,6 +29,12 @@ public class PanneauConfiguration extends JPanel implements Observer{
     private JSpinner decallageSpinner;
     private JSlider angleDuMotif;
     Surface surfaceSelectionnee;
+    private ImperialLabel labelImperialHauteurSurface, labelImperialLargeurSurface, labelImperialHauteurTuile,
+            labelImperialLargeurTuile, labelImperialHauteurTuileSelect, labelImperialLargeurTuileSelect,
+            labelImperialEpaisseurCoulis;
+    JLabel labelUniteMesureHauteurSurface, labelUniteMesureLargeurSurface, labelUniteMesureHauteurTuile,
+            labelUniteMesureLargeurTuile, labelUniteMesureHauteurTuileSelect, labelUniteMesureLargeurTuileSelect,
+            labelUniteMesureLCoulis;
 
     private Controller controller;
     public MainWindow mainWindow;
@@ -84,13 +90,20 @@ public class PanneauConfiguration extends JPanel implements Observer{
         hauteurSurfaceText.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                int vieilleLargeur = Integer.parseInt(controller.getInfosSurfaceSelect().get("Longueur surface"));
-                controller.setDimensionsSurface(Integer.parseInt(hauteurSurfaceText.getText()), vieilleLargeur);
+                try{
+                    int vieilleLargeur = Integer.parseInt(controller.getInfosSurfaceSelect().get("Longueur surface"));
+                    controller.setDimensionsSurface(Integer.parseInt(hauteurSurfaceText.getText()), vieilleLargeur);
+                }catch(Exception e){}
+
             }
         });
         this.add(hauteurSurfaceText);
 
-        JLabel labelUniteMesureHauteurSurface = new JLabel(uniteMesure);
+        labelImperialHauteurSurface = new ImperialLabel(true);
+        labelImperialHauteurSurface.setLocation(80, 60);
+        labelImperialHauteurSurface.setVisible(false);
+
+        labelUniteMesureHauteurSurface = new JLabel(uniteMesure);
         labelUniteMesureHauteurSurface.setSize(70, 30);
         labelUniteMesureHauteurSurface.setLocation(200, 60);
         this.add(labelUniteMesureHauteurSurface);
@@ -105,13 +118,20 @@ public class PanneauConfiguration extends JPanel implements Observer{
         largeurSurfaceText.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                int vieilleHauteur = Integer.parseInt(controller.getInfosSurfaceSelect().get("Hauteur surface"));
-                controller.setDimensionsSurface(vieilleHauteur, Integer.parseInt(largeurSurfaceText.getText()));
+                try{
+                    int vieilleHauteur = Integer.parseInt(controller.getInfosSurfaceSelect().get("Hauteur surface"));
+                    controller.setDimensionsSurface(vieilleHauteur, Integer.parseInt(largeurSurfaceText.getText()));
+                }catch (Exception e){}
             }
         });
         this.add(largeurSurfaceText);
 
-        JLabel labelUniteMesureLargeurSurface = new JLabel(uniteMesure);
+
+        labelImperialLargeurSurface = new ImperialLabel(true);
+        labelImperialLargeurSurface.setLocation(80, 90);
+        labelImperialLargeurSurface.setVisible(false);
+
+        labelUniteMesureLargeurSurface = new JLabel(uniteMesure);
         labelUniteMesureLargeurSurface.setSize(70, 30);
         labelUniteMesureLargeurSurface.setLocation(200, 90);
         this.add(labelUniteMesureLargeurSurface);
@@ -174,7 +194,12 @@ public class PanneauConfiguration extends JPanel implements Observer{
         hauteurTuileText.setEditable(false);
         this.add(hauteurTuileText);
 
-        JLabel labelUniteMesureHauteurTuile = new JLabel(uniteMesure);
+        labelImperialHauteurTuile = new ImperialLabel(true);
+        labelImperialHauteurTuile.setLocation(80, 265);
+        labelImperialHauteurTuile.setEditable(false);
+        labelImperialHauteurTuile.setVisible(false);
+
+        labelUniteMesureHauteurTuile = new JLabel(uniteMesure);
         labelUniteMesureHauteurTuile.setSize(70, 30);
         labelUniteMesureHauteurTuile.setLocation(200, 265);
         this.add(labelUniteMesureHauteurTuile);
@@ -189,7 +214,12 @@ public class PanneauConfiguration extends JPanel implements Observer{
         largeurTuileText.setEditable(false);
         this.add(largeurTuileText);
 
-        JLabel labelUniteMesureLargeurTuile = new JLabel(uniteMesure);
+        labelImperialLargeurTuile = new ImperialLabel(true);
+        labelImperialLargeurTuile.setLocation(80, 290);
+        labelImperialLargeurTuile.setEditable(false);
+        labelImperialLargeurTuile.setVisible(false);
+
+        labelUniteMesureLargeurTuile = new JLabel(uniteMesure);
         labelUniteMesureLargeurTuile.setSize(70, 30);
         labelUniteMesureLargeurTuile.setLocation(200, 290);
         this.add(labelUniteMesureLargeurTuile);
@@ -250,12 +280,21 @@ public class PanneauConfiguration extends JPanel implements Observer{
         epaisseurCoulisText.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                controller.setEpaisseurCoulis(Integer.parseInt(epaisseurCoulisText.getText()));
+                try{
+                    controller.setEpaisseurCoulis(Integer.parseInt(epaisseurCoulisText.getText()));
+                }
+                catch (Exception e){}
             }
         });
         this.add(epaisseurCoulisText);
 
-        JLabel labelUniteMesureLCoulis = new JLabel(uniteMesure);
+        labelImperialEpaisseurCoulis = new ImperialLabel(false);
+        labelImperialEpaisseurCoulis.setLocation(80, 410);
+        labelImperialEpaisseurCoulis.setEditable(false);
+        labelImperialEpaisseurCoulis.setVisible(false);
+        this.add(labelImperialEpaisseurCoulis);
+
+        labelUniteMesureLCoulis = new JLabel(uniteMesure);
         labelUniteMesureLCoulis.setSize(60, 30);
         labelUniteMesureLCoulis.setLocation(205, 410);
         this.add(labelUniteMesureLCoulis);
@@ -298,7 +337,13 @@ public class PanneauConfiguration extends JPanel implements Observer{
         hauteurTuileSelectText.setEditable(false);
         this.add(hauteurTuileSelectText);
 
-        JLabel labelUniteMesureHauteurTuileSelect = new JLabel(uniteMesure);
+        labelImperialHauteurTuileSelect = new ImperialLabel(true);
+        labelImperialHauteurTuileSelect.setLocation(80, 530);
+        labelImperialHauteurTuileSelect.setEditable(false);
+        labelImperialHauteurTuileSelect.setVisible(false);
+        this.add(labelImperialHauteurTuileSelect);
+
+        labelUniteMesureHauteurTuileSelect = new JLabel(uniteMesure);
         labelUniteMesureHauteurTuileSelect.setSize(70, 30);
         labelUniteMesureHauteurTuileSelect.setLocation(200, 530);
         this.add(labelUniteMesureHauteurTuileSelect);
@@ -314,7 +359,13 @@ public class PanneauConfiguration extends JPanel implements Observer{
         largeurTuileSelectText.setEditable(false);
         this.add(largeurTuileSelectText);
 
-        JLabel labelUniteMesureLargeurTuileSelect = new JLabel(uniteMesure);
+        labelImperialLargeurTuileSelect = new ImperialLabel(true);
+        labelImperialLargeurTuileSelect.setLocation(80, 560);
+        labelImperialLargeurTuileSelect.setEditable(false);
+        labelImperialLargeurTuileSelect.setVisible(false);
+        this.add(labelImperialLargeurTuileSelect);
+
+        labelUniteMesureLargeurTuileSelect = new JLabel(uniteMesure);
         labelUniteMesureLargeurTuileSelect.setSize(70, 30);
         labelUniteMesureLargeurTuileSelect.setLocation(200, 560);
         this.add(labelUniteMesureLargeurTuileSelect);
@@ -387,6 +438,13 @@ public class PanneauConfiguration extends JPanel implements Observer{
         this.add(revetementSurfaceSelectionnee);
         this.add(boutonMenuRevetement);
         this.add(angleDuMotif);
+
+        //Labels imperials
+        this.add(labelImperialHauteurSurface);
+        this.add(labelImperialLargeurSurface);
+        this.add(labelImperialHauteurTuile);
+        this.add(labelImperialLargeurTuile);
+
         this.setVisible(true);
 
     }
@@ -422,7 +480,9 @@ public class PanneauConfiguration extends JPanel implements Observer{
                 radioSurface.setSelected(true);
             }
             hauteurSurfaceText.setText(controller.getInfosSurfaceSelect().get("Hauteur surface")+"");
+            labelImperialHauteurSurface.setVallues(Double.parseDouble(controller.getInfosSurfaceSelect().get("Hauteur surface")));
             largeurSurfaceText.setText(controller.getInfosSurfaceSelect().get("Longueur surface")+"");
+            labelImperialLargeurSurface.setVallues(Double.parseDouble(controller.getInfosSurfaceSelect().get("Longueur surface")));
             revetementSurfaceSelectionnee.removeActionListener(selectRevetementAction);
             String nom = controller.getInfosRevetementSelect().get("Nom Revêtement");
             revetementSurfaceSelectionnee.setSelectedItem(nom);
@@ -431,21 +491,29 @@ public class PanneauConfiguration extends JPanel implements Observer{
             couleurMateriauText.setBackground(new Color (Integer.parseInt(controller.getInfosRevetementSelect().get("Couleur tuiles")+"")));
             motifTuileText.setText(controller.getInfosRevetementSelect().get("Motif tuiles"));
             hauteurTuileText.setText(controller.getInfosRevetementSelect().get("Hauteur tuiles")+"");
+            labelImperialHauteurTuile.setVallues(Double.parseDouble(controller.getInfosRevetementSelect().get("Hauteur tuiles")));
             largeurTuileText.setText(controller.getInfosRevetementSelect().get("Longueur tuiles")+"");
+            labelImperialLargeurTuile.setVallues(Double.parseDouble(controller.getInfosRevetementSelect().get("Longueur tuiles")));
             nbTuilesBoiteText.setText(controller.getInfosRevetementSelect().get("nb. tuiles par boite")+"");
             couleurCoulisText.setBackground(new Color (Integer.parseInt(controller.getInfosSurfaceSelect().get("Couleur coulis")+"")));
             epaisseurCoulisText.removeActionListener(selectTailleCoulis);
             epaisseurCoulisText.setText(controller.getInfosSurfaceSelect().get("Épaisseur coulis")+"");
+            labelImperialEpaisseurCoulis.setVallues(Double.parseDouble(controller.getInfosSurfaceSelect().get("Épaisseur coulis")));
             epaisseurCoulisText.addActionListener(selectTailleCoulis);
             decallageSpinner.setValue(motifTuileText.getText().equals("Installation en décallé")?controller.getOffset():0);
             decallageSpinner.setEnabled(motifTuileText.getText().equals("Installation en décallé"));
             hauteurTuileSelectText.setText(Integer.toString(controller.getHauteurTuile()));
+            labelImperialHauteurTuileSelect.setVallues(controller.getHauteurTuile());
             largeurTuileSelectText.setText(Integer.toString(controller.getLargeurTuile()));
+            labelImperialLargeurTuileSelect.setVallues(controller.getLargeurTuile());
             angleDuMotif.setValue((int)controller.getAngleMotifSurfaceSelectionne());
+
         }
         else{
             hauteurSurfaceText.setText("");
+            labelImperialHauteurSurface.setEmpty();
             largeurSurfaceText.setText("");
+            labelImperialLargeurSurface.setEmpty();
             revetementSurfaceSelectionnee.removeActionListener(selectRevetementAction);
             revetementSurfaceSelectionnee.setSelectedItem("Revêtement par défaut");
             revetementSurfaceSelectionnee.addActionListener(selectRevetementAction);
@@ -453,17 +521,78 @@ public class PanneauConfiguration extends JPanel implements Observer{
             couleurMateriauText.setBackground(Color.WHITE);
             motifTuileText.setText("");
             hauteurTuileText.setText("");
+            labelImperialHauteurTuile.setEmpty();
             largeurTuileText.setText("");
+            labelImperialLargeurTuile.setEmpty();
             nbTuilesBoiteText.setText("");
             couleurCoulisText.setBackground(Color.WHITE);
             epaisseurCoulisText.setText("");
+            labelImperialEpaisseurCoulis.setEmpty();
             decallageSpinner.setValue(0);
             hauteurTuileSelectText.setText("");
+            labelImperialHauteurTuileSelect.setEmpty();
             largeurTuileSelectText.setText("");
+            labelImperialLargeurTuileSelect.setEmpty();
             this.angleDuMotif.setValue(0);
 
         }
 
-    }
+        if(controller.getModeImperial()){
+            hauteurSurfaceText.setVisible(false);
+            labelUniteMesureHauteurSurface.setVisible(false);
+            labelImperialHauteurSurface.setVisible(true);
 
+            largeurSurfaceText.setVisible(false);
+            labelUniteMesureLargeurSurface.setVisible(false);
+            labelImperialLargeurSurface.setVisible(true);
+
+            hauteurTuileText.setVisible(false);
+            labelUniteMesureHauteurTuile.setVisible(false);
+            labelImperialHauteurTuile.setVisible(true);
+
+            largeurTuileText.setVisible(false);
+            labelUniteMesureLargeurTuile.setVisible(false);
+            labelImperialLargeurTuile.setVisible(true);
+
+            hauteurTuileSelectText.setVisible(false);
+            labelUniteMesureHauteurTuileSelect.setVisible(false);
+            labelImperialHauteurTuileSelect.setVisible(true);
+
+            largeurTuileSelectText.setVisible(false);
+            labelUniteMesureLargeurTuileSelect.setVisible(false);
+            labelImperialLargeurTuileSelect.setVisible(true);
+
+            epaisseurCoulisText.setVisible(false);
+            labelUniteMesureLCoulis.setVisible(false);
+            labelImperialEpaisseurCoulis.setVisible(true);
+        }else{
+            hauteurSurfaceText.setVisible(true);
+            labelUniteMesureHauteurSurface.setVisible(true);
+            labelImperialHauteurSurface.setVisible(false);
+
+            largeurSurfaceText.setVisible(true);
+            labelUniteMesureLargeurSurface.setVisible(true);
+            labelImperialLargeurSurface.setVisible(false);
+
+            hauteurTuileText.setVisible(true);
+            labelUniteMesureHauteurTuile.setVisible(true);
+            labelImperialHauteurTuile.setVisible(false);
+
+            largeurTuileText.setVisible(true);
+            labelUniteMesureLargeurTuile.setVisible(true);
+            labelImperialLargeurTuile.setVisible(false);
+
+            hauteurTuileSelectText.setVisible(true);
+            labelUniteMesureHauteurTuileSelect.setVisible(true);
+            labelImperialHauteurTuileSelect.setVisible(false);
+
+            largeurTuileSelectText.setVisible(true);
+            labelUniteMesureLargeurTuileSelect.setVisible(true);
+            labelImperialLargeurTuileSelect.setVisible(false);
+
+            epaisseurCoulisText.setVisible(true);
+            labelUniteMesureLCoulis.setVisible(true);
+            labelImperialEpaisseurCoulis.setVisible(false);
+        }
+    }
 }
