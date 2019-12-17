@@ -1,4 +1,4 @@
-package Domaine;
+package Services;
 
 public class MesureImperiale {
     public int pieds;
@@ -18,7 +18,7 @@ public class MesureImperiale {
         this.pouces = (huitiemes % 96) / 8;
         int num = huitiemes % 8;
         int denum = 8;
-        while(num % 2 == 0){
+        while(num % 2 == 0 && num != 0){
             num /= 2;
             denum /= 2;
         }
