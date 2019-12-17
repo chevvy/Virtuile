@@ -162,8 +162,8 @@ public class Surface implements Cloneable, Serializable {
 
         int coordXduBound = (ratioWidthHeigth >= 1)? polygone.getBounds().x - 10*(tuileWidth+tailleCoulis) : polygone.getBounds().x - 10*(tuileWidth+tailleCoulis)*ratioHeigthWidth;
         int coordYduBond = (ratioHeigthWidth >= 1)? polygone.getBounds().y - 10*(tuileHeight+tailleCoulis) : polygone.getBounds().y - 10*(tuileHeight+tailleCoulis)*ratioWidthHeigth;
-        int boundsWidth = (ratioWidthHeigth >= 1)? ((int)polygone.getBounds().getMaxX() - coordXduBound) : ((int)polygone.getBounds().getMaxX() - coordXduBound) * ratioHeigthWidth*2;
-        int boundsHeight = (ratioHeigthWidth >= 1)? ((int)polygone.getBounds().getMaxY() - coordYduBond) : ((int)polygone.getBounds().getMaxY() - coordYduBond) * ratioWidthHeigth*2;
+        int boundsWidth = (ratioWidthHeigth >= 1)? ((int)polygone.getBounds().getMaxX() - coordXduBound)*2 : ((int)polygone.getBounds().getMaxX() - coordXduBound) * ratioHeigthWidth*2;
+        int boundsHeight = (ratioHeigthWidth >= 1)? ((int)polygone.getBounds().getMaxY() - coordYduBond)*2 : ((int)polygone.getBounds().getMaxY() - coordYduBond) * ratioWidthHeigth*2;
 
 
         int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis));
@@ -203,8 +203,8 @@ public class Surface implements Cloneable, Serializable {
             genererChevron(nbTuilesY, coordXduBound, nbTuilesX, tailleCoulis, tuileWidth, tuileHeight, coordYduBond, newListeTuiles);
         }
 
-        // return IntersectionTuiles(newListeTuiles);
-        return  newListeTuiles;
+        return IntersectionTuiles(newListeTuiles);
+        //return  newListeTuiles;
 
     }
 
