@@ -149,25 +149,37 @@ public class Surface implements Cloneable, Serializable {
 
 
     public ArrayList<Tuile> genererListeDeTuiles() {
-        // "Installation droite", "Installation imitation parquet", "Installation en décallé", "Installation en chevron",
-        // "Installation en L"
+
         // En ce moment, si le motif est autre que Installation droite ou installation décallé, il fait "installation"
         // CAD : installation equivalent en x et y
+        // l'idée était d'utiliser le ratio height/width pour scaler la grosseur bound des tuiles en dehors de la zone
+        //turns out que quand tu as un ratio de 1, ben ça fait pas grand chose han
         int ratioHeigthWidth = polygone.getBounds().height/polygone.getBounds().width;
         int ratioWidthHeigth = polygone.getBounds().width/polygone.getBounds().height;
         String motif = this.revetement.getMotifTuiles();
         int tailleCoulis = this.getTailleDuCoulis();
         int tuileWidth = revetement.getLongueurTuile();
         int tuileHeight = revetement.getHauteurTuile();
-        int nbTuilesXVirtuelle = (polygone.getBounds().width /(8*tailleCoulis));
-        int nbTuilesYVirtuelle = (polygone.getBounds().height / (8*tailleCoulis));
 
-        int coordXduBound = (ratioWidthHeigth >= 1)? (polygone.getBounds().x - nbTuilesXVirtuelle*(tuileWidth+tailleCoulis))-revetement.getOffsetMotifx() : (polygone.getBounds().x - nbTuilesXVirtuelle*(tuileWidth+tailleCoulis)*ratioHeigthWidth)-revetement.getOffsetMotifx();
-        int coordYduBond = (ratioHeigthWidth >= 1)? (polygone.getBounds().y - nbTuilesYVirtuelle*(tuileHeight+tailleCoulis))-revetement.getOffsetMotify() : (polygone.getBounds().y - nbTuilesYVirtuelle*(tuileHeight+tailleCoulis)*ratioWidthHeigth) -revetement.getOffsetMotify();
+        // ici l'idée était d'avoir un facteur qui s'ajuste en fonction de la taille de width et height
+        int nbTuilesXVirtuelle = (polygone.getBounds().width /(8*tailleCoulis))*2;
+        int nbTuilesYVirtuelle = (polygone.getBounds().height / (8*tailleCoulis))*2;
 
-
-        int boundsWidth = (ratioWidthHeigth >= 1)? ((int)polygone.getBounds().getMaxX() - coordXduBound)*2 : ((int)polygone.getBounds().getMaxX() - coordXduBound) * ratioHeigthWidth*2;
-        int boundsHeight = (ratioHeigthWidth >= 1)? ((int)polygone.getBounds().getMaxY() - coordYduBond)*2 : ((int)polygone.getBounds().getMaxY() - coordYduBond) * ratioWidthHeigth*2;
+        // ici, l'idée de changer la taille de chq bounds en fonction du facteur, mais après plusieurs tests, c'est pas
+        // vraiment le résultat escompté.
+        // IMPORTANT -> le changement du offset du motif est fait par -revetement.getOffsetMotifx()
+        int coordXduBound = (ratioWidthHeigth >= 1)?
+                (polygone.getBounds().x - nbTuilesXVirtuelle*(tuileWidth+tailleCoulis))-revetement.getOffsetMotifx() :
+                (polygone.getBounds().x - nbTuilesXVirtuelle*(tuileWidth+tailleCoulis)*ratioHeigthWidth)-revetement.getOffsetMotifx();
+        int coordYduBond = (ratioHeigthWidth >= 1)?
+                (polygone.getBounds().y - nbTuilesYVirtuelle*(tuileHeight+tailleCoulis))-revetement.getOffsetMotify() :
+                (polygone.getBounds().y - nbTuilesYVirtuelle*(tuileHeight+tailleCoulis)*ratioWidthHeigth) -revetement.getOffsetMotify();
+        int boundsWidth = (ratioWidthHeigth >= 1)?
+                ((int)polygone.getBounds().getMaxX() - coordXduBound)*2 :
+                ((int)polygone.getBounds().getMaxX() - coordXduBound) * ratioHeigthWidth*2;
+        int boundsHeight = (ratioHeigthWidth >= 1)?
+                ((int)polygone.getBounds().getMaxY() - coordYduBond)*2 :
+                ((int)polygone.getBounds().getMaxY() - coordYduBond) * ratioWidthHeigth*2;
 
 
         int nbTuilesX = (boundsWidth / (tuileWidth + tailleCoulis));
@@ -206,7 +218,9 @@ public class Surface implements Cloneable, Serializable {
             genererChevron(nbTuilesY, coordXduBound, nbTuilesX, tailleCoulis, tuileWidth, tuileHeight, coordYduBond, newListeTuiles);
         }
 
+        // Pour debug, simplement retourner la liste newListeTuiles
         return IntersectionTuiles(newListeTuiles);
+        //return newListeTuiles;
     }
 
     private void genererImitationParquet(int nbTuilesY, int coordXduBound, int nbTuilesX, int tailleCoulis, int tuileWidth,
