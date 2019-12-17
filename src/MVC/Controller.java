@@ -4,17 +4,10 @@ import Domaine.*;
 import Services.Historique;
 import Services.SaveBundle;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public class Controller {
     private ArrayList<Observer> observers;
@@ -25,7 +18,7 @@ public class Controller {
     public ArrayList<Point> patronForme;
     private Etat etat = Etat.LECTURE;
     private Point positionSourisActuelle = new Point();
-    private boolean modeIspection = false;
+    private boolean modeInspection = false;
     private int dimensionInspection = 1;
 
 
@@ -270,7 +263,7 @@ public class Controller {
             g.fillPolygon(surfaceSelectionnee.polygone);
             if(!surfaceSelectionnee.estUnTrou){
                 for (Tuile tuile : surfaceSelectionnee.getListeTuiles()){
-                    g.setColor(modeIspection && tuile.estTropPetite(dimensionInspection)?Color.RED:surfaceSelectionnee.getRevetement().getCouleurTuile());
+                    g.setColor(modeInspection && tuile.estTropPetite(dimensionInspection)?Color.RED:surfaceSelectionnee.getRevetement().getCouleurTuile());
                     g.fillPolygon(tuile.getPolygone());
                     g.setColor(Color.BLACK);
                     g.drawPolygon(tuile.getPolygone());
@@ -427,7 +420,7 @@ public class Controller {
     }
 
     public void setModeInspection(boolean modeInspection){
-        this.modeIspection = modeInspection;
+        this.modeInspection = modeInspection;
         notifyObservers();
     }
 

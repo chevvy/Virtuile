@@ -162,8 +162,8 @@ public class Surface implements Cloneable, Serializable {
         int tuileHeight = revetement.getHauteurTuile();
 
         // ici l'idée était d'avoir un facteur qui s'ajuste en fonction de la taille de width et height
-        int nbTuilesXVirtuelle = (polygone.getBounds().width /(8*tailleCoulis))*2;
-        int nbTuilesYVirtuelle = (polygone.getBounds().height / (8*tailleCoulis))*2;
+        int nbTuilesXVirtuelle = (polygone.getBounds().width /(8*tailleCoulis +1))*2;
+        int nbTuilesYVirtuelle = (polygone.getBounds().height / (8*tailleCoulis +1))*2;
 
         // ici, l'idée de changer la taille de chq bounds en fonction du facteur, mais après plusieurs tests, c'est pas
         // vraiment le résultat escompté.
