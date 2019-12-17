@@ -38,7 +38,6 @@ public class PanneauMateriau extends JPanel{
         boutonOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controller.ajouterTypeMateriau(nomMateriauField.getText());
-                frame.original.setEnabled(true);
                 frame.dispose();
                 new FrameRevetements(controller, frame.original).setVisible(true);
             }
