@@ -1,9 +1,8 @@
-package Domaine;
+package Services;
+
+import Services.MesureImperiale;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 
 public class Outils {
@@ -39,7 +38,7 @@ public class Outils {
         return minValue;
     }
 
-    public Optional<Point> CalculIntersection(double m1, double b1, double m2, double b2) {
+    public static Optional<Point> CalculIntersection(double m1, double b1, double m2, double b2) {
 
         if (m1 == m2) {
             return Optional.empty();
