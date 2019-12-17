@@ -43,7 +43,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
         this.mainWindow = mainWindow;
         controller.addObserver(this);
         this.setBackground(Color.gray);
-        this.setPreferredSize(new Dimension(300, 800));
+        this.setPreferredSize(new Dimension(300, 900));
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         this.setLayout(null);
         this.controller = controller;

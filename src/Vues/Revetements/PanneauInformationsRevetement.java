@@ -3,6 +3,7 @@ package Vues.Revetements;
 import Domaine.Revetement;
 import MVC.Controller;
 import MVC.Observer;
+import Vues.ImperialLabel;
 import Vues.Materiaux.FrameMateriau;
 
 import javax.swing.*;
@@ -20,6 +21,8 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
     public String nomRevetementSelectionnee;
     private JComboBox typeMateriauxCombo, motifRecouvrementCombo;
     private JButton boutonAjouterCouleur;
+    private ImperialLabel labelImperialhauteurTuile, labelImperiallargeurTuile;
+    private JLabel hauteurTuileUniteMesure, largeurTuileUniteMesure;
 
     PanneauInformationsRevetement(Controller controller, FrameRevetements frame) {
         controller.addObserver(this);
@@ -28,7 +31,7 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
         SetUpUi();
         this.setPreferredSize(new Dimension(480, 500));
         this.setLayout(null);
-
+        update();
     }
 
 
@@ -144,7 +147,12 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
         });
         this.add(hauteurTuileText);
 
-        JLabel hauteurTuileUniteMesure = new JLabel(uniteMesure);
+        labelImperialhauteurTuile = new ImperialLabel(true);
+        labelImperialhauteurTuile.setLocation(220, 200);
+        labelImperialhauteurTuile.setVisible(false);
+        this.add(labelImperialhauteurTuile);
+
+        hauteurTuileUniteMesure = new JLabel(uniteMesure);
         hauteurTuileUniteMesure.setBounds(330,200,100,25);
         this.add(hauteurTuileUniteMesure);
 
@@ -157,7 +165,12 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
         largeurTuileText.setBounds(220,230,100,25);
         this.add(largeurTuileText);
 
-        JLabel largeurTuileUniteMesure = new JLabel(uniteMesure);
+        labelImperiallargeurTuile = new ImperialLabel(true);
+        labelImperiallargeurTuile.setLocation(220, 230);
+        labelImperiallargeurTuile.setVisible(false);
+        this.add(labelImperiallargeurTuile);
+
+        largeurTuileUniteMesure = new JLabel(uniteMesure);
         largeurTuileUniteMesure.setBounds(330,230,100,25);
         this.add(largeurTuileUniteMesure);
 
@@ -255,7 +268,9 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
             this.motifRecouvrementCombo.setSelectedIndex(selectionComboMotif);
 
             this.hauteurTuileText.setText(String.valueOf(revetementSelectionnee.getHauteurTuile()));
+            this.labelImperialhauteurTuile.setVallues(revetementSelectionnee.getHauteurTuile());
             this.largeurTuileText.setText(String.valueOf(revetementSelectionnee.getLongueurTuile()));
+            this.labelImperiallargeurTuile.setVallues(revetementSelectionnee.getLongueurTuile());
             this.nbTuilesBoiteText.setText(String.valueOf(revetementSelectionnee.getNbTuilesBoite()));
             int nbBoites = (controller.getNbBoites().get(nomRevetementSelectionnee) != null)?controller.getNbBoites().get(nomRevetementSelectionnee):0;
             this.nbBoiteText.setText(String.valueOf(nbBoites));
@@ -263,5 +278,22 @@ public class PanneauInformationsRevetement extends JPanel implements Observer {
             this.nbTuilesText.setText(String.valueOf(nbTuiles));
         }
 
+        if(controller.getModeImperial()){
+            hauteurTuileText.setVisible(false);
+            hauteurTuileUniteMesure.setVisible(false);
+            labelImperialhauteurTuile.setVisible(true);
+
+            largeurTuileText.setVisible(false);
+            largeurTuileUniteMesure.setVisible(false);
+            labelImperiallargeurTuile.setVisible(true);
+        }else{
+            hauteurTuileText.setVisible(true);
+            hauteurTuileUniteMesure.setVisible(true);
+            labelImperialhauteurTuile.setVisible(false);
+
+            largeurTuileText.setVisible(true);
+            largeurTuileUniteMesure.setVisible(true);
+            labelImperiallargeurTuile.setVisible(false);
+        }
     }
 }
