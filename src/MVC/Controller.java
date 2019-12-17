@@ -444,6 +444,10 @@ public class Controller {
         notifyObservers();
     }
 
+    public int getDimensionInspection(){
+        return this.dimensionInspection;
+    }
+
     public void goForward(){
         this.plan = Historique.goForward();
         notifyObservers();

@@ -426,6 +426,7 @@ public class PanneauConfiguration extends JPanel implements Observer{
 
         imperialLabelDecallage = new ImperialLabel(false);
         imperialLabelDecallage.setLocation(60, 610);
+        imperialLabelDecallage.setVisible(false);
         imperialLabelDecallage.addActionListenner(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -599,7 +600,6 @@ public class PanneauConfiguration extends JPanel implements Observer{
             labelImperialEpaisseurCoulis.setVallues(Double.parseDouble(controller.getInfosSurfaceSelect().get("Épaisseur coulis")));
             epaisseurCoulisText.addActionListener(selectTailleCoulis);
             decallageSpinner.setValue(motifTuileText.getText().equals("Installation en décallé")?controller.getOffset():0);
-            imperialLabelDecallage.setVallues(motifTuileText.getText().equals("Installation en décallé")?controller.getOffset():0);
             decallageSpinner.setEnabled(motifTuileText.getText().equals("Installation en décallé"));
             hauteurTuileSelectText.setText(Integer.toString(controller.getHauteurTuile()));
             labelImperialHauteurTuileSelect.setVallues(controller.getHauteurTuile());
@@ -628,7 +628,6 @@ public class PanneauConfiguration extends JPanel implements Observer{
             epaisseurCoulisText.setText("");
             labelImperialEpaisseurCoulis.setEmpty();
             decallageSpinner.setValue(0);
-            imperialLabelDecallage.setVallues(0);
             hauteurTuileSelectText.setText("");
             labelImperialHauteurTuileSelect.setEmpty();
             largeurTuileSelectText.setText("");
@@ -636,7 +635,8 @@ public class PanneauConfiguration extends JPanel implements Observer{
             this.angleDuMotif.setValue(0);
 
         }
-
+        imperialLabelDecallage.setVallues(controller.getDimensionInspection());
+        inspectionTuilesMin.setValue(controller.getDimensionInspection());
         if(controller.getModeImperial()){
             hauteurSurfaceText.setVisible(false);
             labelUniteMesureHauteurSurface.setVisible(false);
@@ -666,8 +666,8 @@ public class PanneauConfiguration extends JPanel implements Observer{
             labelUniteMesureLCoulis.setVisible(false);
             labelImperialEpaisseurCoulis.setVisible(true);
 
-            inspectionTuilesMin.setVisible(false);
-            imperialLabelDecallage.setVisible(true);
+            //inspectionTuilesMin.setVisible(false);
+            //imperialLabelDecallage.setVisible(true);
         }else{
             hauteurSurfaceText.setVisible(true);
             labelUniteMesureHauteurSurface.setVisible(true);
@@ -697,8 +697,8 @@ public class PanneauConfiguration extends JPanel implements Observer{
             labelUniteMesureLCoulis.setVisible(true);
             labelImperialEpaisseurCoulis.setVisible(false);
 
-            inspectionTuilesMin.setVisible(true);
-            imperialLabelDecallage.setVisible(false);
+            //inspectionTuilesMin.setVisible(true);
+            //imperialLabelDecallage.setVisible(false);
         }
     }
 }
