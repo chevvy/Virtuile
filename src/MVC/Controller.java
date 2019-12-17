@@ -96,6 +96,7 @@ public class Controller {
 
     public void setDimensionsSurface(int hauteur, int largeur){
         plan.setDimensionsSurface(hauteur, largeur);
+        addCurrentStep();
         notifyObservers();
     }
 
@@ -103,6 +104,7 @@ public class Controller {
         if(plan.surfaceSelectionnee != null){
             plan.surfaceSelectionnee.getRevetement().setAngleMotif(angle);
             plan.surfaceSelectionnee.majListeTuiles();
+            addCurrentStep();
             notifyObservers();
         }
     }
@@ -384,6 +386,7 @@ public class Controller {
                 revetement.setLongueurTuile(calculerLargeurTuile(revetement.getHauteurTuile(), motif, epaisseur));
             }
             plan.surfaceSelectionnee.setTailleDuCoulis(epaisseur);
+            addCurrentStep();
         }
         notifyObservers();
     }
@@ -400,6 +403,7 @@ public class Controller {
                 revetement.setLongueurTuile(calculerLargeurTuile(revetement.getHauteurTuile(), motif, this.plan.surfaceSelectionnee.getTailleDuCoulis()));
             }
             this.plan.surfaceSelectionnee.setRevetement(revetement);
+            addCurrentStep();
         }
         notifyObservers();
     }
@@ -407,6 +411,7 @@ public class Controller {
     public void setCouleurCoulis(Color couleurCoulis) {
         if(plan.surfaceSelectionnee != null){
             this.plan.surfaceSelectionnee.setCouleurCoulis(couleurCoulis);
+            addCurrentStep();
         }
         notifyObservers();
     }
@@ -451,6 +456,7 @@ public class Controller {
 
     public void setOffset(int offset){
         plan.surfaceSelectionnee.setOffset(offset);
+        addCurrentStep();
         notifyObservers();
     }
 
@@ -464,6 +470,7 @@ public class Controller {
     public void setOffsetMotifx(int offset){
         plan.surfaceSelectionnee.getRevetement().setOffsetMotifx(offset);
         plan.surfaceSelectionnee.majListeTuiles();
+        addCurrentStep();
         notifyObservers();
     }
 
@@ -474,11 +481,16 @@ public class Controller {
     public void setOffsetMotify(int offset){
         plan.surfaceSelectionnee.getRevetement().setOffsetMotify(offset);
         plan.surfaceSelectionnee.majListeTuiles();
+        addCurrentStep();
         notifyObservers();
     }
 
     public int getOffsetMotify(){
         return plan.surfaceSelectionnee.getRevetement().getOffsetMotify();
+    }
+
+    public void addCurrentStep(){
+        Historique.addState(this.plan);
     }
 }
 
