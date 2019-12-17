@@ -8,15 +8,15 @@ import java.util.Optional;
 public class Outils {
 
     public static double impToMet(MesureImperiale frac){
-        return (double)frac.getHuitiemes() * 25.4/8.0;
+        return (double)frac.getHuitiemes() * 2.54/8.0;
     }
 
     public static double impToMet(int huitiemes){
-        return huitiemes * 25.4/8.0;
+        return huitiemes * 2.54/8.0;
     }
 
     public static MesureImperiale metToImp(double met){
-        return new MesureImperiale((int)Math.round(8.0*met/25.4)) ;
+        return new MesureImperiale((int)Math.round(8.0*met/2.54)) ;
     }
 
     public static int getMaxValue(int[] listeNombre){
