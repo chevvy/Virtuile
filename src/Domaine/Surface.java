@@ -151,8 +151,8 @@ public class Surface implements Cloneable, Serializable {
         int tuileHeight = revetement.getHauteurTuile();
 
         // ici l'idée était d'avoir un facteur qui s'ajuste en fonction de la taille de width et height
-        int nbTuilesXVirtuelle = (polygone.getBounds().width /(8*tailleCoulis));
-        int nbTuilesYVirtuelle = (polygone.getBounds().height / (8*tailleCoulis));
+        int nbTuilesXVirtuelle = (polygone.getBounds().width /(8*tailleCoulis + 1));
+        int nbTuilesYVirtuelle = (polygone.getBounds().height / (8*tailleCoulis + 1));
         if (motif.equals("Installation en chevron") || motif.equals("Installation imitation parquet") || motif.equals("Installation en décallé")){
             nbTuilesXVirtuelle *= 2;
             nbTuilesYVirtuelle *= 2;
