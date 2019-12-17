@@ -26,8 +26,8 @@ public class PanneauAlignementVerticalImage extends JPanel {
 
         //hautExt
         try {
-            BufferedImage imageHaut01 = ImageIO.read(new File("src/Ressources/hautExt.png"));
-            JButton image = new JButton(new ImageIcon(imageHaut01));
+            ImageIcon imageHaut01 = new ImageIcon(getClass().getResource("/Ressources/hautExt.png"));
+            JButton image = new JButton(imageHaut01);
             image.setMargin(new Insets(0, 0, 0, 0));
             image.setLayout(null);
             image.addActionListener(new ActionListener() {
@@ -36,14 +36,14 @@ public class PanneauAlignementVerticalImage extends JPanel {
             });
             this.add(image);
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             System.out.println("Pas d'image :(");
         }
 
         //hautInt
         try {
-            BufferedImage imageHaut02 = ImageIO.read(new File("src/Ressources/hautInt.png"));
-            JButton image = new JButton(new ImageIcon(imageHaut02));
+            ImageIcon imageHaut02 = new ImageIcon(getClass().getResource("/Ressources/hautInt.png"));
+            JButton image = new JButton(imageHaut02);
             image.setMargin(new Insets(0, 0, 0, 0));
             image.setLayout(null);
             image.addActionListener(new ActionListener() {
@@ -52,14 +52,14 @@ public class PanneauAlignementVerticalImage extends JPanel {
             });
             this.add(image);
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             System.out.println("Pas d'image :(");
         }
 
         //centre vertical
         try {
-            BufferedImage imageCentre = ImageIO.read(new File("src/Ressources/centreVertical.png"));
-            JButton image = new JButton(new ImageIcon(imageCentre));
+            ImageIcon imageCentre = new ImageIcon(getClass().getResource("/Ressources/centreVertical.png"));
+            JButton image = new JButton(imageCentre);
             image.setMargin(new Insets(0, 0, 0, 0));
             image.setLayout(null);
             image.addActionListener(new ActionListener() {
@@ -68,14 +68,14 @@ public class PanneauAlignementVerticalImage extends JPanel {
             });
             this.add(image);
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             System.out.println("Pas d'image :(");
         }
 
         //bas int
         try {
-            BufferedImage imageBas01 = ImageIO.read(new File("src/Ressources/basInt.png"));
-            JButton image = new JButton(new ImageIcon(imageBas01));
+            ImageIcon imageBas01 = new ImageIcon(getClass().getResource("/Ressources/basInt.png"));
+            JButton image = new JButton(imageBas01);
             image.setMargin(new Insets(0, 0, 0, 0));
             image.setLayout(null);
             image.addActionListener(new ActionListener() {
@@ -84,14 +84,14 @@ public class PanneauAlignementVerticalImage extends JPanel {
             });
             this.add(image);
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             System.out.println("Pas d'image :(");
         }
 
         //bas ext
         try {
-            BufferedImage imageBas02 = ImageIO.read(new File("src/Ressources/basExt.png"));
-            JButton image = new JButton(new ImageIcon(imageBas02));
+            ImageIcon imageBas02 = new ImageIcon(getClass().getResource("/Ressources/basExt.png"));
+            JButton image = new JButton(imageBas02);
             image.setMargin(new Insets(0, 0, 0, 0));
             image.setLayout(null);
             image.addActionListener(new ActionListener() {
@@ -100,15 +100,15 @@ public class PanneauAlignementVerticalImage extends JPanel {
             });
             this.add(image);
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             System.out.println("Pas d'image :(");
         }
 
         //pas d'alignement vertical
         //vide
         try {
-            BufferedImage imageNoAlignement = ImageIO.read(new File("src/Ressources/non.png"));
-            JButton image = new JButton(new ImageIcon(imageNoAlignement));
+            ImageIcon imageNoAlignement = new ImageIcon(getClass().getResource("/Ressources/non.png"));
+            JButton image = new JButton(imageNoAlignement);
             image.setMargin(new Insets(0, 0, 0, 0));
             image.setLayout(null);
             image.addActionListener(new ActionListener() {
@@ -117,7 +117,7 @@ public class PanneauAlignementVerticalImage extends JPanel {
             });
             this.add(image);
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             System.out.println("Pas d'image :(");
         }
     }

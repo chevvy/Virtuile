@@ -25,7 +25,7 @@ public class PanneauActions extends JPanel implements Observer {
 
     private void setUpUI(){
         // Ajouter une surface
-        ImageIcon imageAjouter = new ImageIcon("src/Ressources/ajouterSurface.png");
+        ImageIcon imageAjouter = new ImageIcon(getClass().getResource("/Ressources/ajouterSurface.png"));
         boutonAjouter = new JButton(imageAjouter);
         boutonAjouter.setMargin(new Insets(0, 0, 0, 0));
         boutonAjouter.setLayout(null);
@@ -39,7 +39,7 @@ public class PanneauActions extends JPanel implements Observer {
         this.add(boutonAjouter);
 
         // Ajouter une surface vide
-        ImageIcon imageAjouterVide = new ImageIcon("src/Ressources/ajouterSurfaceVide.png");
+        ImageIcon imageAjouterVide = new ImageIcon(getClass().getResource("/Ressources/ajouterSurfaceVide.png"));
         boutonAjouterSurfaceVide = new JButton(imageAjouterVide);
         boutonAjouterSurfaceVide.setMargin(new Insets(0, 0, 0, 0));
         boutonAjouterSurfaceVide.setLayout(null);
@@ -53,7 +53,7 @@ public class PanneauActions extends JPanel implements Observer {
         this.add(boutonAjouterSurfaceVide);
 
         // Supprimer une surface
-        ImageIcon imageSupprimer = new ImageIcon("src/Ressources/suprimerSurface.png");
+        ImageIcon imageSupprimer = new ImageIcon(getClass().getResource("/Ressources/suprimerSurface.png"));
         boutonSupprimer = new JButton(imageSupprimer);
         boutonSupprimer.setMargin(new Insets(0, 0, 0, 0));
         boutonSupprimer.setLayout(null);
@@ -64,7 +64,7 @@ public class PanneauActions extends JPanel implements Observer {
         this.add(boutonSupprimer);
 
         // Alligner une surface
-        ImageIcon imageAlligner = new ImageIcon("src/Ressources/allignerSurface.png");
+        ImageIcon imageAlligner = new ImageIcon(getClass().getResource("/Ressources/allignerSurface.png"));
         boutonAlligment = new JButton(imageAlligner);
         boutonAlligment.setMargin(new Insets(0, 0, 0, 0));
         boutonAlligment.setLayout(null);
@@ -75,7 +75,7 @@ public class PanneauActions extends JPanel implements Observer {
         this.add(boutonAlligment);
 
         // Fusionner une surface
-        ImageIcon imageFusionner = new ImageIcon("src/Ressources/fusionnerSurface.png");
+        ImageIcon imageFusionner = new ImageIcon(getClass().getResource("/Ressources/fusionnerSurface.png"));
         boutonFusionner = new JButton(imageFusionner);
         boutonFusionner.setMargin(new Insets(0, 0, 0, 0));
         boutonFusionner.setLayout(null);
@@ -86,7 +86,7 @@ public class PanneauActions extends JPanel implements Observer {
         this.add(boutonFusionner);
 
         // Espacer surface
-        ImageIcon imageAjouterEspace = new ImageIcon("src/Ressources/ajouterEspace.png");
+        ImageIcon imageAjouterEspace = new ImageIcon(getClass().getResource("/Ressources/ajouterEspace.png"));
         boutonAjouterEspace = new JButton(imageAjouterEspace);
         boutonAjouterEspace.setMargin(new Insets(0, 0, 0, 0));
         boutonAjouterEspace.setLayout(null);
@@ -99,7 +99,7 @@ public class PanneauActions extends JPanel implements Observer {
         this.add(boutonAjouterEspace);
 
         // Undo
-        ImageIcon imageBackward = new ImageIcon("src/Ressources/backward.png");
+        ImageIcon imageBackward = new ImageIcon(getClass().getResource("/Ressources/backward.png"));
         boutonBackward = new JButton(imageBackward);
         boutonBackward.setMargin(new Insets(0, 0, 0, 0));
         boutonBackward.setLayout(null);
@@ -112,7 +112,7 @@ public class PanneauActions extends JPanel implements Observer {
         this.add(boutonBackward);
 
         // Redo
-        ImageIcon imageForward = new ImageIcon("src/Ressources/forward.png");
+        ImageIcon imageForward = new ImageIcon(getClass().getResource("/Ressources/forward.png"));
         boutonForward = new JButton(imageForward);
         boutonForward.setMargin(new Insets(0, 0, 0, 0));
         boutonForward.setLayout(null);

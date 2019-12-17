@@ -17,7 +17,7 @@ import java.io.File;
 public class MainWindow extends JFrame implements Observer {
 
     private JMenuBar menuBar;
-    private JMenu menuFichier, menuEdition, menuVue;
+    private JMenu menuFichier, menuEdition;
     private JMenuItem menuItemSauvegarder, menuItemCharger, menuItemTailleGrilleMagnetique;
     private JCheckBoxMenuItem menuCheckboxMagnetiser, menuCheckboxImperial;
     private PanneauConfiguration panelVueInfo;
@@ -45,7 +45,6 @@ public class MainWindow extends JFrame implements Observer {
         menuBar = new JMenuBar();
         menuFichier = new JMenu("Fichier");
         menuEdition = new JMenu("Edition");
-        menuVue = new JMenu("Vue");
         menuItemSauvegarder = new JMenuItem("Sauvegarder");
         menuItemSauvegarder.addActionListener(new ActionListener() {
             @Override
@@ -132,7 +131,6 @@ public class MainWindow extends JFrame implements Observer {
         menuEdition.add(menuCheckboxImperial);
         menuBar.add(menuFichier);
         menuBar.add(menuEdition);
-        menuBar.add(menuVue);
         this.setJMenuBar(menuBar);
 
         panelVuePlan = new Canvas(controller);
